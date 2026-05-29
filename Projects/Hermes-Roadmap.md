@@ -1,7 +1,7 @@
 # Hermes Roadmap
 
 > สิ่งที่จะทำต่อใน Hermes — เรียงตาม priority และ effort
-> อัปเดตล่าสุด: 2026-05-30
+> อัปเดตล่าสุด: 2026-05-30 (batch /goal)
 
 ---
 
@@ -9,14 +9,24 @@
 
 - [x] **Obsidian MCP** — เชื่อม `~/SecondBrain` เข้า Hermes (read + write)
 - [x] **Git sync vault → GitHub** — auto-commit ทุก 15 นาที ไป `github.com/nuntnet/second-brain`
-  - คำถาม "ต่อ GitHub เพื่อ backup Obsidian ใช่มั้ย?" → **ใช่ และทำเสร็จแล้ว**
   - launchd: `ai.hermes.vault-sync.plist` (StartInterval 900s)
-  - script: `~/.hermes/scripts/sync-vault.sh`
 - [x] **True streaming** — char-based chunking (4 chars/45ms), เห็น typing จริง
 - [x] **Per-session model** — แต่ละ chat เลือก model แยกกันได้
 - [x] **Thinking indicator** — แสดง "Thinking… Xs" timer ระหว่างรอ
 - [x] **Mobile layout** — RightPanel เป็น drawer, sidebar auto-collapse
 - [x] **Memory Panel Tab 1** — SOUL.md editor (Personality)
+- [x] **Memory Panel Tab 2 "Your Memory"** — query สิ่งที่จำ + add memory
+- [x] **Thoughts → Hermes Sync** — ปุ่ม "Save to memory" + synced badge
+- [x] **Sessions History Panel** — browse + view transcript + continue
+- [x] **Scheduled Jobs Create UI** — form + presets + toggle + trigger + delete
+- [x] **GitHub MCP** — repos/PRs/issues (token จาก gh keychain ไม่เก็บใน config)
+  - ทดสอบแล้ว: Hermes ตอบ username + repo count ได้
+  - wrapper: `~/.hermes/scripts/github-mcp.sh`
+- [x] **Command Palette (Cmd+K)** — quick switch session/panel/model/recent chats
+- [x] **Daily Briefing cron** — 7:00 GitHub + Obsidian tasks + top 3 priorities
+- [x] **Memory Pipeline (End-of-Day cron)** — 21:00 extract decisions/tasks → Obsidian Daily
+- [x] **Weekly Review cron** — ศุกร์ 17:00 → Obsidian Areas/Weekly-Reviews
+- [x] **Mobile Access (cloudflared)** — launchd tunnel, URL ใน `~/.hermes/mobile-url.txt`
 - [x] **Auth auto-recovery** — wake-handler เปิด Claude.app refresh token
 
 ---
