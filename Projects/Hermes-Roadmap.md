@@ -121,6 +121,21 @@
 
 ---
 
+## 🔒 Version Control (2026-05-30)
+
+โค้ด Hermes แยกเป็น 2 private GitHub repo (ไม่เอาเข้า SecondBrain — กัน secret leak + vault bloat):
+
+| Repo | Path | เนื้อหา |
+|------|------|--------|
+| `nuntnet/hermes-ui` | `~/hermes-ui` | Next.js web UI |
+| `nuntnet/hermes-config` | `~/.hermes` | adapter, config.yaml, SOUL.md, scripts/ |
+
+- **`~/.hermes/.gitignore`** ใช้ whitelist (ignore ทุกอย่าง → allow เฉพาะ code) — `auth.json`, `.env`, `*.db`, `logs/`, `memories/`, `sessions/`, `skills/` ไม่ขึ้น GitHub เด็ดขาด
+- **SecondBrain vault** ยัง sync แยกที่ `nuntnet/second-brain` (notes เท่านั้น)
+- ⚠️ **hermes-config commit แบบ manual** (ไม่ auto เหมือน vault) — แก้ config/scripts แล้วต้อง `cd ~/.hermes && git add -A && git commit && git push` เอง
+
+---
+
 ## 📝 Notes / Decisions
 
 - **Obsidian path** = `~/SecondBrain` (ไม่ใช่ ~/Documents/SecondBrain)
