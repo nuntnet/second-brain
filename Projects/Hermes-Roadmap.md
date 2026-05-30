@@ -40,93 +40,30 @@
 
 ---
 
-## 🔥 Priority 1 — UI Features ที่ใกล้เสร็จ (ต่อจากของเดิม)
+## 🎯 ที่เหลือจริงๆ (เกือบทุกอย่างเดิมเสร็จหมดแล้ว — ดู Done ด้านบน)
 
-- [ ] **Memory Panel Tab 2 "Your Memory"**
-  - ปุ่ม "Ask Hermes what it remembers" → query facts ที่ Hermes จำได้
-  - แสดงเป็น bullet list
-  - ปุ่ม "Add memory" → textarea ส่ง "Please remember: …"
-  - _effort: 1 ชม._
+### 🔌 Integration — เชื่อมโลกการทำงาน (คุ้มสุด)
+- [ ] **Outline MCP เปิดให้ Hermes** — มีใน ~/.claude/mcp.json แล้ว แค่เพิ่มใน config.yaml → ถาม docs.sellsuki.com ได้ (_15 นาที, ไม่ต้อง credential_)
+- [ ] **Jira / Atlassian MCP** — อ่าน/อัปเดต ticket, สรุป sprint (_มี MCP พร้อม, ต้อง auth_)
+- [ ] **Google Calendar MCP** — อ่าน/สร้าง event + รวมใน briefing (_OAuth setup_)
+- [ ] **Gmail MCP** — อ่าน inbox + draft reply (_OAuth, ใช้ร่วม Calendar_)
+- [ ] **Index codebase** — semantic search ch-erawan-next / OMS 2.0
 
-- [ ] **Thoughts → Hermes Memory Sync**
-  - ปุ่ม "Save to Memory" บน thought card
-  - ส่ง "Please remember this: {content}" → mark `synced: true`
-  - badge "✓ saved to memory"
-  - _effort: 30 นาที_
+### 🤖 Automation — proactive (cron → Telegram ได้แล้ว)
+- [ ] **PR digest เช้า** — "มี PR รอ review, ตัวไหน block release" (ใช้ GitHub MCP)
+- [ ] **Standup prep** — สรุปเมื่อวาน + วันนี้จะทำอะไร
+- [ ] **EOD → Daily note** อัตโนมัติลง Obsidian (มีโครง EOD cron แล้ว ทำให้ครบ)
 
-- [ ] **Sessions History Panel**
-  - browse session เก่า (title, date, message count)
-  - กด session → ดู transcript ใน modal
-  - ปุ่ม "Continue this session"
-  - API route: `/api/hermes/sessions`
-  - _effort: 1 ชม._
+### 🧠 Intelligence — ปิด learning loop
+- [ ] **Auto-generate SKILL.md** จาก pattern ที่กด 👍 → workflow ซ้ำได้กลายเป็น skill
+- [ ] **Feedback → ปรับ persona** — 👎 เยอะเรื่องไหน distill เข้า SOUL.md
 
-- [ ] **Scheduled Jobs Create UI**
-  - form สร้าง cron job (name, schedule, prompt, enabled)
-  - cron picker + human-readable preview
-  - POST `/api/hermes/cron/jobs`
-  - _effort: 30 นาที_
+### ⚡ Perf — ถ้าอยากเร็วกว่านี้
+- [ ] **ลด SDK overhead** — โหลด 92 skills + 4 MCP + system prompt ใหญ่ทุก request (~15s) → lazy-load / ตัด MCP ที่ไม่ใช้ / warm pool
 
----
-
-## 🚀 Priority 2 — Automation & Intelligence
-
-- [ ] **Memory Pipeline (auto-capture)**
-  - หลัง chat จบ → auto-extract facts → เขียนลง Obsidian
-  - flush memories ผ่าน Hermes memory provider
-  - เลือก folder ปลายทาง (Daily/ หรือ Areas/)
-  - _effort: 2-3 ชม._
-
-- [ ] **Proactive Daily Briefing**
-  - cron 7:00 น. → morning summary
-  - รวม: GitHub PRs ค้าง, Obsidian tasks, context เมื่อวาน
-  - ส่งผ่าน Discord / Telegram
-  - _effort: 1 ชม. (ต้องมี GitHub MCP ก่อน)_
-
----
-
-## 🔌 Priority 3 — MCP Connections (เพิ่มความสามารถ)
-
-- [ ] **Brave Search MCP**
-  - ให้ Hermes ค้นเว็บได้
-  - `npx @modelcontextprotocol/server-brave-search` + API key
-  - _effort: 15 นาที_
-
-- [ ] **GitHub MCP**
-  - Hermes รู้จัก repos, PRs, issues
-  - `npx @modelcontextprotocol/server-github` + PAT
-  - ปลดล็อค daily briefing + code workflow
-  - _effort: 15 นาที_
-
-- [ ] **Google Calendar MCP**
-  - อ่าน/สร้าง event
-  - daily briefing รวมตารางนัด
-  - _effort: 30 นาที (OAuth setup)_
-
-- [ ] **Gmail / Email MCP**
-  - อ่าน inbox, draft reply
-  - _effort: 30 นาที (OAuth setup)_
-
----
-
-## 📱 Priority 4 — Mobile & UX
-
-- [ ] **Mobile Access (cloudflared tunnel)**
-  - เข้า Hermes UI จาก Samsung ผ่าน browser
-  - `cloudflared tunnel` → public HTTPS URL
-  - หรือใช้ Telegram bot แทน (เบากว่า)
-  - _effort: 1 ชม._
-
-- [ ] **Command Palette (Cmd+K)**
-  - quick switch session / panel / model
-  - quick action: new chat, search, scope folder
-  - _effort: 2 ชม._
-
-- [ ] **Voice Interface**
-  - Ctrl+B record → STT (Whisper local) → ส่ง
-  - response → TTS (edge voice)
-  - config มีอยู่แล้วใน config.yaml (`voice.record_key: ctrl+b`)
-  - _effort: 2-3 ชม._
+### ❌ ยกเลิก
+- ~~Brave Search MCP~~ — ผู้ใช้ยกเลิก
+- ~~cloudflared ถาวร~~ — quick tunnel พอแล้ว (มี Telegram เป็นหลัก)
 
 ---
 
