@@ -40,6 +40,17 @@
 
 ---
 
+## 🩹 Stability fixes (2026-05-30)
+
+- [x] **Outline MCP** — Hermes ค้น docs.sellsuki.com ได้ (28 collections) — key อ่าน runtime
+- [x] **Morning Briefing → standup+PR digest** — GitHub PR review + Obsidian tasks + top 3 (ส่ง Telegram)
+- [x] **🔥 แก้ MCP process leak (ต้นเหตุ RAM crash!)** — obsidian-mcp leak 11 procs/573MB → 2/65MB
+  - keepalive patch: stdio ข้าม probe (ดู scripts/PATCHES.md — re-apply ถ้า update hermes)
+  - mcp-reaper watchdog: ฆ่า orphan ppid=1 ทุก 10 นาที
+- [ ] **ปิด terminal hermes เก่า (PID 3284)** — เปิดค้าง 6 วัน รัน code เก่า ⚠️ ผู้ใช้ต้องปิด/restart เอง
+
+---
+
 ## 🎯 ที่เหลือจริงๆ (เกือบทุกอย่างเดิมเสร็จหมดแล้ว — ดู Done ด้านบน)
 
 ### 🔌 Integration — เชื่อมโลกการทำงาน (คุ้มสุด)
