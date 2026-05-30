@@ -31,7 +31,12 @@
 - [x] **Voice Interface (web UI)** — mic STT (Ctrl+B), TTS auto-speak + per-message read-aloud
 - [x] **Thai quality fix** — SOUL.md persona (ผม/ครับ สม่ำเสมอ) + adapter ไม่ route ไทย/CJK ไป Haiku (ขั้นต่ำ Sonnet) + honor explicit model
 - [x] **TTS quality fix** — edge-tts (th-TH-NiwatNeural), strip emoji/symbols, ไทยปนอังกฤษใช้ multilingual voice (ไม่สะกดทีละตัว)
-- [x] **Learning loop** — memory write/recall verified ✓; **Memory Distill cron** (22:00) consolidate+dedupe USER.md (69KB→5KB), เก็บ Patterns + Avoid/Mistakes sections
+- [x] **Learning loop** — memory write/recall verified ✓; **Memory Distill cron** (22:00) consolidate+dedupe USER.md (69KB→5KB), เก็บ Patterns + Avoid/Mistakes sections; 👍/👎 feedback → feedback.jsonl
+- [x] **Telegram bot** — long-polling, lock to user, cron delivery → มือถือ Samsung (setup-telegram.sh)
+- [x] **Sonnet default** — opus-4-5 → sonnet-4-6 (Telegram/CLI เร็วขึ้น; UI เลือก model เองได้)
+- [x] **Streaming TTS** — พูดทีละประโยคระหว่าง stream (queue) เริ่มพูด ~1s ไม่รอจบ; sentence split ฉลาด (Thai/list/version)
+- [x] **hermes-backup.sh + cron** — commit+push 2 repo คำสั่งเดียว, launchd ทุก 6 ชม. (commit เฉพาะมี changes)
+- [x] **TTS segmentation** — แยกภาษา ไทย→Niwat อังกฤษ→Andrew ต่อเสียง (แก้อังกฤษ "หายในลำคอ")
 
 ---
 
