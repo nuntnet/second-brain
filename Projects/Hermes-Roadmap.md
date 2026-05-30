@@ -27,7 +27,8 @@
 - [x] **Memory Pipeline (End-of-Day cron)** — 21:00 extract decisions/tasks → Obsidian Daily
 - [x] **Weekly Review cron** — ศุกร์ 17:00 → Obsidian Areas/Weekly-Reviews
 - [x] **Mobile Access (cloudflared)** — launchd tunnel, URL ใน `~/.hermes/mobile-url.txt`
-- [x] **Auth auto-recovery** — wake-handler เปิด Claude.app refresh token
+- [x] **Auth auto-recovery 2.0** — proactive token-keepalive (hourly) + แก้ wake-handler ไม่ restart adapter ทุก 5 นาที + adapter เรียก recovery เอง + `setup-long-lived-token.sh`
+- [x] **Voice Interface (web UI)** — mic STT (Ctrl+B), TTS auto-speak toggle + per-message read-aloud, Thai voice (Kanya), Web Speech API (ไม่ต้อง backend)
 
 ---
 
