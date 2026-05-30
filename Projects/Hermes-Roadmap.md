@@ -43,7 +43,8 @@
 ## 🩹 Stability fixes (2026-05-30)
 
 - [x] **Outline MCP** — Hermes ค้น docs.sellsuki.com ได้ (28 collections) — key อ่าน runtime
-- [x] **Morning Briefing → standup+PR digest** — GitHub PR review + Obsidian tasks + top 3 (ส่ง Telegram)
+- [x] **Jira MCP** — Sellsuki internal Atlassian (SSE, network-gated) — 35 projects, อ่าน/ค้น issue+sprint
+- [x] **Morning Briefing → standup+PR+Jira digest** — Jira issues (blocked) + GitHub PR review + Obsidian tasks + top 3 (ส่ง Telegram)
 - [x] **🔥 แก้ MCP process leak (ต้นเหตุ RAM crash!)** — obsidian-mcp leak 11 procs/573MB → 2/65MB
   - keepalive patch: stdio ข้าม probe (ดู scripts/PATCHES.md — re-apply ถ้า update hermes)
   - mcp-reaper watchdog: ฆ่า orphan ppid=1 ทุก 10 นาที
