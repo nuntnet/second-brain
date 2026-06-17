@@ -52,7 +52,7 @@
 ### Notion Setup (ค่าล่าสุดที่ถูกต้อง!)
 | Variable | Value |
 |----------|-------|
-| `NOTION_API_KEY` | `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` |
+| `NOTION_API_KEY` | `<NOTION_API_TOKEN_REMOVED — store in .env, not in notes>` |
 | `NOTION_CARS_DB_ID` | `36a604e0d99a8068b518f26cf65cd05c` ⚠️ อัพเดต Vercel! |
 | `NOTION_BLOG_DB_ID` | `36a604e0d99a80dbbfced00ab2d89147` ⚠️ อัพเดต Vercel! |
 | `NOTION_STORIES_DB_ID` | `36a604e0d99a801288f0c845f33fba91` ✅ |
