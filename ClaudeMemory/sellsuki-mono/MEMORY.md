@@ -8,3 +8,5 @@
 | [reference_secondbrain_vault.md](reference_secondbrain_vault.md) | reference | Obsidian vault ~/SecondBrain — Claude memory symlinked in; auto-syncs via launchd every 15 min |
 | [user_language_thai.md](user_language_thai.md) | user | User writes in Thai and prefers Thai responses |
 | [reference_bola_jira_project.md](reference_bola_jira_project.md) | reference | BOLA tickets are in Jira project BOLA (id 10126), not LR as repo config claims |
+| [project_bundle_in_catalog.md](project_bundle_in_catalog.md) | project | Bundle/set product lives in catalog-service (multi-catalog), not pis-api |
+| [project_segment_export_static_snapshot.md](project_segment_export_static_snapshot.md) | project | BOLA static segment export must read from snapshot table, not re-eval rule live |
