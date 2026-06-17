@@ -9,9 +9,9 @@ metadata:
 
 User's Obsidian vault lives at `/Users/nunt/SecondBrain` (PARA structure, git repo, remote `github.com/nuntnet/second-brain`).
 
-Claude Code's per-project memory for sellsuki_mono is **symlinked** into the vault:
-`~/.claude/projects/-Users-nunt-sellsuki-mono/memory` → `~/SecondBrain/ClaudeMemory/`
-So memory files written here land in the vault and are browsable/linkable in Obsidian. No Obsidian app or MCP needed — plain files.
+Claude Code's per-project memory is **symlinked** into the vault under `~/SecondBrain/ClaudeMemory/<project>/` (one subfolder per project, kept separate so each project's MEMORY.md doesn't collide). Symlinked projects so far: `sellsuki-mono`, `BOLA`, `WizemovesOS`, `Shipmunk`, `hermes`. e.g.
+`~/.claude/projects/-Users-nunt-sellsuki-mono/memory` → `~/SecondBrain/ClaudeMemory/sellsuki-mono/`
+So memory files written here land in the vault and are browsable/linkable in Obsidian. No Obsidian app or MCP needed — plain files. To add another project: move its `~/.claude/projects/<dir>/memory` contents into `ClaudeMemory/<name>/`, rmdir, then symlink back.
 
 Vault backup is automated by a launchd agent **`ai.hermes.vault-sync`** (`~/Library/LaunchAgents/ai.hermes.vault-sync.plist`) running `~/.hermes/scripts/sync-vault.sh` every 900s (15 min); logs at `~/.hermes/logs/vault-sync.log`. So a dedicated SessionEnd commit/push hook is redundant.
 
