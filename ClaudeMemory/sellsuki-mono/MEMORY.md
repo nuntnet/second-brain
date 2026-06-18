@@ -10,3 +10,5 @@
 | [reference_bola_jira_project.md](reference_bola_jira_project.md) | reference | BOLA tickets are in Jira project BOLA (id 10126), not LR as repo config claims |
 | [project_bundle_in_catalog.md](project_bundle_in_catalog.md) | project | Bundle/set product lives in catalog-service (multi-catalog), not pis-api |
 | [project_segment_export_static_snapshot.md](project_segment_export_static_snapshot.md) | project | BOLA static segment export must read from snapshot table, not re-eval rule live |
+| [reference_oc2plus_jira_project.md](reference_oc2plus_jira_project.md) | reference | OC2Plus Jira project key is "OC" (id 10001) — repo config says TBD |
+| [project_oc4207_line_optional_design.md](project_oc4207_line_optional_design.md) | project | OC-4207: empty string = no LINE (not *string); affects OC-4241, OC-3339, OC-3340, OC-3341 |
