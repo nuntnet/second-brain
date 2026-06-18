@@ -17,3 +17,6 @@
 | [feedback_decisive_deep_execution.md](feedback_decisive_deep_execution.md) | feedback | Be sharper/decisive — investigate & act, don't offer ก/ข/ค menus |
 | [project_pis_frontend_local_testing.md](project_pis_frontend_local_testing.md) | project | pis-frontend points at dev-th STAGING by default; how to wire UI → local pis-api for testing |
 | [feedback_ff_only_force_push_ok.md](feedback_ff_only_force_push_ok.md) | feedback | PIS repos are FF-only → rebase+force-push FEATURE branches is OK (not main) |
+| [reference_ccs_config_namespaces.md](reference_ccs_config_namespaces.md) | reference | CCS config namespaces: patona-seller-center-user/store, sellsuki-global-user — schemas + missing patona-provider-company |
+| [reference_pat_jira_project.md](reference_pat_jira_project.md) | reference | Patona Jira project key PAT, board 71 — company management epics PAT-2448 to PAT-2452 |
+| [project_provider_frontend_backend_routing.md](project_provider_frontend_backend_routing.md) | project | provider-management-frontend → CCS backend (8092) not management-backend; store CRUD/file upload/CCS config proxy only in management-backend |
