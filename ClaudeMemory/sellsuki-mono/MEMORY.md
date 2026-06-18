@@ -16,3 +16,4 @@
 | [project_ms687_reserve_needs_company_location.md](project_ms687_reserve_needs_company_location.md) | project | MS-687 OMS↔inventory reserve BLOCKED — needs company+location; orders don't carry it yet |
 | [feedback_decisive_deep_execution.md](feedback_decisive_deep_execution.md) | feedback | Be sharper/decisive — investigate & act, don't offer ก/ข/ค menus |
 | [project_pis_frontend_local_testing.md](project_pis_frontend_local_testing.md) | project | pis-frontend points at dev-th STAGING by default; how to wire UI → local pis-api for testing |
+| [feedback_ff_only_force_push_ok.md](feedback_ff_only_force_push_ok.md) | feedback | PIS repos are FF-only → rebase+force-push FEATURE branches is OK (not main) |
