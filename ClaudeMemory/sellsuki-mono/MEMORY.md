@@ -20,3 +20,5 @@
 | [reference_ccs_config_namespaces.md](reference_ccs_config_namespaces.md) | reference | CCS config namespaces: patona-seller-center-user/store, sellsuki-global-user — schemas + missing patona-provider-company |
 | [reference_pat_jira_project.md](reference_pat_jira_project.md) | reference | Patona Jira project key PAT, board 71 — company management epics PAT-2448 to PAT-2452 |
 | [project_provider_frontend_backend_routing.md](project_provider_frontend_backend_routing.md) | project | provider-management-frontend → CCS backend (8092) not management-backend; store CRUD/file upload/CCS config proxy only in management-backend |
+| [project_bola_auth_mode_deployment.md](project_bola_auth_mode_deployment.md) | project | BOLA auth: SaaS=kratos, multi-tenant=local_jwt; AUTH_MODE/VITE_AUTH_MODE env; deploy env in SRE repo not monorepo |
+| [project_overmind_restart_quirk.md](project_overmind_restart_quirk.md) | project | overmind: use `overmind restart <name>` for dead proc; `start <name> -D` from CLAUDE.md doesn't work |
