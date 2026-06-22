@@ -19,4 +19,10 @@ kratos provider resolves the BOLA admin by the Kratos identity's **email** — s
 
 **Deployment env vars are NOT in this monorepo** — `.gitlab-ci.yml` includes pipelines from `sellsuki/sre/deployment/pipeline-deployment` (GitLab). To fix prod auth, the SaaS env must be set there: backend `AUTH_MODE=kratos` + `ORY_KRATOS_PUBLIC_URL` (+ `KRATOS_ADMIN_URL`/`KRATOS_ADMIN_TOKEN` for invite/recovery); frontend `VITE_AUTH_MODE=kratos` + `VITE_KRATOS_LOGIN_URL`/`VITE_KRATOS_ACCOUNTS_URL`.
 
-Local dev: Kratos runs in docker-compose (public :4433), `accounts.sellsuki.local` = kratos-ui-go login UI. See [[project_overmind_restart_quirk]] for restarting bola-api after env change.
+Local dev: Kratos runs in docker-compose (public :4433), `accounts.sellsuki.local` = kratos-ui-go login UI (overmind `kratos-ui`, :4455). See [[project_overmind_restart_quirk]] for restarting bola-api after env change.
+
+**To test BOLA kratos mode locally, ALL of these must hold (each was a separate gotcha):**
+1. backend `.env` `AUTH_MODE=kratos` (default is local_jwt)
+2. frontend must run as `vite --mode dev` so `.env.dev` (`VITE_AUTH_MODE=kratos`) loads — plain `bun run dev`/`vite` uses mode `development` which loads `.env`/`.env.development` (neither sets the var) → silently falls back to local_jwt. The main `Procfile` web-bola line was missing `--mode dev` (fixed 2026-06-22; `Procfile.bola`/`Procfile.frontend` already had it).
+3. `kratos-ui` service must be running (`accounts.sellsuki.local` → :4455) or login redirect gives 502. Starting only `bola-api,web-bola` in overmind is not enough — include `kratos-ui`.
+4. clear localStorage when switching modes: kratos `isAuthenticated()` only checks `getWorkspaceId()`, so a stale `bola_workspace` from a local_jwt session suppresses the redirect.
