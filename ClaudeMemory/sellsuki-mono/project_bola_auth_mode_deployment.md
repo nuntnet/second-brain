@@ -17,7 +17,13 @@ BOLA auth provider is chosen at runtime by env var, no code change needed (code 
 
 kratos provider resolves the BOLA admin by the Kratos identity's **email** — so a bola DB admin record must exist with email matching the Kratos identity, else `admin_not_found`.
 
-**Deployment env vars are NOT in this monorepo** — `.gitlab-ci.yml` includes pipelines from `sellsuki/sre/deployment/pipeline-deployment` (GitLab). To fix prod auth, the SaaS env must be set there: backend `AUTH_MODE=kratos` + `ORY_KRATOS_PUBLIC_URL` (+ `KRATOS_ADMIN_URL`/`KRATOS_ADMIN_TOKEN` for invite/recovery); frontend `VITE_AUTH_MODE=kratos` + `VITE_KRATOS_LOGIN_URL`/`VITE_KRATOS_ACCOUNTS_URL`.
+**SaaS prod URL is `bola.bearyweb.com`** (staging `bola-web.staging-th.bearyweb.com`), NOT bola.sellsuki.com. **Decision (2026-06-22): move SaaS to `*.sellsuki.com`** (Option A) so the central Kratos cookie SSO works — because a Kratos session cookie scoped to `.sellsuki.com` is NEVER sent to a `bearyweb.com` page (different registrable domain) and bearyweb isn't in Kratos's `WHITELIST_DOMAIN`/`allowed_return_urls` (which cover `*.sellsuki.com`/`*.patona.online`/`*.oc2.plus`). This cross-domain cookie issue is the real reason SaaS auth was "wrong" — not just a missing env.
+
+In-cluster Kratos URLs (from `backend/kratos-ui-go/deployment/values-*.yml`): public `http://kratos-public`, admin `http://kratos-admin:80` (no token), browser UI `https://accounts[.staging-th].sellsuki.com`. BOLA kratos provider forwards the whole Cookie header to whoami, so it doesn't need the cookie NAME (sellsuki_session / sellsuki_session_staging).
+
+**Deploy config DOES live in this monorepo** (corrects earlier note): backend `backend/bola-backend/deployment/values-{staging,production}.yml` (helm env list) and frontend `frontend/bola-frontend/.gitlab-ci.yml` (`.variables_export_{production,staging}_frontend` build-time VITE_* vars). Work started on branch **`feat/bola-saas-kratos-sso`** in BOTH submodules (committed, NOT pushed/merged) — adds AUTH_MODE=kratos + Kratos URLs + moves domains to *.sellsuki.com, with TODO(SRE) on CloudFront/ACM IDs. Must cut over atomically with SRE (flipping kratos on the live bearyweb domains alone = 401). The backend CI (`backend/bola-backend/.gitlab-ci.yml`) only includes SRE pipeline templates and has no env.
+
+**(superseded) Deployment env vars are NOT in this monorepo** — `.gitlab-ci.yml` includes pipelines from `sellsuki/sre/deployment/pipeline-deployment` (GitLab). To fix prod auth, the SaaS env must be set there: backend `AUTH_MODE=kratos` + `ORY_KRATOS_PUBLIC_URL` (+ `KRATOS_ADMIN_URL`/`KRATOS_ADMIN_TOKEN` for invite/recovery); frontend `VITE_AUTH_MODE=kratos` + `VITE_KRATOS_LOGIN_URL`/`VITE_KRATOS_ACCOUNTS_URL`.
 
 Local dev: Kratos runs in docker-compose (public :4433), `accounts.sellsuki.local` = kratos-ui-go login UI (overmind `kratos-ui`, :4455). See [[project_overmind_restart_quirk]] for restarting bola-api after env change.
 

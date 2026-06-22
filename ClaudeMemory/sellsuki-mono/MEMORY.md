@@ -22,3 +22,4 @@
 | [project_provider_frontend_backend_routing.md](project_provider_frontend_backend_routing.md) | project | provider-management-frontend → CCS backend (8092) not management-backend; store CRUD/file upload/CCS config proxy only in management-backend |
 | [project_bola_auth_mode_deployment.md](project_bola_auth_mode_deployment.md) | project | BOLA auth: SaaS=kratos, multi-tenant=local_jwt; AUTH_MODE/VITE_AUTH_MODE env; deploy env in SRE repo not monorepo |
 | [project_overmind_restart_quirk.md](project_overmind_restart_quirk.md) | project | overmind: use `overmind restart <name>` for dead proc; `start <name> -D` from CLAUDE.md doesn't work |
+| [project_oc_epic_backlog_triage.md](project_oc_epic_backlog_triage.md) | project | OC board ~127 non-Done epics (stale clutter); 26 dead-shells closed 2026-06-22; MCP Jira cross-project contamination bug |
