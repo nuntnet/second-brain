@@ -23,3 +23,4 @@
 | [project_bola_auth_mode_deployment.md](project_bola_auth_mode_deployment.md) | project | BOLA auth: SaaS=kratos, multi-tenant=local_jwt; AUTH_MODE/VITE_AUTH_MODE env; deploy env in SRE repo not monorepo |
 | [project_overmind_restart_quirk.md](project_overmind_restart_quirk.md) | project | overmind: use `overmind restart <name>` for dead proc; `start <name> -D` from CLAUDE.md doesn't work |
 | [project_oc_epic_backlog_triage.md](project_oc_epic_backlog_triage.md) | project | OC board ~127 non-Done epics (stale clutter); 26 dead-shells closed 2026-06-22; MCP Jira cross-project contamination bug |
+| [project_oc_bola_domain_boundary.md](project_oc_bola_domain_boundary.md) | project | OC2Plus×BOLA boundary (OC-4200): LIFF register = 2-layer split; membership=OC2Plus, LINE/LIFF=BOLA; card re-map |
