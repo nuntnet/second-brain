@@ -1,38 +1,53 @@
 ---
 name: project_bola_auth_mode_deployment
-description: "BOLA auth — SaaS deployment uses kratos, multi-tenant uses local_jwt; env lives in SRE repo not monorepo"
+description: BOLA auth — dual-path AUTH_MODE=kratos (Oathkeeper header-trust + cookie fallback); deployment config in monorepo
 metadata: 
   node_type: memory
   type: project
-  originSessionId: 42bf1a19-7f07-405b-a1a4-451da110e784
+  originSessionId: 8ea4e16e-492a-4d1e-8bcb-146ecab6fad2
 ---
 
-BOLA auth provider is chosen at runtime by env var, no code change needed (code fully supports all modes):
-- backend `AUTH_MODE` (`backend/bola-backend/.env`, parsed in `cmd/bola_server/main.go`, provider built in `cmd/bola_server/helper.go:601`): `kratos` | `local_jwt` (default) | `oidc` | `header`
-- frontend `VITE_AUTH_MODE` (`frontend/bola-frontend/.env.dev`): `kratos` | `local_jwt`
+## Final architecture (2026-06-23)
 
-**Intended mapping:**
-- **SaaS** deployment (`bola.sellsuki.com`) → **kratos** (central Sellsuki Ory Kratos SSO, session cookie)
-- **multi-tenant / self-hosted** deployment → **local_jwt** (BOLA issues its own JWT)
+`AUTH_MODE=kratos` is the single SaaS auth mode — it is dual-path, no separate `gateway` mode:
 
-kratos provider resolves the BOLA admin by the Kratos identity's **email** — so a bola DB admin record must exist with email matching the Kratos identity, else `admin_not_found`.
+1. **Header path (prod/Oathkeeper)**: Oathkeeper gateway validates the Kratos session at the edge and injects `X-User-Id` (Kratos identity UUID) + `X-User-Kind`. Backend reads these from middleware, resolves BOLA admin by `KratosIdentityID` (global lookup via `FindAdminsByKratosIdentityIDGlobal`, then workspace-scoped via `GetAdminByKratosIdentityID`). Domain-agnostic — bearyweb.com is fine.
+2. **Cookie path (local dev)**: If no `X-User-Id` header (or "anonymous"), falls back to reading the Kratos session cookie and doing whoami. Works on `*.sellsuki.local` (same domain as Kratos cookie).
 
-**⚠️ CORRECTION (2026-06-23) — the real platform auth pattern is gateway header-trust, NOT kratos-cookie.** Verified across 8+ backends (address, catalog, customer-book, file-service, i18n, management, CCS) + sellercenter frontend: an Ory **Oathkeeper gateway** validates the Kratos session at the edge and injects `X-User-Id` + `X-User-Kind` (Kratos identity UUID, kind `sellsuki.user`; sometimes `X-Company-Id`). Backends just **trust `X-User-Id`** via `helper.GetIdentityFromHeader` — NO cookie read, NO whoami, NO JWT validate, NO `AUTH_MODE` env (management's `ORY_KRATOS_ADMIN_SERVER` is only for *managing* identities). Frontends use `withCredentials` + redirect to AMS SSO (`VITE_AMS_URL/login?return_to=`) on 401; there is an AMS `/cookie?destination_accounts_url=` cookie-bridge. **No `X-User-Email` is injected anywhere** — identity is the UUID only. This is domain-agnostic at the backend layer → bearyweb is fine for the BACKEND (dev was right); the cookie→gateway delivery is the SRE/gateway layer.
+Discriminator in `isKratosUUID(credential)`: UUID has no `=` or `;`; Kratos Cookie header always does.
 
-BOLA already has the (unused) `X-User-Id` `helper.GetIdentityFromHeader` from platform boilerplate but wires its OWN AuthProvider system instead. To match the platform: extend the `header` provider (or add `AUTH_MODE=gateway`) to read `X-User-Id` and resolve the admin by `KratosIdentityID` (entity field exists, set at invite — needs a `FindAdminsByKratosIdentityID` repo method + global lookup for FlatAdminGuard). Catch: admins created via local_jwt have empty `KratosIdentityID` → must backfill (email→Kratos identity) OR get the gateway to also inject email. The earlier branch `feat/bola-saas-kratos-sso` (AUTH_MODE=kratos + domain move to *.sellsuki.com) is the WRONG model — scrap/revise it. Local kratos test passed only because local is single-domain (`*.sellsuki.local`) AND has no gateway (BOLA does whoami itself) — it validated the provider code but not the prod topology.
+**Why:** Ory Oathkeeper is the platform-standard auth pattern used by 8+ backends (management, catalog, customer-book, file-service, i18n, CCS, address). No cookie read, no whoami, no JWT validate in prod. Frontends use `withCredentials` + 401 → redirect to AMS SSO (`VITE_AMS_URL/login?return_to=`).
 
-**SaaS prod URL is `bola.bearyweb.com`** (staging `bola-web.staging-th.bearyweb.com`), NOT bola.sellsuki.com. **Decision (2026-06-22): move SaaS to `*.sellsuki.com`** (Option A) so the central Kratos cookie SSO works — because a Kratos session cookie scoped to `.sellsuki.com` is NEVER sent to a `bearyweb.com` page (different registrable domain) and bearyweb isn't in Kratos's `WHITELIST_DOMAIN`/`allowed_return_urls` (which cover `*.sellsuki.com`/`*.patona.online`/`*.oc2.plus`). This cross-domain cookie issue is the real reason SaaS auth was "wrong" — not just a missing env.
+## Key files changed (commit e806205 on feat/bola-gateway-auth)
 
-In-cluster Kratos URLs (from `backend/kratos-ui-go/deployment/values-*.yml`): public `http://kratos-public`, admin `http://kratos-admin:80` (no token), browser UI `https://accounts[.staging-th].sellsuki.com`. BOLA kratos provider forwards the whole Cookie header to whoami, so it doesn't need the cookie NAME (sellsuki_session / sellsuki_session_staging).
+- `src/repository/auth_provider/kratos.go` — dual-path CredentialFromRequest + Authenticate
+- `src/repository/admin_repository/postgres_gorm.go` — added `GetAdminByKratosIdentityID`, `FindAdminsByKratosIdentityIDGlobal`
+- `src/use_case/repository/bola_repository.go` — added both methods to AdminRepository interface
+- `src/use_case/repository/mock_admin.go` — mock implementations
+- `src/interface/fiber_server/middleware/workspace_auth.go` — pass `x-user-id` and `x-user-kind` headers to auth provider
 
-**Deploy config DOES live in this monorepo** (corrects earlier note): backend `backend/bola-backend/deployment/values-{staging,production}.yml` (helm env list) and frontend `frontend/bola-frontend/.gitlab-ci.yml` (`.variables_export_{production,staging}_frontend` build-time VITE_* vars). Work started on branch **`feat/bola-saas-kratos-sso`** in BOTH submodules (committed, NOT pushed/merged) — adds AUTH_MODE=kratos + Kratos URLs + moves domains to *.sellsuki.com, with TODO(SRE) on CloudFront/ACM IDs. Must cut over atomically with SRE (flipping kratos on the live bearyweb domains alone = 401). The backend CI (`backend/bola-backend/.gitlab-ci.yml`) only includes SRE pipeline templates and has no env.
+## Deployment config (lives in this monorepo)
 
-**(superseded) Deployment env vars are NOT in this monorepo** — `.gitlab-ci.yml` includes pipelines from `sellsuki/sre/deployment/pipeline-deployment` (GitLab). To fix prod auth, the SaaS env must be set there: backend `AUTH_MODE=kratos` + `ORY_KRATOS_PUBLIC_URL` (+ `KRATOS_ADMIN_URL`/`KRATOS_ADMIN_TOKEN` for invite/recovery); frontend `VITE_AUTH_MODE=kratos` + `VITE_KRATOS_LOGIN_URL`/`VITE_KRATOS_ACCOUNTS_URL`.
+**Backend** `backend/bola-backend/deployment/values-{staging,production}.yml`:
+- Add `AUTH_MODE=kratos` (hardcoded value, not a secret)
+- Add `ORY_KRATOS_PUBLIC_URL` (for cookie fallback path if needed in staging) — or leave as secret
 
-Local dev: Kratos runs in docker-compose (public :4433), `accounts.sellsuki.local` = kratos-ui-go login UI (overmind `kratos-ui`, :4455). See [[project_overmind_restart_quirk]] for restarting bola-api after env change.
+**Frontend** `frontend/bola-frontend/.gitlab-ci.yml`:
+- `.variables_export_staging_frontend` and `.variables_export_production_frontend`
+- Add `VITE_AUTH_MODE: 'kratos'`
+- Add `VITE_AMS_URL` pointing to Sellsuki AMS (accounts.sellsuki.com) for 401 redirect
 
-**To test BOLA kratos mode locally, ALL of these must hold (each was a separate gotcha):**
-1. backend `.env` `AUTH_MODE=kratos` (default is local_jwt)
-2. frontend must run as `vite --mode dev` so `.env.dev` (`VITE_AUTH_MODE=kratos`) loads — plain `bun run dev`/`vite` uses mode `development` which loads `.env`/`.env.development` (neither sets the var) → silently falls back to local_jwt. The main `Procfile` web-bola line was missing `--mode dev` (fixed 2026-06-22; `Procfile.bola`/`Procfile.frontend` already had it).
-3. `kratos-ui` service must be running (`accounts.sellsuki.local` → :4455) or login redirect gives 502. Starting only `bola-api,web-bola` in overmind is not enough — include `kratos-ui`.
-4. clear localStorage when switching modes: kratos `isAuthenticated()` only checks `getWorkspaceId()`, so a stale `bola_workspace` from a local_jwt session suppresses the redirect.
+**SaaS prod URL**: `bola.bearyweb.com` (prod), `bola-web.staging-th.bearyweb.com` (staging) — **no domain move needed** because Oathkeeper header-trust is domain-agnostic.
+
+## Backfill needed
+
+Existing BOLA admins created via `local_jwt` have empty `kratos_identity_id` column. Must run a backfill script/cmd that: for each admin email → call Kratos admin API `/admin/identities?credentials_identifier=<email>` → get UUID → update `admins.kratos_identity_id`. New admins are set at invite time via `CreateOrFindIdentity`.
+
+## Local dev checklist (all required)
+
+1. backend `.env`: `AUTH_MODE=kratos`
+2. frontend must run `vite --mode dev` (loads `.env.dev` with `VITE_AUTH_MODE=kratos`) — Procfile `web-bola` line fixed 2026-06-22 to include `--mode dev`
+3. `kratos-ui` service must be running (`accounts.sellsuki.local` → :4455)
+4. Clear localStorage when switching modes (`bola_workspace` stale from local_jwt suppresses redirect)
+
+See [[project_overmind_restart_quirk]] for restarting bola-api after env change.
