@@ -27,3 +27,4 @@
 | [project_sukipay_audit_log.md](project_sukipay_audit_log.md) | project | SukiPay audit: table transaction_audit_logs (not trails); PAT-2286 rewrite card set A-F; PAT has no Tech Story type |
 | [project_bola_kratos_sso_staging.md](project_bola_kratos_sso_staging.md) | project | BOLA staging Kratos SSO: API must be on *.staging-th.sellsuki.com (cookie domain); Emissary cfg in sre/configuration/api-gateway; staging deploys only from main+manual |
 | [project_control_tower.md](project_control_tower.md) | project | Control Tower site at docs/control-tower/ — ecosystem/roadmap/connection-map dashboard; progress derived from epic-index.md; run via launch.json "control-tower" :4480 |
+| [reference_env_urls.md](reference_env_urls.md) | reference | Env URL convention: dev=.dev-th, staging=.staging-th, prod=none; gateway api.{suffix}.sellsuki.com/{svc}/v1; AMS/admin/PIS/RAG/GitLab anchors |
