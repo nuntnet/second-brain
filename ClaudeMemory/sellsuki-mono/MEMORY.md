@@ -25,3 +25,4 @@
 | [project_oc_epic_backlog_triage.md](project_oc_epic_backlog_triage.md) | project | OC board ~127 non-Done epics (stale clutter); 26 dead-shells closed 2026-06-22; MCP Jira cross-project contamination bug |
 | [project_oc_bola_domain_boundary.md](project_oc_bola_domain_boundary.md) | project | OC2Plus×BOLA boundary (OC-4200): LIFF register = 2-layer split; membership=OC2Plus, LINE/LIFF=BOLA; card re-map |
 | [project_sukipay_audit_log.md](project_sukipay_audit_log.md) | project | SukiPay audit: table transaction_audit_logs (not trails); PAT-2286 rewrite card set A-F; PAT has no Tech Story type |
+| [project_bola_kratos_sso_staging.md](project_bola_kratos_sso_staging.md) | project | BOLA staging Kratos SSO: API must be on *.staging-th.sellsuki.com (cookie domain); Emissary cfg in sre/configuration/api-gateway; staging deploys only from main+manual |
