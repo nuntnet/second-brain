@@ -26,3 +26,4 @@
 | [project_oc_bola_domain_boundary.md](project_oc_bola_domain_boundary.md) | project | OC2Plus×BOLA boundary (OC-4200): LIFF register = 2-layer split; membership=OC2Plus, LINE/LIFF=BOLA; card re-map |
 | [project_sukipay_audit_log.md](project_sukipay_audit_log.md) | project | SukiPay audit: table transaction_audit_logs (not trails); PAT-2286 rewrite card set A-F; PAT has no Tech Story type |
 | [project_bola_kratos_sso_staging.md](project_bola_kratos_sso_staging.md) | project | BOLA staging Kratos SSO: API must be on *.staging-th.sellsuki.com (cookie domain); Emissary cfg in sre/configuration/api-gateway; staging deploys only from main+manual |
+| [project_control_tower.md](project_control_tower.md) | project | Control Tower site at docs/control-tower/ — ecosystem/roadmap/connection-map dashboard; progress derived from epic-index.md; run via launch.json "control-tower" :4480 |
