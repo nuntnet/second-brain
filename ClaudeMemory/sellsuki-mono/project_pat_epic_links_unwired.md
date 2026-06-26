@@ -1,0 +1,22 @@
+---
+name: project-pat-epic-links-unwired
+description: PAT Jira epic↔child links are NOT wired (parent field empty); roadmap/epic-index drift; 174 orphans; full gap analysis doc
+metadata: 
+  node_type: memory
+  type: project
+  originSessionId: 06c2449b-af9f-42b9-bf19-e32fb331ac0f
+---
+
+PAT is a **team-managed Jira project** (projectTypeKey software, simplified=true) → epic↔child link = the `parent` field (not classic "Epic Link").
+
+**Core finding (2026-06-26):** the epic→child structure in Jira is **largely NOT wired**. Work is grouped by a `[tag]` in the summary (e.g. `[OMS 2.0]`, `[SukiPay]`) + a "Parent Epic: X" line in the *description prose*, but the actual `parent` field is EMPTY. e.g. `epic-index.md` lists PAT-2253/2254/2257/2258 as children of PAT-2240, but in Jira PAT-2240 has only 2 real linked children (PAT-2356, PAT-2330).
+
+**Consequences:**
+- `docs/sellsuki-roadmap.md` + `.claude/knowledge/epic-index.md` are hand-maintained → **drift / incomplete** (roadmap covers ~9 of 75 PAT epics; misses Provider PAT-2448–2452, API/MCP PAT-2052/2120/2121/2122).
+- Control Tower [[project-control-tower]] capabilities #2 (epic's missing child cards vs DoD) and #4 (epic progress rollup) are **impossible to compute correctly** until links exist.
+
+**Numbers (snapshot 2026-06-26):** 75 PAT epics (70 To Do / 5 Done, ~26 "hot" = updated ≥ 2026-04). **174 open orphans** (issuetype not in Epic/Subtask, `parent is EMPTY`, not Done): 78 hot. Of those: 40 just need re-parenting into existing epics (31 OMS 2.0 → PAT-2238–2247/2294, 9 SukiPay → PAT-2056–2069); 44 reveal **6 missing epics to create** (Payment Verification & Order Expiry, Technical Hardening/Tech-debt, Reporting & Export, Shipmunk↔Patona, OMS→OC2Plus CDP sync, Chat-commerce Auto-Payment); ~90 untagged need manual triage.
+
+**Full detail + per-card inventory:** `.claude/knowledge/pat-epic-gap-analysis.md` (point-in-time; regenerate via JQL `project = PAT AND issuetype not in (Epic, Subtask) AND parent is EMPTY AND statusCategory != Done`, paginate nextPageToken 100/page). Don't re-query Jira every time — read that doc.
+
+Stale-epic noise: ~32 PAT epics untouched in 2026 (MVP 1.x, Akita 3.1.x, OMS 1.0–1.4, CCS 1.0/1.2, QMS, i18n 1.x, PAT-1511 old white-label superseded by 2448–2452). A roadmap should filter these out (updated ≥ this year / fixVersion).
