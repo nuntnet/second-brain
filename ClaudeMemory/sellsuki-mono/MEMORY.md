@@ -24,6 +24,7 @@
 | [project_overmind_restart_quirk.md](project_overmind_restart_quirk.md) | project | overmind: use `overmind restart <name>` for dead proc; `start <name> -D` from CLAUDE.md doesn't work |
 | [project_oc_epic_backlog_triage.md](project_oc_epic_backlog_triage.md) | project | OC board ~127 non-Done epics (stale clutter); 26 dead-shells closed 2026-06-22; MCP Jira cross-project contamination bug |
 | [project_oc_bola_domain_boundary.md](project_oc_bola_domain_boundary.md) | project | OC2Plus×BOLA boundary (OC-4200): LIFF register = 2-layer split; membership=OC2Plus, LINE/LIFF=BOLA; card re-map |
+| [reference_oc2plus_member_frontend.md](reference_oc2plus_member_frontend.md) | reference | OC2Plus customer member-register LIFF frontend = existing repo oc2plus-linecrm-frontend-member (GitLab 2yr); OC-4245 goes there; ls-remote GitLab not just local submodules |
 | [project_sukipay_audit_log.md](project_sukipay_audit_log.md) | project | SukiPay audit: table transaction_audit_logs (not trails); PAT-2286 rewrite card set A-F; PAT has no Tech Story type |
 | [project_bola_kratos_sso_staging.md](project_bola_kratos_sso_staging.md) | project | BOLA staging Kratos SSO: API must be on *.staging-th.sellsuki.com (cookie domain); Emissary cfg in sre/configuration/api-gateway; staging deploys only from main+manual |
 | [project_control_tower.md](project_control_tower.md) | project | Control Tower site at docs/control-tower/ — ecosystem/roadmap/connection-map dashboard; progress derived from epic-index.md; run via launch.json "control-tower" :4480 |
