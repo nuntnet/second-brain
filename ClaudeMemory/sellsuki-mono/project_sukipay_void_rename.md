@@ -7,13 +7,13 @@ metadata:
   originSessionId: 80b5b310-7a4e-49dc-8932-34d4eb091c9a
 ---
 
-SukiPay **transaction** state rename เพื่อเลิกสับสนกับ **payment** state `VOIDED` (คนละ level):
-- `VOID_PREPARED` → `Compensating`
-- `VOID` → `Compensated`
+SukiPay **transaction** state rename เพื่อเลิกสับสนกับ **payment** state `VOIDED` (คนละ level). ใช้ **UPPER CASE ทั้งหมด** ให้ตรง convention เดิม (PENDING/CLOSED/VOID_PREPARED):
+- `VOID_PREPARED` → `COMPENSATING`
+- `VOID` → `COMPENSATED`
 - payment `VOIDED` **คงเดิม ไม่แตะ** ([payment.go:18](backend/sellsuki-pay-backend/src/entity/payment/payment.go:18))
 
 **Decisions locked (2026-07):**
-- Kafka event names เปลี่ยนด้วย (`VOID_PREPARED`/`TRANSACTION_VOIDED`) → breaking, ต้อง coordinated deploy SukiPay+OMS
+- ใช้ CAPS ทั้งหมด (COMPENSATING/COMPENSATED). Kafka event names เปลี่ยนด้วย (`VOID_PREPARED`/`TRANSACTION_VOIDED`) → breaking, ต้อง coordinated deploy SukiPay+OMS
 - RPC/action names เปลี่ยนตาม (`InitiateVoid`→`InitiateCompensation` ฯลฯ) — RPCs ยังไม่ implement (backlog ใน epic-index.md)
 - Outline + 6 unread cards (PAT-2097/2288/2447/2443/2049/2040): รอ Outline MCP กลับมาแล้วทำต่อ
 

@@ -32,3 +32,5 @@
 | [reference_env_urls.md](reference_env_urls.md) | reference | Env URL convention: dev=.dev-th, staging=.staging-th, prod=none; gateway api.{suffix}.sellsuki.com/{svc}/v1; AMS/admin/PIS/RAG/GitLab anchors |
 | [project_pat_epic_links_unwired.md](project_pat_epic_links_unwired.md) | project | PAT epic↔child `parent` links NOT wired (grouped by [tag]+prose only); roadmap/epic-index drift; 174 orphans; 6 missing epics; full doc in .claude/knowledge/pat-epic-gap-analysis.md |
 | [project_sukipay_void_rename.md](project_sukipay_void_rename.md) | project | SukiPay transaction state rename VOID_PREPARED→Compensating, VOID→Compensated — plan + locked decisions (event+RPC change, data migration, Outline pending) |
+| [project_sukipay_refund_cluster.md](project_sukipay_refund_cluster.md) | project | PAT refund cluster roles (2424 produce/2289 execute/2036 read-only) + recurring attribution bug + OMS↔SukiPay sync/async + 3 state layers |
+| [project_quota_not_feature_gate.md](project_quota_not_feature_gate.md) | project | quota-management = usage metering, NO hasFeature() boolean; feature-gate ต้องใช้ plan/capability/admin-override ไม่ใช่ quota |
