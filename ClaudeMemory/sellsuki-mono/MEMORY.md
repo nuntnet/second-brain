@@ -31,3 +31,4 @@
 | [project_control_tower.md](project_control_tower.md) | project | Control Tower site at docs/control-tower/ — ecosystem/roadmap/connection-map dashboard; progress derived from epic-index.md; run via launch.json "control-tower" :4480 |
 | [reference_env_urls.md](reference_env_urls.md) | reference | Env URL convention: dev=.dev-th, staging=.staging-th, prod=none; gateway api.{suffix}.sellsuki.com/{svc}/v1; AMS/admin/PIS/RAG/GitLab anchors |
 | [project_pat_epic_links_unwired.md](project_pat_epic_links_unwired.md) | project | PAT epic↔child `parent` links NOT wired (grouped by [tag]+prose only); roadmap/epic-index drift; 174 orphans; 6 missing epics; full doc in .claude/knowledge/pat-epic-gap-analysis.md |
+| [project_sukipay_void_rename.md](project_sukipay_void_rename.md) | project | SukiPay transaction state rename VOID_PREPARED→Compensating, VOID→Compensated — plan + locked decisions (event+RPC change, data migration, Outline pending) |
