@@ -35,3 +35,4 @@
 | [project_sukipay_void_rename.md](project_sukipay_void_rename.md) | project | SukiPay transaction state rename VOID_PREPARED→Compensating, VOID→Compensated — plan + locked decisions (event+RPC change, data migration, Outline pending) |
 | [project_sukipay_refund_cluster.md](project_sukipay_refund_cluster.md) | project | PAT refund cluster roles (2424 produce/2289 execute/2036 read-only) + recurring attribution bug + OMS↔SukiPay sync/async + 3 state layers |
 | [project_quota_not_feature_gate.md](project_quota_not_feature_gate.md) | project | quota-management = usage metering, NO hasFeature() boolean; feature-gate ต้องใช้ plan/capability/admin-override ไม่ใช่ quota |
+| [project_oms2_plan_gaps_2026q3.md](project_oms2_plan_gaps_2026q3.md) | project | Gap analysis 2026-07-03: OMS 2.0 ไม่มี SP สักใบ (waves ≠ schedule), 2244↔2057 lock ไม่มีจริง, 2057 เป็นเปลือก, RAG P0 ไม่มี epic, parcel 19 ใบ superseded ค้างใน 2241 |
