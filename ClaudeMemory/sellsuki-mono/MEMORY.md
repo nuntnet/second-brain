@@ -39,3 +39,4 @@
 | [project_quota_not_feature_gate.md](project_quota_not_feature_gate.md) | project | quota-management = usage metering, NO hasFeature() boolean; feature-gate ต้องใช้ plan/capability/admin-override ไม่ใช่ quota |
 | [project_oms2_plan_gaps_2026q3.md](project_oms2_plan_gaps_2026q3.md) | project | Gap analysis 2026-07-03: OMS 2.0 ไม่มี SP สักใบ (waves ≠ schedule), 2244↔2057 lock ไม่มีจริง, 2057 เป็นเปลือก, RAG P0 ไม่มี epic, parcel 19 ใบ superseded ค้างใน 2241 |
 | [reference_pat_board_sprints.md](reference_pat_board_sprints.md) | reference | PAT sprint truth = board 71 JQL (customfield_10020) — ห้ามใช้ epic-index เป็น sprint state; PAT-2038/2036 identity เคยผิดใน index |
+| [project_user_pain_evidence_gap.md](project_user_pain_evidence_gap.md) | project | องค์กรไม่มี user pain research จริง — QA bugs คือ evidence ที่แข็งสุด; address-form cluster + OC loyalty redemption = pain ไร้ epic |
