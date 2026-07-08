@@ -13,7 +13,11 @@ The customer-facing OC2Plus **member registration LIFF frontend** already exists
 
 **OC-4245 (membership register/enrich page) belongs in this existing `-member` repo** (likely an enhancement of the existing register-line flow, wiring it to the new OC-4289 Membership API + domain boundary), NOT a greenfield app.
 
-**OC2Plus line-crm has TWO separate backends (both on GitLab, neither was a monorepo submodule):**
+**OC2Plus line-crm actually has THREE active backends (discovered incrementally — monorepo only had one):**
+- `oc2plus-line-crm-service-3rdparty-api` — **the REAL campaign engine**: evaluates campaigns + awards points (`src/use_case/campaign_transaction.go` — calculate→prepare→commit chain, event inquiry/confirm OpenAPI with API keys). Backoffice-api only has campaign CRUD; it never awards points. NOT a monorepo submodule. Campaign facts (verified 2026-07-08): condition types = code/point/**event** (1 event per campaign, merchant-created `EV-xxx`, no system "purchase" event seeded); reward point = **fixed Quantity int64 only** — no formula/amount/conversion-rate anywhere in the domain; campaigns with overlapping date ranges can be created freely (zero overlap validation, no priority/exclusive concept — confirm is per-campaign so caller chooses). OC-4295 (points by purchase) was rewritten to: purchase system event + campaign-level "every X baht = Y point" config translated to quantity=floor(amount/X) through the existing engine path + overlap policy v1 = award ALL eligible campaigns + creation-time warning.
+- ⚠️ GitLab repo named `oc2plus-line-crm-service-campaign-engine` is an **EMPTY SHELL** (README only, dead since 2024-10) — don't be fooled by the name; the engine lives in 3rdparty-api.
+
+**Plus the TWO backends found earlier (neither was a monorepo submodule):**
 - `oc2plus-line-crm-service-backoffice-api` — admin/backoffice API (HTTP 8089), the only one in the monorepo. Has its own DB.
 - `oc2plus-line-crm-service-member-api` — **customer-facing member API** = `api.member.oc2.plus` (dev `api.member.dev-th.oc2.plus`). This is what the `oc2plus-linecrm-frontend-member` frontend calls (`VITE_SERVICE_MEMBER_BASE_URL`). Branches: develop, feature/oc-2313-login, enhance/oc-3426-change-endpoint-management-backend-to-ccs, etc. Existing member-create flow: frontend sends `line_access_token` → member-api creates member (LINE-coupled).
 
