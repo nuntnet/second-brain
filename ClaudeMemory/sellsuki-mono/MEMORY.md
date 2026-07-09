@@ -43,3 +43,4 @@
 | [project_user_pain_evidence_gap.md](project_user_pain_evidence_gap.md) | project | องค์กรไม่มี user pain research จริง — QA bugs คือ evidence ที่แข็งสุด; address-form cluster + OC loyalty redemption = pain ไร้ epic |
 | [project_loyalty_point_cluster.md](project_loyalty_point_cluster.md) | project | Loyalty cluster OC-4295/4297/4335/4339 — purchase event+conversion, welcome, QR-receipt pull model (rate ณ purchased_at), clawback; QR = URL render client-side |
 | [feedback_card_user_story_flows.md](feedback_card_user_story_flows.md) | feedback | การ์ดห้ามเป็น technical concept ล้วน — ต้องมี User Story + Flow create/edit/runtime, technical scope เป็น supporting section |
+| [feedback_no_scope_change_in_sprint.md](feedback_no_scope_change_in_sprint.md) | feedback | ห้ามแก้ scope การ์ด In Progress ใน sprint — enhance เปิดการ์ดใหม่ blocked-by แทน; ถ้าแตะแล้วให้ revert |
