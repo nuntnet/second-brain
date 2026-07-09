@@ -41,3 +41,5 @@
 | [project_oms2_plan_gaps_2026q3.md](project_oms2_plan_gaps_2026q3.md) | project | Gap analysis 2026-07-03: OMS 2.0 ไม่มี SP สักใบ (waves ≠ schedule), 2244↔2057 lock ไม่มีจริง, 2057 เป็นเปลือก, RAG P0 ไม่มี epic, parcel 19 ใบ superseded ค้างใน 2241 |
 | [reference_pat_board_sprints.md](reference_pat_board_sprints.md) | reference | PAT sprint truth = board 71 JQL (customfield_10020) — ห้ามใช้ epic-index เป็น sprint state; PAT-2038/2036 identity เคยผิดใน index |
 | [project_user_pain_evidence_gap.md](project_user_pain_evidence_gap.md) | project | องค์กรไม่มี user pain research จริง — QA bugs คือ evidence ที่แข็งสุด; address-form cluster + OC loyalty redemption = pain ไร้ epic |
+| [project_loyalty_point_cluster.md](project_loyalty_point_cluster.md) | project | Loyalty cluster OC-4295/4297/4335/4339 — purchase event+conversion, welcome, QR-receipt pull model (rate ณ purchased_at), clawback; QR = URL render client-side |
+| [feedback_card_user_story_flows.md](feedback_card_user_story_flows.md) | feedback | การ์ดห้ามเป็น technical concept ล้วน — ต้องมี User Story + Flow create/edit/runtime, technical scope เป็น supporting section |
