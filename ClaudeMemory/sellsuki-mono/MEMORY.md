@@ -46,3 +46,4 @@
 | [feedback_no_scope_change_in_sprint.md](feedback_no_scope_change_in_sprint.md) | feedback | ห้ามแก้ scope การ์ด In Progress ใน sprint — enhance เปิดการ์ดใหม่ blocked-by แทน; ถ้าแตะแล้วให้ revert |
 | [reference_messaging_backend.md](reference_messaging_backend.md) | reference | Messaging กลาง = sellsuki-messaging-backend (OTP/SMS Thaibulk, extensible provider) — email OC-4343 ทำที่นี่; sellsuki-service-messaging ตายแล้ว |
 | [project_oms2_decouple_decision.md](project_oms2_decouple_decision.md) | project | OMS 2.0 เลือก Decouple (PAT-2540); children 2546-2550 (derivation/generator/templates/guard/FE) + slices 2292/2293 เป็น consumer (de-dup แล้ว) |
+| [project_customer_app_program.md](project_customer_app_program.md) | project | Customer App program แทน posh-medica: 5 epics label customer-app-program (OC-4344/4349/4355/4359 + OC-2743); BFF ที่ member-api; web login ใน MVP; DoR blockers 4 ใบ |
