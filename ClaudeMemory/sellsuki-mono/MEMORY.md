@@ -45,3 +45,4 @@
 | [feedback_card_user_story_flows.md](feedback_card_user_story_flows.md) | feedback | การ์ดห้ามเป็น technical concept ล้วน — ต้องมี User Story + Flow create/edit/runtime, technical scope เป็น supporting section |
 | [feedback_no_scope_change_in_sprint.md](feedback_no_scope_change_in_sprint.md) | feedback | ห้ามแก้ scope การ์ด In Progress ใน sprint — enhance เปิดการ์ดใหม่ blocked-by แทน; ถ้าแตะแล้วให้ revert |
 | [reference_messaging_backend.md](reference_messaging_backend.md) | reference | Messaging กลาง = sellsuki-messaging-backend (OTP/SMS Thaibulk, extensible provider) — email OC-4343 ทำที่นี่; sellsuki-service-messaging ตายแล้ว |
+| [project_oms2_decouple_decision.md](project_oms2_decouple_decision.md) | project | OMS 2.0 เลือก Decouple (PAT-2540); children 2546-2550 (derivation/generator/templates/guard/FE) + slices 2292/2293 เป็น consumer (de-dup แล้ว) |
