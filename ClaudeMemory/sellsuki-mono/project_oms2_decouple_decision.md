@@ -17,4 +17,6 @@ metadata:
 
 **Source of truth:** `docs/oms2-study/18-flow-archetypes-guard-model.md` + `ship-flow.decouple.example.json` (repo, committed) — เกี่ยวกับ [[project_sukipay_void_rename]] (vocab COMPENSATING/COMPENSATED ที่ใช้ใน cluster นี้)
 
+**Fulfillment handoff (จาก user 2026-07-11):** `prepare` = ปุ่มของแผนกขาย ส่งมอบงานเข้า **Fulfillment Hub** (เลือกสาขาผู้ fulfill ได้ — hub ของแต่ละสาขาเห็น order ทั้งของร้านตัวเองและที่ส่งมาจากสาขาอื่น) → order = `preparing`; ห้ามข้ามขั้นนี้/ห้ามยุบ แพ็ค→ส่ง→ได้รับ เป็นปุ่มเดียว; `delivered` มาจาก **carrier hook เท่านั้น** ไม่ใช่ปุ่มเรา; A12 (3PL/FBS): กด "ส่ง order เข้า WMS" = prepare แล้วทุก transition จากนั้นเป็น WMS hook; tracking แบ่ง standard shipping (แพลตฟอร์ม→เรา + label) vs own fleet (เรา→แพลตฟอร์ม) — encode ใน PAT-2240 + artifact v6
+
 **Marketplace mapping (verified 2026-07-10):** ตาราง 7-states × Shopee/TikTok/Lazada + 4 adapter gaps (IN_CANCEL/ON_HOLD=flag, RETRY_SHIP วนกลับ ready_to_deliver, Lazada item-level aggregate) + LINE MY SHOP enum ยังไม่ verify — encode แล้วที่ **PAT-2240** (§ Marketplace Status Mapping, เจ้าของ ChannelFlowConfig.marketplace_event_mapping) + สรุปย่อใน PAT-2540 §5.2.1; `ready_to_deliver` มีคู่ตรงทั้ง 3 เจ้า (PROCESSED/AWAITING_COLLECTION/RTS) = external validation ของ rename

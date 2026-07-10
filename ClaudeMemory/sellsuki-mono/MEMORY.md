@@ -48,3 +48,5 @@
 | [project_oms2_decouple_decision.md](project_oms2_decouple_decision.md) | project | OMS 2.0 เลือก Decouple (PAT-2540); children 2546-2550 (derivation/generator/templates/guard/FE) + slices 2292/2293 เป็น consumer (de-dup แล้ว) |
 | [project_customer_app_program.md](project_customer_app_program.md) | project | Customer App program แทน posh-medica: 5 epics label customer-app-program (OC-4344/4349/4355/4359 + OC-2743); BFF ที่ member-api; web login ใน MVP; DoR blockers 4 ใบ |
 | [project_invite_multiapp_chain.md](project_invite_multiapp_chain.md) | project | Invite→app chain: PAT-2553 return_to email, PAT-2554 deep-link, OC-4371 OC2Plus bridge; BOLA=kratos cookie |
+| [feedback_qa_reproduce_guide.md](feedback_qa_reproduce_guide.md) | feedback | การ์ดต้องมี QA Reproduce & Test Guide (reproduce ก่อนแก้ + ตารางเทส map AC) |
+| [feedback_ground_claims_file_line.md](feedback_ground_claims_file_line.md) | feedback | ทุก claim ในการ์ดต้องยึด file:line จริง แยก verified vs อนุมาน — user ท้าทายซ้ำ |
