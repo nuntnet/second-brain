@@ -16,3 +16,5 @@ metadata:
 **Dependency:** 2547/2548/2550 blocks 2292+2293 · 2297 blocks 2549 · generator/derivation นิยามอยู่ที่ 2548/2547 เท่านั้น (slices เป็น consumer — de-dup แล้วทั้ง 2292/2293)
 
 **Source of truth:** `docs/oms2-study/18-flow-archetypes-guard-model.md` + `ship-flow.decouple.example.json` (repo, committed) — เกี่ยวกับ [[project_sukipay_void_rename]] (vocab COMPENSATING/COMPENSATED ที่ใช้ใน cluster นี้)
+
+**Marketplace mapping (verified 2026-07-10):** ตาราง 7-states × Shopee/TikTok/Lazada + 4 adapter gaps (IN_CANCEL/ON_HOLD=flag, RETRY_SHIP วนกลับ ready_to_deliver, Lazada item-level aggregate) + LINE MY SHOP enum ยังไม่ verify — encode แล้วที่ **PAT-2240** (§ Marketplace Status Mapping, เจ้าของ ChannelFlowConfig.marketplace_event_mapping) + สรุปย่อใน PAT-2540 §5.2.1; `ready_to_deliver` มีคู่ตรงทั้ง 3 เจ้า (PROCESSED/AWAITING_COLLECTION/RTS) = external validation ของ rename
