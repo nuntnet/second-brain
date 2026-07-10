@@ -13,7 +13,7 @@ metadata:
 
 **Epics:** OC-4344 Foundation (4345 spike auth⚠️critical path, 4346 shell, 4347 BFF, 4348 web login, 4246 theme) · OC-4349 Points/Rewards (4350-4354) · OC-4355 News CMS (4356-4358) · OC-4359 Profile/Consent (4360-4361 thin wiring) · earning ใหม่ใต้ OC-2743 เดิม (4362 no-QR receipt, 4363 code entry) · 25 dependency links
 
-**DoR blockers ค้าง (2026-07-10):** OC-4345 ไม่มี timebox · OC-4246 checkbox format พัง (`* \[ \]`) · OC-4358 cache key ไม่ scope company_id · OC-4362 รอ PO เคาะ: ไม่มี campaign active ณ purchase_date → approve 0 แต้ม หรือ reject
+**สถานะปิดงาน publish (2026-07-10): DoR 18/18 story ผ่าน** — blockers แก้หมด: OC-4362 เคาะ **reject อัตโนมัติ+ข้อความ** (แต้มพิเศษ→OC-4294) · OC-4345 timebox 3 วัน · OC-4358 cache key scope company_id · เพิ่ม **OC-4364** News scheduling worker (แตกจาก OC-4356) · harvest pointers แปะครบ 5 ใบ (4363/4335/4354/4353/4347) · **นโยบาย posh code: ไม่ fork — selective harvest logic-only** (PrimeVue markup ห้าม copy; posh ไม่มี i18n/LIFF) · caveat: OC-4246/4345 checkbox render เป็น text (MCP markdown→ADF bug — แก้ได้เฉพาะ Jira UI) · critical path = spike OC-4345 gate ทั้งโปรแกรม
 
 **posh-medica clone อยู่ scratchpad (3 repo: customer-fe 31 routes, backoffice-fe = banner/channel/minigame/promotion, backend-go = BFF pattern)** — path จริง `sellsuki/beary/posh-medica/{backend,frontend}/...` (subgroup ซ้อน) · บทเรียนจาก posh: QR scanner ต้องมี 3-engine fallback (jsQr/jsQr3x/zxing — camera บน LINE browser), มี /r/:code short-link, /delete-account (PDPA) · minigame/marketplace = out of scope v1
 
