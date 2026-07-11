@@ -12,7 +12,7 @@
 | [project_segment_export_static_snapshot.md](project_segment_export_static_snapshot.md) | project | BOLA static segment export must read from snapshot table, not re-eval rule live |
 | [reference_oc2plus_jira_project.md](reference_oc2plus_jira_project.md) | reference | OC2Plus Jira project key is "OC" (id 10001) — repo config says TBD |
 | [project_oc4207_line_optional_design.md](project_oc4207_line_optional_design.md) | project | OC-4207: empty string = no LINE (not *string); affects OC-4241, OC-3339, OC-3340, OC-3341 |
-| [project_qms_ui.md](project_qms_ui.md) | project | QMS UI (OC-4257) → provider-management-frontend + management-backend proxy; no ListAssignPlans gRPC |
+| [project_qms_ui.md](project_qms_ui.md) | project | QMS CCS2 (OC-4257): Plan-centric reframe — Plan bundle ≠ Quota primitive; Code≠Reference bug class; MR !194/!7; engine gotchas (revision/revoke/PK) |
 | [project_ms687_reserve_needs_company_location.md](project_ms687_reserve_needs_company_location.md) | project | MS-687 OMS↔inventory reserve BLOCKED — needs company+location; orders don't carry it yet |
 | [feedback_decisive_deep_execution.md](feedback_decisive_deep_execution.md) | feedback | Be sharper/decisive — investigate & act, don't offer ก/ข/ค menus |
 | [feedback_subagent_model_tiering.md](feedback_subagent_model_tiering.md) | feedback | Tier sub-agent models by difficulty (haiku scan / sonnet research / opus verify) — don't run everything on the big model |
