@@ -50,3 +50,4 @@
 | [project_invite_multiapp_chain.md](project_invite_multiapp_chain.md) | project | Invite→app chain: PAT-2553 return_to email, PAT-2554 deep-link, OC-4371 OC2Plus bridge; BOLA=kratos cookie |
 | [feedback_qa_reproduce_guide.md](feedback_qa_reproduce_guide.md) | feedback | การ์ดต้องมี QA Reproduce & Test Guide (reproduce ก่อนแก้ + ตารางเทส map AC) |
 | [feedback_ground_claims_file_line.md](feedback_ground_claims_file_line.md) | feedback | ทุก claim ในการ์ดต้องยึด file:line จริง แยก verified vs อนุมาน — user ท้าทายซ้ำ |
+| [project_sukipay_offline_payment.md](project_sukipay_offline_payment.md) | project | SukiPay offline (bankTransferOffline) wire ครบ end-to-end แล้ว — no-slip instant COMPLETED; PAT-2034 online-only by design; correction=void PAT-2441+adjust PAT-2288 |
