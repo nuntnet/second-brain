@@ -18,3 +18,5 @@ metadata:
 **posh-medica clone อยู่ scratchpad (3 repo: customer-fe 31 routes, backoffice-fe = banner/channel/minigame/promotion, backend-go = BFF pattern)** — path จริง `sellsuki/beary/posh-medica/{backend,frontend}/...` (subgroup ซ้อน) · บทเรียนจาก posh: QR scanner ต้องมี 3-engine fallback (jsQr/jsQr3x/zxing — camera บน LINE browser), มี /r/:code short-link, /delete-account (PDPA) · minigame/marketplace = out of scope v1
 
 เชื่อม [[reference_oc2plus_member_frontend]] [[project_loyalty_point_cluster]] [[project_oc_bola_domain_boundary]]
+
+**E2E policy (PO สั่ง 2026-07-10):** การ์ด customer app ทุกใบต้องมี E2E automated test เป็น DoD — harness card = **OC-4370** (repo ใหม่ `oc2plus-customer-app-e2e-playwright` ใน group line-crm/testing, pattern จาก testing/sellsuki-e2e-test-playwright) · **LIFF webview automate ไม่ได้ → E2E รันบน web surface** (`member.oc2.plus/c/{slug}` + web login) + LIFF = manual smoke · fixture 2 company ทุก scenario + OTP stub ห้ามยิง Thaibulk จริง · ⚠️ งานเติม DoD bullet ค้างครึ่ง (Epic 1/2 เติมแล้ว, Epic 4/5 + earning ยังไม่) — user หยุด agent ไว้
