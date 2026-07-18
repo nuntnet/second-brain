@@ -17,6 +17,7 @@
 | [project_qms_ui.md](project_qms_ui.md) | project | QMS CCS2 (OC-4257): Plan-centric reframe — Plan bundle ≠ Quota primitive; Code≠Reference bug class; MR !194/!7; engine gotchas (revision/revoke/PK) |
 | [project_ms687_reserve_needs_company_location.md](project_ms687_reserve_needs_company_location.md) | project | MS-687 OMS↔inventory reserve BLOCKED — needs company+location; orders don't carry it yet |
 | [feedback_decisive_deep_execution.md](feedback_decisive_deep_execution.md) | feedback | Be sharper/decisive — investigate & act, don't offer ก/ข/ค menus |
+| [feedback_selfexplaining_ux.md](feedback_selfexplaining_ux.md) | feedback | ทุกหน้า/ฟีเจอร์ต้องอธิบายตัวเอง + กดอ่านต่อได้ + บอกผลก่อนกด; view ซ้ำ source เดียว |
 | [feedback_subagent_model_tiering.md](feedback_subagent_model_tiering.md) | feedback | Tier sub-agent models by difficulty (haiku scan / sonnet research / opus verify) — don't run everything on the big model |
 | [project_pis_frontend_local_testing.md](project_pis_frontend_local_testing.md) | project | pis-frontend points at dev-th STAGING by default; how to wire UI → local pis-api for testing |
 | [feedback_ff_only_force_push_ok.md](feedback_ff_only_force_push_ok.md) | feedback | PIS repos are FF-only → rebase+force-push FEATURE branches is OK (not main) |
