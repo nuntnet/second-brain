@@ -64,3 +64,4 @@
 | [project_bola_apm_webhook_design.md](project_bola_apm_webhook_design.md) | project | APM webhook: webhook_setting overloaded+now auto-provisioned; LINE flex rejects empty text→"-"; missing field→"" optional; errors were all 500 + ErrorMessage never set |
 | [project_plan_capability_quota_anchor.md](project_plan_capability_quota_anchor.md) | project | Anchor: Commercial Plan (management-backend) แกนเดียว; Capability+Quota เป็น projection; ไม่สร้าง entitlement service; glossary Plan/Capability/Quota; Registration = core ทุก tier |
 | [reference_bola_contacts_upsert_api.md](reference_bola_contacts_upsert_api.md) | reference | POST /v1/contacts/upsert testing: cookie auth + workspace_id query param, custom_fields for extra columns, normalize_phone for E.164, ~14 contacts/sec/job |
+- [OC2Plus merge to develop](feedback_oc2plus_merge_to_develop.md) — OC2Plus MRs target develop only, never main (รวม platform service กลาง)
