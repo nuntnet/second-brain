@@ -65,3 +65,4 @@
 | [project_plan_capability_quota_anchor.md](project_plan_capability_quota_anchor.md) | project | Anchor: Commercial Plan (management-backend) แกนเดียว; Capability+Quota เป็น projection; ไม่สร้าง entitlement service; glossary Plan/Capability/Quota; Registration = core ทุก tier |
 | [reference_bola_contacts_upsert_api.md](reference_bola_contacts_upsert_api.md) | reference | POST /v1/contacts/upsert testing: cookie auth + workspace_id query param, custom_fields for extra columns, normalize_phone for E.164, ~14 contacts/sec/job |
 - [OC2Plus merge to develop](feedback_oc2plus_merge_to_develop.md) — OC2Plus MRs target develop only, never main (รวม platform service กลาง)
+- [OC2Plus 3rd-party API key gap](project_oc2plus_3rdparty_apikey_gap.md) — OC-2275 rewrite: real API-key infra exists but narrow; collides w/ OC-4322 (dup auth) + OC-4294 (shared AdjustPoint)
