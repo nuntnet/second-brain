@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: a0710894-5349-411a-b947-f53b13519857
-  modified: 2026-07-21T13:33:34.938Z
+  modified: 2026-07-21T15:21:18.597Z
 ---
 
 **OC-2275** (Epic, created 2024-01-11 as an empty stub with 4 stale UI-mockup child stories never implemented) rewritten 2026-07-21 after verifying actual code — not the 2024 spec — by shallow-cloning the real repos into scratchpad (none of these are monorepo submodules).
@@ -19,6 +19,8 @@ metadata:
 - **OC-4294** ("Marketer อยาก adjust point ด้วยมือ") will build the first `AdjustPoint/GrantPoint/DeductPoint` use case in the whole system (admin-session consumer). OC-2275's point.adjust scope must reuse that use case with a different entry point (API key), not build a parallel one.
 
 **Final scope list locked in OC-2275 (2026-07-21):** `event.read`, `campaign.read`, `campaign.redeem.event`, `member.read`, `member.manage`, `point.adjust`, `point.redeem` — explicitly cut `campaign.manage`/write (WS4, too risky — campaign authoring stays session-auth-only in backoffice-api).
+
+**Round 2 (same day, 2026-07-21) — user asked to make the scope catalog exhaustive so it never needs revisiting.** Diffed v1 (customer-session API, `/v1/*`) against v2/openapi (company API-key API, `/v2/openapi/*`) in 3rdparty-api and found two more real feature gaps: v1 has full code-based campaign redemption (`PostCampaignCodeConfirm/Inquiry`, condition type `code` sibling to `event`) and full point balance/history (`GET /me/point`, `/me/point/expire`, `/me/point/transaction`) — neither is reachable via API key. Added 3 scopes to the locked list: `campaign.redeem.code` (WS7, ties to OC-4335 receipt-QR), `point.read`, `point.history.read` (WS8, split for least-privilege). Final locked scope catalog = 10: `event.read`, `campaign.read`, `campaign.redeem.event`, `campaign.redeem.code`, `member.read`, `member.manage`, `point.adjust`, `point.redeem`, `point.read`, `point.history.read`. Explicitly evaluated-and-excluded (written into OC-2275's "พิจารณาแล้วไม่รวม" table so it's a documented decision, not a silent gap): `campaign.manage`, `member.delete`, `contact.read` (member∪follower — flagged as still needing a PO decision before WS2), `consent.*` (legal risk), outbound webhook/event-push (confirmed no producer mechanism exists anywhere in 3rdparty-api, only an internal Kafka consumer), `reward.read` (unnecessary — reward is a campaign attribute, not a separate catalog), order-shipping status. All 4 child cards (OC-2275, OC-2273, OC-2269, OC-2274) updated to stay consistent — OC-2273 holds the one canonical 10-row scope table; OC-2269/2274 point at it rather than duplicating, to prevent future drift.
 
 **4 stale 2024 child stories rewritten 2026-07-21 to match this scope + real schema:**
 - **OC-2273** (create key) — now the canonical/only create-flow card. Flags: migration needed for `name`/`expires_at`/`created_by` columns on `api_key` table (repo `oc2plus-line-crm-service-3rdparty-api`), no `CreateApiKey` use case exists yet, secret currently stored plain-text (flagged MUST-FIX before merge — needs hash/encrypt + crypto-random ≥32 bytes, not bare UUID).
