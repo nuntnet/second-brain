@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: a0710894-5349-411a-b947-f53b13519857
-  modified: 2026-07-21T15:21:18.597Z
+  modified: 2026-07-22T04:21:50.831Z
 ---
 
 **OC-2275** (Epic, created 2024-01-11 as an empty stub with 4 stale UI-mockup child stories never implemented) rewritten 2026-07-21 after verifying actual code — not the 2024 spec — by shallow-cloning the real repos into scratchpad (none of these are monorepo submodules).
@@ -27,5 +27,13 @@ metadata:
 - **OC-2269** (list page) — blocked-by OC-2273's migration; revoke = soft-delete via `deleted_at` (column exists, but no `RevokeApiKey` use case/endpoint yet); status is derived (`deleted_at IS NULL` + `expires_at` check), no status enum in schema.
 - **OC-2274** (detail view, read-only) — same migration dependency; dropped the old spec's "Description" field (no `description` column in `api_key` table, would need a new migration if ever wanted).
 - **OC-2305** — confirmed a pure empty-template duplicate of OC-2273 (same goal, created 12 days apart by the same reporter in Jan 2024). Description now flags it as DUPLICATE/recommend-close pointing at OC-2273; status left untouched (To Do) pending explicit PO confirmation before transitioning/closing.
+
+**WS1-A implemented 2026-07-22** (first code of this epic). Added `oc2plus-line-crm-service-3rdparty-api` as a monorepo submodule (branch `develop`) — it was NOT one before. Built on branch `feat/oc-2273-apikey-crud` (commit `4512b44`, NOT pushed, NOT landed): company-scoped `CreateApiKey/ListApiKeys/GetApiKeyByID/RevokeApiKey` use cases + repository (goqu, local `postgresApiKey` struct raw-table access — does NOT use the shared entity Go struct), bcrypt secret hashing with legacy-plaintext constant-time fallback (`crypto/subtle`), expiry enforcement, `crypto/rand` key+secret gen, soft-delete revoke. `go build ./...` + 511 tests green, coverage 95.8% on use_case. Security review: clean (tenant scoping sound, no auth bypass, no SQLi, secret never leaked/logged).
+
+**Schema ownership (verified 2026-07-22):** the `api_key` table columns are owned by the shared external module `gitlab.sellsuki.com/sellsuki/oc2plus/line-crm/backend/entity` (pinned **v1.7.1** in 3rdparty-api go.mod) — **3rdparty-api has NO in-repo migration system** (no SQL files, no AutoMigrate; DB opened against existing `POSTGRES_CRM_DB_NAME`). So the OC-2273 "add name/expires_at/created_by" migration = **WS1-B in the entity module** (separate repo, branch `main`, reachable), NOT in 3rdparty-api. WS1-B must also add `UNIQUE(company_id, name)` (partial on `deleted_at IS NULL` so revoked names are reusable) + a one-time backfill re-hashing any plaintext `secret` rows. This mirrors the member-tables-in-shared-entity-DB fact in [[reference_oc2plus_member_frontend]]. **api_key blast radius is small** — backoffice-api and member-api never touch the table (only mention it in OpenAPI YAML), so it's effectively 3rdparty-api-exclusive.
+
+**🔴 Deploy-order landmine:** WS1-A's rewritten `GetActiveApiKey` now SELECTs the 3 not-yet-existing columns, and that query backs the **already-live `/auth/whoami`**. Merging WS1-A to `develop` and deploying **before WS1-B** breaks live auth ("column does not exist"). **WS1-A must NOT merge to develop until WS1-B ships.**
+
+**Auth-model decision (2026-07-22, PO call):** the key-management endpoints stay in **3rdparty-api** (API-key-authed, not session/backoffice-api) and get a new **`apikey.manage`** scope (→ **11th** scope; catalog was 10) gating Create/List/Revoke. This fixes a within-tenant self-escalation the security review found: currently any valid company key can mint a key with any scope (the impl gates on empty-scope = "any valid company key"). Chicken-and-egg accepted: the first/bootstrap key is admin-minted. **Open follow-ups (paused by user 2026-07-22 — summarize, don't proceed):** (1) apply the `apikey.manage` gate to WS1-A code (currently ungated beyond "any company key"); (2) sync the 11-scope catalog into OC-2275 + OC-2273; (3) do WS1-B entity migration; (4) WS1-A adds NO audit logging (no audit mechanism in 3rdparty-api) — decide if that's acceptable or a separate concern.
 
 Links [[project_loyalty_point_cluster]] (point earn/redeem business rules for the campaign engine side) — the two together map most of OC2Plus's loyalty/points surface area.
