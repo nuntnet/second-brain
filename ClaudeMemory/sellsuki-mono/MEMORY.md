@@ -68,3 +68,4 @@
 - [OC2Plus 3rd-party API key gap](project_oc2plus_3rdparty_apikey_gap.md) — OC-2275 epic+children rewritten; 10-scope catalog; WS1-A API-key CRUD coded 2026-07-22 (unlanded); schema owned by shared entity module=WS1-B; /auth/whoami deploy-order landmine; apikey.manage decision
 - [BOLA ops visibility = CCS1 not CCS3](project_bola_ops_visibility_ccs1.md) — self-service workspaces have no company; proxy via central-configuration-system, BOLA stays outside AMS gateway (self-host isolation)
 - [BOLA RBAC = Keto-direct not sync](project_bola_rbac_keto_direct.md) — SaaS=PERMISSION_PROVIDER=keto (BOLA-118), self-host=local; 3-tier model; sync MR !138/!251 superseded; BOLA owns bola_workspace namespace
+- [BOLA deploy topology](project_bola_deploy_topology.md) — 2 paths: repo-chart (staging, migrate-on-boot) vs SRE bola-tenants chart (rgb72 self-host, migrate-ci init container); FE tenants repo auto-latest+manual gate; kratos-admin port-80 gotcha
