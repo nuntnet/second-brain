@@ -71,3 +71,4 @@
 - [BOLA reply-token epic](project_bola_reply_token_epic.md) — BOLA-294 5-card plan + decisions เคาะแล้ว + group-fallback bug webhook.go:533-535
 - [BOLA deploy topology](project_bola_deploy_topology.md) — 2 paths: repo-chart (staging, migrate-on-boot) vs SRE bola-tenants chart (rgb72 self-host, migrate-ci init container); FE tenants repo auto-latest+manual gate; kratos-admin port-80 gotcha
 - [BOLA AI chatbot personalization](project_bola_ai_chatbot_personalization.md) — chatbot มีจริงแล้ว (keyword-RAG, no asker context); personalized answer = 4-layer design; gaps: stub embeddings, plaintext key, oc2plus-only linking
+- [APM scheduled send + batch digest epic](project_apm_scheduled_batch_epic.md) — design เคาะแล้ว (cron --job=auto-push-flush, TEXT payload, text-only batch phase 1, render-at-receive); epic+6 stories ลง Jira BOLA 2026-07-23
