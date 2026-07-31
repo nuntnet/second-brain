@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: a0710894-5349-411a-b947-f53b13519857
-  modified: 2026-07-23T01:11:31.994Z
+  modified: 2026-07-31T10:13:56.998Z
 ---
 
 **OC-2275** (Epic, created 2024-01-11 as an empty stub with 4 stale UI-mockup child stories never implemented) rewritten 2026-07-21 after verifying actual code — not the 2024 spec — by shallow-cloning the real repos into scratchpad (none of these are monorepo submodules).
@@ -42,4 +42,6 @@ metadata:
 
 **Auth-model decision (2026-07-22, PO call) [SUPERSEDED — see above]:** the key-management endpoints stay in **3rdparty-api** (API-key-authed, not session/backoffice-api) and get a new **`apikey.manage`** scope (→ **11th** scope; catalog was 10) gating Create/List/Revoke. This fixes a within-tenant self-escalation the security review found: currently any valid company key can mint a key with any scope (the impl gates on empty-scope = "any valid company key"). Chicken-and-egg accepted: the first/bootstrap key is admin-minted. **Open follow-ups (paused by user 2026-07-22 — summarize, don't proceed):** (1) apply the `apikey.manage` gate to WS1-A code (currently ungated beyond "any company key"); (2) sync the 11-scope catalog into OC-2275 + OC-2273; (3) do WS1-B entity migration; (4) WS1-A adds NO audit logging (no audit mechanism in 3rdparty-api) — decide if that's acceptable or a separate concern.
 
-Links [[project_loyalty_point_cluster]] (point earn/redeem business rules for the campaign engine side) — the two together map most of OC2Plus's loyalty/points surface area.
+**Research เพิ่ม (2026-07-23, สำหรับ BOLA/AI-chatbot จะเรียก OC2Plus เป็น connector) — 3 findings verified:** (1) 🔴 **per-request auth gap ใน `/v2/openapi/*`**: มีแค่ `/auth/whoami` ที่ validate key/secret จริง (`GetApiKeyInfo`, auth_apikey.go) — data handlers (GetEvent, CampaignEventInquiry/Confirm) อ่าน `X-Api-Key-Id`/`X-Company-Id`/`X-Api-Scope` **ตรงจาก header โดยไม่ verify key ต่อ request** (`helper/auth.go:29-49`); ไม่มี middleware กลางใน fiber_server.go — โมเดลนี้ปลอดภัยเฉพาะเมื่อมี gateway upstream เรียก whoami แล้ว inject trusted headers ซึ่งไม่พบ wiring ใน repo (โยง /auth/whoami deploy-order landmine เดิม) — ต้องปิดก่อนเปิดให้ consumer ใหม่ (เช่น BOLA/Agent Service). (2) **ไม่มี tier/membership-level entity ที่ไหนเลย** (grep ทั้ง 3 repo) และไม่มี "coupon held" query — ใกล้สุดคือ campaign/code/event redemption + activity log ของการ redeem ที่ผ่านมา; member-summary สำหรับ chatbot จึงเป็น M/L ไม่ใช่ S (points มี: `GET /v1/me/point*` แต่เป็น session-auth). (3) **link_follower write path ยังไม่ implement** — backoffice-api มีแค่ label UI action (`ContactActionLinkFollower`), ไม่มีโค้ดเรียก BOLA `/contacts/link` จริง (design-only ใน OC-4241/4242) → การ resolve LINE user → oc2plus member_id ยังเป็น unproven path.
+
+Links [[project_loyalty_point_cluster]] (point earn/redeem business rules for the campaign engine side) — the two together map most of OC2Plus's loyalty/points surface area. [[ai-chat-platform-plan]] (E6 CRM MCP ต้องปิด auth gap นี้ก่อน).
