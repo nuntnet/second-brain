@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: c107f1b5-8d84-48d1-b495-a8743dfcb35b
-  modified: 2026-07-31T10:53:15.937Z
+  modified: 2026-07-31T11:14:17.574Z
 ---
 
 **AI Chat Assistant Platform (2026-07-26):** CTO แตกเป็น 7 service: (1) BOLA=LINE channel, (2) Messaging Service — **เคาะ CTO 2026-07-26: ขยาย `sellsuki-messaging-backend` (live, Go 1.22) เป็น unified gateway ตัวเดียว** ครอบ OTP+email+SMS+**social chat**; เอาไอเดีย/โค้ด (FB/LINE REST client, multicast/scheduler) จาก `sellsuki-service-messaging` (dormant, ไม่มีขา receive) แล้ว**ยุบ/archive ทิ้ง**; **BOLA ต้อง forward chat webhook เข้า gateway นี้ก่อนส่ง Chat Core**; guardrail: OTP path live — chat module ต้องแยก route/worker/schema ไม่กระทบ SLA, (3) Chat Core (repo `oc2plus-service-chat` NestJS8+Mongo dormant ก.พ. 2023 — เคาะ**สร้างใหม่เป็น Go** ใช้เดิมเป็น reference), (4) CRM=OC2Plus, (5) AI Agentic=Sellsuki RAG (มีจริง: `api-rag.dev-th.sellsuki.com/v1/api/chat/ask`, UI rag.staging — **ยังไม่ inventory repo = O1**) + AI adapter/MCP/multi-agent, (6) Data pipeline, (7) QMS=quota-management-backend (metering ตรง AI Gateway quota; hard cap ≠ feature gate)
@@ -23,6 +23,10 @@ metadata:
 **Tiered Reply Router เคาะ (2026-07-31):** Chat Core มี router 3 ชั้นก่อนถึง agent — Tier 0 keyword/regex (0 token), Tier 1 NLP intent แบบ Dialogflow ด้วย embedding matching (intent ต่อ workspace ใน pgvector reuse infra RAG, ถูกกว่า LLM ~100x), Tier 2 agent เต็ม; ack template ("ขอเวลาค้นหา...") configurable ต่อ workspace/intent; ต้องมี unmet-intent queue + metric token saved ต่อ tier; latency budget อยู่ doc §5.6 (hot path ห้าม Kafka, gateway pass-through ≤20ms, RAG ≤150ms, prompt caching)
 
 **Send Policy Engine เคาะ (2026-07-31):** ใน Gateway (E1) — caller ส่ง intent (reply/follow_up/reminder/notify) ไม่สั่ง transport; send-state ต่อบทสนทนา (LINE reply token+expiry generalize BOLA-295, FB window_expires_at); policy: LINE token-first+push fallback, FB remind ก่อน window ปิด (T-2h) = ใช้ 24h window เป็น advantage, นอกกติกา=blocked+คิว; outcome emitter รวม (free_reply/free_window/paid_push/blocked + เงินที่ประหยัด) generalize BOLA-297; BOLA forward ต้องแนบ reply token+expiry ให้ gateway consume
+
+**Context memory เคาะ (2026-07-31, doc §5.6.4):** preload เฉพาะกะทัดรัด+คงทน, เจาะจง/สด = tool-call; Context Assembler (E3) มีงบ token ต่อชั้น (persona cached / profile card ~300 / rolling summary ~400 / recent turns / RAG / tools); two-tier memory: Tier1 rolling summary บน chat_session (E2), Tier2 User Profile Card ที่ CRM Customer Preference (E6, controlled write); ตัวกวาด = "Sync Compact" worker ตามกล่องใน diagram CTO (async Kafka ได้, model เล็ก, key facts schema ต่อ tenant, Python ได้); PDPA: ห้าม extract ข้อมูลสุขภาพเว้น tenant config ชัด
+
+**Lead intelligence + Consent เคาะ (2026-07-31, doc §5.6.5–6):** lead rules ประเมินบน key facts จาก chat (ให้เบอร์ผ่าน chat = Hot ได้โดยไม่ลงทะเบียน); rule=auto-apply, AI suggestion=human-in-loop queue + audit rule/AI/คน · Consent: identity ladder — ทักแรก auto-create **contact** (pre-member, โครง contacts≠member ของ OC2Plus) + privacy notice first-touch → consent gate ก่อนเก็บ PII/marketing → บันทึกเข้า sellsuki-service-consent ผูก contact id, merge ตอนเป็น member; consent state เป็น input ของ Sync Compact/lead/send policy; **O5 ปิดแล้ว (user ยืนยัน 2026-07-31)**: consent service **ไม่รองรับ non-member → ต้องแก้** — ขยาย subject model รองรับ contact id (pre-member) + merge consent ตอน upgrade เป็น member; เป็น blocker ของ consent gate
 
 **Jira:** project **AI** (AI-chatsystem, id 10226, board 254) — เขียน epic แล้ว 2026-07-29: E0=AI-1, E1=AI-2, E2=AI-3, E3=AI-4, E4=AI-5, E5=AI-6, E6=AI-7, E7=AI-8, E8=AI-9, E9=AI-10 (E10 จะลง BOLA board; การ์ด serve ฝั่ง CRM ลง OC board)
 
