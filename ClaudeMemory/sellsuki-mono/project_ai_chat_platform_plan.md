@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: c107f1b5-8d84-48d1-b495-a8743dfcb35b
-  modified: 2026-07-31T17:36:43.265Z
+  modified: 2026-07-31T17:52:53.547Z
 ---
 
 **AI Chat Assistant Platform (2026-07-26):** CTO แตกเป็น 7 service: (1) BOLA=LINE channel, (2) Messaging Service — **เคาะ CTO 2026-07-26: ขยาย `sellsuki-messaging-backend` (live, Go 1.22) เป็น unified gateway ตัวเดียว** ครอบ OTP+email+SMS+**social chat**; เอาไอเดีย/โค้ด (FB/LINE REST client, multicast/scheduler) จาก `sellsuki-service-messaging` (dormant, ไม่มีขา receive) แล้ว**ยุบ/archive ทิ้ง**; **BOLA ต้อง forward chat webhook เข้า gateway นี้ก่อนส่ง Chat Core**; guardrail: OTP path live — chat module ต้องแยก route/worker/schema ไม่กระทบ SLA, (3) Chat Core (repo `oc2plus-service-chat` NestJS8+Mongo dormant ก.พ. 2023 — เคาะ**สร้างใหม่เป็น Go** ใช้เดิมเป็น reference), (4) CRM=OC2Plus, (5) AI Agentic=Sellsuki RAG (มีจริง: `api-rag.dev-th.sellsuki.com/v1/api/chat/ask`, UI rag.staging — **ยังไม่ inventory repo = O1**) + AI adapter/MCP/multi-agent, (6) Data pipeline, (7) QMS=quota-management-backend (metering ตรง AI Gateway quota; hard cap ≠ feature gate)
@@ -37,6 +37,8 @@ metadata:
 **Decisions รอบสุดท้าย (2026-07-31):** W1/O8 = Line Group notify ใช้ **BOLA auto push (target_type=line_group, BOLA-270)** — AI platform ถือ config + M2M call ไป BOLA (internal notify ไม่ขัด "pilot=FB เท่านั้น") · W3 infra ตามแบบแผน BOLA · **D10 billing: QMS ส่ง usage รายเดือน → order-management-backend เปิดบิล** (contract QMS→OMS = การ์ดฝั่งนั้น + โยง O3) · B1 non-text approved · ถัดไป: po-team ทำ technical card + user story ต่อ epic (เริ่ม MVP ตาม §6.1, E0 ก่อน)
 
 **Multi-use-case design (2026-08-01, doc §5.11):** Lead = use case แรกเท่านั้น — โมเดลสองชั้นแบบ Trello: Core (agnostic) + **Case aggregate generic** (configurable state machine ต่อ workspace) + **Solution Template** (config bundle: fact schema/intents/persona/statuses/dashboard/label pack) + Business App plug-in (bounded context ผ่าน events+MCP, ACL เสมอ); workspace = app instance (company มี workspace ขาย+HR ได้); onboarding wizard เลือก template <30 นาที; **E12 epic เสนอไว้ยังไม่เปิด**; guardrails ใส่ตอนนี้: event envelope มี case_type, AI-47 state machine เป็น engine ไม่ hardcode enum, AI-9 view layer generic component
+
+**Decision #1 เคาะแล้ว (2026-08-01): workspace registry อยู่ใน Chat Core** (ไม่เปิด platform-core แยก) + 3 เงื่อนไข: resolve ที่ขอบ→propagate X-Workspace-Id/X-Company-Id header (ห้าม sync-call ราย request), emit workspace.created/updated event, API เป็น published contract extract ได้ภายหลัง — AI-13 ปลด block แล้ว (เหลือ blocked: AI-15/18 chart, AI-19 CCS)
 
 **Backlog ปิดครบ (2026-08-01):** ~96 story/~500SP ใต้ 12 epic + links ~85 เส้น + DoR review ครบ (ซ่อม mechanical หมด) · 🔴 4 ใบรอ human decision: AI-13 (workspace registry service ไหน), AI-15/18 (chart ownership กับ SRE), AI-19 (CCS versioning) + external: consent service (AI-53/61/77) · **การ์ดเริ่มได้ทันที: AI-14, AI-12, AI-21, AI-95, AI-32** · O1 ปิดแล้ว: RAG poc = rag-core (Milvus+OpenRouter+llama-index, single-org 3 collections, no workspace) + channel-gateway (BFF: SSE/LINE/Discord/Google OIDC) + frontend-web (Svelte) — AI-38 = เพิ่ม workspace dimension ไม่ใช่ greenfield; reconcile: OpenRouter↔OpenAI กลาง, Google groups↔Keto
 
