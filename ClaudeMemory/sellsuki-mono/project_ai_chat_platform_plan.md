@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: c107f1b5-8d84-48d1-b495-a8743dfcb35b
-  modified: 2026-08-01T13:59:03.100Z
+  modified: 2026-08-01T14:14:50.539Z
 ---
 
 **AI Chat Assistant Platform (2026-07-26):** CTO แตกเป็น 7 service: (1) BOLA=LINE channel, (2) Messaging Service — **เคาะ CTO 2026-07-26: ขยาย `sellsuki-messaging-backend` (live, Go 1.22) เป็น unified gateway ตัวเดียว** ครอบ OTP+email+SMS+**social chat**; เอาไอเดีย/โค้ด (FB/LINE REST client, multicast/scheduler) จาก `sellsuki-service-messaging` (dormant, ไม่มีขา receive) แล้ว**ยุบ/archive ทิ้ง**; **BOLA ต้อง forward chat webhook เข้า gateway นี้ก่อนส่ง Chat Core**; guardrail: OTP path live — chat module ต้องแยก route/worker/schema ไม่กระทบ SLA, (3) Chat Core (repo `oc2plus-service-chat` NestJS8+Mongo dormant ก.พ. 2023 — เคาะ**สร้างใหม่เป็น Go** ใช้เดิมเป็น reference), (4) CRM=OC2Plus, (5) AI Agentic=Sellsuki RAG (มีจริง: `api-rag.dev-th.sellsuki.com/v1/api/chat/ask`, UI rag.staging — **ยังไม่ inventory repo = O1**) + AI adapter/MCP/multi-agent, (6) Data pipeline, (7) QMS=quota-management-backend (metering ตรง AI Gateway quota; hard cap ≠ feature gate)
@@ -41,6 +41,10 @@ metadata:
 **AI-19 ปลด + O2 คืบ (2026-08-01):** CCS มี versioning แล้ว (เจ้าของยืนยัน) → E0 ไม่มีใบ blocked เหลือ · data-pipeline group สำรวจแล้ว (~35 repos): stack=Airflow K8s+Spark+**Metabase** (=dashboard tool), convention 1 repo/source → เปิด ai_chat_data_pipeline, **Ads pipelines (fb/line/tiktok) มีแล้ว → cost-per-lead join warehouse เป็นหลัก AI-113 manual=fallback**, milvus_config อยู่ทีมนี้, ⚠️ line_uid_mapping_prototype อาจซ้อน E2/AI-50 ต้องนัด sync
 
 **Implement เริ่มแล้ว (2026-08-01): AI-14 llmclient เสร็จ In Review** — ai-platform-kit-go MR !1 (2 commits, coverage 86.2%, -race): signature lock, catalog+cost, OpenRouter passthrough+scope headers, error taxonomy 7 sentinels, SSE+trace ctx, key redaction+adversarial test; ผ่าน review 2 ชั้น (internal 2B+9W + bot 7 findings) แก้ครบ; follow-up: DefaultCatalog ราคา placeholder ต้อง reconcile ก่อน prod · consent MR !42 กำลังแก้ bot findings (1 MUST FIX validation + 5 SHOULD)
+
+**⚠️ MULTI-SESSION COORDINATION (2026-08-01 — บทเรียนจริง):** user รันหลาย Claude session ขนานบน implementation track เดียวกัน — เกือบทำ AI-12/AI-95 ซ้ำ (อีก session ทำเสร็จ+merge ไปแล้ว) · กติกาก่อนจับการ์ดทุกครั้ง: (1) เช็ค Jira status การ์ด (In Progress/In Review = มีคนทำ), (2) เช็ค remote จริง `git ls-remote --heads` + `glab mr list --all` ของ repo เป้าหมาย, (3) claim โดย transition → In Progress + comment 🔒 บอก branch ก่อนเริ่ม, (4) งานขนานห้ามทำใน submodule ของ /Users/nunt/sellsuki_mono (อีก session ใช้ working tree อยู่ — เช่น chat-core checkout branch ai-17 ค้างอยู่) → clone สดลง scratchpad เสมอ
+
+**สถานะ implement ณ 2026-08-01 ค่ำ (verify จาก remote):** kit main = seed→AI-14 (MR !1 **merged**)→AI-12 authctx→AI-95 events→fix dns:// Keto (ทำในอีก session, การ์ดทั้งสาม In Review) · chat-core: MR !1 (AI-32 data model→main) + MR !2 (AI-13 workspace registry, stack บน AI-32) เปิดค้าง In Review; branch local feature/ai-17-role-model กำลังทำในอีก session · monorepo เพิ่ม kit+chat-core เป็น submodule แล้ว (commit ที่ root) · Sprint 1 To Do เหลือ: AI-15 (infra), AI-29 (isolation guardrail), AI-117 (OpenRouter config) · **AI-23 session นี้ claim แล้ว** → developer agent ทำใน clone สด `scratchpad/msg-ai23` branch feature/AI-23-normalized-message-schema (messaging-backend — repo ว่าง ไม่ชนใคร; ai-agent/admin-fe ก็ยังว่าง)
 
 **Repos สร้างแล้ว (2026-08-01, user อนุมัติ):** ✅ ทั้ง 4 มี main + seed commit: `share/library/ai-platform-kit-go` (go.mod + package stubs authctx/llmclient/events พร้อม doc.go contract), `sellsuki/backend/sellsuki-chat-core`, `sellsuki/backend/sellsuki-ai-agent`, `sellsuki/frontend/ai-chat-admin-frontend` (README + scaffold checklist ชี้การ์ด/design doc) — ยังไม่เพิ่มเป็น submodule ใน monorepo (ทำตอน AI-15 scaffold จริง พร้อม Procfile/port-map)
 
