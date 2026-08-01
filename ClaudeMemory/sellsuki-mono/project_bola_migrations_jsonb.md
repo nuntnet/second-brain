@@ -16,3 +16,5 @@ Two bola-backend (back-office-of-line-api-backend) gotchas that caused a full st
 **Why tests passed but prod failed:** unit/integration/e2e run on SQLite, and migration 0121 explicitly skips on SQLite (`tx.Dialector.Name() == "sqlite"`). PostgreSQL-only migrations are invisible to the test suite — verify them against Postgres before merge.
 
 Backend staging-th deploys automatically on `main` (`deploy_staging_th_arm`, not manual — unlike the frontend which is manual). Cluster: `eks_staging_th-cluster` via Teleport (`tsh login` + `tsh kube login eks_staging_th-cluster`; cert expires ~hourly). Related: [[project_bola_kratos_sso_staging]]
+
+**Update 2026-07-22 (verified on prod rgb72 v1.0.28):** migrations now run in a `migrate-ci` INIT container, not the server process — a failing migration wedges the rollout (new pod stuck Init, old pod keeps serving) instead of crashlooping the service. Deploy risk is 'stuck', not 'outage'.
