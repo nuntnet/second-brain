@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: c107f1b5-8d84-48d1-b495-a8743dfcb35b
-  modified: 2026-08-01T01:59:08.291Z
+  modified: 2026-08-01T03:09:36.523Z
 ---
 
 **AI Chat Assistant Platform (2026-07-26):** CTO แตกเป็น 7 service: (1) BOLA=LINE channel, (2) Messaging Service — **เคาะ CTO 2026-07-26: ขยาย `sellsuki-messaging-backend` (live, Go 1.22) เป็น unified gateway ตัวเดียว** ครอบ OTP+email+SMS+**social chat**; เอาไอเดีย/โค้ด (FB/LINE REST client, multicast/scheduler) จาก `sellsuki-service-messaging` (dormant, ไม่มีขา receive) แล้ว**ยุบ/archive ทิ้ง**; **BOLA ต้อง forward chat webhook เข้า gateway นี้ก่อนส่ง Chat Core**; guardrail: OTP path live — chat module ต้องแยก route/worker/schema ไม่กระทบ SLA, (3) Chat Core (repo `oc2plus-service-chat` NestJS8+Mongo dormant ก.พ. 2023 — เคาะ**สร้างใหม่เป็น Go** ใช้เดิมเป็น reference), (4) CRM=OC2Plus, (5) AI Agentic=Sellsuki RAG (มีจริง: `api-rag.dev-th.sellsuki.com/v1/api/chat/ask`, UI rag.staging — **ยังไม่ inventory repo = O1**) + AI adapter/MCP/multi-agent, (6) Data pipeline, (7) QMS=quota-management-backend (metering ตรง AI Gateway quota; hard cap ≠ feature gate)
@@ -37,6 +37,8 @@ metadata:
 **Decisions รอบสุดท้าย (2026-07-31):** W1/O8 = Line Group notify ใช้ **BOLA auto push (target_type=line_group, BOLA-270)** — AI platform ถือ config + M2M call ไป BOLA (internal notify ไม่ขัด "pilot=FB เท่านั้น") · W3 infra ตามแบบแผน BOLA · **D10 billing: QMS ส่ง usage รายเดือน → order-management-backend เปิดบิล** (contract QMS→OMS = การ์ดฝั่งนั้น + โยง O3) · B1 non-text approved · ถัดไป: po-team ทำ technical card + user story ต่อ epic (เริ่ม MVP ตาม §6.1, E0 ก่อน)
 
 **Multi-use-case design (2026-08-01, doc §5.11):** Lead = use case แรกเท่านั้น — โมเดลสองชั้นแบบ Trello: Core (agnostic) + **Case aggregate generic** (configurable state machine ต่อ workspace) + **Solution Template** (config bundle: fact schema/intents/persona/statuses/dashboard/label pack) + Business App plug-in (bounded context ผ่าน events+MCP, ACL เสมอ); workspace = app instance (company มี workspace ขาย+HR ได้); onboarding wizard เลือก template <30 นาที; **E12 epic เสนอไว้ยังไม่เปิด**; guardrails ใส่ตอนนี้: event envelope มี case_type, AI-47 state machine เป็น engine ไม่ hardcode enum, AI-9 view layer generic component
+
+**Decisions ล่าสุด (2026-08-01):** quota = นับ message ที่ AI ตอบ/เดือน (enforce) + token/token_cost ต่อ message = ROI metric (decision #12) · **LLM provider = OpenRouter กลาง + curated model catalog + config ต่อ workspace (AI-117 — ปิด decision #9, ไม่รอบัญชี OpenAI)** · brief-gap ครบ 6 การ์ด: AI-111 delivery, AI-113 Ads input, AI-114 backup/log, AI-115 goal AddLINE, AI-116 fallback notify, AI-117 OpenRouter · Provider Admin Dashboard = AI-112 (data: realtime จาก AI-90 API / analytics จาก E9 warehouse — ห้าม query transactional DB ตรง) · consent MR ย้ายเป็น **!42 → develop** (!41 ปิด — main-only commits ติด diff)
 
 **Consent MR ส่งแล้ว (2026-08-01): sellsuki-service-consent MR !41 In Review** — POST /v1/consentee/merge (idempotent, ล่าสุดชนะต่อ purpose, soft-link MergedFrom/To ไม่ลบ history, Kafka audit), convention oc2plus.contact:{id} ใช้ได้เลย (ReferenceID opaque ทุก layer), coverage 91.9%; ปลด external blocker AI-53/55/58/61 เมื่อ merge; submodule ref ยังไม่อัพเดท (รอ merge) · Billing decision (§5.6.12): billing = context กลาง Plan/QMS/OMS/SukiPay, product = read model; pilot ขยาย AI-107 (used/remaining/cycle), AI-110 ใหม่ = billing history+payment method (platform, รอ serve API ฝั่ง OMS/SukiPay), AI-101 ได้ quota indicator + hard-cap banner realtime
 
