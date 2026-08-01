@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: c107f1b5-8d84-48d1-b495-a8743dfcb35b
-  modified: 2026-08-01T03:25:50.638Z
+  modified: 2026-08-01T03:41:26.064Z
 ---
 
 **AI Chat Assistant Platform (2026-07-26):** CTO แตกเป็น 7 service: (1) BOLA=LINE channel, (2) Messaging Service — **เคาะ CTO 2026-07-26: ขยาย `sellsuki-messaging-backend` (live, Go 1.22) เป็น unified gateway ตัวเดียว** ครอบ OTP+email+SMS+**social chat**; เอาไอเดีย/โค้ด (FB/LINE REST client, multicast/scheduler) จาก `sellsuki-service-messaging` (dormant, ไม่มีขา receive) แล้ว**ยุบ/archive ทิ้ง**; **BOLA ต้อง forward chat webhook เข้า gateway นี้ก่อนส่ง Chat Core**; guardrail: OTP path live — chat module ต้องแยก route/worker/schema ไม่กระทบ SLA, (3) Chat Core (repo `oc2plus-service-chat` NestJS8+Mongo dormant ก.พ. 2023 — เคาะ**สร้างใหม่เป็น Go** ใช้เดิมเป็น reference), (4) CRM=OC2Plus, (5) AI Agentic=Sellsuki RAG (มีจริง: `api-rag.dev-th.sellsuki.com/v1/api/chat/ask`, UI rag.staging — **ยังไม่ inventory repo = O1**) + AI adapter/MCP/multi-agent, (6) Data pipeline, (7) QMS=quota-management-backend (metering ตรง AI Gateway quota; hard cap ≠ feature gate)
@@ -37,6 +37,8 @@ metadata:
 **Decisions รอบสุดท้าย (2026-07-31):** W1/O8 = Line Group notify ใช้ **BOLA auto push (target_type=line_group, BOLA-270)** — AI platform ถือ config + M2M call ไป BOLA (internal notify ไม่ขัด "pilot=FB เท่านั้น") · W3 infra ตามแบบแผน BOLA · **D10 billing: QMS ส่ง usage รายเดือน → order-management-backend เปิดบิล** (contract QMS→OMS = การ์ดฝั่งนั้น + โยง O3) · B1 non-text approved · ถัดไป: po-team ทำ technical card + user story ต่อ epic (เริ่ม MVP ตาม §6.1, E0 ก่อน)
 
 **Multi-use-case design (2026-08-01, doc §5.11):** Lead = use case แรกเท่านั้น — โมเดลสองชั้นแบบ Trello: Core (agnostic) + **Case aggregate generic** (configurable state machine ต่อ workspace) + **Solution Template** (config bundle: fact schema/intents/persona/statuses/dashboard/label pack) + Business App plug-in (bounded context ผ่าน events+MCP, ACL เสมอ); workspace = app instance (company มี workspace ขาย+HR ได้); onboarding wizard เลือก template <30 นาที; **E12 epic เสนอไว้ยังไม่เปิด**; guardrails ใส่ตอนนี้: event envelope มี case_type, AI-47 state machine เป็น engine ไม่ hardcode enum, AI-9 view layer generic component
+
+**Repo decisions (2026-08-01):** เปิดใหม่ 4: sellsuki-chat-core (E2+workspace registry), sellsuki-ai-agent (E3), **sellsuki-ai-platform-kit** (Go lib: authctx/llmclient/events — ≠ rag-core ซึ่งเป็น Python service), frontend/ai-chat-admin — เปิด kit ก่อน · **E4 promote rag-core ออกจาก poc แน่นอน** (AI-36 เหลือ how ไม่ใช่ whether) · **E5 ไม่ใช้ channel-gateway** (ingress BFF ≠ egress proxy; เก็บเป็น BFF internal assistant; เส้นทาง: llmclient → ยกเป็น gateway service เดือน 3) · E9 = group sellsuki/data-pipeline (O2 เหลือแค่ ownership) · แก้ repo เดิม: messaging-backend/CCS/central-config/role-permission/QMS/consent
 
 **Sprint allocation (2026-08-01): 76 การ์ด pilot เข้า AI Sprint 1–11 (id 3133–3143, board 254, field customfield_10020) — 76/76 สำเร็จ verify รายใบ** ตาม milestone: S1 contracts → S3 M2 คุยได้ → S4 M3 lead → S5 M4 takeover → S6 M5 follow-up → S7 M6 admin → S8 M7 go-live → S9-10 M8 gateway → S11 M9 quota+UAT → S12 buffer ว่าง; platform-track ~29 ใบคง backlog; หมายเหตุ: Jira MCP response contamination หนักตอน 2 sessions เขียนขนาน — edit ลงถูกเสมอแต่ response สลับ ต้อง verify ด้วย getJiraIssue รายใบ (JQL ก็โดนสลับ)
 
