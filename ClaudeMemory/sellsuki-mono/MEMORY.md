@@ -83,3 +83,5 @@
 - [chat-core role bootstrap + east-west auth](project_chatcore_role_bootstrap_and_eastwest_auth.md) — CHAT_WORKSPACE_OPERATOR_ROLE_ID → self-bootstrap-by-name (matches management-backend); SERVICE_TOKEN confirmed correct (ahead of RBAC service's own no-auth internal routes); LLM_API_KEY UI mgmt = System Admin only on CCS1
 - [GitLab review-bot targets](reference_gitlab_review_bot_targets.md) — bot reviews only main/develop-targeted MRs; feature-branch MRs need manual substitute review
 - [rps dual mainline](reference_rps_dual_mainline.md) — role-permission-service: main AND develop both live; number migrations past both branches; /internal has no auth by design
+- [AI platform deploy gating](project_ai_platform_deploy_gating.md) — CI_JOB_ENABLE var + missing K8s secret + develop→dev/main→staging model gate chat-core deploys; shared chart lacks initContainers
+- [AI Sprint 2-4 autonomous run](project_ai_sprint234_autonomous_run.md) — S2-4 cards on pushed feature branches WITHOUT MRs; messaging-backend FB stack based on unmerged AI-29 branch
