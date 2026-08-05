@@ -81,3 +81,5 @@
 - [OC2Plus consent enforcement model](project_oc2plus_consent_enforcement_model.md) — OC-3897/4089/4340 pipeline (all To Do); enforcement decoupled from type into 3 layers (type=envelope, doc=default, binding=per-surface) + server-side consent gate
 - [Entity pure / zod = DTO layer](feedback_entity_pure_zod_dto.md) — senior review: domain layer ต้อง zero-dependency, zod เป็น z.ZodType<Entity> ที่ boundary เท่านั้น; ใช้กับทุก boilerplate/kit
 - [chat-core role bootstrap + east-west auth](project_chatcore_role_bootstrap_and_eastwest_auth.md) — CHAT_WORKSPACE_OPERATOR_ROLE_ID → self-bootstrap-by-name (matches management-backend); SERVICE_TOKEN confirmed correct (ahead of RBAC service's own no-auth internal routes); LLM_API_KEY UI mgmt = System Admin only on CCS1
+- [GitLab review-bot targets](reference_gitlab_review_bot_targets.md) — bot reviews only main/develop-targeted MRs; feature-branch MRs need manual substitute review
+- [rps dual mainline](reference_rps_dual_mainline.md) — role-permission-service: main AND develop both live; number migrations past both branches; /internal has no auth by design
