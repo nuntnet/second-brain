@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: a0710894-5349-411a-b947-f53b13519857
-  modified: 2026-08-06T02:51:36.076Z
+  modified: 2026-08-06T15:56:21.065Z
 ---
 
 **Loyalty point cluster under epic OC-2743 (Point Budgeting Management) — designs locked with user 2026-07-08/09.** Engine facts (3rdparty-api = real engine, campaign-engine repo = empty shell, reward = fixed Quantity only) are in [[reference_oc2plus_member_frontend]].
@@ -21,5 +21,9 @@ The 5-card map and key locked decisions:
 - **Channel matrix "แต้มตามยอดซื้อ" = 1 engine (OC-4295 conversion, rate ณ purchased_at), differs only in amount-source + verify + dedup-key:** POS-auto (order event / system / order-serial / OC-4295) · QR-receipt (order-lookup / system / order-serial / OC-4335) · no-QR-receipt (member-entered+photo / admin review / receipt_number / OC-4362) · **Marketplace Shopee-Lazada-TikTok (NO card yet — proposed): connector-pull by marketplace_order_id (Patona/Akita already has connectors; if OMS ingests mp orders → reuse OC-4335 pull-model, order-source=marketplace) OR member-enter mp_order_id+screenshot+review (OC-4362 pattern); key risk = identity matching (marketplace buyer ≠ member); dedup = marketplace_order_id**.
 
 QR inventory (verified by grep 2026-07-08): OC2Plus has NO real QR generation — `outline-qr-code` is just a menu icon for the "โค้ด" feature; BOLA has the pattern to copy (`qrcode.react` client-side rendering of URLs, LONSubscribersPage); payment QR (KBank) in space-go/sukipay is a different domain. QR = URL rendered client-side; never build backend image generation.
+
+**Loyalty spans TWO epics (audit 2026-08-06):** **OC-2743 = earning/mechanism + budgeting** (backoffice campaign CRUD + award engine + all earn channels) · **OC-4349 = Customer App Epic 2 "My Points, Promotions & Rewards" = member-facing SEE/USE** — children: OC-4350 (dashboard/balance), OC-4351 (point history + expiring), OC-4352 (rewards catalog), OC-4353 (reward shipping address), OC-4354 (redeem/spend). So "member sees/uses points" lives under OC-4349, NOT OC-2743 — looking only at OC-2743 gives false impression it's missing. **Backend point-account READ APIs already DONE** (legacy): OC-3701 (get member point list), OC-3703 (get point transaction), OC-3274 (3rd-party get me/point/transaction), OC-3858 (member_point_activity repo) + big QA suite.
+
+**Sync purchase-award gap → OC-4412 (created 2026-08-06):** OC-4295's runtime (Flow C) is **async Kafka only** (purchase activity from OC-4286/4287 → connector → award; blocked-by activity ingestion). Engine EventConfirm = fixed-qty, no amount/conversion/order-dedup. **Missing = a synchronous open API where POS/ERP fires `{member_ref, order_id, amount}` directly → 3rd-party runs campaign logic inline (conversion floor / threshold / order-id dedup / limit / active window) → award + returns points in the response.** OC-4412 fills it (reuses OC-4295 conversion + engine award; adds POST /v2/openapi/purchase-award + order_id idempotency shared cross-path with OC-4295/4335 + threshold field + member resolution). Open decisions: member_ref shape (id/phone/member-QR), threshold home (entity shared w/ OC-4295), no-active-campaign policy (200 award-0 vs error). Note: **threshold (min purchase amount) is a general gap — OC-4295 only has floor(amount/X), no explicit min-spend threshold.**
 
 Existing code-gen (โค้ด menu) deliberately NOT reused for receipt tokens: pre-generated lots, no amount payload, per-code dedup only, merchant-managed lifecycle vs system-minted per-receipt volume. But "fixed-point QR poster" use case can use existing code-gen today with only a FE render button.
