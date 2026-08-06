@@ -84,4 +84,5 @@
 - [GitLab review-bot targets](reference_gitlab_review_bot_targets.md) — bot reviews only main/develop-targeted MRs; feature-branch MRs need manual substitute review
 - [rps dual mainline](reference_rps_dual_mainline.md) — role-permission-service: main AND develop both live; number migrations past both branches; /internal has no auth by design
 - [AI platform deploy gating](project_ai_platform_deploy_gating.md) — CI_JOB_ENABLE var + missing K8s secret + develop→dev/main→staging model gate chat-core deploys; shared chart lacks initContainers
-- [AI Sprint 2-4 autonomous run](project_ai_sprint234_autonomous_run.md) — S2-4 cards on pushed feature branches WITHOUT MRs; messaging-backend FB stack based on unmerged AI-29 branch
+- [AI Sprint 2-4 autonomous run](project_ai_sprint234_autonomous_run.md) — ALL S2-4 cards done 2026-08-06 on pushed feature branches WITHOUT MRs; full branch map + merge order; cards left In Progress
+- [PG partial-index ON CONFLICT generic-plan gotcha](reference_pg_partial_index_onconflict_generic_plan.md) — 42P10 from 6th execution per connection; fix = target-less DO NOTHING; test with 10+ calls on one connection
