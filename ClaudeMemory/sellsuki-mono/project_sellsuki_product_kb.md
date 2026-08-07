@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: 60159299-7c45-49ce-8985-bacd71095aa0
-  modified: 2026-08-07T16:14:42.098Z
+  modified: 2026-08-07T16:43:27.943Z
 ---
 
 Product Knowledge Base สำหรับ **BD · Marketing · Sales · C-level** อยู่ที่ `docs/product-kb/`
@@ -27,6 +27,8 @@ pain point ต้องแยก evidence จริง (Jira bug) ออกจ�
 - ช่องที่เป็นหลุมใหญ่สุด = **HOW** (pricing / SLA / ToS / support ไม่มีเลยทุก product) → `_gaps.md` G-02/G-10/G-11/G-12
 
 **Surface:** Control Tower แท็บ Docs มีชั้นวาง "📕 Product Knowledge Base" ปักหมุด (แก้ที่ `index.html` `#kbShelf` + `KB_SHELF`)
-**Outline:** ยังไม่ได้ publish — ติด VPN ดู [[reference-outline-mcp-vpn-blocker]]
+**Outline:** publish แล้ว 2026-08-07 → collection **Product Knowledge Base** `9c9911d3-b918-4010-b31b-485551e37e29`
+(11 หน้า nest ใต้ README) · sync ด้วย `python3 docs/product-kb/publish-to-outline.py --publish` (ต้องอยู่บน VPN
+ดู [[reference-outline-mcp-vpn-blocker]]) · **ต้นทางคือ repo เสมอ — ห้ามแก้ใน Outline ตรง ๆ** เพราะ sync รอบหน้าเขียนทับ
 
-commit `c850f79` บน branch `feat/oc-4200-member-follower` (monorepo local-only ดู [[reference-monorepo-no-origin]])
+commit `c850f79` + `a719b96` บน branch `feat/oc-4200-member-follower` (monorepo local-only ดู [[reference-monorepo-no-origin]])
