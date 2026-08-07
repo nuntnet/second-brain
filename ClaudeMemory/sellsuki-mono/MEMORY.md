@@ -87,6 +87,7 @@
 - [AI Sprint 2-4 autonomous run](project_ai_sprint234_autonomous_run.md) — ALL S2-4 cards done 2026-08-06 on pushed feature branches WITHOUT MRs; full branch map + merge order; cards left In Progress
 - [Monorepo root has no origin](reference_monorepo_no_origin.md) — only remote is glab-base→BOLA repo; monorepo branches are local-only, never push
 - [chat-core stack merge order](project_ai_chatcore_merge_order.md) — fix/AI-32 must merge to main BEFORE the 9-branch AI stack, else 42P10 ships; EnsureDefault has a 2nd uncovered arbiter
+- [Lease/claim ownership bug class](reference_lease_claim_ownership_bug_class.md) — release/MarkDone by id without claim-token check → double-processing; hit 3× Aug 2026; tests miss it without concurrent workers
 - [PG partial-index ON CONFLICT generic-plan gotcha](reference_pg_partial_index_onconflict_generic_plan.md) — 42P10 from 6th execution per connection; fix = target-less DO NOTHING; test with 10+ calls on one connection
 - [Loyalty canonical contract sheet](project_loyalty_canonical_contract.md) — OC-4413 = hub/SoT (order_ref, channel enum, resolved_skus, SYSTEM_BASE_EARN); OC-4415 ย้ายเข้าหน้าหน่วยแต้ม; PAT-2604 + OC-4419 ใหม่; PO review 9 ใบผ่าน 1
 - [Sellsuki Product KB](project_sellsuki_product_kb.md) — docs/product-kb/ สำหรับ BD/MKT/Sales; ป้าย verified/asserted/hypothesis/GAP บังคับ; AI chatbot = 3 ระบบไม่ใช่ engine เดียว

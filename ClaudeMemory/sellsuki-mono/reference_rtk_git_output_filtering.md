@@ -1,22 +1,17 @@
 ---
-name: reference-rtk-git-output-filtering
-description: "rtk (Rust Token Killer) hook transparently rewrites git commands and can return compressed/empty output (e.g. \"ok ✓\", blank commit body) instead of real git data — use the full git binary path to bypass it when fidelity matters"
+name: rtk-output-can-drop-lines
+description: The rtk token-saving hook can silently drop lines from command output — verify with grep before concluding something is missing
 metadata: 
   node_type: memory
   type: reference
-  originSessionId: 8b54895a-0013-46d6-8588-dd94f45b9c4a
-  modified: 2026-08-05T15:59:39.083Z
+  originSessionId: 72e79abc-11d5-45a2-b332-ae75f50bceb1
+  modified: 2026-08-07T18:34:54.508Z
 ---
 
-Per `~/.claude/RTK.md`, a Claude Code hook transparently rewrites plain `git ...` commands to `rtk git ...` for token savings. This is usually fine, but its filtered/summarized output can be misleading when you need exact data:
+The global `rtk` hook (see ~/.claude/RTK.md) rewrites shell commands to a token-optimizing proxy. It does not only compress — it can **silently omit lines**, so absence in the output is not evidence of absence in the file.
 
-- `git status --short` returned literally `ok ✓` instead of the real file list.
-- `git log -1 --format="%H%n%s%n%n%b"` returned only the hash, with subject/body silently empty.
+Observed cases:
+- `cat package.json` came back missing a script line, making a CI gate (`depcheck`) look nonexistent — nearly reported as a CRITICAL "broken gate" until re-checked with `grep`.
+- `git` output has come back compressed or empty where the exact text mattered (e.g. a blank commit body).
 
-**Symptom to watch for**: git output that looks suspiciously compressed, or a field that should never be empty (commit subject/body) coming back blank.
-
-**Fix**: call the real binary directly to skip the hook's rewrite/filtering, e.g. `/opt/homebrew/bin/git log ...` (find the path with `which -a git`). `rtk proxy <cmd>` (per RTK.md) is the documented alternative for raw output.
-
-Use the direct-binary form whenever inspecting commit messages, diffs, or branch state that will inform a decision (e.g. verifying what a branch actually contains before merging) — don't rely on the hook-filtered form for anything beyond a quick sanity check.
-
-**Also affects `glab` (2026-08-05)**: hook-wrapped `glab ci list` / `glab ci get` / `glab api` returned **stale cached pipeline status** — showed a pipeline as `success`/`failed` while the GitLab API said `running`/`waiting_for_resource`, and `glab ci get` kept serving job states frozen at an old timestamp. This produced a false "pipeline failed" and a false "pipeline succeeded" in the same session. Fix: `rtk proxy glab api "projects/:id/pipelines/<id>"` for authoritative status when deciding to merge/cancel; treat hook-filtered glab output as unreliable for CI state.
+**Rule:** when a conclusion depends on a line being absent — a missing script, a missing config key, an empty diff/commit — re-verify with a targeted `grep`/`rg`, or invoke the tool by full path to bypass the hook. Never report "X is missing" from rtk-filtered output alone.
