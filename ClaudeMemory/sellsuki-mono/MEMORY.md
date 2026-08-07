@@ -87,3 +87,4 @@
 - [AI Sprint 2-4 autonomous run](project_ai_sprint234_autonomous_run.md) — ALL S2-4 cards done 2026-08-06 on pushed feature branches WITHOUT MRs; full branch map + merge order; cards left In Progress
 - [chat-core stack merge order](project_ai_chatcore_merge_order.md) — fix/AI-32 must merge to main BEFORE the 9-branch AI stack, else 42P10 ships; EnsureDefault has a 2nd uncovered arbiter
 - [PG partial-index ON CONFLICT generic-plan gotcha](reference_pg_partial_index_onconflict_generic_plan.md) — 42P10 from 6th execution per connection; fix = target-less DO NOTHING; test with 10+ calls on one connection
+- [Loyalty canonical contract sheet](project_loyalty_canonical_contract.md) — OC-4413 = hub/SoT (order_ref, channel enum, resolved_skus, SYSTEM_BASE_EARN); OC-4415 ย้ายเข้าหน้าหน่วยแต้ม; PAT-2604 + OC-4419 ใหม่; PO review 9 ใบผ่าน 1
