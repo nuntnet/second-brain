@@ -91,3 +91,4 @@
 - [Loyalty canonical contract sheet](project_loyalty_canonical_contract.md) — OC-4413 = hub/SoT (order_ref, channel enum, resolved_skus, SYSTEM_BASE_EARN); OC-4415 ย้ายเข้าหน้าหน่วยแต้ม; PAT-2604 + OC-4419 ใหม่; PO review 9 ใบผ่าน 1
 - [Sellsuki Product KB](project_sellsuki_product_kb.md) — docs/product-kb/ สำหรับ BD/MKT/Sales; ป้าย verified/asserted/hypothesis/GAP บังคับ; AI chatbot = 3 ระบบไม่ใช่ engine เดียว
 - [Outline MCP VPN blocker](reference_outline_mcp_vpn_blocker.md) — mcp-outline เป็น internal 10.x ต่อไม่ได้นอก VPN; ใช้ publish-to-outline.py แทน
+- [Verify as the user sees it](feedback_verify_as_the_user_sees_it.md) — publish/deploy เสร็จต่อเมื่อเปิดได้ใน session ที่ล็อกอินจริง; tool log + curl 200 ไม่ใช่หลักฐาน; เช็คสิทธิ์แยกจากการสร้าง
