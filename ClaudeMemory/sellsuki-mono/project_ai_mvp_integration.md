@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: 72e79abc-11d5-45a2-b332-ae75f50bceb1
-  modified: 2026-08-08T10:16:52.217Z
+  modified: 2026-08-08T11:15:17.736Z
 ---
 
 The AI Chat Assistant Platform reached a working local end-to-end path on 2026-08-08. A signed Facebook webhook now flows: signature verify → replay/rate-limit → normalize → **forward to chat-core** → session → Tier 0 keyword match → reply stored → outbound send, stopping only at `token_unavailable` (no real FB page token), which is the correct stop for a credential-free test.
@@ -19,9 +19,14 @@ The AI Chat Assistant Platform reached a working local end-to-end path on 2026-0
 
 **Test without credentials:** seed a Tier 0 keyword rule — a Tier 0 hit answers from a template with zero LLM calls and no RAG, so the whole transport path is exercisable with no LLM key and no Milvus.
 
-**Blockers before a real Facebook test** (beyond obtaining a page token):
-1. `VAULT_ADDR` unset ⇒ the secret store is in-memory while `fb_app` rows live in Postgres, so **every messaging-backend restart loses the app secret** and all webhooks 404 `fb_app_not_found`; the row must be deleted and re-registered (rotate-secret can't recover it).
-2. Attachments don't flow — chat-core's inbound route models a text `body` only, so media messages are refused with `unsupported_content` before any HTTP call. Fix is additive (`attachment_ref` + relax body-required).
-3. chat-core can't mint a conversation id itself (`GetOrCreateConversation` needs a `channel_binding` it has no model for) — fine while every conversation arrives via this forward.
+**Closed 2026-08-08** on `feature/mvp-media-and-secret-durability` (both repos): secret durability — a Vault dev container is now in docker-compose, `RegisterApp` **refuses** (`503 secret_store_ephemeral`) when a durable registry is wired to an ephemeral secret store (opt-out via `CHAT_ALLOW_EPHEMERAL_SECRET_STORE`), and "secret gone" is now `ErrFBAppSecretUnresolvable`/`503` instead of masquerading as `404 fb_app_not_found`; attachments — the forward payload and chat-core's inbound DTO carry an attachment (body OR attachment required, migration 0044). Caught along the way: a tier0 `.*` pattern rule would have fired a canned text reply at every incoming photo, because `matchesPattern` didn't reject an empty body.
+
+**Still blocking a real Facebook test** (beyond a page token):
+1. `CHAT_FILE_SERVICE_BASE_URL` unset and `file-service` isn't in `Procfile.ai-mvp` — attachments store to an in-memory media repo, so the reference round-trips but the bytes don't survive a restart.
+2. `LLM_API_KEY` unset — anything that isn't a Tier 0 hit answers `ai_error`.
+3. Dev-mode Vault is inmem, so recreating the container still loses secrets — but it's now loud and recoverable with `rotate-secret`.
+4. chat-core can't mint a conversation id itself (`GetOrCreateConversation` needs a `channel_binding` it has no model for) — fine while every conversation arrives via this forward.
+
+Non-text messages today are **stored, not answered** — guardrails and tier0 both see an empty body and don't fire; deciding AI behaviour for media is AI-4's call and was deliberately not invented here.
 
 See [[project-ai-sprint234-autonomous-run]] for the full card/branch map and [[gorm-pgx-libpq-automigrate]] for the restart bug found along the way.
