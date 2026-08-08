@@ -85,7 +85,7 @@
 - [rps dual mainline](reference_rps_dual_mainline.md) — role-permission-service: main AND develop both live; number migrations past both branches; /internal has no auth by design
 - [AI platform deploy gating](project_ai_platform_deploy_gating.md) — CI_JOB_ENABLE var + missing K8s secret + develop→dev/main→staging model gate chat-core deploys; shared chart lacks initContainers
 - [AI Sprint 2-4 autonomous run](project_ai_sprint234_autonomous_run.md) — ALL S2-4 cards done 2026-08-06 on pushed feature branches WITHOUT MRs; full branch map + merge order; cards left In Progress
-- [Monorepo root has no origin](reference_monorepo_no_origin.md) — only remote is glab-base→BOLA repo; monorepo branches are local-only, never push
+- [Monorepo remotes: push origin, never glab-base](reference_monorepo_no_origin.md) — origin→monorepo.git is real (verified 2026-08-08); glab-base→BOLA repo is a trap
 - [chat-core stack merge order](project_ai_chatcore_merge_order.md) — fix/AI-32 must merge to main BEFORE the 9-branch AI stack, else 42P10 ships; EnsureDefault has a 2nd uncovered arbiter
 - [Lease/claim ownership bug class](reference_lease_claim_ownership_bug_class.md) — release/MarkDone by id without claim-token check → double-processing; hit 3× Aug 2026; tests miss it without concurrent workers
 - [PG partial-index ON CONFLICT generic-plan gotcha](reference_pg_partial_index_onconflict_generic_plan.md) — 42P10 from 6th execution per connection; fix = target-less DO NOTHING; test with 10+ calls on one connection
