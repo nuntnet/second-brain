@@ -93,3 +93,5 @@
 - [Sellsuki Product KB](project_sellsuki_product_kb.md) — docs/product-kb/ สำหรับ BD/MKT/Sales; ป้าย verified/asserted/hypothesis/GAP บังคับ; AI chatbot = 3 ระบบไม่ใช่ engine เดียว
 - [Outline MCP VPN blocker](reference_outline_mcp_vpn_blocker.md) — mcp-outline เป็น internal 10.x ต่อไม่ได้นอก VPN; ใช้ publish-to-outline.py แทน
 - [Verify as the user sees it](feedback_verify_as_the_user_sees_it.md) — publish/deploy เสร็จต่อเมื่อเปิดได้ใน session ที่ล็อกอินจริง; tool log + curl 200 ไม่ใช่หลักฐาน; เช็คสิทธิ์แยกจากการสร้าง
+- [Product marketing voice](feedback_product_marketing_voice.md) — เขียน KB สวมบท PMM ไม่ใช่ auditor; pain=งานลูกค้าไม่ใช่ bug; ต้องมีสูตรผสมฟีเจอร์; ToS/SLA ให้ร่าง
+- [Search before declaring GAP](feedback_search_before_declaring_gap.md) — เคยเขียนว่าไม่มี pricing ทั้งที่อยู่ใน docs/plan-capability-quota-map.md §8

@@ -24,7 +24,9 @@ pain point ต้องแยก evidence จริง (Jira bug) ออกจ�
 - Shipmunk **มี public API + API key auth อยู่แล้ว** — roadmap P2 ที่บอกว่าต้องสร้างนั้นผิด
   gap จริงคือ self-service onboarding + billing + white-label
 - Shipmunk มี carrier adapter 6 เจ้าใน code (dhl/flash/jnt/kerry/ninjavan/thaipost) แต่ README บอกแค่ 2
-- ช่องที่เป็นหลุมใหญ่สุด = **HOW** (pricing / SLA / ToS / support ไม่มีเลยทุก product) → `_gaps.md` G-02/G-10/G-11/G-12
+- **ราคา BOLA มีจริง** ใน `docs/plan-capability-quota-map.md` §8 (Starter ฿590 / Pro ฿1,990 / Ent ฿4,990 + capability key รายฟีเจอร์ + เพดาน workspace/broadcast/ai_message) — §7 = กติกา capability (boolean by presence, ต่อ feature ไม่ใช่ต่อ product)
+- **การล็อกสิทธิ์ตาม tier ยังไม่บังคับใช้** ทุก workspace = enterprise ตาม migration → sale ห้ามใช้ข้อจำกัดฟีเจอร์ปิดการขาย
+- product อื่นยังไม่ได้ขุด pricing (Patona/SukiPay/Shipmunk/OC2Plus)
 
 **Surface:** Control Tower แท็บ Docs มีชั้นวาง "📕 Product Knowledge Base" ปักหมุด (แก้ที่ `index.html` `#kbShelf` + `KB_SHELF`)
 **Outline:** publish แล้ว 2026-08-07 → collection **Product Knowledge Base** `9c9911d3-b918-4010-b31b-485551e37e29`
