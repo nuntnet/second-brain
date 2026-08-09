@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: a0710894-5349-411a-b947-f53b13519857
-  modified: 2026-08-09T06:04:33.752Z
+  modified: 2026-08-09T11:06:26.621Z
 ---
 
 **API-key management UI (OC-2269/2273/2274) = `frontend/oc2plus-linecrm-frontend-backoffice`** (Vue 3, :5176) → `src/views/ApiKey/{ApiKeyList,ApiKeyCreate,ApiKeyDetail}.vue`, routes `/apikey`, `/apikey/create`, `/apikey/:id`. Backend = **backoffice-api** (:8089) 4 endpoints `/v1/company/:id/api-keys`.
@@ -43,6 +43,16 @@ metadata:
 - FE เรียกผ่าน prefix ของ gateway: **`/backoffice/v1`** (64 จุด) และ **`/crmadmin/v1`** (apikey) → Caddy ต้อง `uri strip_prefix` ทั้งคู่
 - reload ใน container ไม่เห็นไฟล์ ใช้ `docker compose up -d --force-recreate caddy` (ดู [[reference_caddy_host_networking_gotcha]])
 
-**ยังต้องทำเอง 1 ขั้น:** `localStorage.setItem('company-id','<id>')` — หน้าเลือกบริษัทดึงจาก `/user/company` ซึ่ง CCS ตอบ `record not found` (ไม่มี mapping user↔company ใน CCS สำหรับ Kratos user นี้ · CCS ไม่มีตาราง mapping ใช้ Keto UUID-mapped tuples)
+**CORS — wildcard ใช้กับ `credentials: include` ไม่ได้ (เจอ 2 จุด):** backoffice-api ตอบ `ACAO: *` (`CorsAllowAll`) และ kratos-ui ตอบ `Allow-Headers: *` → เบราว์เซอร์ปฏิเสธทั้งคู่ · แก้ที่ Caddy ด้วย `header >` (replace) ใส่ origin/headers ที่ระบุชัด · ⚠️ **ต้องตั้งที่ระดับ site ไม่ใช่ใน `reverse_proxy`** เพราะ response 401 มาจาก **forward_auth (Kratos)** ไม่ผ่าน proxy → `header_down` ไม่ทำงาน และ CORS ของ Kratos จะบัง 401 จริงไว้ ทำให้ดูเหมือนปัญหา CORS
+
+**อีก 2 ค่าที่ setup.sh ตั้งผิด/ขาด (backoffice-api):**
+- **`PROVIDER_CODE` default = `patona`** แต่ company ที่ seed-dev สร้างเป็น **`sellsuki`** → `/user/company` คืน `[]` แล้ว UI ไล่ไปหน้า "สร้างบริษัท"
+- `KAFKA_TOPIC_CAMPAIGN_STATUS_COMMAND` ต้องมีค่า ไม่งั้น panic ตอน boot
+
+**🔴 companies ทุกแถวมี `address_country_code` ว่าง** → CCS `UserListCompany` เรียก `GetCountryByCode("")` → `record not found` → **500 ทั้ง list และ create** (UI แสดงเป็น "company creation failed") · ตาราง `countries` มีแค่ THA · fix: `UPDATE companies SET address_country_code='THA', tax_address_country_code='THA'` (อยู่ในสคริปต์ seed แล้ว)
+
+**`ssk-*` "Failed to resolve component" = warning ไม่ใช่ bug** — เป็น Lit Web Components จริงที่ render ได้ Vue แค่ไม่รู้จัก เพราะ `vite.config.ts` ไม่ได้ตั้ง `compilerOptions.isCustomElement` ให้ prefix `ssk-` (สภาพเดิมของรีโป ไม่เกี่ยว local)
+
+**ยังต้องทำเอง 1 ขั้น (เดิม — แก้แล้วด้วย PROVIDER_CODE):** `localStorage.setItem('company-id','<id>')` — หน้าเลือกบริษัทดึงจาก `/user/company` ซึ่ง CCS ตอบ `record not found` (ไม่มี mapping user↔company ใน CCS สำหรับ Kratos user นี้ · CCS ไม่มีตาราง mapping ใช้ Keto UUID-mapped tuples)
 
 ดู [[project_oc2plus_3rdparty_apikey_gap]] · [[project_pis_frontend_local_testing]] (เคส FE ชี้ dev-th เหมือนกัน — แก้ด้วย `.env.development.local`)
