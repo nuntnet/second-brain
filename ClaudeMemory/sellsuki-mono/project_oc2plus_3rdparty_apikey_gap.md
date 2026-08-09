@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: a0710894-5349-411a-b947-f53b13519857
-  modified: 2026-08-09T14:49:09.670Z
+  modified: 2026-08-09T15:35:31.613Z
 ---
 
 **รอบ 2026-08-09 — gap analysis + เปิด 7 การ์ด (OC-4424…4430)**
@@ -25,6 +25,11 @@ metadata:
 **CRUD 2 บ้าน — ทีมแก้แล้ว** `feat/oc-2273-apikey-crud` commit ล่าสุด `2f2b021 refactor(apikey): drop management endpoints (moved to backoffice-api)` → 3rdparty-api เหลือแค่ verification, backoffice-api เป็นเจ้าของ CRUD (ตรงกับเส้นแบ่งที่เคาะพอดี)
 
 ⚠️ **mainline ของ 3rdparty-api คือ `develop` ไม่ใช่ main** (develop นำ main 396 commit, มี ~90 branch)
+
+⚡ **hot path (เคาะ 2026-08-09, comment 43436 ของ OC-2275):** scope registry **ไม่อยู่บน hot path** — enforcement เทียบ string ระหว่าง scope ที่ principal ถือ กับ scope ที่ endpoint ต้องใช้ (ค่าคงที่ในไบนารี) ไม่มี DB read · registry = catalog สำหรับ UI/คน อ่านตอน boot พอ · เหลือของบน hot path ชั้นเดียว = credential verification
+🔴 **bcrypt = latency cliff ที่กำลังมา** — วัดจริง `bcrypt.CompareHashAndPassword` cost 10 = **47ms/ครั้ง** (100 req/s ≈ 5 คอร์) · branch `feat/oc-2273-apikey-crud` (MR !207, in code review) เปลี่ยน secret เป็น bcrypt + กรอง `expires_at` ที่ `postgresql.go:80-83` (develop วันนี้ยัง plaintext SQL compare + **ไม่กรอง expires_at เลย** = key หมดอายุยังใช้ได้) → **ต้องมี Redis cache principal ก่อน merge** (Redis มีในรีโปแล้ว: otp_session, rate_limit) · แจ้ง reviewer ที่ comment 43437 ของ OC-2273
+**ดีไซน์ปลายทาง:** เฟส 1 verify+cache TTL 60–300s + stale-while-revalidate (= คำตอบของ SPOF) · เฟส 2 JWKS signed token อายุสั้น verify in-memory ไม่มี hop · ⚠️ `/oauth/token` ที่มีอยู่เป็นของ **member ไม่ใช่ S2S** และเป็น opaque token + DB lookup ทุก request (`route_oauth_v1.go:13`, `Scope:"*"` hardcode `:33`) **อย่าเอาแพตเทิร์นนี้ไปใช้กับ S2S** · หมดอายุให้ filter ใน query เสมอ ไม่ใช่ job ไล่ flip status
+**ระบบ key เก่า (ไม่เกี่ยวกับงานนี้ อย่าเอาไปปนในการ์ด):** `oc2plus-cron-apikey-expiration` ทำงานกับ **MongoDB** `oc2plus-service-core-api` collection `apikey` keyed by `store_id` (CronJob รายชั่วโมง, มี values-production.yml) — คนละ store คนละ tenant model กับ Postgres `api_key` ของ OC-2273
 
 **เส้นแบ่งที่ทีมเคาะ:** key mgmt → central (ยังไม่ทำ) · scope + mapping + enforcement = บ้านใครบ้านมัน · central เก็บ scope เป็น **opaque** ห้ามมี enum · สัญญา = scope registry ที่ service ประกาศเอง · โค้ดต้องอยู่หลัง interface `CredentialVerifier` (คืน key_id/company_id/scopes/principal_type) เพื่อย้ายง่าย · ไม่เอาไว้ที่ RPS (Keto tuple = คนละโมเดลกับ bearer secret) แนะนำ CCS · **ไม่มี JWT ในระบบเลย** → central เฟส 1 introspect+cache, เฟส 2 JWKS · note เต็มอยู่ที่ comment 43431+43433 ของ OC-2275
 
