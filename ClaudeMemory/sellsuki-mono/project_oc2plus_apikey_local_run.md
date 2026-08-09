@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: a0710894-5349-411a-b947-f53b13519857
-  modified: 2026-08-09T11:06:26.621Z
+  modified: 2026-08-09T13:35:02.806Z
 ---
 
 **API-key management UI (OC-2269/2273/2274) = `frontend/oc2plus-linecrm-frontend-backoffice`** (Vue 3, :5176) → `src/views/ApiKey/{ApiKeyList,ApiKeyCreate,ApiKeyDetail}.vue`, routes `/apikey`, `/apikey/create`, `/apikey/:id`. Backend = **backoffice-api** (:8089) 4 endpoints `/v1/company/:id/api-keys`.
@@ -17,7 +17,12 @@ metadata:
 1. **identity** — `X-User-Id` ต้อง resolve ใน **Kratos** (`GetUserProfileFromID` → kratos admin :4434) ไม่ใช่ CCS
 2. **permission** — `oc2plus.apikey.manage` บน `sellsuki.company:{id}` ผ่าน **role-perm gRPC** (สร้าง role + AssignRole)
 3. **DPA** — ต้องมี consentee `company_{companyID}` ที่ทุก option = accepted (`IsAllAccepted()`; **POST /consentee สร้างมาเป็น `declined` เสมอ ต้อง PUT ทับ**) · consent service ไม่มี API สร้าง `application` row ต้อง upsert ลง Mongo เอง
-4. **schema** — ตาราง `api_key` **ไม่มี migration ในรีโป** (comment ในโค้ดชี้ว่าเป็นของ WS1-B ที่ยังไม่ลง) → `scripts/schema-oc2plus-crm.sql` + wired เข้า `migrate-all.sh`
+4. **schema** — CRM schema **อยู่ในรีโปแยกต่างหาก** (ดูหัวข้อล่าง) ไม่ใช่ในรีโป service ไหนเลย
+
+**🔑 CRM schema อยู่ที่ `git@gitlab.sellsuki.com:sellsuki/oc2plus/line-crm/migration/oc2plus-line-crm-migration.git`** — db-migrate (Node), **78 migrations → 49 ตาราง** (member/campaign/point/code/order/broadcast/richmenu/api_key/export) · รันด้วย `DEVELOPMENT_{USERNAME,PASSWORD,HOST,DATABASE}` + `npx db-migrate up -e dev` · wired เข้า `migrate-all.sh` แล้ว (clone ลง `.cache/`, gitignored)
+- ⚠️ **อย่าเดา DDL เอง** — ผมเคยเขียน `api_key` เองจากโค้ด แล้วผิดหลายจุด: จริงคือ `company_id uuid` (ไม่ใช่ TEXT), `key varchar(32)`, `secret varchar(64)`, `timestamp without time zone`, `uuid_generate_v4()` (ต้องมี extension `uuid-ossp`)
+- WS1-B (`member-api/migrations/003_add_api_key_columns.up.sql`) **ยังไม่อยู่ในรีโป migration** → migrate-all.sh apply ไฟล์นั้นทับหลัง 78 ตัว
+- ไม่มี `member`/`cms_menu`/`export` = ทุกหน้าใน CRM 500 (ไม่ใช่บั๊กโค้ด)
 
 **ค่า env ที่ setup.sh ตั้งผิด/ขาด (แก้แล้วทั้ง template และ .env):**
 - `CCS_SERVICE_BASE_URL` เคยเป็น **8085 (ผิด — central-configuration-system)** ต้องเป็น **8092**
@@ -29,6 +34,8 @@ metadata:
 - **backoffice-api ไม่มี `.air.toml`** → air build root ที่ไม่มี main package → 502 (สร้างให้แล้ว)
 - Kafka consumer ถูกสร้าง**เสมอ ไม่เช็ค `KAFKA_ENABLED`** → panic `either Topic or GroupTopics must be specified` ถ้า `KAFKA_TOPIC_CAMPAIGN_STATUS_COMMAND` ว่าง
 - CCS boot health-check **fail-fast** ต้องมี sukipay gRPC :50070 + address gRPC :50058 ขึ้นก่อน ไม่งั้น CCS ตาย
+
+**🔴 บั๊กที่ 2 ของ OC-2273 — `key` ยาวเกินคอลัมน์ (พังบน dev-th/staging ด้วย):** `use_case/api_key.go:118` `generateAPIKeyPlaintext(16)` → hex 32 ตัว + prefix `"ak_"` (line 125) = **35 ตัว** แต่ migration `20250204031115-create-table-api-key` กำหนด `key varchar(32)` → **POST /api-keys ล้มทุกครั้ง** `value too long for type character varying(32)` · ตารางมีก่อน prefix `ak_` — WS1-A เติม prefix โดยไม่ขยายคอลัมน์ · ต้องเปิด migration ใหม่ในรีโป migration (local ใช้ `ALTER ... varchar(64)` ใน `scripts/schema-oc2plus-crm.sql` ไปก่อน) · **บั๊กนี้ถูกซ่อนไว้ถ้าเทสด้วยตารางที่เดา DDL เอง**
 
 **🔴 บั๊กในโค้ด OC-2273 ที่เจอและแก้ (ยังไม่ commit):** `api_key_repository/postgresql.go` `scanApiKeyRows` scan **9 ปลายทาง แต่ `apiKeyColumns` select 10** และข้าม `key` → list/detail 500 เสมอ ("expected 10 destination arguments in Scan, not 9") — **ฟีเจอร์ใช้ไม่ได้จริงบน branch นั้น**
 
