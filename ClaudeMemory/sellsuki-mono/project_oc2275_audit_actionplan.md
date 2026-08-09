@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: a0710894-5349-411a-b947-f53b13519857
-  modified: 2026-08-09T16:51:34.175Z
+  modified: 2026-08-09T17:16:44.470Z
 ---
 
 **Audit เต็มของ OC-2275 API-key workstream (2026-08-09) — user อ่านแล้วบอกว่า "วิเคราะห์ถูกต้องทั้งหมด อยากทำทั้งหมด" แต่ token ไม่พอ จึงบันทึกไว้ทำต่อ**
@@ -26,7 +26,14 @@ metadata:
 - ผิดยังไง: WS1-B อยู่ที่ `member-api/migrations/003_add_api_key_columns.up.sql` แต่**บ้านจริงของ schema CRM คือรีโป `git@gitlab.sellsuki.com:sellsuki/oc2plus/line-crm/migration/oc2plus-line-crm-migration.git`** ซึ่งเป็นที่ที่ `api_key` ถูกสร้าง (`20250204031115-create-table-api-key-up.sql`)
 - คอมเมนต์ในไฟล์เขียนเหตุผลผิดว่า member-api คือ "CRM DB's version-controlled migration set" — ไม่จริง · member-api ไม่มี runner (ไฟล์เขียนเองว่า "no automated runner in this repo") · เลข 001/002/003 คนละระบบกับ db-migrate timestamp
 - MR !71 target `feat/oc-4289-post-members` ซึ่ง **ยังไม่ merge (+3 จาก develop) และไม่มี MR ของตัวเอง** → WS1-B ไปไม่ถึง develop ทางนี้ · branch ยังลาก 3 commit ของ OC-4289 (LINE-agnostic members + OTP) ติดมา
-**▶ ความคืบหน้า 2026-08-09:** สร้าง+push แล้ว branch `feat/oc-2273-ws1b-api-key-management-columns` ในรีโป migration (commit `58a96c7`, 3 ไฟล์: `20260809000000-alter-table-api-key-add-management-columns` .js + sqls up/down) · verify แล้วว่า up.sql รันผ่านบน local oc2plus_crm และ idempotent
+## ✅ ข้อ 1 ทำเสร็จแล้ว 2026-08-10
+
+- **migration repo !73** (Draft) `feat/oc-2273-ws1b-api-key-management-columns` → **develop** — WS1-B ฉบับย้ายบ้าน + แก้ `key varchar(32)`→64 · **merge หลัง !72 เท่านั้น**
+- **migration repo !72** `chore/sync-develop-with-main` → develop — 🔴 **main กับ develop ของรีโปนี้ unrelated histories** (main = 1 commit squashed 2026-07-31 มี 77 migrations · develop = history เดิมปี 2024 มี 6 migrations, ไม่มีไฟล์ไหนที่ main ไม่มี, ต่างแค่ README+package.json) → merge `--allow-unrelated-histories` เอาฝั่ง main, tree เท่ากับ main เป๊ะ, ไม่ force push
+- **member-api !71 ปิดแล้ว** พร้อมคอมเมนต์ชี้ทางไป !72/!73 (note_83991)
+- ⏳ เหลือ: **ลบ `member-api/migrations/003_add_api_key_columns.{up,down}.sql`** ไม่ให้มี DDL ของ api_key สองชุด
+
+**▶ ความคืบหน้าเดิม 2026-08-09:** สร้าง+push แล้ว branch `feat/oc-2273-ws1b-api-key-management-columns` ในรีโป migration (commit `58a96c7`, 3 ไฟล์: `20260809000000-alter-table-api-key-add-management-columns` .js + sqls up/down) · verify แล้วว่า up.sql รันผ่านบน local oc2plus_crm และ idempotent
 🔴 **ยังไม่เปิด MR — ติดคำถาม target branch**: รีโป migration นี้ **`develop` ตายตั้งแต่ 2024-03-07 (6 migrations) ส่วน `main` คือของจริง (77 migrations, active 2026-07-31)** → ขัดกฎ "OC2Plus merge to develop เท่านั้น" ต้องให้ user เคาะก่อน
 ⚠️ **ตัดสินใจระหว่างทาง**: `expires_at` ใช้ **timestamptz** (ไม่ตาม convention `without time zone` ของตาราง) เพราะ GetActiveApiKey เทียบคอลัมน์กับ Go `time.Time` ที่ driver ส่งเป็น timestamptz → ถ้าเป็น without-tz Postgres จะ cast ด้วย session TimeZone แล้วอ่าน UTC เป็น Asia/Bangkok = **เพี้ยน 7 ชม.**
 ยังค้าง: เปิด MR · ปิด !71 · ลบไฟล์ออกจาก member-api
