@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: a0710894-5349-411a-b947-f53b13519857
-  modified: 2026-08-09T14:43:37.561Z
+  modified: 2026-08-09T14:49:09.670Z
 ---
 
 **รอบ 2026-08-09 — gap analysis + เปิด 7 การ์ด (OC-4424…4430)**
@@ -19,6 +19,8 @@ metadata:
 
 🟡 **G3 scope catalog drift:** FE `entities/apikey.ts:19-30` = 10 · backend model = 3 · การ์ด OC-2273 = 11 → OC-4426 registry
 **G4** ไม่มี endpoint ให้แต้มตามยอดซื้อ → OC-4429/OC-4413 · **G5** audit 1 จุด (`me.go:148`), ไม่มี request log ให้ร้านดู, webhook = 0 → OC-4427/4428
+
+🔴 **secret รั่วลง log** — `middleware/logger.go:31,32` เก็บ `Headers` + `Body` ทั้งก้อนไม่ redact (mount ที่ `fiber_server.go:64-66` เมื่อ `sc.RequestLog`) แต่ `/auth/whoami` (`route_openapi_auth_v2.go:12-13`) รับ `X-Api-Key`/`X-Api-Secret` ทาง header → **secret ลง Loki เป็น plaintext ทุกครั้งที่ POS เรียก whoami** · ยังไม่ได้เช็คว่า `RequestLog` เปิดบน prod มั้ย (ถ้าเปิด = incident) · แจ้งไว้ที่ comment 43435 ของ OC-4427 เสนอแยกเป็น bug ใบเล็ก · **ของแถม: instrumentation ที่ OC-4427 ต้องการมีอยู่แล้วในไฟล์นี้** งานจริงเหลือแค่ retention + โชว์แบบ scope ตาม company
 
 **CRUD 2 บ้าน — ทีมแก้แล้ว** `feat/oc-2273-apikey-crud` commit ล่าสุด `2f2b021 refactor(apikey): drop management endpoints (moved to backoffice-api)` → 3rdparty-api เหลือแค่ verification, backoffice-api เป็นเจ้าของ CRUD (ตรงกับเส้นแบ่งที่เคาะพอดี)
 
