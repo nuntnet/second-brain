@@ -97,5 +97,6 @@
 - [Verify as the user sees it](feedback_verify_as_the_user_sees_it.md) — publish/deploy เสร็จต่อเมื่อเปิดได้ใน session ที่ล็อกอินจริง; tool log + curl 200 ไม่ใช่หลักฐาน; เช็คสิทธิ์แยกจากการสร้าง
 - [Product marketing voice](feedback_product_marketing_voice.md) — เขียน KB สวมบท PMM ไม่ใช่ auditor; pain=งานลูกค้าไม่ใช่ bug; ต้องมีสูตรผสมฟีเจอร์; ToS/SLA ให้ร่าง
 - [Search before declaring GAP](feedback_search_before_declaring_gap.md) — เคยเขียนว่าไม่มี pricing ทั้งที่อยู่ใน docs/plan-capability-quota-map.md §8
+- [Verify before claiming "ไม่มี X"](feedback_verify_absence_claims.md) — clone refspec หลอก `git branch -r`, grep ชื่อที่รีโปใช้จริง, rtk กรอง output; เคยไปแย้งการ์ดที่ถูกต้อง
 - [OC2Plus API-key local run](project_oc2plus_apikey_local_run.md) — UI=linecrm-backoffice /apikey; 4 gates (kratos/keto-role/DPA-consentee/api_key table); setup.sh env ผิด 4 ตัว; scan-column bug ทำ list 500
 - [ssk-* DS docs live in node_modules](reference_ssk_components_docs.md) — isCustomElement is REQUIRED for Vue property binding, not a warning fix; read the catalog skill, never the minified bundle

@@ -5,8 +5,26 @@ metadata:
   node_type: memory
   type: project
   originSessionId: a0710894-5349-411a-b947-f53b13519857
-  modified: 2026-07-31T10:13:56.998Z
+  modified: 2026-08-09T14:43:37.561Z
 ---
+
+**รอบ 2026-08-09 — gap analysis + เปิด 7 การ์ด (OC-4424…4430)**
+
+✅ **scope ถูก enforce จริง ครบ 4/4 endpoint** — กลไก `use_case/apikey_identity.go:11 checkIdentityApiKey` + `:44 isValidScopes` (มีบน main และ develop) · `/event`→`event.read` (`event.go:22`) · `/campaign/event/inquiry`→`event.read`+`campaign.read` (`event_redemption.go:20`) · `/campaign/event/confirm`→`campaign.redeem.event` (`:148`) · `/auth/whoami` ไม่ต้องมี scope
+🔴 **ผมเคยสรุปผิดว่า "ไม่ enforce เลย" แล้วไป comment แย้ง OC-4398 (ซึ่งเขียนถูก)** — ถอนแล้วที่ comment 43432 (OC-4398) และ 43433 (OC-2275) · สาเหตุ: grep `HasScope|RequireScope|CheckScope` ซึ่งไม่ใช่ชื่อที่รีโปนี้ใช้ + นับ 33 endpoint รวมเส้น member session (v2 openapi มีแค่ **4 path**)
+
+🔴 **gap จริง G1 — enforcement เป็น convention ไม่ใช่โครงสร้าง** `security: - apiKey: []` ประกาศ scope ว่าง → `spec.gen.go` set `ApiKeyScopes` = `[]string{}` ไม่มีใครอ่าน → endpoint ใหม่ที่ลืมเรียก `checkIdentityApiKey` 1 บรรทัด = ไม่มี scope check และไม่มีสัญญาณเตือน (build/test/swagger ผ่านหมด) → OC-4424
+
+🔴 **G2 — service เชื่อ header** `helper/auth.go:29-52` อ่าน `X-Api-Key-Id`/`X-Company-Id`/`X-Api-Scope` ตรง ๆ สมมติ gateway verify+inject · ถ้า gateway ไม่ strip ของ client = ปลอม scope และปลอม company ได้ · **ยังไม่ได้ verify** → OC-4425 · (header member `X-User-Id`/`X-User-Kind` แยกขาดจาก API-key จึงไม่มี confused-deputy ในตัว service)
+
+🟡 **G3 scope catalog drift:** FE `entities/apikey.ts:19-30` = 10 · backend model = 3 · การ์ด OC-2273 = 11 → OC-4426 registry
+**G4** ไม่มี endpoint ให้แต้มตามยอดซื้อ → OC-4429/OC-4413 · **G5** audit 1 จุด (`me.go:148`), ไม่มี request log ให้ร้านดู, webhook = 0 → OC-4427/4428
+
+**CRUD 2 บ้าน — ทีมแก้แล้ว** `feat/oc-2273-apikey-crud` commit ล่าสุด `2f2b021 refactor(apikey): drop management endpoints (moved to backoffice-api)` → 3rdparty-api เหลือแค่ verification, backoffice-api เป็นเจ้าของ CRUD (ตรงกับเส้นแบ่งที่เคาะพอดี)
+
+⚠️ **mainline ของ 3rdparty-api คือ `develop` ไม่ใช่ main** (develop นำ main 396 commit, มี ~90 branch)
+
+**เส้นแบ่งที่ทีมเคาะ:** key mgmt → central (ยังไม่ทำ) · scope + mapping + enforcement = บ้านใครบ้านมัน · central เก็บ scope เป็น **opaque** ห้ามมี enum · สัญญา = scope registry ที่ service ประกาศเอง · โค้ดต้องอยู่หลัง interface `CredentialVerifier` (คืน key_id/company_id/scopes/principal_type) เพื่อย้ายง่าย · ไม่เอาไว้ที่ RPS (Keto tuple = คนละโมเดลกับ bearer secret) แนะนำ CCS · **ไม่มี JWT ในระบบเลย** → central เฟส 1 introspect+cache, เฟส 2 JWKS · note เต็มอยู่ที่ comment 43431+43433 ของ OC-2275
 
 **OC-2275** (Epic, created 2024-01-11 as an empty stub with 4 stale UI-mockup child stories never implemented) rewritten 2026-07-21 after verifying actual code — not the 2024 spec — by shallow-cloning the real repos into scratchpad (none of these are monorepo submodules).
 
