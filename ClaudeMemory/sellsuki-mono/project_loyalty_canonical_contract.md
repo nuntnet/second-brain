@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: a0710894-5349-411a-b947-f53b13519857
-  modified: 2026-08-07T15:50:15.378Z
+  modified: 2026-08-09T05:33:05.531Z
 ---
 
 **OC-4413 (Award Engine Core) = hub + single source of truth ของ loyalty cluster.** Contract กลางประกาศไว้ที่คอมเมนต์ "CANONICAL CONTRACT SHEET" (2026-08-07) — การ์ดอื่นห้ามนิยามเอง ให้อ้างมาที่นี่
@@ -19,6 +19,13 @@ metadata:
 **OC-4415 ย้ายไปเป็น field ในหน้าตั้งค่าหน่วยแต้มเดิม (เครื่องมือ > คะแนน) ไม่เปิดเมนูใหม่** — base rate = คุณสมบัติของ point currency (`point.Point` มี IsPrimary อยู่แล้ว, เพิ่ม 5 field: base_rate_enabled / base_amount_per_point / base_points_earned / base_rounding / base_rate_effective_from)
 
 **การ์ดใหม่ 2026-08-07:** **PAT-2604** (บอร์ด PAT, epic PAT-2490) = สัญญา purchase event ขอ `line_items[{sku,qty,line_amount}]` + sku ตรง PIS + customer.phone E.164 — blocks OC-4414; ต้อง fold เข้า **PAT-2300** (Kafka event v2 = SoT ของ schema) · **OC-4419** = integration guide รวมชุด (decision tree + error playbook) เพราะ "swagger" เดิมเป็นแค่ DoD บรรทัดเดียวกระจายหลายใบ
+
+**รอบ 4 — PO เพิ่ม logic ใน OC-4295 (2026-08-08), 3 ใน 4 ต้องบังคับตอน runtime ที่ OC-4413/OC-4420:**
+1. **channel = multi-select** — `channel_scope: all|selected` + `channels[]` (**OR** เข้าเกณฑ์ถ้าตรงอย่างน้อย 1) · ห้ามมีค่า `all` ปนใน array · แทน field `channel` เดี่ยว
+2. **จำกัดสมาชิก 3 ชั้นอิสระ ตั้งพร้อมกันได้** — `member_limit_per_campaign/_per_day/_per_month` (nullable) · **AND** ชั้นที่ตั้งต้องผ่านทุกชั้น · **หน้าต่าง = ปฏิทิน Asia/Bangkok ไม่ใช่ rolling 24 ชม./30 วัน** · 🔴 **นับด้วย `purchased_at` ไม่ใช่เวลาแจกแต้ม** (บิลย้อนหลังกินโควตาของวันที่ซื้อจริง → วันที่เต็มแล้วจะ skip) · Commit **ต้อง re-check ใน txn** ไม่งั้น TOCTOU
+3. **วันหมดอายุแต้ม 3 โหมด** — `never` / `duration_days` (แต่ละก้อนคนละวัน) / `fixed_date` (ทุกก้อนวันเดียว) · **วันตายตัวต้องไม่ก่อนวันสิ้นสุดแคมเปญ** ไม่งั้นคนซื้อวันท้าย ๆ ได้แต้มหมดอายุทันที · แต้มที่แจกแล้วถือวันหมดอายุ ณ ตอนได้รับ ห้าม recompute
+4. **segment = multi-select** — `segment_ids[]` + `segment_match: any` (OR) · ทุก id ต้องเป็นของ company เดียวกัน
+**edit-guard หลัง published:** ขยายลิมิต = ได้ · **ลดลิมิต/เพิ่มชั้นใหม่ = block** · **แก้วันหมดอายุ = block ทุกกรณี**
 
 **🔴 "หมวดสินค้า" ไม่มีอยู่จริงทั้งแพลตฟอร์ม (verified 2026-08-07):** `grep -i categor` = 0 ผลลัพธ์ ทั้ง pis-api (`src/entity`, `src/use_case/repository`), catalog-service, และ backoffice product layer · PIS `GetProductPaginateQueryParam` (`pis-api/src/interface/fiber_server/model/product_get_model.go:51`) = `Keyword/Type/RefID/Offset/Limit/SortBy/SortDirection/LocationID` ไม่มี category · backoffice client (`backoffice-api/src/repository/product_repository/rest.go:109-115`) ส่งได้แค่ `type`+`keyword` → **campaign "เลือกทั้งหมวด" ทำไม่ได้ ตัดออกจาก v1** (ต้องเปิดการ์ดฝั่ง PIS ก่อน) · พ่วง: **`Sku` อยู่ที่ `ProductVariant` ไม่ใช่ `Product`** → เลือกสินค้า 1 ตัว = หลาย SKU
 
