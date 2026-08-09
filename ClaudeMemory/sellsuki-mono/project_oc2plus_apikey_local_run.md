@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: a0710894-5349-411a-b947-f53b13519857
-  modified: 2026-08-09T05:31:15.759Z
+  modified: 2026-08-09T06:04:33.752Z
 ---
 
 **API-key management UI (OC-2269/2273/2274) = `frontend/oc2plus-linecrm-frontend-backoffice`** (Vue 3, :5176) → `src/views/ApiKey/{ApiKeyList,ApiKeyCreate,ApiKeyDetail}.vue`, routes `/apikey`, `/apikey/create`, `/apikey/:id`. Backend = **backoffice-api** (:8089) 4 endpoints `/v1/company/:id/api-keys`.
@@ -32,6 +32,17 @@ metadata:
 
 **🔴 บั๊กในโค้ด OC-2273 ที่เจอและแก้ (ยังไม่ commit):** `api_key_repository/postgresql.go` `scanApiKeyRows` scan **9 ปลายทาง แต่ `apiKeyColumns` select 10** และข้าม `key` → list/detail 500 เสมอ ("expected 10 destination arguments in Scan, not 9") — **ฟีเจอร์ใช้ไม่ได้จริงบน branch นั้น**
 
-**Caddy:** เพิ่ม local-dev identity shim ที่ `oc2plus-api.sellsuki.local` (inject `X-User-Id` เมื่อ caller ไม่ได้ส่ง) เพราะ FE ส่ง `Authorization: Bearer` แต่ backend อ่าน `X-User-Id` — dev-th มี gateway แปลงให้ local ไม่มี · ⚠️ ต้องใช้ `request_header @matcher` **ห้ามใส่ใน `handle`** (handle เป็น mutually exclusive → คืน 200 body ว่าง) · reload ใน container ไม่เห็นไฟล์ ใช้ `docker compose up -d --force-recreate caddy` (ดู [[reference_caddy_host_networking_gotcha]])
+**🔑 AMS ตัว local = `kratos-ui-go` ที่ `accounts.sellsuki.local` (:4455) — อย่าทำ stub เอง** (ผมเคยพลาดทำ stub ก่อน user ทัก) มันเสิร์ฟ `/profile` `/login` `/logout` `/cookie` `/error` ครบ และ `/profile` คืน `{id,email,first_name,last_name}` ตรงกับที่ FE ต้องการเป๊ะ · Caddy map `accounts.sellsuki.local` → 4455 อยู่แล้ว
+- **Kratos ออกแบบมาเพื่อ local SSO อยู่แล้ว:** `kratos_schema_client/kratos.yml` → `base_url: https://accounts.sellsuki.local/` · session cookie `sellsuki_session` **domain `sellsuki.local`** (แชร์ทุก subdomain) · `allowed_return_urls` ลิสต์ `https://oc2plus.sellsuki.local/` และ FE ตัวอื่นไว้แล้ว
+- 🔴 **kratos-ui-go ต้องตั้ง `WHITELIST_DOMAIN`** — default `http://127.0.0.1:*` ไม่ครอบ `*.sellsuki.local` → `/cookie` เด้ง `?invalidWhitelist=false` (อาการเดียวกับ AMS dev-th ปฏิเสธ local origin) · ใช้ `{https://*.sellsuki.local*,http://localhost:*,http://127.0.0.1:*}` (gobwas/glob รองรับ `{a,b}`) · setup.sh ไม่ได้ตั้งให้ (เพิ่มแล้ว)
+- ⚠️ แก้ `.env` แล้ว `overmind restart` **ไม่พอ** — air ไม่ rebuild ต้อง `touch` ไฟล์ .go ให้ air restart binary (godotenv โหลดตอน boot)
+
+**Caddy — identity translation:** ให้ `oc2plus-api.sellsuki.local` ทำงานแทน gateway ด้วย `forward_auth localhost:4433 { uri /sessions/whoami; copy_headers X-Kratos-Authenticated-Identity-Id>X-User-Id }` → ได้ user จาก session จริง **ไม่ hardcode** · ไม่มี session = 401 จริง (FE เด้งไป login เหมือน prod) · กัน matcher `@has_user header X-User-Id *` ไว้ให้ curl/test override ได้
+- 🔴 **ห้าม `import api_proxy` ข้างใน `handle`** — snippet นั้น import `common` ที่มี `tls` ซึ่งไม่ใช่ ordered HTTP handler → **config adaptation ล้มทั้ง Caddyfile ทุกโดเมนดับหมด** ไม่ใช่แค่ site นั้น · ให้ `import common` ที่ระดับ site แล้วใน handle ใส่แค่ `reverse_proxy`
+- ⚠️ `handle` เป็น mutually exclusive — เอา `request_header` ไปใส่ใน handle เปล่า ๆ จะกลืน request แล้วคืน 200 body ว่าง
+- FE เรียกผ่าน prefix ของ gateway: **`/backoffice/v1`** (64 จุด) และ **`/crmadmin/v1`** (apikey) → Caddy ต้อง `uri strip_prefix` ทั้งคู่
+- reload ใน container ไม่เห็นไฟล์ ใช้ `docker compose up -d --force-recreate caddy` (ดู [[reference_caddy_host_networking_gotcha]])
+
+**ยังต้องทำเอง 1 ขั้น:** `localStorage.setItem('company-id','<id>')` — หน้าเลือกบริษัทดึงจาก `/user/company` ซึ่ง CCS ตอบ `record not found` (ไม่มี mapping user↔company ใน CCS สำหรับ Kratos user นี้ · CCS ไม่มีตาราง mapping ใช้ Keto UUID-mapped tuples)
 
 ดู [[project_oc2plus_3rdparty_apikey_gap]] · [[project_pis_frontend_local_testing]] (เคส FE ชี้ dev-th เหมือนกัน — แก้ด้วย `.env.development.local`)
