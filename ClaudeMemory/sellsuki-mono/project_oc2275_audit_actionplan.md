@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: a0710894-5349-411a-b947-f53b13519857
-  modified: 2026-08-10T09:12:17.990Z
+  modified: 2026-08-10T10:03:29.558Z
 ---
 
 ## 📌 สถานะล่าสุด 2026-08-10 16:12 — OC-4424+4425+4426 shipped ก้อนเดียว
@@ -22,7 +22,13 @@ metadata:
 - `GET /.well-known/scopes` (plain fiber route, ไม่ผ่าน codegen) อ่านจาก `middleware.EnforcedScopes()` — **map เดียวกับที่ enforce จริง ไม่มี list ที่สอง** พิสูจน์ด้วยการเพิ่ม description ของ scope ที่ไม่ enforce แล้ว test แดง
 - 3rd bug ที่เจอ (`c.Route().Path` คืนค่า route ของ middleware เองไม่ใช่ endpoint ปลายทางเมื่ออยู่ใน Group — ใช้ `c.Path()` แทน) — ถ้า WS3 (OC-4398) merge มาแล้วมี path param ต้องแก้ทั้ง middleware และ test คู่กัน (เขียน comment เตือนไว้ในโค้ดแล้ว)
 
-🔴 **OC-4425 ทำได้ไม่ครบ — เหลือ audit gateway จริง** ผมไม่มีทางเข้าถึง gateway config ของ dev-th/staging/prod จาก sandbox นี้ (local Caddyfile ไม่ได้ proxy เข้า 3rdparty-api เลย มีแต่ backoffice-api :8089) — ต้องมีคนที่เข้าถึง gateway จริง + curl จริงมาปิดข้อนี้ เขียนไว้ชัดใน comment 43451 ของ OC-4425 ว่ายัง open
+✅ **OC-4425 อัปเดต 2026-08-10 หลัง user ชี้ repo — เจอ gateway config จริง ตรวจได้ 90%** (comment 43453)
+- **`sellsuki/sre/configuration/oc2plus`** `manifest/{env}/rule.yaml` = Ory **Oathkeeper** access rules (ตัวจริงที่ทำ AuthN) — `sellsuki/sre/configuration/api-gateway` (ที่ user เดา) เป็นแค่ Ambassador Mapping ที่ forward เข้า `oathkeeper-proxy.share:4455` อีกที
+- เส้น partner จริงคือ hostname **`openapi.poshmedica.co.th/v2/openapi<.*>`** (ตรงกับ `PROVIDER_CODE=poshmedica`) **ไม่ใช่** `crmapi.oc2.plus` (อันนั้นเป็น v1 member-session คนละ rule คนละ auth model)
+- rule: `bearer_token` authenticator อ่าน `X-Api-Key` จาก client, forward `X-Api-Key`+`X-Api-Secret` ไปเรียก **`check_session_url: .../v2/openapi/auth/whoami`** ของ 3rdparty-api เอง (bcrypt verify จริงตาม `GetActiveApiKey`) แล้ว `header` mutator เซ็ต `X-Api-Key-Id`/`X-Company-Id`/`X-Api-Scope` จาก response (`api_key_id`/`company_id`/`scope` — ตรง JSON tag `AuthWhoAmIResponse` เป๊ะ)
+- ✅ ไม่มี Ambassador Mapping อื่นชี้ตรงเข้า `oc2plus-line-crm-service-3rdparty-api-svc` เลย (grep ทั้ง repo ทุก env) + k8s Service เป็น ClusterIP อยู่แล้ว
+- ⚠️ **เหลือจุดเดียว** — ไม่ได้ยิง curl จริงยืนยันว่า Oathkeeper `header` mutator **Set (replace)** หรือ **Add (append)** ค่าที่ client ปลอมมา (ความมั่นใจสูงว่าเป็น Set ตามพฤติกรรมที่ mutator นี้ตั้งใจทำ แต่ไม่ได้ verify runtime) — แนะนำ curl staging-th ด้วย `X-Company-Id` ปลอม + key จริง ดู response
+- `sre/configuration/networkpolicy` **repo เปล่า** —ยังไม่รู้ network policy จริงของ namespace `octoplus` อยู่ที่ไหน (ปัจจัยรอง)
 
 Jira comments: 43450 (OC-4424) · 43451 (OC-4425, partial) · 43452 (OC-4426)
 
