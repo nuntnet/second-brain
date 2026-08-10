@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: a0710894-5349-411a-b947-f53b13519857
-  modified: 2026-08-09T17:16:44.470Z
+  modified: 2026-08-10T08:47:28.354Z
 ---
 
 **Audit เต็มของ OC-2275 API-key workstream (2026-08-09) — user อ่านแล้วบอกว่า "วิเคราะห์ถูกต้องทั้งหมด อยากทำทั้งหมด" แต่ token ไม่พอ จึงบันทึกไว้ทำต่อ**
@@ -26,6 +26,21 @@ metadata:
 - ผิดยังไง: WS1-B อยู่ที่ `member-api/migrations/003_add_api_key_columns.up.sql` แต่**บ้านจริงของ schema CRM คือรีโป `git@gitlab.sellsuki.com:sellsuki/oc2plus/line-crm/migration/oc2plus-line-crm-migration.git`** ซึ่งเป็นที่ที่ `api_key` ถูกสร้าง (`20250204031115-create-table-api-key-up.sql`)
 - คอมเมนต์ในไฟล์เขียนเหตุผลผิดว่า member-api คือ "CRM DB's version-controlled migration set" — ไม่จริง · member-api ไม่มี runner (ไฟล์เขียนเองว่า "no automated runner in this repo") · เลข 001/002/003 คนละระบบกับ db-migrate timestamp
 - MR !71 target `feat/oc-4289-post-members` ซึ่ง **ยังไม่ merge (+3 จาก develop) และไม่มี MR ของตัวเอง** → WS1-B ไปไม่ถึง develop ทางนี้ · branch ยังลาก 3 commit ของ OC-4289 (LINE-agnostic members + OTP) ติดมา
+## 📌 สถานะรวม 2026-08-10 (user สั่ง implement OC-4431/4424/4425/4426/4430 + งานค้าง)
+
+**เสร็จ:**
+- migration repo **!72 merged** (sync develop←main) · **!73 พร้อม merge** (WS1-B + key varchar 64) · member-api **!71 ปิดแล้ว**
+- ไฟล์ `member-api/migrations/003_add_api_key_columns.*` **ไม่เคยไปถึง develop** (อยู่แต่บน branch ที่ MR ปิด) → ไม่ต้องลบอะไร ปิดข้อนี้ได้
+- **OC-4431 เสร็จ → 3rdparty-api MR !209** branch `fix/oc-4431-redact-request-log` → develop · allow-list redaction + drop body บน `/auth/whoami` `/oauth/token` + test 4 ตัวที่พิสูจน์แล้วว่าแดงตอนถอด redaction
+
+**ยังไม่เริ่ม (เรียงตามลำดับที่ควรทำ — ทั้งหมดอยู่ repo 3rdparty-api ยกเว้นที่ระบุ):**
+1. **OC-4424 + OC-4425 + OC-4426 ควรทำเป็นก้อนเดียว** — ใช้ `Principal`/`CredentialVerifier`/scope catalog ร่วมกัน แยก MR จะขัดกันเอง · 4424 = ประกาศ scope ใน `v2_openapi.yaml` (ตอนนี้ `- apiKey: []` ว่าง) + middleware + test ที่แดงเมื่อลืมประกาศ · 4425 = principal type + header trust audit (ต้องหา gateway config) · 4426 = `/.well-known/scopes` + FE เลิก hardcode
+2. **bcrypt → shared module `line-crm/backend/entity`** (repo แยก) แล้วลบ `api_key_repository/secret.go` ทั้ง backoffice-api + 3rdparty-api
+3. **OC-4430 QA matrix** — repo `testing/oc2plus-line-crm-automate-testing` ทำหลัง 4424/4425
+4. แก้การ์ด: OC-2273 ตัด `apikey.manage` · OC-2275 description 4 บรรทัด (7/9/103/160)
+
+🔴 **OC-2274 "ดู secret ไม่ได้" = ดีไซน์ถูกแล้ว ไม่ใช่บั๊ก** — secret เก็บเป็น bcrypt hash จึงกู้คืนไม่ได้เชิงคณิตศาสตร์ · create คืน plaintext ครั้งเดียวจริง (`api_key_v1_model.go:54` + FE `ApiKeyCreate.vue:382`) · detail ไม่โชว์ = ตาม Business Rule ของ OC-2274 เอง · ถ้าอยากให้ user ได้ secret ใหม่ ต้องทำ **regenerate/rotate** ไม่ใช่ "ดูซ้ำ"
+
 ## ✅ ข้อ 1 ทำเสร็จแล้ว 2026-08-10
 
 - **migration repo !73** (Draft) `feat/oc-2273-ws1b-api-key-management-columns` → **develop** — WS1-B ฉบับย้ายบ้าน + แก้ `key varchar(32)`→64 · **merge หลัง !72 เท่านั้น**
