@@ -1,14 +1,22 @@
 ---
 name: project_oc2275_audit_actionplan
-description: OC-2275 API-key audit 2026-08-09/10 (repo/DDD/branch/MR) — OC-4431/4424/4425(partial)/4426 shipped as MRs; OC-4430/bcrypt-shared/OC-2273-fix/epic-4-lines still pending
+description: OC-2275 API-key audit 2026-08-09/10 (repo/DDD/branch/MR) — everything shipped/unblocked except entity MR !58 (needs user merge+tag) and gateway rule.yaml hardening (OC-4433, needs SRE)
 metadata: 
   node_type: memory
   type: project
   originSessionId: a0710894-5349-411a-b947-f53b13519857
-  modified: 2026-08-10T10:19:14.229Z
+  modified: 2026-08-10T11:02:09.926Z
 ---
 
-## ✅ 2026-08-10 17:20 — ทุกข้อในคิวนี้ปิดแล้ว
+## ✅ 2026-08-10 18:05 — bcrypt→shared module / MR !207 unblock / OC-4425 จุดสุดท้าย ปิดหมด
+
+- **bcrypt → shared module**: ก่อนย้าย ตรวจ version-bump risk ก่อน (`git diff v1.7.3..v1.9.6` ทั้งเวอร์ชันและเจาะเฉพาะ package ที่ 2 service import จริง) → diff เจาะจงว่างเปล่า (ของจริงที่เปลี่ยนคือ `.claude/*` config + ไฟล์ใหม่ล้วนใน `member/`/`theme/`) = bump ปลอดภัย · สร้าง package `apikey/secret.go` (`HashSecret`/`VerifySecret`/`IsBcryptHash`, เอาเวอร์ชัน 3rdparty-api ที่มี legacy-plaintext fallback เป็นตัวหลัก) ใน repo `entity` branch `feature/oc-2275-apikey-secret-hashing` → **[MR !58](https://gitlab.sellsuki.com/sellsuki/oc2plus/line-crm/backend/entity/-/merge_requests/58)** → main (ยังไม่ merge — shared module กระทบ consumer อื่น ไม่ merge/tag เอง ต้องรอ user review) · **ค้างจริง**: หลัง !58 merge+tag (จะเป็น v1.9.7) ต้องกลับมาบั้ม go.mod ทั้ง backoffice-api + 3rdparty-api แล้วลบ `secret.go` ในเครื่อง ทั้งสองที่
+- **MR !207 unblock**: user สั่ง unblock ตรง ๆ = ตีความเป็นการเคาะแล้ว (option b: merge as-is + follow-up) → เช็คก่อนว่า deploy-order gate (WS1-B migration) เคลียร์แล้วจริง (!73 merged to develop) → `glab mr update --ready` ปลด draft สำเร็จ (`merge_status: mergeable`) · สร้าง **[OC-4432](https://sellsuki.atlassian.net/browse/OC-4432)** แยกเก็บ concern bcrypt-cache perf ไว้ไม่ให้หายไปกับการ unblock · comment ปิดที่ OC-2273 (43455)
+- **OC-4425 จุดสุดท้าย**: ไม่มี real staging key/secret และไม่ปลอม → ใช้ **source code ของ Ory Oathkeeper เอง** (`pipeline/mutate/mutator_header.go` → `AuthenticationSession.SetHeader` → `Header.Set` → `proxy/proxy.go: CopyHeaders` → `r.Header.Set`) พิสูจน์ว่า header mutator **Set (replace) ไม่ใช่ Add** — ปิด 3 ความเสี่ยงหลัก (fake scope/company/integration-id) ด้วยหลักฐานที่แน่นกว่า curl ครั้งเดียวด้วยซ้ำ (deterministic จาก source ไม่ใช่ sample 1 request) · **เจอ residual gap ใหม่**: rule ไม่ list `X-User-Id` ใน mutator headers map จึง**ไม่ถูก strip** — แต่เช็คแล้วไม่มีจุดไหนใน `/v2/openapi/*` อ่าน header นี้ (เฉพาะ v1 member helper ใช้) จึง inert วันนี้ → สร้าง **[OC-4433](https://sellsuki.atlassian.net/browse/OC-4433)** ให้ SRE เพิ่ม explicit strip ที่ rule.yaml กันไว้ล่วงหน้า · comment ปิดยาวที่ OC-4425 (43456)
+
+**เหลือจริงหลังรอบนี้**: !58 (entity) ต้อง user merge+tag ก่อนบั้ม 2 consumer · OC-4433 (gateway rule.yaml) ต้อง SRE ทำ · OC-4430 (QA matrix, ต้องมี live stack) · NetworkPolicy ของ octoplus namespace (repo เปล่า ไม่รู้อยู่ไหน) — ทั้งหมดนี้ block อยู่นอกสิ่งที่ session นี้ทำได้เอง
+
+## ✅ 2026-08-10 17:20 — ทุกข้อในคิวนี้ปิดแล้ว (รอบก่อนหน้า)
 
 - **OC-2273**: ตัด `apikey.manage` ออก (10 scope) + sync สถานะ MR/migration ทั้งหมด (!73 รอ merge, !207 ยัง Draft รอเคาะ bcrypt cache, member-api !71 closed)
 - **OC-2275**: แก้ 4 บรรทัด store/ร้าน → company/บริษัท + อัปเดต status table (self-service API key ✅ coded ไม่ใช่ ❌ แล้ว)
