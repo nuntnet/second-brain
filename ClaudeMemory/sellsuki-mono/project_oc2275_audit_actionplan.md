@@ -5,8 +5,16 @@ metadata:
   node_type: memory
   type: project
   originSessionId: a0710894-5349-411a-b947-f53b13519857
-  modified: 2026-08-10T10:03:29.558Z
+  modified: 2026-08-10T10:19:14.229Z
 ---
+
+## ✅ 2026-08-10 17:20 — ทุกข้อในคิวนี้ปิดแล้ว
+
+- **OC-2273**: ตัด `apikey.manage` ออก (10 scope) + sync สถานะ MR/migration ทั้งหมด (!73 รอ merge, !207 ยัง Draft รอเคาะ bcrypt cache, member-api !71 closed)
+- **OC-2275**: แก้ 4 บรรทัด store/ร้าน → company/บริษัท + อัปเดต status table (self-service API key ✅ coded ไม่ใช่ ❌ แล้ว)
+- **MR !207 (3rdparty-api)**: บล็อกด้วย Draft flag เท่านั้น — **ยังไม่ปลด** เพราะ bcrypt-cache concern ยังไม่แก้ในโค้ด รอ user เคาะทาง (เพิ่ม cache ก่อน vs merge+follow-up) ก่อน comment 43454
+- **OC-4425 เกือบเสร็จ 95%**: user ชี้ repo `sellsuki/sre/configuration/api-gateway` (Ambassador) ถูกทาง → เจอตัวจริงคือ `sellsuki/sre/configuration/oc2plus` (Oathkeeper rule.yaml) — verified: bearer_token authenticator ยิง `X-Api-Key`/`X-Api-Secret` เข้า `/v2/openapi/auth/whoami` ของ service เอง (bcrypt จริง) แล้ว header mutator เซ็ต `X-Api-Key-Id`/`X-Company-Id`/`X-Api-Scope` จาก response · ไม่มี route อื่นทะลุตรง · curl จริงยืนยันว่า Oathkeeper reject ด้วย error shape ของตัวเอง (ไม่ใช่ของ service) ก่อนถึง backend เลย — งานจริง · **เหลือจุดเดียว** ต้องมี key+secret จริงของ staging ยิง spoofed `X-Company-Id` เทียบผล (ไม่มี ไม่ได้พยายามปลอม/เดา) → comment 43453
+- **เหลือค้างจริง**: OC-4430 (QA matrix, ต้องมี live stack), bcrypt→shared module refactor (ยังไม่เริ่ม), NetworkPolicy ของ octoplus namespace (repo เปล่า ไม่รู้อยู่ไหน)
 
 ## 📌 สถานะล่าสุด 2026-08-10 16:12 — OC-4424+4425+4426 shipped ก้อนเดียว
 
