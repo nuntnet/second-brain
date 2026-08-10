@@ -1,12 +1,32 @@
 ---
 name: project_oc2275_audit_actionplan
-description: OC-2275 API-key audit 2026-08-09 (repo/DDD/branch/MR) + แผนแก้ 4 ข้อที่ user อนุมัติแล้ว — ยังไม่ได้ลงมือ
+description: OC-2275 API-key audit 2026-08-09/10 (repo/DDD/branch/MR) — OC-4431/4424/4425(partial)/4426 shipped as MRs; OC-4430/bcrypt-shared/OC-2273-fix/epic-4-lines still pending
 metadata: 
   node_type: memory
   type: project
   originSessionId: a0710894-5349-411a-b947-f53b13519857
-  modified: 2026-08-10T08:47:28.354Z
+  modified: 2026-08-10T09:12:17.990Z
 ---
+
+## 📌 สถานะล่าสุด 2026-08-10 16:12 — OC-4424+4425+4426 shipped ก้อนเดียว
+
+**[MR !210](https://gitlab.sellsuki.com/sellsuki/oc2plus/line-crm/backend/oc2plus-line-crm-service-3rdparty-api/-/merge_requests/210)** branch `feat/oc-4424-4425-4426-scope-enforcement` → develop (Draft) — commit `0a03071`
+
+**การค้นพบสำคัญที่เปลี่ยนแผน OC-4424:** `apiKey`-type security scheme ใน OpenAPI **ต้องมี scope array ว่างเสมอ** ตาม spec (scope เป็น concept ของ oauth2/openIdConnect เท่านั้น) — เขียน `- apiKey: [campaign.read]` ใน yaml ไม่มีทางไหลผ่าน oapi-codegen ได้ (`spec.gen.go` hardcode `SetUserValue(ApiKeyScopes, []string{})` ทุกครั้ง) → **เปลี่ยนแหล่งความจริงเป็น Go map** `v2RouteScopes` ใน `src/interface/fiber_server/middleware/require_scope.go` แทน
+
+**สิ่งที่ shipped:**
+- `RequireApiKeyScope` middleware mount บน **route group** `/v2/openapi` เท่านั้น (ไม่ใช้ `FiberServerOptions.Middlewares` — มันเป็น global บน `*fiber.App` เดียวกับ v1/system เพราะ codegen เรียก `router.Use(m)` ไม่มี path prefix)
+- fail-closed 500 บน route ที่ไม่มี scope policy — พิสูจน์จริงด้วยการยิง route ที่ไม่ได้ตั้งค่า
+- `scope_policy_test.go` parse yaml ตรง (ไม่ผ่าน codegen) assert ทุก apiKey-secured operation มี entry — พิสูจน์จริงด้วยการแอบใส่ fake path
+- `model.PrincipalType` + `CRMApiKey.Type` ประทับที่ 2 จุดสร้าง identity จริง (`GetApiKeyIdentityFromHeader`, `postgresApiKey.ToCRMAPIKey`)
+- `GET /.well-known/scopes` (plain fiber route, ไม่ผ่าน codegen) อ่านจาก `middleware.EnforcedScopes()` — **map เดียวกับที่ enforce จริง ไม่มี list ที่สอง** พิสูจน์ด้วยการเพิ่ม description ของ scope ที่ไม่ enforce แล้ว test แดง
+- 3rd bug ที่เจอ (`c.Route().Path` คืนค่า route ของ middleware เองไม่ใช่ endpoint ปลายทางเมื่ออยู่ใน Group — ใช้ `c.Path()` แทน) — ถ้า WS3 (OC-4398) merge มาแล้วมี path param ต้องแก้ทั้ง middleware และ test คู่กัน (เขียน comment เตือนไว้ในโค้ดแล้ว)
+
+🔴 **OC-4425 ทำได้ไม่ครบ — เหลือ audit gateway จริง** ผมไม่มีทางเข้าถึง gateway config ของ dev-th/staging/prod จาก sandbox นี้ (local Caddyfile ไม่ได้ proxy เข้า 3rdparty-api เลย มีแต่ backoffice-api :8089) — ต้องมีคนที่เข้าถึง gateway จริง + curl จริงมาปิดข้อนี้ เขียนไว้ชัดใน comment 43451 ของ OC-4425 ว่ายัง open
+
+Jira comments: 43450 (OC-4424) · 43451 (OC-4425, partial) · 43452 (OC-4426)
+
+**verification:** `go build ./...` clean, full suite เขียว (รวม ~40 `model.CRMApiKey{}` literal ใน use_case tests เดิม — ไม่ต้องแก้เพราะ `Type` เช็คแค่ที่ interface/repository boundary ไม่ใช่ใน `checkIdentityApiKey`)
 
 **Audit เต็มของ OC-2275 API-key workstream (2026-08-09) — user อ่านแล้วบอกว่า "วิเคราะห์ถูกต้องทั้งหมด อยากทำทั้งหมด" แต่ token ไม่พอ จึงบันทึกไว้ทำต่อ**
 สำเนาสำหรับทีมอยู่ที่ **comment ของ OC-2275** (ดู index คอมเมนต์ด้านล่าง) — ถ้าไฟล์นี้หายให้ไปอ่านที่นั่น
