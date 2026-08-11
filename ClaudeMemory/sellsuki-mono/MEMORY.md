@@ -115,3 +115,5 @@
 - [Local i18n + config seeding](reference_local_i18n_config_seeding.md) — make seed-i18n pulls staging's public i18n API (local snapshot is stale); i18n/central-config admin APIs need a Keto role on tenant sellsuki.system
 - [AI platform architecture artifact](reference_ai_platform_architecture_artifact.md) — diagram = artifact 4972126d…, source now at docs/ai-platform-architecture.md (update via Artifact + url=); `&amp;` double-escapes in mermaid labels; in-app browser can't view private artifacts
 - [BOLA SaaS access model (BOLA-309)](project_bola_saas_access_model.md) — layered: CCS3 = company/org scope, BOLA = inside-workspace, Kratos = identity, Keto enforces; two contradictory designs both shipped → SaaS invite had no reachable UI
+- [AI chat Conversation Intelligence (§5.13)](project_ai_conversation_intelligence.md) — Case/Checkpoint/Memory-lanes/Mismatch เคาะ 2026-08-11; stage ต้องผูก case_id, fact scope=case, routing เป็นโค้ดไม่ใช่ LLM; รายการการ์ดที่ต้องแก้
+- [AI board stale cards](reference_ai_board_stale_cards.md) — AI-38 ยังเขียน pgvector/Qdrant ทั้งที่ spike AI-36 ปิดเป็น Milvus; channel-gateway ไม่มีการ์ดเพราะ E12 ยังไม่เปิด
