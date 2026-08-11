@@ -82,7 +82,7 @@
 - [Entity pure / zod = DTO layer](feedback_entity_pure_zod_dto.md) — senior review: domain layer ต้อง zero-dependency, zod เป็น z.ZodType<Entity> ที่ boundary เท่านั้น; ใช้กับทุก boilerplate/kit
 - [chat-core role bootstrap + east-west auth](project_chatcore_role_bootstrap_and_eastwest_auth.md) — CHAT_WORKSPACE_OPERATOR_ROLE_ID → self-bootstrap-by-name (matches management-backend); SERVICE_TOKEN confirmed correct (ahead of RBAC service's own no-auth internal routes); LLM_API_KEY UI mgmt = System Admin only on CCS1
 - [GitLab review-bot targets](reference_gitlab_review_bot_targets.md) — bot reviews only main/develop-targeted MRs; feature-branch MRs need manual substitute review
-- [rps dual mainline](reference_rps_dual_mainline.md) — role-permission-service: main AND develop both live; number migrations past both branches; /internal has no auth by design
+- [rps dual mainline](reference_rps_dual_mainline.md) — main→staging (manual deploy gate), develop→dev; a feature on one line only silently 503s the other env; number migrations past both branches
 - [AI platform deploy gating](project_ai_platform_deploy_gating.md) — CI_JOB_ENABLE var + missing K8s secret + develop→dev/main→staging model gate chat-core deploys; shared chart lacks initContainers
 - [AI Sprint 2-4 autonomous run](project_ai_sprint234_autonomous_run.md) — ALL S2-4 cards done 2026-08-06 on pushed feature branches WITHOUT MRs; full branch map + merge order; cards left In Progress
 - [Monorepo remotes: push origin, never glab-base](reference_monorepo_no_origin.md) — origin→monorepo.git is real (verified 2026-08-08); glab-base→BOLA repo is a trap
@@ -108,3 +108,5 @@
 - [CCS env topology](reference_ccs_env_topology.md) — dev = ns sellsuki-dev ON staging-th cluster (develop), ns sellsuki = staging (main); app logs version=image sha; Loki blind for these pods
 - [BOLA-293 chain state](project_bola293_chain_state.md) — rps+CCS landed & deployed to dev 2026-08-11; left: SPA !15, bola tag, backfill→keto flip, CCS2 role-code mismatch, kratos password gaps, RemoveAdmin tuple leak
 - [DS 1.0 beta gotchas](reference_ds_1_0_beta_gotchas.md) — semver inversion (0.27.0-beta.1 < 0.27.0, pin exact), --ssk-font-family-sans is provider-scoped not global, --ssk-type-* unpublished, DS skill docs stale on font
+- [rps is_system_role trap](reference_rps_is_system_role_trap.md) — is_system_role=true matches thousands of rows (every company's seeded roles); filtering on it alone + populateGroupScopes = minutes-long hang, not an error
+- [Local bola = own overmind socket](reference_local_bola_own_overmind_socket.md) — .overmind-bola.sock + Procfile.bola; 502 on bola.sellsuki.local means not started, vs all-hosts refused = Caddy container
