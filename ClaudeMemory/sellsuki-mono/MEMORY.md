@@ -107,3 +107,4 @@
 - [Dead 'staging' runner tag](reference_dead_staging_runner_tag.md) — repos on old generic-frontend-npm.yml template queue forever; switch include to -th variant (staging-th runners)
 - [CCS env topology](reference_ccs_env_topology.md) — dev = ns sellsuki-dev ON staging-th cluster (develop), ns sellsuki = staging (main); app logs version=image sha; Loki blind for these pods
 - [BOLA-293 chain state](project_bola293_chain_state.md) — rps+CCS landed & deployed to dev 2026-08-11; left: SPA !15, bola tag, backfill→keto flip, CCS2 role-code mismatch, kratos password gaps, RemoveAdmin tuple leak
+- [DS 1.0 beta gotchas](reference_ds_1_0_beta_gotchas.md) — semver inversion (0.27.0-beta.1 < 0.27.0, pin exact), --ssk-font-family-sans is provider-scoped not global, --ssk-type-* unpublished, DS skill docs stale on font
