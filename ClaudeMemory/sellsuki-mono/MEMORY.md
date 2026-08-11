@@ -117,3 +117,5 @@
 - [BOLA SaaS access model (BOLA-309)](project_bola_saas_access_model.md) — layered: CCS3 = company/org scope, BOLA = inside-workspace, Kratos = identity, Keto enforces; two contradictory designs both shipped → SaaS invite had no reachable UI
 - [AI chat Conversation Intelligence (§5.13)](project_ai_conversation_intelligence.md) — Case/Checkpoint/Memory-lanes/Mismatch เคาะ 2026-08-11; stage ต้องผูก case_id, fact scope=case, routing เป็นโค้ดไม่ใช่ LLM; รายการการ์ดที่ต้องแก้
 - [AI board stale cards](reference_ai_board_stale_cards.md) — AI-38 ยังเขียน pgvector/Qdrant ทั้งที่ spike AI-36 ปิดเป็น Milvus; channel-gateway ไม่มีการ์ดเพราะ E12 ยังไม่เปิด
+- [quota has no allow/deny RPC](reference_quota_no_allow_deny_rpc.md) — metering only (verified from proto); "block when quota full" ACs are unimplementable until BOLA-201 defines a contract — never compute limits client-side
+- [quota has no allow/deny RPC](reference_quota_no_allow_deny_rpc.md) — metering only (verified from proto); "block when quota full" ACs are unimplementable until BOLA-201 defines a contract — never compute limits client-side
