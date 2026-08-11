@@ -110,3 +110,4 @@
 - [DS 1.0 beta gotchas](reference_ds_1_0_beta_gotchas.md) — semver inversion (0.27.0-beta.1 < 0.27.0, pin exact), --ssk-font-family-sans is provider-scoped not global, --ssk-type-* unpublished, DS skill docs stale on font
 - [rps is_system_role trap](reference_rps_is_system_role_trap.md) — is_system_role=true matches thousands of rows (every company's seeded roles); filtering on it alone + populateGroupScopes = minutes-long hang, not an error
 - [Local bola = own overmind socket](reference_local_bola_own_overmind_socket.md) — .overmind-bola.sock + Procfile.bola; 502 on bola.sellsuki.local means not started, vs all-hosts refused = Caddy container
+- [CCS3 frontend facts](reference_ccs3_frontend_facts.md) — admin.sellsuki.com, members UI = /users (no /companies/:id/members), company from session not URL; local needs bun install for the DS dep
