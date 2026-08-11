@@ -113,4 +113,5 @@
 - [CCS3 frontend facts](reference_ccs3_frontend_facts.md) — admin.sellsuki.com, members UI = /users (no /companies/:id/members), company from session not URL; local needs bun install for the DS dep
 - [messaging-backend shared-repo traps](reference_messaging_backend_shared_repo_traps.md) — .env is tracked (values silently repoint others), develop is 5mo stale but is the policy target, and there is NO CI on MRs
 - [Local i18n + config seeding](reference_local_i18n_config_seeding.md) — make seed-i18n pulls staging's public i18n API (local snapshot is stale); i18n/central-config admin APIs need a Keto role on tenant sellsuki.system
+- [AI platform architecture artifact](reference_ai_platform_architecture_artifact.md) — diagram = artifact 4972126d…, source now at docs/ai-platform-architecture.md (update via Artifact + url=); `&amp;` double-escapes in mermaid labels; in-app browser can't view private artifacts
 - [BOLA SaaS access model (BOLA-309)](project_bola_saas_access_model.md) — layered: CCS3 = company/org scope, BOLA = inside-workspace, Kratos = identity, Keto enforces; two contradictory designs both shipped → SaaS invite had no reachable UI

@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: 80b5b310-7a4e-49dc-8932-34d4eb091c9a
-  modified: 2026-08-07T05:45:00.085Z
+  modified: 2026-08-11T16:27:03.403Z
 ---
 
 การแก้ Jira card ผ่าน `editJiraIssue` (Jira MCP) ด้วย markdown → มี **markdown↔ADF round-trip breakage** ที่รู้จากการ rename VOID→COMPENSATING (11 cards):
@@ -22,5 +22,10 @@ metadata:
 
 **🔴 SILENT CONTENT LOSS — blockquote ซ้อนใน list item (ยืนยัน 2026-08-07 บน OC-4415):** ถ้าเขียน `> ...` (blockquote) **ซ้อนอยู่ใต้ bullet/AC item** → markdown→ADF **ตัด bullet ทั้งข้อทิ้งเงียบ ๆ** ไม่มี error, tool คืน success ปกติ (AC-03 หายทั้งบรรทัด). ต่างจากเคสอื่นตรงที่ **ไม่เห็นร่องรอย** ต้อง `getJiraIssue` กลับมาอ่านถึงจะรู้. **แก้:** เขียน note เป็น plain text ในบรรทัดเดียวกับ bullet (ห้าม `>` ซ้อน) — blockquote ระดับบนสุด (ไม่ซ้อนใน list) ยังใช้ได้ปกติ.
 → **หลัง editJiraIssue ทุกครั้งที่มี list ยาว ควร re-fetch นับจำนวน AC เทียบ** ไม่ใช่เชื่อ success response
+
+**`searchJiraIssuesUsingJql` payload บวมมาก (2026-08-11):** แม้ส่ง `fields: ["summary","status"]` ผลลัพธ์ ~10-20 ใบ
+ก็ทะลุ token cap (169k chars) เพราะแนบ project/issuetype/avatar blob + description เต็มมาทุกใบ → tool จะ save เป็นไฟล์
+แล้วบังคับให้อ่านทั้งไฟล์. **วิธีที่เร็ว:** ปล่อยให้มัน save แล้ว `jq -r '.issues.nodes[] | "\(.key)\t\(.fields.status.name)\t\(.fields.summary)"' <file>`
+(ใช้ `/usr/bin/jq` เลี่ยง rtk) — ได้ตารางย่อในไม่กี่ร้อย token แทนที่จะอ่านไฟล์ทั้งก้อน
 
 **Best practice:** (0) **re-fetch verify เสมอ** ไม่ใช่แค่ตอนมีรูป — content loss แบบเงียบมีจริง (ดูข้อบน). (1) การ์ดที่มีรูปฝัง/smartlink — เลี่ยง full rewrite ผ่าน markdown; แก้ target เฉพาะจุด หรือใช้ ADF format. (2) หลัง rewrite ทุกครั้ง **ตรวจ format** โดยเฉพาะใบที่มี media/smartlink. (3) re-edit ผ่าน markdown ซ้ำ = เสี่ยงเกิด escape ซ้ำ. (4) เนื้อหายาว/หลาย section → อย่าใช้ createJiraIssue markdown ตรงๆ ใช้ editJiraIssue set description. ใช้ประกอบ [[project_sukipay_void_rename]].
