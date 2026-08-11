@@ -102,3 +102,4 @@
 - [Verify before claiming "ไม่มี X"](feedback_verify_absence_claims.md) — clone refspec หลอก `git branch -r`, grep ชื่อที่รีโปใช้จริง, rtk กรอง output; เคยไปแย้งการ์ดที่ถูกต้อง
 - [OC2Plus API-key local run](project_oc2plus_apikey_local_run.md) — UI=linecrm-backoffice /apikey; 4 gates (kratos/keto-role/DPA-consentee/api_key table); setup.sh env ผิด 4 ตัว; scan-column bug ทำ list 500
 - [ssk-* DS docs live in node_modules](reference_ssk_components_docs.md) — isCustomElement is REQUIRED for Vue property binding, not a warning fix; read the catalog skill, never the minified bundle
+| [project_central_audit_log.md](project_central_audit_log.md) | project | Central user-activity audit epic PAT-2611 (S1-S5 PAT-2612..2616) — stdout/sellsuki-go-logger v2→fluentd→Loki→CCS-backend→CCS1/2/3 UI; CCS1/2/3 mapping; แยกจาก SukiPay audit |
