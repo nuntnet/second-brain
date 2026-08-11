@@ -87,6 +87,7 @@
 - [AI Sprint 2-4 autonomous run](project_ai_sprint234_autonomous_run.md) — ALL S2-4 cards done 2026-08-06 on pushed feature branches WITHOUT MRs; full branch map + merge order; cards left In Progress
 - [Monorepo remotes: push origin, never glab-base](reference_monorepo_no_origin.md) — origin→monorepo.git is real (verified 2026-08-08); glab-base→BOLA repo is a trap
 - [chat-core stack merge order](project_ai_chatcore_merge_order.md) — fix/AI-32 must merge to main BEFORE the 9-branch AI stack, else 42P10 ships; EnsureDefault has a 2nd uncovered arbiter
+- [AI chat frontend design source](reference_ai_chat_frontend_design.md) — Claude Design project (read via DesignSync); DB HeaventRounded only, no font under 18px; @uxuissk vs @sellsuki-org DS conflict unresolved
 - [AI chat MVP integration](project_ai_mvp_integration.md) — end-to-end works locally to token_unavailable; forward contract + branches + the 3 blockers before a real FB test
 - [GORM pgx vs lib/pq AutoMigrate](reference_gorm_pgx_libpq_automigrate.md) — "got 2 parameters but the statement requires 1", only fails on the SECOND boot; test by calling AutoMigrate 3×
 - [Lease/claim ownership bug class](reference_lease_claim_ownership_bug_class.md) — release/MarkDone by id without claim-token check → double-processing; hit 3× Aug 2026; tests miss it without concurrent workers
