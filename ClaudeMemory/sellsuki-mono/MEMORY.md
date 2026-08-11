@@ -103,3 +103,6 @@
 - [OC2Plus API-key local run](project_oc2plus_apikey_local_run.md) — UI=linecrm-backoffice /apikey; 4 gates (kratos/keto-role/DPA-consentee/api_key table); setup.sh env ผิด 4 ตัว; scan-column bug ทำ list 500
 - [ssk-* DS docs live in node_modules](reference_ssk_components_docs.md) — isCustomElement is REQUIRED for Vue property binding, not a warning fix; read the catalog skill, never the minified bundle
 | [project_central_audit_log.md](project_central_audit_log.md) | project | Central user-activity audit epic PAT-2611 (S1-S5 PAT-2612..2616) — stdout/sellsuki-go-logger v2→fluentd→Loki→CCS-backend→CCS1/2/3 UI; CCS1/2/3 mapping; แยกจาก SukiPay audit |
+- [Dead 'staging' runner tag](reference_dead_staging_runner_tag.md) — repos on old generic-frontend-npm.yml template queue forever; switch include to -th variant (staging-th runners)
+- [CCS env topology](reference_ccs_env_topology.md) — dev = ns sellsuki-dev ON staging-th cluster (develop), ns sellsuki = staging (main); app logs version=image sha; Loki blind for these pods
+- [BOLA-293 chain state](project_bola293_chain_state.md) — rps+CCS landed & deployed to dev 2026-08-11; left: SPA !15, bola tag, backfill→keto flip, CCS2 role-code mismatch, kratos password gaps, RemoveAdmin tuple leak
