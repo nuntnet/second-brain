@@ -119,3 +119,5 @@
 - [AI board stale cards](reference_ai_board_stale_cards.md) — AI-38 ยังเขียน pgvector/Qdrant ทั้งที่ spike AI-36 ปิดเป็น Milvus; channel-gateway ไม่มีการ์ดเพราะ E12 ยังไม่เปิด
 - [quota has no allow/deny RPC](reference_quota_no_allow_deny_rpc.md) — metering only (verified from proto); "block when quota full" ACs are unimplementable until BOLA-201 defines a contract — never compute limits client-side
 - [quota has no allow/deny RPC](reference_quota_no_allow_deny_rpc.md) — metering only (verified from proto); "block when quota full" ACs are unimplementable until BOLA-201 defines a contract — never compute limits client-side
+- [Local identity hardcode loop](reference_local_identity_hardcode_loop.md) — committed .env.dev X-User-Id that isn't in Kratos = infinite AMS bounce; fixed with Caddy forward_auth→whoami; any who-am-I test before that was meaningless
+- [Ambiguous 404 fails open](reference_ambiguous_404_fail_open.md) — "no such record" vs "no such endpoint" both 404; branch on error_code or a security check silently skips during the deploy window
