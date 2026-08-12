@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: 80b5b310-7a4e-49dc-8932-34d4eb091c9a
-  modified: 2026-08-12T17:12:03.745Z
+  modified: 2026-08-12T18:40:04.162Z
 ---
 
 การแก้ Jira card ผ่าน `editJiraIssue` (Jira MCP) ด้วย markdown → มี **markdown↔ADF round-trip breakage** ที่รู้จากการ rename VOID→COMPENSATING (11 cards):
@@ -30,7 +30,9 @@ metadata:
 
 **🔴 `description ~ "x"` ให้ false positive จนใช้เช็ค "การ์ดถูกแก้แล้วหรือยัง" ไม่ได้ (ยืนยัน 2026-08-12/13):** JQL text search tokenize + ตัด underscore ⇒ `description ~ "case_id"` ไป match คำไทย **"เคส"** และ column header **"Test Case"** → สรุปผิดว่าการ์ด 3 ใบ (AI-16/47/95) ถูกอัปเดตแล้วทั้งที่ยังไม่เคยแตะ **แล้วเอาไปแบ่งงาน sub-agent ผิด (ตกไป 2 ใบ)** · `~ "§5.13"` ก็ match ไม่ได้ (อักขระพิเศษ+เลขทศนิยม) · **วิธีที่เชื่อได้:** probe ด้วย token ที่ไม่มีทางเกิดเองในการ์ดเดิม (`denormalized`, `attribution`, `subject_ref`, `unmapped`) หรือ getJiraIssue มา grep เอง
 
-**🔴 `{"errors":{"issuelinks":"'SET' operation is not supported."}}` ตอน edit ที่ส่งแค่ `description` (2026-08-12, AI-52):** fail ทั้งที่ไม่ได้แตะ issuelinks — ผ่านหลังเอา issue key ออกจากตาราง Dependencies (ใบอื่นในรอบเดียวกันใส่ key ได้ปกติ ⇒ อาจต่อใบ/transient) · ผลข้างเคียง: ตาราง Dependencies เหลือ "ชื่อการ์ด" ไม่ใช่ key = กดไม่ได้ ต้องตามแก้
+**🟡 `{"errors":{"issuelinks":"'SET' operation is not supported."}}` ตอน edit ที่ส่งแค่ `description` = TRANSIENT (ยืนยัน 2026-08-13):** เจอครั้งแรกบน AI-52 แล้ว "ผ่านหลังเอา issue key ออกจากตาราง Dependencies" → **สรุปสาเหตุผิด** · รอบยืนยันภายหลังใส่ key กลับทั้ง 4 คีย์ (plain text ไม่ใช่ link syntax) **ผ่านรอบเดียว ไม่มี error** ⇒ **ไม่ใช่เพราะ issue key ในเนื้อ** เป็นอาการชั่วคราวของ MCP · **วิธีรับมือ: retry ก่อน อย่าตัดเนื้อหาการ์ดทิ้งเพื่อเลี่ยง error** (การตัด key ออกทำให้ตาราง Dependencies กดตามไม่ได้ = เสียของฟรี)
+
+**🔴 ห้ามส่งข้อความไทยเป็น `\uXXXX` escape ใน payload ของ editJiraIssue (ยืนยัน 2026-08-13 — เจอ 4 agent ใน session เดียว):** escape ผิดตัวเดียวได้คำเพี้ยนที่อ่านผ่านตาไม่เห็น — พบจริง: `กฎ`→`กฏ`, `เกณฑ์`→`เกณฏ์`, `บริโภค`→`บริโกค`, `การคำนวณ`→`การคำนวຓ` (อักษรลาว!), `เรื่องหนึ่ง`→`เรื่อหนึ่ง`, `หนึ่ง`→`หนี่ง` · สระ/วรรณยุกต์หายแบบเงียบและ Jira ไม่ error ⇒ **เขียนไทยตรง ๆ ใน payload** และถ้าจำเป็นต้อง escape ต้อง re-fetch มาอ่านคำที่แก้ทีละคำ
 
 **🔴 response ตอบกลับเป็นการ์ดคนละใบ (2026-08-12):** `editJiraIssue` ของ AI-45 คืน payload ของ AI-133 · `createIssueLink` เคยคืน getJiraIssue ของ BOLA-313 ที่ไม่เกี่ยวเลย — **ของถูกเขียนถูกใบ** เป็น response mix-up ⇒ ยิ่งตอกย้ำว่าต้อง re-fetch ใบที่ตั้งใจแก้แยกเสมอ
 
