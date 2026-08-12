@@ -122,3 +122,5 @@
 - [Local identity hardcode loop](reference_local_identity_hardcode_loop.md) — committed .env.dev X-User-Id that isn't in Kratos = infinite AMS bounce; fixed with Caddy forward_auth→whoami; any who-am-I test before that was meaningless
 - [Ambiguous 404 fails open](reference_ambiguous_404_fail_open.md) — "no such record" vs "no such endpoint" both 404; branch on error_code or a security check silently skips during the deploy window
 - [ai-agent is stateless (no DB)](project_ai_agent_stateless.md) — chat-core owns workspace config + eval harness; config travels on the reply request; E3 copied instead of moving
+- [GORM Updates(&struct) drops false](reference_gorm_updates_drops_false.md) — a bool going false never persists, UPDATE still succeeds; only a real DB round-trip test catches it (BOLA suspend)
+- [A flag checked in one guard enforces nothing](reference_flag_without_enforcement.md) — FlatAdminGuard vs WorkspaceGuard drift (~40 routes unguarded); plus fiber c.JSON returns nil so an error-only helper reads as allowed
