@@ -124,3 +124,4 @@
 - [ai-agent is stateless (no DB)](project_ai_agent_stateless.md) — chat-core owns workspace config + eval harness; config travels on the reply request; E3 copied instead of moving
 - [GORM Updates(&struct) drops false](reference_gorm_updates_drops_false.md) — a bool going false never persists, UPDATE still succeeds; only a real DB round-trip test catches it (BOLA suspend)
 - [A flag checked in one guard enforces nothing](reference_flag_without_enforcement.md) — FlatAdminGuard vs WorkspaceGuard drift (~40 routes unguarded); plus fiber c.JSON returns nil so an error-only helper reads as allowed
+- [Kafka publishes fail silently on staging](reference_kafka_silent_publish_failure.md) — BOLA pods have no KAFKA_SERVERS (BOLA-319); and a topic full of messages is NOT proof your producer works — check key vs payload, a new-only field, and the pod log
