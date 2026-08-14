@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: feedback
   originSessionId: 60159299-7c45-49ce-8985-bacd71095aa0
-  modified: 2026-08-11T16:27:13.207Z
+  modified: 2026-08-14T11:01:04.286Z
 ---
 
 2026-08-07: รายงานว่า publish Product KB ขึ้น Outline สำเร็จ พร้อมตาราง URL 11 อัน
@@ -29,5 +29,18 @@ Not Found, และ tool log บอกแค่ว่า API call ผ่าน 
 สั่งงานต่อโดยยึดว่าไฟล์แก้แล้ว, จับได้ตอน `grep -n "5\.13"` คืน 0 → **ก่อนเขียนว่า "แก้/เพิ่มลงไฟล์แล้ว" ต้องมี
 tool call จริงในเทิร์นนั้น หรือ grep ยืนยัน** ห้ามสรุปจาก "เนื้อหาที่ร่างไว้ในหัว"
 
+**ส่วนขยาย (2026-08-14) — "200 ทุกตัว" ไม่ใช่หลักฐานว่าไม่มีบั๊ก:** เปิด admin UI ใน Chrome ที่
+ล็อกอินจริง เจอสองบั๊กที่ curl/HTTP-200 ให้ผ่านทั้งคู่ (ก) จอแรกขึ้น error แต่กด retry แล้วได้ —
+race ของลำดับ render/effect ที่ยิง request แรกไปแบบไม่มี scope header (ข) **หน้า idle ยิง 164
+request ใน 10 วินาที** — 200 หมด ไม่มี error ไม่มีจอไหนดูผิด มองไม่เห็นเลยถ้าไม่เปิด network
+
+**How to apply เพิ่ม:**
+5. ตอนเปิดหน้าใน browser ให้ **วัด request rate ตอนหน้านิ่ง ๆ** (clear network → รอ ~10 วิ → นับ)
+   ไม่ใช่ดูแค่ว่า request สำเร็จ — refetch storm มีหน้าตาเป็น 200 ล้วน
+6. ทดสอบ **cold load** เสมอ ไม่ใช่แค่หลังกด retry — บั๊กลำดับ (effect vs render) โผล่แค่ครั้งแรก
+7. 401 ที่เราสร้างเอง แยกไม่ออกจาก session หมดอายุ ถ้าเจอเด้งไปหน้า login ให้สงสัย
+   "เราส่ง header ไม่ครบ" ก่อนสงสัย cookie
+
 เกี่ยวข้อง: [[reference-outline-mcp-vpn-blocker]] (กับดัก 3 ข้อของ Outline MCP) ·
-[[feedback-ground-claims-file-line]] · [[project-sellsuki-product-kb]]
+[[feedback-ground-claims-file-line]] · [[project-sellsuki-product-kb]] ·
+[[reference_browser_surfaces_this_workspace]]
