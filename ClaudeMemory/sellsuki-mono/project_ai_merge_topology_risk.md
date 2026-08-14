@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: 369f9f55-f1f1-4ed5-92cb-b4d1e841aa8f
-  modified: 2026-08-14T09:35:19.014Z
+  modified: 2026-08-14T10:38:10.083Z
 ---
 
 Reviewed 2026-08-14 across all six AI-platform repos. The code works (all four Go
@@ -42,6 +42,24 @@ assignment, evalResult, auth (Kratos), flags. `VITE_USE_MOCKS` defaults to
 **off**, so the running app hits real backends — a red screen there is the truth,
 not a regression. Delete a factory from `unavailableAdapters.ts` when its backend
 lands; that file is the todo list.
+
+**The admin UI's north-south auth had no path at all (found + fixed 2026-08-14).**
+chat-core's routes sit behind the kit's `authctx` gate, which needs BOTH
+`X-User-Id` and `X-Company-Id`. Two holes, both reporting as
+`401 missing_credential / "missing or expired session"` — i.e. reading as a
+cookie problem: (1) the frontend **never sent `X-User-Id`** even though
+`Session.userId` was documented as becoming that header since AI-92; (2)
+`X-Company-Id` is derived by `AppShell` from
+`PermissionsPort.listAccessibleWorkspaces`, one of the eleven dead ports — so the
+single missing port gated every working port. Fixed on
+`feature/AI-122-flags-port` (commit `a5f209c`): `setApiUserId` in `mutator.ts` +
+a DEV-only `VITE_DEV_WORKSPACES=workspaceId:companyId[:label]` escape hatch, set
+in `apps/admin/.env` (gitignored). Vite reads `.env` at boot → restart after edits.
+**Open security gap, needs a card:** chat-core trusts whatever `X-User-Id`
+arrives — no gateway since channel-gateway was decommissioned — so the header is
+browser-asserted, not proven. Needs a session-verifying gateway or an in-process
+Kratos middleware. Note `chat_workspace` does **not** exist as a Keto namespace
+locally, so the permission check is scoping-only in local runs.
 
 `kbEntry` is the special case: **rag-core already serves full CRUD**, but it
 authenticates a Bearer gateway-JWT while the admin holds a Kratos cookie, and
