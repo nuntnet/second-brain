@@ -23,3 +23,13 @@ Contents: `Chat Platform UI v2 SSK.dc.html` + `Chat Platform UI.dc.html` (the sc
 Other layout constants from the design, unaffected: Sky-500 `#32a9ff` primary; per-product themes switch only `--primary` and `--sidebar-accent-*` via `data-product`; navbar 56px, sidebar 200px (64px collapsed), max content 1280px.
 
 See [[ds-1-0-beta-gotchas]] for the version/token traps hit while adopting it.
+
+**IMPLEMENTED 2026-08-14** (commit 966885d on `feature/AI-122-flags-port`): the
+handoff's screen 2a + 3a segmented control now IS the inbox
+(`apps/admin/src/pages/inbox/`, styles in `inbox.css`), brand switched
+patona→ccs3 (sky). The 18px floor stays unadopted. DS gotchas hit while
+implementing: `<ssk-heading>` renders section-title scale even at
+`size="sm"` (use a token-sized span for navbar/sidebar labels), and
+`<ssk-divider>` renders as a thick gray block inside `<ssk-sidebar>` (use a
+1px `--stroke-primary` hr). Live refs from chat-core are `facebook:<psid>`,
+not the `fb:psid:` shape AI-101's mocks used.
