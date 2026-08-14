@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: 72e79abc-11d5-45a2-b332-ae75f50bceb1
-  modified: 2026-08-11T12:55:34.534Z
+  modified: 2026-08-14T09:34:55.548Z
 ---
 
 The AI Chat Assistant Platform reached a working local end-to-end path on 2026-08-08. A signed Facebook webhook now flows: signature verify → replay/rate-limit → normalize → **forward to chat-core** → session → Tier 0 keyword match → reply stored → outbound send, stopping only at `token_unavailable` (no real FB page token), which is the correct stop for a credential-free test.
@@ -29,9 +29,30 @@ The AI Chat Assistant Platform reached a working local end-to-end path on 2026-0
 
 **RAG is deliberately not wired (decision 2026-08-11).** The RAG team is reworking their POC API to be **per-company**, while our `rag-core` work (AI-38/39/41/43/44) is **per-workspace** — connecting now would mean redoing the contract twice, so AI-46 (retrieval visibility/ACL + PDPA erasure) is deferred until their API lands. The chat-core side is already built behind a port (`src/repository/rag_source/`), so the swap is one adapter. Consequence while unwired: `hasKBGrounding` is hard-false, so AI-57's guardrail rewrites/blocks any numeric claim — expect behaviour to change and re-test once RAG connects.
 
+**RE-VERIFIED LIVE 2026-08-14** (items 1 and 2 below are now CLOSED). The whole
+MVP path was running in `.overmind-ai-mvp.sock` and re-proved end-to-end:
+Tier 0 via `scripts/smoke/chat-core-inbound.sh -k local-dev-token`, the full
+signed chain via `scripts/smoke/fb-webhook.sh`, and **Tier 2 with a real
+OpenRouter key** (`LLM_API_KEY` now lives in root `.env.ai-mvp`, gitignored,
+sourced per-line by `Procfile.ai-mvp`) returning a 3.5k-char Thai reply with
+`ai_error: null`. `file-service` + `role-perm` are now in `Procfile.ai-mvp`,
+and `ai-agent` (8101) is wired there too after the E3 extraction.
+The FB pilot survives: page `268502970215081` → workspace
+`c11511cc-ecb5-4579-95b0-c5421be87e84`, `token_status=healthy`, and the
+cloudflared hostname `ai-chat-local-api.bearyweb.com` still routes to 8100
+(a bad `hub.verify_token` correctly returns 403) — so a real Messenger test is
+one message away, no re-onboarding needed.
+Gotchas hit: the smoke scripts read the token from
+`backend/sellsuki-chat-core/.env`, which does NOT match the Procfile's
+`SERVICE_TOKEN=local-dev-token` — pass `-k local-dev-token` or you get
+`401 invalid_service_token`. And **kratos-ui had died while overmind still
+reported it "running"** (port 4455 not listening → `accounts.sellsuki.local`
+502 → no admin login); `OVERMIND_SOCKET=.overmind-ai-mvp.sock overmind restart kratos-ui`
+fixed it. Trust `lsof`, not `overmind status`.
+
 **Still blocking a fuller test:**
-1. `CHAT_FILE_SERVICE_BASE_URL` unset and `file-service` isn't in `Procfile.ai-mvp` — attachments store to an in-memory media repo, so the reference round-trips but the bytes don't survive a restart.
-2. `LLM_API_KEY` unset — anything that isn't a Tier 0 hit answers `ai_error`.
+1. ~~`CHAT_FILE_SERVICE_BASE_URL` unset~~ — CLOSED, see above.
+2. ~~`LLM_API_KEY` unset~~ — CLOSED, see above.
 3. Dev-mode Vault is inmem, so recreating the container still loses secrets — but it's now loud and recoverable with `rotate-secret`.
 4. chat-core can't mint a conversation id itself (`GetOrCreateConversation` needs a `channel_binding` it has no model for) — fine while every conversation arrives via this forward.
 
