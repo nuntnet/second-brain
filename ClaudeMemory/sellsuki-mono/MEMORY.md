@@ -38,6 +38,7 @@
 - [PAT epic links unwired](project_pat_epic_links_unwired.md) — epic↔child `parent` field not wired, grouped by label instead
 - [SukiPay void rename](project_sukipay_void_rename.md) — transaction state rename history
 - [Jira editIssue ADF break](reference_jira_editissue_adf_breakage.md) — editJiraIssue markdown breaks ADF formatting
+- [Jira MCP search quirks](reference_jira_mcp_search_quirks.md) — parallel calls collide, fields ignored; sweep boards via subagent+TSV, verify via count+text~
 - [SukiPay refund cluster](project_sukipay_refund_cluster.md) — refund cluster roles: 2424 produces, 2289 consumes
 - [Quota ≠ feature gate](project_quota_not_feature_gate.md) — quota-management = usage metering only, no gating logic
 - [OMS2 gaps 2026Q3](project_oms2_plan_gaps_2026q3.md) — 2026-07-03: OMS 2.0 has zero shipped SPs yet
