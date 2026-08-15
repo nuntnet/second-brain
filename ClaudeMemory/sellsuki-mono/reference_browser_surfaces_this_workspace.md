@@ -33,3 +33,11 @@ passwords: ask them to open the logged-in page, then inspect and drive it. It
 closed out two real bugs that curl-level checks had rated green.
 
 Related: [[feedback_verify_as_the_user_sees_it]]
+
+More quirks (2026-08-14): (1) physical clicks via `computer` are occasionally
+swallowed right after a navigation/HMR reload (mousedown/mouseup across a
+re-render or focus race) — a "clicked but nothing happened" is NOT app
+breakage until a `javascript_tool` `.click()` also fails; JS clicks were 100%
+reliable. (2) The page clock can render in a non-local timezone (saw PDT while
+the Mac was +07) — likely CDP timezone emulation; don't chase "wrong
+timestamps" in app code without checking `new Date()` in the page first.

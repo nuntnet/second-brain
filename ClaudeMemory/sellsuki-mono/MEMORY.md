@@ -129,3 +129,4 @@
 - [AI merge topology risk](project_ai_merge_topology_risk.md) — 206 chat-core commits in one MR; 11/18 admin ports have no backend by design
 - [Shared identity infra is a SPOF](reference_shared_identity_infra_singleton.md) — kratos/keto/hydra all 1-replica, colocate on one node; hit 2x in one day
 - [AI backlog gap sweep 2026-08](project_ai_backlog_gap_sweep_202608.md) — AI-142–150 created; open: AI-150 E8-vs-CCS3, E12 ~4 cards left
+- [Design handoff = full fidelity](feedback_design_handoff_full_fidelity.md) — implement ทั้งเฟรม + follow-through, no-mock ใช้กับ data เท่านั้น

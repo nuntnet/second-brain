@@ -59,3 +59,18 @@ fixed it. Trust `lsof`, not `overmind status`.
 Non-text messages today are **stored, not answered** — guardrails and tier0 both see an empty body and don't fire; deciding AI behaviour for media is AI-4's call and was deliberately not invented here.
 
 See [[project-ai-sprint234-autonomous-run]] for the full card/branch map and [[gorm-pgx-libpq-automigrate]] for the restart bug found along the way.
+
+**Operator reply path landed 2026-08-14** (chat-core `f86573e` on
+feature/AI-126-case-use-case — NOTE: committed onto another session's live
+branch because switching branches under a concurrent session would break it;
+frontend `dfc94b0`): `POST .../conversations/{id}/messages` stores an
+admin message, delivers via OutboundMessenger, and auto-takeovers when sent
+in AI mode. Two real bugs found and fixed along the way: (1) inbound
+messages never bumped `chat_sessions.updated_at`, so inbox order froze and
+the polling realtime saw nothing — now bumped in AppendIdempotent's own
+transaction (GREATEST, new-row only); (2) useWorkspaceRealtime only
+refreshed message history on `message` events, which the polling transport
+never emits — now refreshes on status_change too. Verified live both ways
+(AI answers ↔ admin takeover mutes AI). Gotcha: editing a hook's useEffect
+body under Vite Fast Refresh does NOT re-run the effect (deps unchanged) —
+full reload before concluding a hook fix "didn't work".
