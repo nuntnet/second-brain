@@ -18,3 +18,14 @@ Gap sweep บอร์ด AI (2026-08-14) ตอบคำถาม user "กา�
 รอบสอง (2026-08-15 หลัง /po-review): DoR review พบ owner-gap → เปิดชุด B: **AI-151** spike ย้าย internal assistant · **AI-152** HR template v1 · **AI-153** unmapped-fact queue store (E2) · **AI-154** answer-trace persist (E2, ควรเข้า pilot เพราะ backfill ไม่ได้) · **AI-155** quota status read model+event+audit (E5) · **AI-156** case-switch UI (E8, Story เต็ม) · **AI-158** workspace-scoped invite (CCS; AI-157 ถูก session อื่นจอง) — และแก้ชุด A ครบ 10 ใบ (SP field = `customfield_10016`; AI-144/146 เปลี่ยน Task→Story สำเร็จ)
 
 **How to apply:** งานค้างถ้า user ถามต่อ — (1) decisions ที่บันทึกในการ์ดแล้วรอคนเคาะ: members UI E8-vs-CCS3 (AI-150), SSE-vs-WS ของ Inbox (AI-149), จุด terminate WS (AI-142), AI-131 ข้อ 1/2/4/5, เจ้าของ CASE_SENSITIVE_FACT_VIEWED / bulk-unassign / ai_quota_exhausted marking (2) E12 ยังขาด: staff-as-asker, ย้าย KB + ปลดระวาง channel-gateway, verify guardrails (3) frontend ที่ backend ครบพร้อมทำ: AI-138+AI-139, AI-106, AI-147 ครึ่งใบ (case routes มี, checkpoint API ยังไม่มี)
+
+**SLA-ladder epic published 2026-08-18**: AI-159 (epic) + 10 stories, label
+`sla-ladder`, parent wired. Backend on chat-core: AI-161 foundation →
+AI-163 config → AI-170 sweep engine → steps AI-162 (ack) / AI-172
+(notify+unassign) / AI-167 (auto-return) → AI-164 restricted mode, AI-160
+snooze. FE: AI-171 config page, AI-165 console status. DoR decisions
+recorded as card comments: snooze owned by AI-160 (AI-170 descoped to
+"engine respects snoozed_until"; canonical formula `next_step_at =
+MAX(next_step_at, snoozed_until)` stored), config verb = PATCH not PUT
+(sibling routes precedent). po-lead agent died mid-review on org spend
+limit; review/links finished inline from main session.
