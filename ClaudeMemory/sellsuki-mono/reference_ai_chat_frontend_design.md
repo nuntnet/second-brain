@@ -33,3 +33,15 @@ implementing: `<ssk-heading>` renders section-title scale even at
 `<ssk-divider>` renders as a thick gray block inside `<ssk-sidebar>` (use a
 1px `--stroke-primary` hr). Live refs from chat-core are `facebook:<psid>`,
 not the `fb:psid:` shape AI-101's mocks used.
+
+**Project layout ตั้งแต่ 2026-08-19** (หลังกู้ของหาย 2 รอบ): ความจริงปัจจุบัน =
+`00 INDEX - อ่านก่อนใช้.dc.html` (authority map + caveats) + `Console P1-P4`
+(Turn 1-6, P1 มี 1c/1d/1e ที่ Claude เขียนเติมเอง) + `Chat Console v3.dc.html`
+(Turn 7-12) + `Chat Console Prototype` (interactive demo). mock เก่า 2 ไฟล์
+ถูกแปะ banner SUPERSEDED แล้ว; standalone-src + Sellsuki bundle ถูกลบ.
+**Gotcha สำคัญ: Claude Design เขียนไฟล์ใหม่ทั้งก้อนทุก turn และมีเพดาน
+~230KB — สั่งเพิ่มเนื้อหาลงไฟล์ใหญ่ = Turn เก่าถูกทับหายเงียบ ๆ (โดนมา
+2 ครั้ง) → เปิดไฟล์ใหม่ต่อ Turn เสมอ + สั่งให้รายงานรายชื่อ section ก่อนจบ.**
+Caveats ที่บันทึกใน INDEX: 11b role ตั้งชื่อเองต้อง map Keto จริง, 11c
+"พร้อมรับงาน"/push = ไม่มี backend, Turn 12 dark = proposal, ชื่อลูกค้า
+ในภาพ = หลัง E6 (วันนี้ต้องใช้ •••xxxx ตาม 8a).
