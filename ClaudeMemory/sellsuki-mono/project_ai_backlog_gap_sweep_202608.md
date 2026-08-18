@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: 22bc8e4d-cfe5-415c-8c23-d4d838fba867
-  modified: 2026-08-15T01:53:40.354Z
+  modified: 2026-08-18T16:46:51.934Z
 ---
 
 Gap sweep บอร์ด AI (2026-08-14) ตอบคำถาม user "การ์ดขาดเยอะมั้ย โดยเฉพาะ admin UI":
@@ -16,6 +16,8 @@ Gap sweep บอร์ด AI (2026-08-14) ตอบคำถาม user "กา�
 **Why:** กันทำ gap analysis ซ้ำ และกันสร้างการ์ดซ้ำรอบหน้า
 
 รอบสอง (2026-08-15 หลัง /po-review): DoR review พบ owner-gap → เปิดชุด B: **AI-151** spike ย้าย internal assistant · **AI-152** HR template v1 · **AI-153** unmapped-fact queue store (E2) · **AI-154** answer-trace persist (E2, ควรเข้า pilot เพราะ backfill ไม่ได้) · **AI-155** quota status read model+event+audit (E5) · **AI-156** case-switch UI (E8, Story เต็ม) · **AI-158** workspace-scoped invite (CCS; AI-157 ถูก session อื่นจอง) — และแก้ชุด A ครบ 10 ใบ (SP field = `customfield_10016`; AI-144/146 เปลี่ยน Task→Story สำเร็จ)
+
+รอบสาม (2026-08-18 /po-team): ชุด **[E8][Observability] Backend Transparency** 6 ใบ — **AI-166** Form Watch (S,5) · **AI-168** Sheet Export (S,3) · **AI-173** Lead reminder view (S,5) · **AI-169** Breaker read API (Task ใต้ AI-4 — breaker จริงอยู่ ai-agent, ฝั่ง chat-core เป็น dead code + prometheus ค้าง 0, `Allow()` มี side effect ห้ามใช้อ่าน) · **AI-174** rolling-summary read projection (blocked-by D1: AI-45 ล็อก narrative ให้ assembler อ่านคนเดียว) · **AI-175** Memory Inspector (blocked-by AI-174) — decision log D1-D8 เป็น comment บน AI-9 · fold 7 หัวข้อ (tier→AI-144/154, metrics+send outcome→AI-107, kill switch→AI-106, goal→AI-115/98, assembler→AI-154, case catalog+24h window→ไม่มีเจ้าของ) · ⚠️ code ของ form/sheet routes อยู่บน branch feature/AI-126-case-use-case ยังไม่ merge · AI-159..167,170-172 = ชุด SLA Ladder ของ session อื่น อย่าสับสน
 
 **How to apply:** งานค้างถ้า user ถามต่อ — (1) decisions ที่บันทึกในการ์ดแล้วรอคนเคาะ: members UI E8-vs-CCS3 (AI-150), SSE-vs-WS ของ Inbox (AI-149), จุด terminate WS (AI-142), AI-131 ข้อ 1/2/4/5, เจ้าของ CASE_SENSITIVE_FACT_VIEWED / bulk-unassign / ai_quota_exhausted marking (2) E12 ยังขาด: staff-as-asker, ย้าย KB + ปลดระวาง channel-gateway, verify guardrails (3) frontend ที่ backend ครบพร้อมทำ: AI-138+AI-139, AI-106, AI-147 ครึ่งใบ (case routes มี, checkpoint API ยังไม่มี)
 
