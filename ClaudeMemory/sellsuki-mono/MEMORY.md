@@ -135,4 +135,4 @@
 - [git @{u} false zero](reference_git_upstream_false_zero.md) — no upstream → "0 unpushed"; compare origin/<branch>..HEAD
 - [FB page dev-mode gate](project_fb_page_dev_mode_gate.md) — real page 268502970215081; only role-holders reach the webhook
 - [Parallel sessions duplicate symbols](reference_parallel_sessions_duplicate_symbols.md) — clean auto-merge ≠ correct; same test written twice won't compile
-- [SLA ladder engine state](project_sla_ladder_engine_state.md) — AI-170 done 2026-08-21; next AI-162→172→167 (167 blocked by 164); QA time-warp must move session+incident timestamps together
+- [SLA ladder engine state](project_sla_ladder_engine_state.md) — epic COMPLETE 2026-08-22 (all steps + restricted mode live); QA time-warp + catch-up gotchas
