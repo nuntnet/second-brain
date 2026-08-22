@@ -1,23 +1,26 @@
 ---
 name: sla-ladder-engine-state
-description: SLA ladder epic (AI-159) fully implemented 2026-08-22 — all steps + restricted mode live-smoked; QA time-warp gotcha; catch-up gotcha
+description: SLA ladder epic (AI-159) shipped 2026-08-22 — MRs open (ai-agent !4 → chat-core !18 → FE !4 order), CronJob in-repo; QA time-warp + catch-up + migration-renumber gotchas
 metadata: 
   node_type: memory
   type: project
   originSessionId: 9847fdca-bb8a-4e71-acd5-7642c3aec6d9
-  modified: 2026-08-21T18:20:48.045Z
+  modified: 2026-08-22T03:29:06.650Z
 ---
 
-SLA ladder epic (AI-159) as of 2026-08-22: **ALL cards implemented locally, unpushed** — AI-161/163/165/171/170 plus the step cards AI-162 (ack), AI-172 (notify+unassign), AI-164 (restricted mode, cross-repo with sellsuki-ai-agent branch `feat/e3-extraction`), AI-167 (auto_return). chat-core rides `feature/AI-126-case-use-case`, FE `feature/AI-122-flags-port`. Migrations 0069–0075 applied locally. Everything live-smoked end to end incl. the full chain: auto_return → faq_only → price ask → holding message + hand back to humans.
+SLA ladder epic (AI-159) as of 2026-08-22: ALL cards implemented, **pushed, MRs open**: ai-agent `feat/e3-extraction` → [!4](https://gitlab.sellsuki.com/sellsuki/sellsuki/backend/sellsuki-ai-agent/-/merge_requests/4) (**merge first** — additive restricted_mode), chat-core `feature/AI-126-case-use-case` → [!18](https://gitlab.sellsuki.com/sellsuki/sellsuki/backend/sellsuki-chat-core/-/merge_requests/18), FE `feature/AI-122-flags-port` → [!4](https://gitlab.sellsuki.com/sellsuki/sellsuki/frontend/ai-chat-admin-frontend/-/merge_requests/4). All Jira cards In Review with closing comments. Post-merge suites: chat-core 2682/177 pkgs, ai-agent 340/14.
 
-**Why:** future sessions must not re-implement; remaining work is push/MR sequencing + Jira updates + K8s CronJob manifest (SRE chart, values in chat-core docs/sla-ladder-sweep.md).
+**Merge topology resolved this session:** origin/main (AI-18 vault + fix/AI-32) merged into chat-core branch; parallel session's S8 Track B (AI-37 Tier 1) also merged — **their migrations 0068-0071 renumbered to 0076-0079** (SLA ladder keeps 0068-0075, already applied to real DBs; Tier 1 unapplied per its own comment). chat-core still has stale open MRs !10/!11/!17 overlapping this line. CronJob is IN-REPO now (not SRE chart): `cmd/sla_ladder_sweep_trigger` + `deployment/values-sla-sweep-cron-*` + cron-arm64/amd64-th CI includes, gated by CI_JOB_ENABLE (off — activates with the service). ⚠️ SWEEP_URL assumes Service name `sellsuki-chat-core-svc` — verify on first deploy.
+
+**Why:** future sessions must not re-implement or re-open MRs; migration numbers 0076-0079 are now claimed by Tier 1.
 
 **How to apply:**
-- QA time-warp: move `chat_sessions.last_customer_message_at` AND `sla_ladder_incidents.opened_at` AND `next_step_at` together (MarkStepFired guard requires equality). The card's QA guide (move incident only) is wrong post-implementation.
-- Catch-up gotcha when QA-ing: a step already past due AT OPEN gets skipped_catch_up — open the incident (sweep once) BEFORE walking time, or the step you want to see fire gets skipped honestly.
-- Ladder config cache 10s TTL; SQL config edits don't invalidate (API saves do). Editing `workspaces.sla_ladder_config` by SQL: write the whole JSON via a temp file + `pg_read_file` — inline heredoc quoting breaks.
-- auto_return defaults DISABLED inside the ladder (0075 flipped stored rows); enabling is per-workspace opt-in on top of the ladder switch.
-- Restricted-mode invariant: EVERY human_mode flip clears ai_restricted_mode; only auto_return re-sets it after its own flip. `sla_ladder.no_open_incident` must match BEFORE the `sla_ladder.*` catch-all in FE mapCode.
-- ai-agent deploys BEFORE chat-core (additive restricted_mode field).
+- QA time-warp: move `chat_sessions.last_customer_message_at` AND `sla_ladder_incidents.opened_at` AND `next_step_at` together (MarkStepFired guard requires equality).
+- Catch-up gotcha: a step already past due AT OPEN gets skipped_catch_up — sweep once to open BEFORE walking time.
+- Ladder config cache 10s TTL; SQL edits don't invalidate (API saves do). SQL JSON edits: temp file + `pg_read_file`.
+- auto_return defaults DISABLED (migration 0075); per-workspace opt-in via settings page.
+- Restricted-mode invariant: EVERY human_mode flip clears ai_restricted_mode; only auto_return re-sets after its own flip.
+- ai-agent deploys BEFORE chat-core.
+- go build in repo root drops the binary in cwd — one already got committed+reverted (9e5f974); it's gitignored now.
 
-Related: [[ai-mvp-integration]], [[ai-merge-topology-risk]]
+Related: [[ai-mvp-integration]], [[ai-merge-topology-risk]], [[parallel-sessions-duplicate-symbols]]
