@@ -136,3 +136,4 @@
 - [FB page dev-mode gate](project_fb_page_dev_mode_gate.md) — real page 268502970215081; only role-holders reach the webhook
 - [Parallel sessions duplicate symbols](reference_parallel_sessions_duplicate_symbols.md) — clean auto-merge ≠ correct; same test written twice won't compile
 - [SLA ladder engine state](project_sla_ladder_engine_state.md) — epic shipped; MRs open (ai-agent !4 first → chat-core !18 → FE !4); tier1 migrations renumbered 0076-0079; CronJob in-repo
+- [entity lib tenant kinds](reference_entity_lib_tenant_kinds.md) — IsActor allowlist gates rps tenant tiers; open the MR yourself; local submodule versions lie
