@@ -29,10 +29,20 @@ Gap sweep บอร์ด AI (2026-08-14) ตอบคำถาม user "กา�
 
 **กับดัก acid test:** `entity/case_/subject.go:10-31` SubjectType เป็น enum ปิด 2 ค่า + `case.go:87-88` บังคับ ChannelIdentityRef ⇒ staff asker ใส่ไม่ลง ⇒ เพิ่ม enum = แก้ core = ชน DoD ของ AI-131 · ai-agent รองรับ staff แล้ว (`agent/types.go:210-221`) · rag-core: AI-38 landed (`entity/workspace/workspace_scope.py`) แต่ KB internal ยังอยู่ `rag_internal` แบบ `filter_expr=None` (`collection_router.py:41-42`) · **ไม่มี pipeline ที่สร้าง KB เดิม** (ai-rag-inventory-recommendation.md:150-160)
 
-## AI-150 — decision ที่โค้ดพิสูจน์แล้ว (ยังรอคนเคาะ)
+## AI-150 — ตัดสินแล้ว (เลือก A) + แตกการ์ด 2026-08-23
 
-CCS **รู้จัก** chat_workspace ระดับ company แล้ว (`central-control-backend/src/use_case/model/permission_group.go:18,217-222`) ⇒ assumption เดิมในการ์ดผิดบางส่วน · แต่ per-workspace operator **เป็นไปไม่ได้วันนี้**: `ai-platform-kit-go/authctx/roleservice.go:133-155` ยิง Kind=`chat_workspace` ซึ่งตกทุกครั้งเพราะ `entity@v0.22.0/entity.go:3-18` IsActor allowlist ไม่มีค่านี้ → InvalidArgument → false · โค้ดเขียนเองว่าเป็น "follow-up" ที่ยังไม่มีการ์ด
+**หลักฐานที่พลิกคำตอบ:** rps รองรับ per-tenant role assignment อยู่แล้ว — `AssignRole(role_id, tenant, user, actor)` tenant อยู่บน **assignment ไม่ใช่บน role** · มี API ครบ (`ListUsersWithRoles`, `ListUserRolesInTenant`, `CountRoleMembers`, `UnassignRole`) · คำเชิญก็พา tenant ได้: `CreateInvitation.Assignments []*RoleWithContexts{RoleId, Contexts []*Namespace}` · CCS เป็น pass-through (`central-control-backend/src/repository/role_and_permission_repository/grpc.go:462-474`)
 
-⇒ 2 ทาง: **A** เพิ่ม chat_workspace ลง allowlist ไลบรารีกลาง (ข้ามทีม) · **B** chat-core เก็บ workspace membership เอง (เสนอ B ตาม BOLA-309 layering) · **ข้อ "(ก) ทำได้ทันที" ในการ์ดใช้ไม่ได้** — ต้องมีการ์ด backend ก่อน
+**🔑 precedent: `patona.store`** — `entity@v0.22.0/entity.go:8-10` มี `SellsukiCompany` + `PatonaStore` ใน IsActor allowlist ด้วยกัน (patona.store = tenant tier ใต้ company แบบเดียวกับ workspace เป๊ะ) และ CCS ทำ name-enrichment ให้มันแล้วที่ `src/use_case/invite.go:42-67`
+
+⇒ **ตัวขวางคือสตริงเดียวใน allowlist** ไม่ใช่สถาปัตยกรรม ⇒ **เลือก A (ใช้ rps) ไม่ใช่ B (chat-core เก็บเอง)**
+
+⚠️ ชื่อ tenant kind จะถูกแช่แข็งถาวร — วันนี้ kit ส่ง `"chat_workspace"` ซึ่งผิด convention `<product>.<thing>` → เสนอ `sellsuki.chat_workspace` · และ `IsActor()` ใช้ตรวจทั้ง Actor และ Tenant (ปนความหมาย แต่ patona.store ก็เป็นแบบเดียวกัน)
+
+**การ์ดที่แตก (links wired):** **AI-182** (SP5, E0 — เปิด tenant tier + composite checker + port `list/grant/revoke` + `managedBy`) blocks **AI-150** (SP5 — เขียนใหม่เป็นหน้าจอ read + company-role, **ทำได้วันนี้** ผ่าน `ListUsersWithRoles` ที่ company tenant) blocks **AI-183** (SP5 — operator ราย workspace + เชิญ)
+
+**ดีไซน์ที่ซื้อความยืดหยุ่น:** field `managedBy` (`ccs`|`workspace`) บนทุกแถว — UI แสดงครบทุกคนแต่กดแก้ได้เฉพาะที่ backend enforce ได้ · วันที่ allowlist ลง แถวเปลี่ยนค่าเอง ไม่ต้องแก้ UI/route (พิสูจน์ด้วย AC8 ของ AI-182: diff ต้องแตะแค่ `tenant.Kind`)
+
+**AI-158 ต้อง rescope (SP ~8 → ~2):** premise ผิด — workspace-scoped invite **มีอยู่แล้ว**ทั้งสาย SPA→CCS→rps · เหลือแค่ enrichment ชื่อ workspace ข้าง ๆ `PatonaStore` และเป็นงานบอร์ด CCS · ถ้าปล่อยไว้จะกลายเป็นระบบคำเชิญที่สอง
 
 Related: [[sla-ladder-engine-state]], [[ai-mvp-integration]], [[bola-saas-access-model]]
