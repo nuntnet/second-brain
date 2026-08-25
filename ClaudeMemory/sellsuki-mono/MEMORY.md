@@ -138,3 +138,4 @@
 - [SLA ladder engine state](project_sla_ladder_engine_state.md) — epic shipped; MRs open (ai-agent !4 first → chat-core !18 → FE !4); tier1 migrations renumbered 0076-0079; CronJob in-repo
 - [entity lib tenant kinds](reference_entity_lib_tenant_kinds.md) — IsActor allowlist gates rps tenant tiers; open the MR yourself; local submodule versions lie
 - [Jira sprint ids not contiguous](reference_jira_sprint_ids_not_contiguous.md) — ids are global across boards; a wrong id files cards into another team's sprint silently
+- [Timing-dependent concurrency tests](reference_timing_dependent_concurrency_tests.md) — goroutine-race tests pass locally against broken code; stage the end state instead
