@@ -111,7 +111,7 @@
 - [rps is_system_role trap](reference_rps_is_system_role_trap.md) — matches thousands of rows; filtering alone can hang minutes
 - [Local bola overmind socket](reference_local_bola_own_overmind_socket.md) — .overmind-bola.sock + Procfile.bola; 502 = not started
 - [CCS3 frontend facts](reference_ccs3_frontend_facts.md) — admin.sellsuki.com; members UI=/users; company from session not URL
-- [messaging-backend repo traps](reference_messaging_backend_shared_repo_traps.md) — .env tracked (repoints others); develop is policy target but stale; no MR CI
+- [messaging-backend repo traps](reference_messaging_backend_shared_repo_traps.md) — .env tracked (repoints others); no MR CI; develop↔main lead flipped — measure both
 - [Local i18n/config seeding](reference_local_i18n_config_seeding.md) — pulls staging's public API; admin APIs need Keto role on sellsuki.system
 - [AI platform arch artifact](reference_ai_platform_architecture_artifact.md) — source at docs/ai-platform-architecture.md; `&amp;` double-escapes in mermaid
 - [BOLA SaaS access model](project_bola_saas_access_model.md) — CCS3=org scope, BOLA=workspace, Kratos=identity, Keto enforces
@@ -127,7 +127,7 @@
 - [OC2Plus Customer App auth plan](project_oc2plus_customer_app_auth_plan.md) — OC-4344: self-build device-trust/password/OIDC on member-api; reject Better Auth + own OIDC Provider
 - [Browser surfaces here](reference_browser_surfaces_this_workspace.md) — Browser pane times out; use Claude in Chrome, user opens a logged-in tab
 - [chat-core migrations break at 0066](reference_chatcore_migrations_break_at_0066.md) — clean DB can't migrate; 0067 checkpoint tables exist nowhere
-- [AI merge topology risk](project_ai_merge_topology_risk.md) — 206 chat-core commits in one MR; 11/18 admin ports have no backend by design
+- [AI merge topology risk](project_ai_merge_topology_risk.md) — codex/ai176-* baselines must be CLOSED not merged; 19 stranded files split BE+FE
 - [Shared identity infra is a SPOF](reference_shared_identity_infra_singleton.md) — kratos/keto/hydra all 1-replica, colocate on one node; hit 2x in one day
 - [AI backlog gap sweep 2026-08](project_ai_backlog_gap_sweep_202608.md) — E12 ปิดครบ (AI-178/179/180/181); AI-150 ติด decision A-vs-B; ผลตรวจ guardrail §5.11
 - [Design handoff = full fidelity](feedback_design_handoff_full_fidelity.md) — implement ทั้งเฟรม + follow-through, no-mock ใช้กับ data เท่านั้น
@@ -137,3 +137,4 @@
 - [Parallel sessions duplicate symbols](reference_parallel_sessions_duplicate_symbols.md) — clean auto-merge ≠ correct; same test written twice won't compile
 - [SLA ladder engine state](project_sla_ladder_engine_state.md) — epic shipped; MRs open (ai-agent !4 first → chat-core !18 → FE !4); tier1 migrations renumbered 0076-0079; CronJob in-repo
 - [entity lib tenant kinds](reference_entity_lib_tenant_kinds.md) — IsActor allowlist gates rps tenant tiers; open the MR yourself; local submodule versions lie
+- [Jira sprint ids not contiguous](reference_jira_sprint_ids_not_contiguous.md) — ids are global across boards; a wrong id files cards into another team's sprint silently
