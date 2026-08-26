@@ -139,3 +139,10 @@
 - [entity lib tenant kinds](reference_entity_lib_tenant_kinds.md) — IsActor allowlist gates rps tenant tiers; open the MR yourself; local submodule versions lie
 - [Jira sprint ids not contiguous](reference_jira_sprint_ids_not_contiguous.md) — ids are global across boards; a wrong id files cards into another team's sprint silently
 - [Timing-dependent concurrency tests](reference_timing_dependent_concurrency_tests.md) — goroutine-race tests pass locally against broken code; stage the end state instead
+- [Lit/React node condition hollows tests](reference_lit_react_node_condition_hollows_tests.md) — vitest gets the SSR build; DS props all undefined, tests prove nothing
+- [DS testId is a property](reference_ds_testid_is_a_property.md) — not data-testid; getByTestId finds nothing and looks like "not rendered"
+- [rps ListAssignedRoles = reverse lookup](reference_rps_list_assigned_roles_reverse_lookup.md) — the "no such endpoint" GAP note was wrong
+- [chat-core CI gaps](reference_chatcore_ci_gaps.md) — integration_test never runs on main; MR jobs pinned to staging-th
+- [List open MRs before opening one](feedback_list_open_mrs_before_opening_one.md) — parallel sessions duplicated a fix; session-start listing is stale
+- [chat-core unprefixed chat_workspace](reference_chatcore_unprefixed_chat_workspace.md) — AssignOperator stays broken after rps !107 without a kit bump
+
