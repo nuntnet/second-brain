@@ -16,3 +16,6 @@ Quirks ของ Jira MCP tools (server d4aa0ce4…, พบ 2026-08-14 ตอน
 4. `createJiraIssue` **HTML-escape อักขระ `<` ใน summary** (`<30 นาที` → `&amp;lt;30`) — เลี่ยงอักขระพิเศษใน summary; แก้ทีหลังด้วย editJiraIssue เฉพาะ field summary ได้ (ไม่แตะ description จะไม่โดนบั๊ก ADF ตาม [[jira-editissue-adf-breakage]])
 
 **How to apply:** งานไหนต้องกวาด Jira board ทั้งบอร์ด → spawn subagent + sequential calls + TSV; งาน verify เนื้อหาการ์ด → count-mode text ~ query
+
+5. **Issue links: ทิศทางกลับด้าน + ลบไม่ได้** (2026-08-26, cluster OC-4362/4407) — `createIssueLink` ผ่าน MCP บันทึกทิศกลับด้านได้ (การ์ดที่ควรเป็น *is blocked by* กลายเป็น *blocks*) และ **ไม่มี tool สำหรับลบ link** → เจอแล้ว 2 ครั้งค้างเป็นเดือน (OC-4407 link 23380 ตั้งแต่ 2026-08-07, OC-4362 link 23390). ต้อง **verify ทิศทางด้วย getJiraIssue หลังสร้างทุกครั้ง** และถ้าผิดต้องให้คนลบใน Jira UI เอง — อย่าปล่อยไว้ เพราะ dependency graph ที่กลับด้านทำให้ prioritizer จัดลำดับผิด
+6. 2026-08-26: `fields` param **ทำงานแล้ว** ทั้ง getJiraIssue และ searchJiraIssuesUsingJql (ต่างจากข้อ 2 ที่พบ 2026-08-14) — แต่ nested `parent` ยังคืน object เต็มเสมอ ทำให้ผลลัพธ์บวมอยู่ดีเมื่อ query หลายสิบใบ
