@@ -145,4 +145,8 @@
 - [chat-core CI gaps](reference_chatcore_ci_gaps.md) — integration_test never runs on main; MR jobs pinned to staging-th
 - [List open MRs before opening one](feedback_list_open_mrs_before_opening_one.md) — parallel sessions duplicated a fix; session-start listing is stale
 - [chat-core unprefixed chat_workspace](reference_chatcore_unprefixed_chat_workspace.md) — AssignOperator stays broken after rps !107 without a kit bump
+- [CCS global config permission gate](reference_ccs_global_config_permission_gate.md) — even global-scope configs need sellsuki.configsystem.config.view on tenant sellsuki.user:""
+- [Local Kratos identity debugging](reference_local_kratos_identity_debugging.md) — don't guess from /admin/identities; check a backend's own request logs instead
+- [Node 25 breaks jsdom localStorage](reference_node25_localstorage_jsdom_conflict.md) — this machine only has Node v25.8.0, no version manager, repos pin v20
+- [Harness classifier blocks secrets/mutations](reference_harness_classifier_blocks_secrets_and_mutations.md) — chat "yes" doesn't unlock it; needs interactive prompt or settings rule
 
