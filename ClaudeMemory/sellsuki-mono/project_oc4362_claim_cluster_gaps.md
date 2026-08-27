@@ -23,9 +23,15 @@ OC-4295/4362/4413/4420/4461/4462/4463/4464/4465 — ก่อนหน้าน�
 - OC-4465 ยัง blocked-by OC-4345 (auth spike) — ต้องเคาะ D1 (ฟอร์มอยู่ SPA ไหน) + D2 (guest→member upgrade ในเซสชันเดียว) ไม่งั้นทำไม่ได้ทั้งใบ
 - link ทิศกลับด้าน 3 จุด (MCP ลบไม่ได้ ต้องแก้ใน Jira UI): OC-4362 link 23390, OC-4407 link 23380, และ OC-4362 ขาด is-blocked-by OC-4420
 
-**ผลตรวจ codebase ที่ขัดกับ OC-4362:**
-- การ์ดเขียน "อัปโหลดผ่าน file-service" แต่ของจริงคือ **S3 ตรง** (`src/repository/file_storage_repository/s3.go:38`, `src/use_case/file_storage.go:17` — saveFile บังคับมี identity.Identity ที่ :34-35)
-- ไฟล์แนบตั้ง `ExpiresAt` **+24 ชม.** (`src/use_case/file_storage.go:36`) → หลักฐานอาจหายก่อนแอดมินตรวจ
-- `oc2plus-line-crm-service-member-api` มีแค่ **9 endpoints** ไม่มี point/loyalty/claim และ **ไม่มี code อัปโหลดไฟล์เลย** → ฟอร์มฝั่ง member ยังไม่มีบ้าน
+**ผลตรวจ codebase (แก้แล้ว 2026-08-27 — รอบแรกผมอ่านผิด base):**
+🔴 local `develop` ของ backoffice-api **แตกทางจาก origin/develop: ตามหลัง 137 / นำหน้า 191 commit**
+→ สำรวจจาก local develop จะได้ข้อสรุปผิด **ยึด `origin/develop` เสมอ**
+
+ของจริงบน origin/develop:
+- เก็บไฟล์ผ่าน **file-service ทาง HTTP** (`src/repository/file_service_repository/http.go:66`) — ตรงกับที่การ์ดเขียนไว้แล้ว
+- **ไม่มี** `use_case/file_storage.go` ⇒ เรื่อง S3-ตรง / `ExpiresAt` 24 ชม. / ตาราง `file_storage` **เป็นของ local ที่ stale ทั้งหมด ไม่ใช่ blocker**
+- 🔴 blocker จริง: มีแค่ `UploadPublicImage` → `/upload/public/` (ทำไว้ให้ theme logo OC-4246)
+  **ยังไม่มี private upload** — รูปใบเสร็จเป็นข้อมูลลูกค้า ใช้ public bucket = ปัญหา PDPA
+- `member-api` ยังไม่มี point/loyalty/claim endpoint และไม่มีโค้ดอัปโหลดไฟล์
 
 ดู [[reference_oc2plus_jira_project]], [[project_loyalty_canonical_contract]], [[project_loyalty_point_cluster]]
