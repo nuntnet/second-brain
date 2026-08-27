@@ -150,4 +150,4 @@
 - [Node 25 breaks jsdom localStorage](reference_node25_localstorage_jsdom_conflict.md) — this machine only has Node v25.8.0, no version manager, repos pin v20
 - [Harness classifier blocks secrets/mutations](reference_harness_classifier_blocks_secrets_and_mutations.md) — chat "yes" doesn't unlock it; needs interactive prompt or settings rule
 
-- [OC-4362 claim cluster](project_oc4362_claim_cluster_gaps.md) — OC-4461..4464 เปิดแล้ว; scope/schema naming ยังชนกัน
+- [OC-4362 claim cluster](project_oc4362_claim_cluster_gaps.md) — OC-4461..4465 เข้า Sprint 128 แล้ว; scope/schema naming ยังชนกัน
