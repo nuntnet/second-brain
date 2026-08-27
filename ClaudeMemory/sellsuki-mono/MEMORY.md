@@ -157,3 +157,4 @@
 - [file-service Keto subject kind](reference_file_service_keto_subject_kind.md) — grant kind must match X-User-Kind or it 403s with the role right there
 - [member-api test-mode login](reference_oc2plus_member_api_test_mode_login.md) — mint a local member session without LINE; which rows must exist first
 - [Permission generator churn](reference_permission_generator_nondeterministic.md) — entity's populate_permission reorders blocks per run; regenerate carefully or the diff is 260 lines of nothing
+- [OC-4464 OCR vendor](project_oc4464_ocr_vendor_decision.md) — iApp chosen; Textract has no Thai at all; the พ.ศ. +543 trap

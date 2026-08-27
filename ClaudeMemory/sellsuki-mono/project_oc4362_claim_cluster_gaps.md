@@ -45,7 +45,7 @@ OC-4295/4362/4413/4420/4461/4462/4463/4464/4465 — ก่อนหน้าน�
 | OC-4362 | ฝั่ง member ครบ (submit + ดูรูปตัวเอง) · admin proxy + reject ครบ · **approve ยังไม่ทำ** (ติด OC-4415) | member-api !93 · backoffice-api !521 · FE !551 / !35 |
 | OC-4462 | ครบ | FE member !35 |
 | OC-4463 | ครบ | backoffice-api !521 |
-| OC-4461 | ครบ **ยกเว้น scope** — ยังใช้ `oc2plus.point.manage` | entity **!44** รอ merge → tag → bump go.mod → เปลี่ยน 5 จุด → ops grant |
+| OC-4461 | **code ครบทุก AC** — scope เป็น `oc2plus.pointclaim.review` แล้ว (entity v0.32.0) | รอ **ops grant scope** ก่อน deploy · BE+FE ต้องขึ้นพร้อมกัน |
 | OC-4465 | BE idempotency + FE guest/modal/draft ครบ · **AC-02 pre-check ถูก descope** (member-api ไม่มี campaign repository — เหตุผลเดียวกับที่ OC-4362 ตัด Rule 4) | !93 · !35 |
 | OC-4464 | ยังไม่เริ่ม — ต้องเคาะ OCR vendor ก่อน | — |
 
@@ -58,4 +58,19 @@ identity ของ `FILE_SERVICE_API_KEY` **kind `sellsuki.system`** ทุก c
 
 **ยังไม่เคย verify ใน browser จริงสักหน้า** — backoffice ติด Kratos ปฏิเสธ return_to=localhost (ต้องมีคน login),
 member LIFF บูตไม่ขึ้นเพราะ dep หาย ดู [[reference-browser-surfaces-this-workspace]]
+
+**2026-08-28 — OC-4461 ปิด code ครบ**: entity!44 merged → tag `v0.32.0` (commit `c0124d1`) →
+backoffice-api go.mod v0.28.0→v0.32.0 + สลับ 6 จุดใน `point_claim.go` → FE เปลี่ยน sidebar + page guard
+เป็น `PERMISSIONS.POINT_CLAIM_REVIEW`
+
+`src/use_case/point.go` และ `ViewPointList` **คงเป็น `oc2plus.point.manage`** — คนละฟีเจอร์ (จัดการหน่วยแต้ม)
+`App.vue` route-permission map คุมแค่ panel export ไม่ใช่ page access จึงไม่ต้องเพิ่ม `point-claims`
+
+⚠️ **ห้าม deploy ก่อน ops grant scope** — เมนูจะหายจากแอดมินทุกคน (ถูกตาม Rule 9 แต่ใช้งานไม่ได้)
+และ **ห้ามถอยกลับไปใช้ point.manage** เพราะนั่นคือ bypass ที่ Rule 9 มีไว้กัน
+
+⚠️ **push tag ถูก classifier บล็อก** — สร้าง local tag ได้ push ไม่ได้ ต้องให้ user ทำเอง
+ดู [[reference-harness-classifier-blocks-secrets-and-mutations]]
+
+OCR vendor ของ OC-4464 เคาะแล้ว ดู [[project-oc4464-ocr-vendor-decision]]
 
