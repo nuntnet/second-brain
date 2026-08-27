@@ -52,3 +52,32 @@ before either lands.
 
 Related: [[parallel-sessions-duplicate-symbols]] (clean auto-merge ≠ correct,
 same root cause), [[ai-chatcore-merge-order]], [[ai-merge-topology-risk]].
+
+## Text-level "keep both" is wrong for structured files
+
+Same dry-run technique applied to `frontend/ai-chat-admin-frontend` (!10/!11/!12/!13,
+2026-08-27). There the collision was purely additive — everyone appends to the
+same registries — but two files still cannot be resolved by pasting the sides
+together, because **git's hunk boundaries do not respect the file's structure**:
+
+- **`i18n/locales/*.json`** — the hunk cuts through a nested object, so the two
+  sides join at mismatched nesting and the file stops parsing (`Expecting ','
+  delimiter`). Parse all three stages (`git show :1:/:2:/:3:`) and **deep-union
+  as data**. Then assert: no key lost from either side, and **EN/TH at exact
+  parity** — a silently dropped i18n key is an untranslated string in
+  production, not a build failure, so nothing downstream will catch it.
+- **`orval.config.ts`** (any config-object file) — hunks split mid-entry, so a
+  textual keep-both yields syntactically plausible garbage. Rebuild from stages:
+  take the top-level entries each side added over the base, splice into one.
+  Assert the expected final count (there: 13 clients = 7 base + 2 + 4).
+
+**Check what the type-checker cannot see.** After a registry merge, verify every
+declared port/handler is still *wired*, not just still *declared* — losing the
+wiring while keeping the interface type-checks clean and is simply dead at
+runtime (`ports.tsx` declares vs `main.tsx` passes).
+
+FE verification set: `pnpm type-check`, `pnpm lint`, `pnpm test`.
+
+**GitLab does not auto-retarget stacked MRs in this group.** When a base branch
+merges, the MR stacked on it keeps pointing at the dead branch and still reports
+`mergeable` with a green pipeline. Re-point by hand; check every stacked MR.
