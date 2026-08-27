@@ -1,6 +1,6 @@
 ---
 name: reference-quota-no-allow-deny-rpc
-description: "quota-management had NO allow/deny RPC and its flow engine could not express a verdict at all; both built 2026-08-13 in MR !13 (unmerged) — InternalCheckAssignPlan + flow_context.Outcome"
+description: "quota-management RPC surface: no allow/deny (built in unmerged MR !13), and usage write has no dimensions/no idempotency key, no billing period to read"
 metadata: 
   node_type: memory
   type: reference
@@ -53,3 +53,25 @@ changes live behaviour for existing Patona callers.
 
 A `workspace_member` quota SKU must also exist in data before BOLA-187/194/196's
 "block when full" ACs can be wired — that is product/ops, not code.
+
+
+---
+
+## UPDATE 2026-08-28 — QMS ยัง "รับ usage แบบมี dimension" และ "บอกรอบบิล" ไม่ได้ด้วย
+
+ตรวจ proto รอบใหม่ตอนรีวิว epic AI-6 (E5 LLM Metering) เจออีก 3 ช่องที่คนละเรื่องกับ allow/deny:
+
+- **`UsageAssignPlanRequest{api_key, provider, user, data}`** — dimension ทุกตัวยัดได้แค่ใน `data`
+  ที่เป็น **string ทึบ** ⇒ ถาม QMS ว่า "workspace/model/caller_service ไหนใช้เท่าไร" ไม่ได้เลย
+- **ไม่มี idempotency key บน usage write** ⇒ replay จาก durable spool หลัง process ตาย = นับซ้ำจริง
+  กันได้แค่ในบัฟเฟอร์ฝั่ง caller ไม่ใช่ end-to-end
+- **`GetCurrentPlanResponse` คืน `FlowContext` เปล่า** (`ContextValue` + `Event[]` + `gas_used`) —
+  ไม่มีวันเริ่ม/วันสิ้นสุดรอบบิล และ renewal เป็น flow ที่ต้องมีคนเรียก `InternalRenewAssignPlan`
+  ⇒ "รีเซ็ตโควตาเองเมื่อขึ้นรอบใหม่" และ `resetAt` บน UI ไม่มีแหล่งข้อมูล
+- ที่ใกล้ read-model ที่สุดคือ `InternalListTransactionOfQuota` ซึ่งคืน `Transaction` ดิบทีละรายการ
+  (`quota_code`/`plan_revision`/`user_ref`/`provider_ref`/`occurred_at` + `Event[]`) — ไม่มี group-by
+
+**How to apply:** อย่าออกแบบให้ QMS เป็นที่เก็บ usage แบบ analytics · เส้นแบ่งที่เคาะแล้ว
+(แผน §5.14.3 D3, 2026-08-28): **QMS ถือหน่วยที่ enforce + billing period · breakdown/cost อยู่ฝั่ง
+ผู้เรียก** · ถ้าการ์ดไหนเขียนว่า "ห้ามมี store ของตัวเอง อ่านจาก QMS อย่างเดียว" ให้ถือว่า
+implement ไม่ได้ และต้องแก้การ์ดนั้น ไม่ใช่ฝืนทำ

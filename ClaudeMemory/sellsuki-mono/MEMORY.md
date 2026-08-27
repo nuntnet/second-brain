@@ -117,7 +117,7 @@
 - [BOLA SaaS access model](project_bola_saas_access_model.md) — CCS3=org scope, BOLA=workspace, Kratos=identity, Keto enforces
 - [AI Conversation Intelligence](project_ai_conversation_intelligence.md) — Case/Checkpoint/Memory-lanes decided 2026-08-11; stage must bind case_id
 - [AI board stale cards](reference_ai_board_stale_cards.md) — AI-38 still says pgvector though spike closed as Milvus
-- [Quota has no allow/deny RPC](reference_quota_no_allow_deny_rpc.md) — metering only; block-on-full ACs unimplementable until BOLA-201
+- [Quota has no allow/deny RPC](reference_quota_no_allow_deny_rpc.md) — metering only; also no usage dimensions, no idempotency key, no billing period
 - [Local identity hardcode loop](reference_local_identity_hardcode_loop.md) — .env.dev X-User-Id not in Kratos = infinite AMS bounce; fixed via forward_auth
 - [Ambiguous 404 fails open](reference_ambiguous_404_fail_open.md) — "no record" vs "no endpoint" both 404; branch on error_code
 - [ai-agent is stateless](project_ai_agent_stateless.md) — chat-core owns config+eval harness; config travels on the request

@@ -1,6 +1,6 @@
 ---
 name: feedback-decisive-deep-execution
-description: "User wants sharper, more decisive work — investigate deeply and act, not option-menus"
+description: "User wants sharper, more decisive work — investigate deeply and act; when a decision IS theirs, ask with trade-offs + your recommendation, then apply the answer same turn"
 metadata: 
   node_type: memory
   type: feedback
@@ -31,3 +31,18 @@ missing migration, fix the wrong env value, create the missing config file), **f
 report**, even when there are many of them stacked (that run had 9 + a real code bug). Reserve the
 question for things I genuinely cannot decide: destructive/irreversible actions, committing to
 someone else's branch, or a product call. Cost of asking first ≈ a wasted round-trip every time.
+
+
+**Reinforced 2026-08-28 — the other half of the rule: what a real decision looks like.** หลังผมรีวิว
+epic AI-6 แล้วจบด้วย "ต้องเคาะ 3 decision" user ตอบว่า **"ถามผมมา อธิบายหน่อย"** ⇒ ยืนยันว่า
+*genuine product/architecture decision* คือสิ่งที่ต้องถาม แต่ **ถามให้ถูกรูป**:
+
+- อธิบายที่มาของปัญหาก่อน (หลักฐาน file:line / proto จริง) แล้วค่อยวางทางเลือก
+- ทุกทางเลือกต้องบอก **แลกกับอะไร** ไม่ใช่แค่ชื่อทาง
+- **ต้องมีคำแนะนำของผมเองพร้อมเหตุผลชี้ขาด** — รอบนี้ user เลือกตามที่แนะนำทั้ง 3 ข้อ
+  ⇒ menu เปล่า ๆ ไม่มีคำแนะนำ = ยังเป็นการโยนงานกลับ
+- ใช้ AskUserQuestion แล้ว **ลงมือ apply ผลทันทีในเทิร์นเดียวกัน** (แก้เอกสารแผน + การ์ดทุกใบ
+  ที่กระทบ) ไม่ต้องถามซ้ำว่าจะให้ทำมั้ย
+
+เส้นแบ่ง: หา/แก้/ยืนยันเอง = ทำเลย · เลือกทิศทางที่ผูกกับสัญญาลูกค้า สถาปัตยกรรม หรือทีมอื่น = ถาม
+แบบข้างบน
