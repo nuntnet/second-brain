@@ -35,3 +35,27 @@ OC-4295/4362/4413/4420/4461/4462/4463/4464/4465 — ก่อนหน้าน�
 - `member-api` ยังไม่มี point/loyalty/claim endpoint และไม่มีโค้ดอัปโหลดไฟล์
 
 ดู [[reference_oc2plus_jira_project]], [[project_loyalty_canonical_contract]], [[project_loyalty_point_cluster]]
+
+---
+
+## 2026-08-28 — สถานะหลัง implement (MR เปิดครบ ชี้ `develop` ทั้งหมด)
+
+| การ์ด | สถานะจริง | MR |
+|---|---|---|
+| OC-4362 | ฝั่ง member ครบ (submit + ดูรูปตัวเอง) · admin proxy + reject ครบ · **approve ยังไม่ทำ** (ติด OC-4415) | member-api !93 · backoffice-api !521 · FE !551 / !35 |
+| OC-4462 | ครบ | FE member !35 |
+| OC-4463 | ครบ | backoffice-api !521 |
+| OC-4461 | ครบ **ยกเว้น scope** — ยังใช้ `oc2plus.point.manage` | entity **!44** รอ merge → tag → bump go.mod → เปลี่ยน 5 จุด → ops grant |
+| OC-4465 | BE idempotency + FE guest/modal/draft ครบ · **AC-02 pre-check ถูก descope** (member-api ไม่มี campaign repository — เหตุผลเดียวกับที่ OC-4362 ตัด Rule 4) | !93 · !35 |
+| OC-4464 | ยังไม่เริ่ม — ต้องเคาะ OCR vendor ก่อน | — |
+
+**D1/D2 ของ OC-4465 ตอบแล้วโดยของที่ ship** ไม่ต้องรอ spike OC-4345: ฟอร์มอยู่ SPA เดียวกับ register
+(`frontend/oc2plus-linecrm-frontend-member`) และ guest = ไม่มี cookie เลย ไม่มี bootstrap session บังคับ
+
+**Deploy blocker ที่ยังไม่ได้ทำ (ต้องให้ SRE):** grant `sellsuki.filesystem.{create,view,list}` ให้
+identity ของ `FILE_SERVICE_API_KEY` **kind `sellsuki.system`** ทุก company — ไม่มีอะไรใน CCS/rps แจกให้ใครเลย
+ดู [[reference-file-service-keto-subject-kind]]
+
+**ยังไม่เคย verify ใน browser จริงสักหน้า** — backoffice ติด Kratos ปฏิเสธ return_to=localhost (ต้องมีคน login),
+member LIFF บูตไม่ขึ้นเพราะ dep หาย ดู [[reference-browser-surfaces-this-workspace]]
+

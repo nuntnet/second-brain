@@ -156,3 +156,4 @@
 - [rps identity kind must be prefixed](reference_rps_identity_kind_must_be_prefixed.md) — bare "user"/"chat_workspace" → identity invalid; read path 503s, write path silently never grants
 - [file-service Keto subject kind](reference_file_service_keto_subject_kind.md) — grant kind must match X-User-Kind or it 403s with the role right there
 - [member-api test-mode login](reference_oc2plus_member_api_test_mode_login.md) — mint a local member session without LINE; which rows must exist first
+- [Permission generator churn](reference_permission_generator_nondeterministic.md) — entity's populate_permission reorders blocks per run; regenerate carefully or the diff is 260 lines of nothing
