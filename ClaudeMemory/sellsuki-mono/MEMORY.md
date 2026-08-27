@@ -158,3 +158,5 @@
 - [member-api test-mode login](reference_oc2plus_member_api_test_mode_login.md) — mint a local member session without LINE; which rows must exist first
 - [Permission generator churn](reference_permission_generator_nondeterministic.md) — entity's populate_permission reorders blocks per run; regenerate carefully or the diff is 260 lines of nothing
 - [OC-4464 OCR vendor](project_oc4464_ocr_vendor_decision.md) — iApp chosen; Textract has no Thai at all; the พ.ศ. +543 trap
+- [Turbo cache false green](reference_turbo_cache_crosssession_false_green.md) — "4 successful" can replay another session's logs; use `turbo run --force` to verify
+- [AI board In Review](reference_ai_board_in_review_means_merged_unverified.md) — In Review = merged but unverified; To Do ≠ not started
