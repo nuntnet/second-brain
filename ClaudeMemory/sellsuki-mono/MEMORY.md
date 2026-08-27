@@ -154,3 +154,5 @@
 - [OC2Plus schema is external](reference_oc2plus_schema_lives_in_external_repo.md) — migration อยู่ repo แยก ไม่ใช่ submodule; DDL ใหม่ไปที่ member-api/migrations/004
 - [Silent semantic merge break](reference_silent_semantic_merge_break.md) — two green MRs; clean auto-merge then won't compile; dry-run the merge
 - [rps identity kind must be prefixed](reference_rps_identity_kind_must_be_prefixed.md) — bare "user"/"chat_workspace" → identity invalid; read path 503s, write path silently never grants
+- [file-service Keto subject kind](reference_file_service_keto_subject_kind.md) — grant kind must match X-User-Kind or it 403s with the role right there
+- [member-api test-mode login](reference_oc2plus_member_api_test_mode_login.md) — mint a local member session without LINE; which rows must exist first
