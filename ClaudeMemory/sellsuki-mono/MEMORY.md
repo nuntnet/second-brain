@@ -151,3 +151,4 @@
 - [Harness classifier blocks secrets/mutations](reference_harness_classifier_blocks_secrets_and_mutations.md) — chat "yes" doesn't unlock it; needs interactive prompt or settings rule
 
 - [OC-4362 claim cluster](project_oc4362_claim_cluster_gaps.md) — OC-4461..4465 เข้า Sprint 128 แล้ว; scope/schema naming ยังชนกัน
+- [OC2Plus schema is external](reference_oc2plus_schema_lives_in_external_repo.md) — migration อยู่ repo แยก ไม่ใช่ submodule; DDL ใหม่ไปที่ member-api/migrations/004
