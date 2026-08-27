@@ -1,43 +1,38 @@
 ---
-name: reference_browser_surfaces_this_workspace
-description: "In this workspace the Browser pane times out — use Claude in Chrome, and the user will open a logged-in tab on request"
-metadata: 
-  node_type: memory
+name: reference-browser-surfaces-this-workspace
+description: the in-app Browser pane DOES reach localhost here; what actually blocks verification is per-app auth and missing deps
+metadata:
   type: reference
-  originSessionId: 369f9f55-f1f1-4ed5-92cb-b4d1e841aa8f
-  modified: 2026-08-14T11:00:41.577Z
 ---
 
-Two browser surfaces exist here and they are NOT interchangeable (2026-08-14):
+**Corrected 2026-08-27.** The earlier note that the Browser pane times out on
+this workspace is wrong. `preview_start` with `http://localhost:<port>` works,
+loads the page, and `read_network_requests` / `read_console_messages` return
+real data. Verify in the Browser pane before assuming it cannot be done.
 
-- **`mcp__Claude_Browser__*` (the in-app Browser pane) — times out.**
-  `preview_start` failed after the full 300s on `https://chat.sellsuki.local`,
-  and a later `Page.captureScreenshot` timed out at 30s. A PostToolUse hook also
-  warns that another chat's dev server owns the folder, so the pane "won't reach
-  it". Do not spend a turn on it; five minutes of dead wall-clock.
-- **`mcp__claude-in-chrome__*` — works.** It drives the user's real Chrome, so
-  their existing Kratos/SSO cookies apply and pages load **already logged in**.
+What actually blocks browser verification here, per app:
 
-Mechanics worth remembering: `tabs_context_mcp` starts with **no tab group** —
-call it with `createIfEmpty: true`, then `navigate` the tab it hands back. The
-user's tab is not in your group, so you navigate to the URL yourself; the
-session still comes from their profile. `read_network_requests` and
-`read_console_messages` only start capturing **when first called**, so an early
-page-load failure is invisible — call them, THEN reload, or you will conclude
-"no errors" from an empty buffer.
+- **Backoffice SPAs (e.g. 5176)** — load, then redirect to Kratos at
+  `accounts.sellsuki.local`, which refuses a `return_to` of
+  `http://localhost:5176/` ("Requested return_to URL is not allowed"). Reaching
+  a logged-in view needs the user to sign in; see
+  [[feedback-verify-as-the-user-sees-it]].
+- **`frontend/oc2plus-linecrm-frontend-member` (5183)** — serves HTML but
+  `src/main.ts` 500s, so nothing renders. Its `node_modules` is a **symlink to
+  the backoffice's**, and three of its own deps are simply absent there:
+  `sellsuki-components`, `@sentry/vue`, `@line/liff`. Same root cause as its
+  `npm run build-only` failing at baseline.
 
-**The user actively supports this.** Asked to check something in a browser, they
-opened the URL in their own Chrome and said so ("ผมเปิด … ในแท็ปที่คุณเข้าถึง
-แล้วจะได้เห็นบั๊กเต็มๆ"). This is the way past the fact that Claude may not enter
-passwords: ask them to open the logged-in page, then inspect and drive it. It
-closed out two real bugs that curl-level checks had rated green.
+⚠️ **Do not run `npm install` in that repo.** It needs auth for the private
+`sellsuki-components` and dies with E401 — and before failing it **deletes the
+node_modules symlink** ("npm warn reify Removing non-directory"), leaving the
+repo with no deps at all, so even vitest/vue-tsc/eslint stop working. Restore
+with:
 
-Related: [[feedback_verify_as_the_user_sees_it]]
+```
+ln -s ../oc2plus-linecrm-frontend-backoffice/node_modules node_modules
+```
 
-More quirks (2026-08-14): (1) physical clicks via `computer` are occasionally
-swallowed right after a navigation/HMR reload (mousedown/mouseup across a
-re-render or focus race) — a "clicked but nothing happened" is NOT app
-breakage until a `javascript_tool` `.click()` also fails; JS clicks were 100%
-reliable. (2) The page clock can render in a non-local timezone (saw PDT while
-the Mac was +07) — likely CDP timezone emulation; don't chase "wrong
-timestamps" in app code without checking `new Date()` in the page first.
+Only the user can `npm login`; ask rather than retrying.
+
+Related: [[reference-caddy-host-networking-gotcha]], [[feedback-verify-as-the-user-sees-it]]

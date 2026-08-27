@@ -125,7 +125,7 @@
 - [Flag without enforcement](reference_flag_without_enforcement.md) — FlatAdminGuard vs WorkspaceGuard drift, ~40 routes unguarded
 - [Kafka fails silently on staging](reference_kafka_silent_publish_failure.md) — BOLA pods missing KAFKA_SERVERS (BOLA-319); check key vs payload
 - [OC2Plus Customer App auth plan](project_oc2plus_customer_app_auth_plan.md) — OC-4344: self-build device-trust/password/OIDC on member-api; reject Better Auth + own OIDC Provider
-- [Browser surfaces here](reference_browser_surfaces_this_workspace.md) — Browser pane times out; use Claude in Chrome, user opens a logged-in tab
+- [Browser surfaces here](reference_browser_surfaces_this_workspace.md) — pane DOES reach localhost; real blockers are Kratos return_to + member repo's node_modules symlink (never npm install there)
 - [chat-core migrations break at 0066](reference_chatcore_migrations_break_at_0066.md) — clean DB can't migrate; 0067 checkpoint tables exist nowhere
 - [AI merge topology risk](project_ai_merge_topology_risk.md) — codex/ai176-* baselines must be CLOSED not merged; 19 stranded files split BE+FE
 - [Shared identity infra is a SPOF](reference_shared_identity_infra_singleton.md) — kratos/keto/hydra all 1-replica, colocate on one node; hit 2x in one day
