@@ -1,0 +1,54 @@
+---
+name: silent-semantic-merge-break
+description: "Two green MRs can break main on merge — a signature change and a new call site auto-merge cleanly and then fail to compile; dry-run the merge, don't reason about it"
+metadata: 
+  node_type: memory
+  type: reference
+  originSessionId: 270e02aa-6ae1-461a-ada0-6fb19a8e9e87
+  modified: 2026-08-27T08:09:16.127Z
+---
+
+Two MRs whose pipelines are both green can still break `main` the moment the
+second one merges, with **no conflict reported by git**. Hit on 2026-08-27 in
+`backend/sellsuki-chat-core` with !28 (AI-40 anti-abuse) and !29 (AI-192
+delivery status):
+
+- !29 added a `messageID` parameter to `sendReplyBestEffort`.
+- !28 independently added a **new call site** for that function (the AI-40
+  rate-limit cooldown reply), written against the old signature.
+
+The edits sit in different regions of `src/use_case/chat_reply.go`, so git
+auto-merges both without a murmur and emits `not enough arguments in call to
+uc.sendReplyBestEffort`. Each branch compiles perfectly alone — **CI cannot
+see this before the merge**, because no pipeline ever builds the combination.
+
+The same pair also produced an ordinary reported conflict in
+`cmd/migration/migrations/migrations.go` (both append registrations). That one
+is the harmless kind: git tells you, and the resolution is "keep both, in id
+order".
+
+**How to apply — dry-run the merge, never reason about it:**
+
+```bash
+git worktree add --detach "$WT" origin/main
+cd "$WT"
+git merge --no-edit origin/<branch-A>
+git merge --no-edit origin/<branch-B>
+go build ./... && go vet ./... && go test -count=1 ./src/...
+git worktree remove --force "$WT"
+```
+
+A reported conflict is the *easy* outcome. The signal to hunt for is a clean
+merge that fails `go build` — so **always build and test the merged tree**,
+not just check whether git complained. Reviewing the overlapping file list
+(`comm -12` of each branch's `diff --name-only origin/main...`) tells you a
+collision is *possible*, never that it is safe.
+
+**Who fixes it:** neither branch can carry the fix while the other is still
+unmerged — merging `main` into either one brings nothing that breaks. The fix
+belongs to whichever merges **second**, which makes it exactly the kind of
+thing that gets lost. Post the exact resolution as a comment on both MRs
+before either lands.
+
+Related: [[parallel-sessions-duplicate-symbols]] (clean auto-merge ≠ correct,
+same root cause), [[ai-chatcore-merge-order]], [[ai-merge-topology-risk]].
