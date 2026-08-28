@@ -8,6 +8,16 @@ metadata:
   modified: 2026-08-10T11:02:09.926Z
 ---
 
+## 🏁 2026-08-28 (จบวัน) — merge แล้ว 3 ใบ เหลือ 2 ใบรอกด
+
+**merged เข้า develop**: !214 (WS8 OC-4473) · !215 (OC-4474 security) · frontend !552 (UX scope availability)
+**mergeable รอกด**: 3rdparty !216 (WS7) · testing !206 (OC-4430 QA matrix)
+
+🔧 **!216 เคยชน conflict หลัง !214/!215 ลง** — แก้ด้วย **merge develop เข้า branch ไม่ใช่ rebase** (workspace ห้าม force push) · conflict ทุกจุดเป็น additive เก็บทั้งสองฝั่ง · **`v2_openapi.yaml` ไม่ merge มือ** — reset เป็นของ develop แล้วรันสคริปต์ที่เพิ่ม WS7 ครั้งแรกซ้ำ แล้ว `make gen-http-fiber` ใหม่ (git แตกเป็น 8 hunk รอบจุดแทรก 2 จุด — spec ที่ parse ผ่านแต่เพี้ยนอันตรายกว่าพังดัง ๆ) · หลัง merge: 12 path ทุกเส้นมี policy, coverage 93.7%
+
+⚠️ **ค้างจริง: ยังไม่ได้ยิงยืนยันซ้ำบน dev-th หลัง WS8 ขึ้น** (image `2b74351c` โรลแล้ว) เพราะ teleport session หมด — ดู [[reference_teleport_session_kills_devth_access]] · สคริปต์รันชุดเดียวเตรียมไว้ที่ scratchpad `verify-devth-oc2275.sh` (matrix + mint key point.read + ยิง gateway 3 เส้น + revoke)
+📌 follow-up ที่เขียนไว้ใน merge commit: `use_case` มี helper ซ้ำสองตัว `resolveCompanyMember` (WS8) กับ `apiKeyMember` (WS7) — ยุบรวมทีหลัง
+
 ## 📦 2026-08-28 (ปิดรอบส่งงาน) — code review + QA automate + UX ครบ
 
 **5 MR รอ merge**: 3rdparty !215 (OC-4474 security, ไม่ชนใคร merge ก่อน) · !214 (WS8) · !216 (WS7) · testing !206 (OC-4430) · frontend !552 (UX) · **artifact สรุปส่งมอบ**: https://claude.ai/code/artifact/524b9441-35ca-4307-8157-2217325f9496
