@@ -8,6 +8,19 @@ metadata:
   modified: 2026-08-10T11:02:09.926Z
 ---
 
+## 🔴 2026-08-28 — เจอ cross-tenant write ใน v2 event redemption (OC-4474, MR !215) + WS7 เสร็จ (OC-4472, MR !216)
+
+**OC-4474 = ของจริงที่สำคัญที่สุดของรอบนี้** `CampaignEventRedemptionConfirm` รับ `member_id` จาก request แล้วไม่เคยเทียบ company:
+- event ดึงด้วย `ident.CompanyID` แต่ campaign ดึงด้วย **`m.CompanyID`** (คนละ tenant ในคอลเดียว)
+- condition เทียบ event ด้วย **string ของ event code** (`campaign_transaction.go:192`) ซึ่งแต่ละบริษัทตั้งเอง ซ้ำกันได้ปกติ ⇒ key ของ A + member/campaign ของ B = transaction ลงที่ B
+- ต้องรู้ member uuid + campaign code ของเป้าหมายก่อน ⇒ ไม่ใช่ยิงมั่วได้ แต่ด่านหายไปทั้งด่าน และจะแย่ลงเมื่อ WS2a เปิดให้เห็น member id
+- 🔑 **หลักฐานว่าไม่เคยมีใครเช็ค**: fixture เดิมตั้ง member `CompanyID: "8900"` แต่ key เป็น uuid — คนละบริษัทมาตลอด แล้ว test เขียวหมด
+- fix: เทียบ `m.CompanyID != ident.CompanyID` → **404** ทั้ง confirm และ inquiry + campaign lookup ใช้ `ident.CompanyID`
+
+**OC-4472 (WS7 code earn) → MR !216** · พอร์ต v1 `CodeInquiry`/`CodeRedemption` มา v2 · scope `campaign.redeem.code` เป็น sibling ของ event (test ตรึงทั้งสองทาง) · **ไม่ได้ทำ mode B ของ OC-4335** (payload ยังไม่เคาะ) · **rate limit key ด้วย member ไม่ใช่ api_key_id** เพราะ limiter เขียน `member_block_log.member_id` และ v2 ทั้ง group ไม่มี rate limit เลย → เสนอทำเป็น middleware ใบเดียวตาม Decision #4
+
+⚠️ **merge order**: !214 (WS8) กับ !216 (WS7) แก้ `v2_openapi.yaml` + `spec.gen.go` ทั้งคู่ → ตัวที่ merge ทีหลัง rebase แล้ว `make gen-http-fiber` ใหม่
+
 ## ✅ 2026-08-28 — OC-4473 (WS8 point read) implement เสร็จ → MR !214
 
 3 endpoint `/v2/openapi/member/{member_id}/point[/expire|/transaction]` · branch `feat/oc-4473-point-read-v2` → develop · coverage 95.7%
