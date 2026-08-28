@@ -8,6 +8,18 @@ metadata:
   modified: 2026-08-10T11:02:09.926Z
 ---
 
+## ✅ 2026-08-28 — OC-4473 (WS8 point read) implement เสร็จ → MR !214
+
+3 endpoint `/v2/openapi/member/{member_id}/point[/expire|/transaction]` · branch `feat/oc-4473-point-read-v2` → develop · coverage 95.7%
+- **เป็นงานพอร์ตจริงตามที่คาด** — repo รับ `(companyID, memberID)` อยู่แล้ว ไม่ต้องแตะอะไรใต้ use_case
+- member คนละ company → **404** (ไม่ใช่ 403) + test พิสูจน์ว่า point repo ไม่ถูกเรียกเลย
+- `limit` > 200 → 400 `limit_too_large` (เพิ่ม `use_case.ErrLimitTooLarge` + map ใน helper/errors.go)
+- `normalizeRouteKey` เพิ่ม branch ตัด `{member_id}` ออกก่อน lookup — เป็น path param ตัวที่ 2 ต่อจาก OC-4398
+- mutation-verified 2 ชั้น: ถอด v2RouteScopes → scope_policy_test แดงระบุครบ 3 route · ถอด branch normalize → 3 test แดง (500)
+- ไม่ต้องแตะ gateway (rule จับ `/v2/openapi<.*>` อยู่แล้ว)
+
+🟡 **เจอ bug class เดิมอีกจุด (ยังไม่แก้)**: `EventInquiry` (`event_redemption.go:24-35`) เรียก `GetByID(memberID)` โดยไม่เทียบ company — ไม่ leak data (query หลังจากนั้น scope ด้วย CompanyID) แต่ probe การมีอยู่ของ member ข้ามบริษัทได้ → ควรเปิดใบเล็ก
+
 ## 📋 2026-08-28 — เปิดการ์ด 5 WS ที่หายไป (OC-4468..4473)
 
 epic OC-2275 ล็อก scope 10 ตัวไว้ตั้งแต่ ก.ค. แต่ **5 workstream ไม่มีการ์ดเลย** ⇒ 7/10 scope แจก key ได้แต่ไม่มี endpoint · เปิดครบแล้ว: **OC-4468** WS2a member.read · **OC-4469** WS2b member.manage (DoR: ต้องเคาะ dedup key ก่อน) · **OC-4470** WS5 point.redeem · **OC-4471** WS6 point.adjust (block โดย OC-4294 ที่ยัง To Do) · **OC-4472** WS7 campaign.redeem.code (coordinate OC-4335) · **OC-4473** WS8 point.read+history (พร้อมที่สุด ไม่มี dependency)
