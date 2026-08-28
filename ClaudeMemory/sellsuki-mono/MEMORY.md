@@ -162,3 +162,4 @@
 - [AI board In Review](reference_ai_board_in_review_means_merged_unverified.md) — In Review = merged but unverified; To Do ≠ not started
 - [chat-core is the admin BFF](reference_chatcore_is_the_admin_bff.md) — owns 7 template stores, no companies table; rag-core has no service actor
 - [keyring vs OC-2275](project_sellsuki_keyring_vs_oc2275.md) — central key service exists (PAT-2640, unmerged); overlaps only the mint side
+- [testify permissive default wins](reference_testify_permissive_default_wins.md) — helper pre-stubs win over a test's own .On(); test passes whatever the code does
