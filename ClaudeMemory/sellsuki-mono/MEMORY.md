@@ -163,3 +163,7 @@
 - [chat-core is the admin BFF](reference_chatcore_is_the_admin_bff.md) — owns 7 template stores, no companies table; rag-core has no service actor
 - [keyring vs OC-2275](project_sellsuki_keyring_vs_oc2275.md) — central key service exists (PAT-2640, unmerged); overlaps only the mint side
 - [testify permissive default wins](reference_testify_permissive_default_wins.md) — helper pre-stubs win over a test's own .On(); test passes whatever the code does
+- [rag-core dual embedding paths](project_ragcore_dual_embedding_paths.md) — two clients live at once; one bypasses metering in prod
+- [ai-agent CI gaps](reference_ai_agent_ci_gaps.md) — code_analyse always red (allow_failure); gosec blocks on G118
+- [CCS AI-chat config namespace](reference_ccs_ai_chat_config_namespace.md) — AI-19 already gives versioning/audit/rollback/Keto; no provider scope
+- [glab ci stale pipeline](reference_glab_ci_status_stale_pipeline.md) — --branch can show the previous run; check the SHA
