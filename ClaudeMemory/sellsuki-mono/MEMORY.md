@@ -91,7 +91,7 @@
 - [AI chat MVP integration](project_ai_mvp_integration.md) — end-to-end works locally to token_unavailable; 3 blockers before real test
 - [GORM pgx/lib-pq AutoMigrate](reference_gorm_pgx_libpq_automigrate.md) — fails only on 2nd boot; test with 3× calls
 - [Lease/claim ownership bug](reference_lease_claim_ownership_bug_class.md) — release-by-id without claim-token → double-processing, hit 3×
-- [PG partial-index ON CONFLICT](reference_pg_partial_index_onconflict_generic_plan.md) — 42P10 on 6th exec/connection; fix = target-less DO NOTHING
+- [PG partial-index ON CONFLICT](reference_pg_partial_index_onconflict_generic_plan.md) — 42P10 sometimes on 1st exec not 6th; target-less DO NOTHING; goqu can't express the bug
 - [Loyalty contract sheet](project_loyalty_canonical_contract.md) — OC-4413 = hub/SoT; OC-4415/PAT-2604/OC-4419 downstream
 - [Sellsuki Product KB](project_sellsuki_product_kb.md) — docs/product-kb/ for BD/MKT; verified/asserted/hypothesis/GAP tags required
 - [Outline MCP VPN blocker](reference_outline_mcp_vpn_blocker.md) — internal 10.x unreachable off-VPN; use publish-to-outline.py

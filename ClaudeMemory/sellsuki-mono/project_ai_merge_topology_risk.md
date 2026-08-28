@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: 270e02aa-6ae1-461a-ada0-6fb19a8e9e87
-  modified: 2026-08-25T11:30:23.087Z
+  modified: 2026-08-28T02:01:53.802Z
 ---
 
 Superseded the 2026-08-14 snapshot (which said chat-core `!10` was open carrying 206
@@ -61,6 +61,24 @@ now 261 behind main. Corrected evidence is posted as a comment on AI-176.
   territory, tracked only as a note on FE !3.
 - AI-183 needed rps to provision a role id for `chat_workspace.operator` and nothing
   owned that step — now **AI-185**.
+
+## Outcome measured 2026-08-28 — AI-176's whole baseline table is dead
+
+AI-176 pinned the **head SHA of five open MRs** as its deploy baseline (2026-08-15).
+Verified with `git merge-base --is-ancestor` after a fresh fetch: **not one of the four
+service SHAs is on its repo's mainline.** messaging-backend `328d82ed` (not on main *or*
+develop), chat-core `8a85aed7` (main is **290 commits** past it), ai-agent `b47512eb`,
+Admin `3f99771b` (its MR !3 is *closed*). The work landed via different branches; the
+pinned MRs were closed. Pinning an MR head as a release baseline is the mechanism —
+it rots silently because nothing re-checks it. Pin **main HEAD at deploy-decision time**
+instead, and record real image digests after the deploy.
+
+Also found the same day: chat-core `main` still 503s `GET /v1/me/workspaces` (unprefixed
+identity kind → rps rejects). That endpoint is the *only* source the admin's
+`grantedWorkspaceAdapter` reads, so a staging deploy without the fix reproduces AI-138 —
+login works, every workspace-scoped page is unreachable. Fix = chat-core **!31**, green
+and ready, unmerged. Must land before any admin staging deploy. See
+[[rps-identity-kind-must-be-prefixed]].
 
 Related: [[ai-board-stale-cards]], [[ai-sprint234-autonomous-run]], [[ai-mvp-integration]],
 [[jira-sprint-ids-not-contiguous]], [[messaging-backend-shared-repo-traps]]
