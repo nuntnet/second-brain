@@ -168,3 +168,7 @@
 - [CCS AI-chat config namespace](reference_ccs_ai_chat_config_namespace.md) — AI-19 already gives versioning/audit/rollback/Keto; no provider scope
 - [glab ci stale pipeline](reference_glab_ci_status_stale_pipeline.md) — --branch can show the previous run; check the SHA
 - [FF merge silently reverts](reference_fast_forward_merge_silently_reverts.md) — main-is-ancestor = fast-forward; drops the other mainline fixes with no conflict
+- [head on grep is sampling](feedback_head_on_grep_is_sampling_not_verification.md) — never claim "X does not exist" from a truncated grep; count first
+- [Central service ≠ caller domain](feedback_central_service_no_caller_domain.md) — scope meaning/enforcement belongs to the consuming service, not the central one
+- [dev-th cluster access](reference_dev_th_cluster_access.md) — kubectl into octoplus-dev/share-dev + Keto reverse lookup for a permitted user
+- [Auth endpoint behind its own guard](reference_auth_endpoint_behind_own_guard.md) — identity middleware over check_session_url → everything 401s; the 40ms tell
