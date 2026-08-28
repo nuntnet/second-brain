@@ -8,6 +8,22 @@ metadata:
   modified: 2026-08-10T11:02:09.926Z
 ---
 
+## 📦 2026-08-28 (ปิดรอบส่งงาน) — code review + QA automate + UX ครบ
+
+**5 MR รอ merge**: 3rdparty !215 (OC-4474 security, ไม่ชนใคร merge ก่อน) · !214 (WS8) · !216 (WS7) · testing !206 (OC-4430) · frontend !552 (UX) · **artifact สรุปส่งมอบ**: https://claude.ai/code/artifact/524b9441-35ca-4307-8157-2217325f9496
+
+**Code review 4 finding**: แก้ใน !214 สองข้อ (paging floor `limit=0` ถูก clamp เงียบ / `errorList` key ซ้ำเป็น dead mapping) · เปิด **OC-4475** (แต้มผ่าน key ไม่บันทึก api_key_id — `prepareCampaignTransaction` รับ `SessionInfo` แล้วไม่เคยอ่าน grep `s\.` = 0) · v2 event confirm ไม่เคยรันสำเร็จเลยเพราะ 401 ทั้งเส้น 18 วัน
+
+**OC-4430 QA matrix** (`testing/oc2plus-line-crm-automate-testing`): `TS-2-3rd-OpenAPI-Scope-Matrix.robot` + `libs/OpenApiSpec/SpecMatrix.py`
+- 🔑 อ่าน endpoint จาก **swagger ที่ service เสิร์ฟจริง** `GET /v2/openapi/swagger/swagger.json` (public 200 ไม่ต้อง auth) ⇒ endpoint ใหม่ที่ไม่มีแถวใน matrix = suite แดง
+- ต้องรัน **ตรงเข้า service** (port-forward) ไม่ใช่ผ่าน gateway — Oathkeeper mutator เขียนทับ `X-Api-Key-Id`/`X-Api-Scope` ที่ inject เอง ⇒ ผ่าน gateway จะ 401 หมด (แบบเดียวกับ TS-2-3rd-* เดิมที่ชี้ internal hostname)
+- ⚠️ กับดักที่เสียเวลา: `Call API` ใน `resources/api.resource` dispatch ด้วย `${GET}`/`${POST}` ตัวพิมพ์เล็ก — ส่ง "GET" ตัวใหญ่เข้าไปจะ **คืน None เงียบ ๆ** แล้วพังเป็น AttributeError ทีหลัง
+- ผลจริง dev-th: 5 pass / 1 skip · mutation-checked สองทาง
+
+**UX (frontend !552)**: หน้า `/apikey` เสนอ scope 10 ตัวแต่ enforce จริง 3 ⇒ แอดมินออก key ที่ promise `point.adjust` ได้แต่ partner โดน 403/404 ตลอด · แก้เป็น disabled + badge "ยังไม่เปิดใช้งาน" + ไม่นับใน select-all ทั้ง create/detail · `src/entities/apikey.ts` มี flag `available` + comment ชี้ว่าให้เปลี่ยนไปอ่าน `/.well-known/scopes` เมื่อ OC-4467 เสร็จ
+- ⚠️ FE repo นี้ **type-check แดงอยู่แล้ว 576 error บน develop** — ใช้เป็น gate ไม่ได้ ให้เทียบจำนวนก่อน/หลังแทน (ของผม 576 = 576, 0 error ในไฟล์ที่แก้)
+- ⚠️ ตอนเข้าไปทำ repo อยู่บน branch `feat/oc-4362-receipt-tab` และมีไฟล์ dirty ของ session อื่น (`console.error` ค้างใน ApiKeyDetail.vue) → ใช้ **git worktree** แยกออกมาทำ ไม่แตะของเขา
+
 ## 🔴 2026-08-28 — เจอ cross-tenant write ใน v2 event redemption (OC-4474, MR !215) + WS7 เสร็จ (OC-4472, MR !216)
 
 **OC-4474 = ของจริงที่สำคัญที่สุดของรอบนี้** `CampaignEventRedemptionConfirm` รับ `member_id` จาก request แล้วไม่เคยเทียบ company:
