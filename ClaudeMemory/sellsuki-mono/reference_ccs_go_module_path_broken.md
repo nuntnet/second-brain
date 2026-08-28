@@ -5,6 +5,25 @@ metadata:
   type: reference
 ---
 
+**STATUS 2026-08-28: fix open, not merged.** CCS
+[MR !301](https://gitlab.sellsuki.com/sellsuki/sellsuki/backend/sellsuki-central-control-backend/-/merge_requests/301)
+(`fix/go-module-path`, 238 files) declares the real path. Pipeline **success**
+(unit_test 50s, build 1m54s; `code_analyse` is red on every branch including
+`main` — SonarQube host unreachable from the runner, `allow_failure: true` in
+the shared SRE template, so do not chase it). Proven end-to-end from a
+throwaway module: `go get ...@fix/go-module-path` resolved and importing
+`src/interface/grpc_server/company_service` compiled and ran. **Until it
+merges, everything below still applies** — and after it merges, dropping a
+vendored proto is a per-consumer decision, not automatic (chat-core's subset
+deliberately omits `CompanyModel` fields 5-12 so resolving a display name
+cannot also return address/tax/phone/email).
+
+Two traps if regenerating protos in that repo: the old path also sits inside
+each `.pb.go`'s serialized `rawDesc` behind **varint length prefixes**, so
+text-editing it corrupts the descriptor and panics at proto registry init
+(no compile error) — regenerate instead. And shortening `share`→`sellsuki`
+reorders imports, so gofmt will flag files the rename touched.
+
 Verified 2026-08-28. `backend/sellsuki-central-control-backend` lives at
 
     gitlab.sellsuki.com:sellsuki/sellsuki/backend/sellsuki-central-control-backend
