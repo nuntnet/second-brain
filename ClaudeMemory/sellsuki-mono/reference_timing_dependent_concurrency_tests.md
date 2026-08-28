@@ -37,3 +37,20 @@ conflict target reintroduces [[pg-partial-index-onconflict-generic-plan]].
 
 Always verify red→green explicitly: stash the fix, confirm the new test fails
 with the *same* error the CI log shows, restore, confirm green.
+
+## Sibling trap: zero-latency fakes hide cache-freshness bugs (2026-08-28)
+
+Same family, opposite direction. A test for "the write's response must land in
+the cache synchronously" (`setQueryData` vs `invalidateQueries`) **passes with
+the fix removed** when the fake port resolves instantly: the invalidate's
+refetch settles in the same microtask as the assertion, so the cache reaches the
+new value either way. Written that way it asserts nothing.
+
+Fix: make the read *stall* for the window under test — a fake with a
+`freezeReads()` that parks every read after the initial load, so the only thing
+that can refresh the cache is the write's own response. Then mutation-test it:
+remove the production line, confirm RED, restore, confirm GREEN. Do that check
+every time — the first draft of the AI-199 guard was green both ways.
+
+Rule of thumb: if a test is about *when* a value arrives, a fake with no latency
+cannot express it.
