@@ -8,6 +8,15 @@ metadata:
   modified: 2026-08-10T11:02:09.926Z
 ---
 
+## ✅ 2026-08-28 (ต่อ) — OC-4466 merge + verify ซ้ำบน dev-th ผ่านครบ
+
+MR !213 merge เป็น `46d43e72` · `deploy_development_th_arm` เป็น job **อัตโนมัติ** บน develop (ไม่ manual) → pod โรลเองใน ~10 นาที · ยิงผ่าน gateway จริง `crmapi.dev-th.oc2.plus` ครบ 9 ข้อ:
+`/event` 200 · `/auth/whoami` 200 · `/campaign` ด้วย key ไม่มี scope = **403 ไม่ใช่ 401** · key ที่มี `campaign.read` = 200 คืนข้อมูลจริง · key ปลอม 401 · revoke แล้วยิงซ้ำ 401 ทันที · mint/revoke 201/204
+
+🔑 **ปิดจุดสุดท้ายของ OC-4425 ด้วยหลักฐาน runtime แล้ว** — ยิง key จริง + ปลอม `X-Company-Id: 0000…` และ `X-Api-Scope: campaign.read` ไปด้วย → whoami ยังคืน company จริง และ `/campaign` ยัง 403 ⇒ Oathkeeper header mutator เป็น **Set ทับ** ยืนยันจาก runtime ไม่ใช่แค่จาก source code แล้ว
+
+OC-4466 → สถานะ **Ready to test (DEV)** (comment 43929) · ยังค้าง: OC-4467 (`/.well-known/scopes` 404 ที่ gateway, รอ SRE) · OC-4433 (strip `X-User-Id`) · OC-4430 (QA matrix)
+
 ## 🔴 2026-08-28 — ไล่ flow เต็มบน dev-th: v2 openapi ตายมาตั้งแต่ 10 ส.ค.
 
 **dev-th = ns `octoplus-dev` บน cluster teleport staging-th** (kubectl context มีอยู่แล้ว) · pods รัน image `2ec10129`/`56a4f737` = develop HEAD เป๊ะ · hostname: backoffice `api.crm.dev-th.oc2.plus/backoffice/*`, partner `crmapi.dev-th.oc2.plus/v2/openapi/*` (public, ไม่ต้อง VPN)
