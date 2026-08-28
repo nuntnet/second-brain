@@ -173,3 +173,4 @@
 - [dev-th cluster access](reference_dev_th_cluster_access.md) — kubectl into octoplus-dev/share-dev + Keto reverse lookup for a permitted user
 - [Auth endpoint behind its own guard](reference_auth_endpoint_behind_own_guard.md) — identity middleware over check_session_url → everything 401s; the 40ms tell
 - [Audit Action is a closed enum](reference_audit_action_is_closed_enum.md) — card-specified event names/metadata.* can't be implemented literally; use EntityRefs
+- [OC2Plus TEST_KEY prod gate](project_oc2plus_test_key_production_gate.md) — impersonation hole closed 2026-08-28; SRE must still delete the secret value
