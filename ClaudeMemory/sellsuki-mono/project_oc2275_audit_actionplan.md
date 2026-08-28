@@ -8,6 +8,15 @@ metadata:
   modified: 2026-08-10T11:02:09.926Z
 ---
 
+## 📋 2026-08-28 — เปิดการ์ด 5 WS ที่หายไป (OC-4468..4473)
+
+epic OC-2275 ล็อก scope 10 ตัวไว้ตั้งแต่ ก.ค. แต่ **5 workstream ไม่มีการ์ดเลย** ⇒ 7/10 scope แจก key ได้แต่ไม่มี endpoint · เปิดครบแล้ว: **OC-4468** WS2a member.read · **OC-4469** WS2b member.manage (DoR: ต้องเคาะ dedup key ก่อน) · **OC-4470** WS5 point.redeem · **OC-4471** WS6 point.adjust (block โดย OC-4294 ที่ยัง To Do) · **OC-4472** WS7 campaign.redeem.code (coordinate OC-4335) · **OC-4473** WS8 point.read+history (พร้อมที่สุด ไม่มี dependency)
+
+🔴 **แก้ข้อมูลผิดใน epic** (comment 43938): epic เขียนว่า point redeem "ไม่มีเลยในทุก service" — **ผิด** · campaign condition รองรับ `oneof=code point event` (`model/campaign_condition.go:15`) และ campaign ที่ condition = `point` คือกลไกใช้แต้มแลกของที่มีอยู่แล้ว → `CampaignRedemptionConfirm` (`campaign_redemption.go:84`) → `createRedemptionPoint` (`campaign_transaction.go:910`) → `DeductMemberPointTxn` (`repository.go:244`) ⇒ WS5 = งานพอร์ต ไม่ใช่สร้างใหม่ · ส่วน point.adjust (WS6) ไม่มีจริงตามที่ epic เขียน
+🔑 **WS8 ง่ายกว่าที่ประเมิน** — point repository รับ `(companyID, memberID)` เป็น argument อยู่แล้ว (`repository.go:239-243`) ที่ผูก session คือ 2 บรรทัดหัว use case (`me.go:373-386`) ⇒ ไม่ต้องแตะ repository
+⚠️ **ขัดกันเองใน epic**: OC-4428 (outbound webhook) เป็น child แต่ epic เขียนใน Out of Scope ว่าต้องเป็น epic ใหม่ — ยังไม่เคาะ
+📌 **แบบแผน v2 ที่การ์ดทุกใบอ้าง**: `CampaignEventRedemptionConfirm` (`event_redemption.go:137`) รับ `model.CRMApiKey` + `mID` แล้วเรียก `checkIdentityApiKey` (`:148`) · ทุก endpoint ใหม่ต้องเพิ่ม `v2RouteScopes` + `scopeDescriptionsTH` ไม่งั้น test แดง/500 · v1 handler ที่ต้องพอร์ต: code earn `route_campaign_v1.go:71,102` → `code_redemption.go:36,109` · point `route_me_v1.go:276,296,317` → `me.go:368,410,442` · backoffice member read `member_v1.go:11,60,80,106`
+
 ## ✅ 2026-08-28 (ต่อ) — OC-4466 merge + verify ซ้ำบน dev-th ผ่านครบ
 
 MR !213 merge เป็น `46d43e72` · `deploy_development_th_arm` เป็น job **อัตโนมัติ** บน develop (ไม่ manual) → pod โรลเองใน ~10 นาที · ยิงผ่าน gateway จริง `crmapi.dev-th.oc2.plus` ครบ 9 ข้อ:
