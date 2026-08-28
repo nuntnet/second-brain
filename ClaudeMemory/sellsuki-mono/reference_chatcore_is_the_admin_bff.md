@@ -46,8 +46,34 @@ nobody can reissue — not just the admin screen. Also: rag-core keys scope on
 `(provider_id, company_id, workspace_id)` while chat-core has no provider concept
 and pins `RAG_CORE_PROVIDER_ID` to one static value per deployment.
 
-The real question there is platform-wide: **who issues service tokens now that
-channel-gateway is gone.**
+Corrected 2026-08-28 after the rag-core owner weighed in, and the correction
+matters: channel-gateway did **auth + metering**, and metering already moved to
+E5, so only auth is left. If internal service-to-service is declared trusted and
+chat-core proxies, the token question largely dissolves — chat-core becomes the
+single enforcement point and it already holds Kratos + Keto. My first framing
+("needs a platform-wide service-token owner") was heavier than the facts warrant.
+Two things still need an answer either way: chat-core→ai-agent uses
+`X-Service-Token` **today** (so "internal is authless" is a change, not the
+status quo), and rag-core forbids `AUTH_MODE=fake` on staging/prod.
+
+**The sharper question is permission-to-knowledge, and rag-core already models
+it.** `visibility` is stored per chunk in Milvus; `resolve_reader` decides
+entitlement from the request's `reading_for`, *not* from actor type — AI-46 fixed
+exactly the bug where `is_employee=True` meant see-everything and a service
+answering customer A could receive customer B's `private` chunks.
+`may_read_internal` is employee-only. chat-core does pass `reading_for`
+(= `channelIdentityRef`, `context_assemble.go`), so the chain is wired end to
+end, and omitting it fails closed to public-only. The open gap is per-actor
+entitlement on `workspace_id` (AI-12/Keto), and rag-core's own doc cites a
+**"Retrieval Visibility/ACL" card that does not exist on the board**.
+
+⚠️ Consequence of ai-agent being stateless: **context assembly — and therefore
+the `reading_for` decision — lives in the caller.** Retrieval is chat-core's job,
+generation is ai-agent's (ai-agent references rag-core in zero files). With one
+caller this is invisible; a second caller that omits `reading_for` degrades
+answers silently, and one that sends the wrong person reopens the AI-46 leak.
+Decide shared-library vs move-into-ai-agent vs contract-test before a second
+caller exists.
 
 Brief with options and recommendations:
 https://claude.ai/code/artifact/68fea22b-9cf8-476a-a90a-71db6bc91b8a

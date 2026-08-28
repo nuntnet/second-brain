@@ -167,3 +167,4 @@
 - [ai-agent CI gaps](reference_ai_agent_ci_gaps.md) — code_analyse always red (allow_failure); gosec blocks on G118
 - [CCS AI-chat config namespace](reference_ccs_ai_chat_config_namespace.md) — AI-19 already gives versioning/audit/rollback/Keto; no provider scope
 - [glab ci stale pipeline](reference_glab_ci_status_stale_pipeline.md) — --branch can show the previous run; check the SHA
+- [FF merge silently reverts](reference_fast_forward_merge_silently_reverts.md) — main-is-ancestor = fast-forward; drops the other mainline fixes with no conflict

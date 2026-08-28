@@ -22,3 +22,7 @@ metadata:
 5. consumer contract (`docs/consumer-contract.md` ใน branch) สั่งผู้เรียก 4 ข้อ: เช็ค identity ยังอยู่ · `effective = permission ∩ scope` (scope = เพดาน) · `active:false` ≠ 5xx · pin tenant จาก `subject` — ข้อ 1/2 OC2Plus ยังไม่ทำ
 
 ดู [[project_oc2275_audit_actionplan]] · [[project_oc2plus_3rdparty_apikey_gap]]
+
+**แผนที่ user เคาะ 2026-08-28:** (1) ยังไม่ย้ายตอนนี้ แต่ย้ายแน่ (2) ออกแบบให้พร้อมย้ายเท่านั้น (3) ทำของปัจจุบันให้ใช้งานได้จริงก่อน (4) ส่ง feedback ให้ kimzey ขยาย keyring ตามสเปคเรา
+**Artifact รีวิว 7 ช่องว่าง (ส่ง kimzey):** https://claude.ai/code/artifact/a45cebfe-74bd-4b28-b7f3-24cb6de2240c — G1 Admin API ไม่มี authn/actor ปลอมได้ · G2 ไม่มีทางเข้า installed base (introspect รับ key เดี่ยว) · G3 ไม่มี scope registry · G4 regex scope ไม่ผูก app · G5 ไม่มี client library · G6 ไม่มี usage event · G7 revoke 60s เป็น const ฝั่ง consumer
+⚠️ ข้อเท็จจริงที่ต้องพูดตรง: openapi ของ OC2Plus **ไม่ได้ใหญ่กว่า** keyring ในโดเมน key (keyring ลึกกว่า: rotate overlap, revoke-by-subject, pepper_gen, keyset pagination, env label, timing parity) — ที่เราคมกว่าคือชั้นรอบ key: scope semantics + fail-closed enforcement + authz ของการออก key
