@@ -64,8 +64,35 @@ answering customer A could receive customer B's `private` chunks.
 `may_read_internal` is employee-only. chat-core does pass `reading_for`
 (= `channelIdentityRef`, `context_assemble.go`), so the chain is wired end to
 end, and omitting it fails closed to public-only. The open gap is per-actor
-entitlement on `workspace_id` (AI-12/Keto), and rag-core's own doc cites a
-**"Retrieval Visibility/ACL" card that does not exist on the board**.
+entitlement on `workspace_id` (AI-12/Keto).
+
+**I got the card question wrong on 2026-08-28** and it is worth remembering how:
+I asserted rag-core's cited "Retrieval Visibility/ACL" card did not exist —
+without ever searching for it. It is **AI-46**, In Review, and I had already
+cited AI-46 by name two paragraphs earlier for the cross-customer fix it
+shipped. Read the reference, failed to connect it, then stated an absence.
+Same failure [[verify-absence-claims]] already records.
+
+What AI-46 actually leaves open is sharper: it is **two deliverables with very
+different status**. Visibility works end to end. The **PDPA erasure cascade is
+built but cannot fire** — rag-core has the use case, the contract and a guarded
+repository, and `knowledge_erasure.py` says of itself *"It does not consume
+Kafka. `customer.erased` has no producer anywhere"*. Confirmed: no consumer
+wired in rag-core, and chat-core never publishes it. **AI-104** (warehouse) waits
+on the same event.
+
+The upstream **does** have a card — on a board I had not searched: **PAT-2535**
+"DSR Foundation — Data Subject Request Orchestration", epic **PAT-2533** "PDPA
+Marketing Consent & DSR" (To Do, Draft). I claimed "no producer card anywhere"
+after searching only AI and OC. **Search PAT and the other boards too.**
+
+The real gap is a seam, not a missing card: PAT-2535 designs a **per-service
+request/response** contract (export returns a file, delete removes/anonymises),
+while AI-46 and AI-104 were built to consume a **broadcast event**. If DSR ships
+as request/response only, those two consumers are never called. And PAT-2535's
+service list is OC2Plus / BOLA / CDP / OMS / consent — **the AI chat platform is
+not on it**, despite holding per-person embeddings and conversation history. So a
+PDPA erasure request would silently miss it.
 
 ⚠️ Consequence of ai-agent being stateless: **context assembly — and therefore
 the `reading_for` decision — lives in the caller.** Retrieval is chat-core's job,

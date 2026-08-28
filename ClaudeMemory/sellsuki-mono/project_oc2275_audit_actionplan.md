@@ -8,6 +8,23 @@ metadata:
   modified: 2026-08-10T11:02:09.926Z
 ---
 
+## 🔴 2026-08-28 — ไล่ flow เต็มบน dev-th: v2 openapi ตายมาตั้งแต่ 10 ส.ค.
+
+**dev-th = ns `octoplus-dev` บน cluster teleport staging-th** (kubectl context มีอยู่แล้ว) · pods รัน image `2ec10129`/`56a4f737` = develop HEAD เป๊ะ · hostname: backoffice `api.crm.dev-th.oc2.plus/backoffice/*`, partner `crmapi.dev-th.oc2.plus/v2/openapi/*` (public, ไม่ต้อง VPN)
+
+**วิธีเข้าไปทดสอบโดยไม่ต้อง login:** port-forward `svc/oc2plus-line-crm-service-backoffice-api-svc 18089:80` แล้วยิงพร้อม header `X-User-Id` (bypass gateway) · หา user ที่มีสิทธิ์จาก Keto: port-forward `svc/keto-read` ใน ns `share-dev` → `GET /relation-tuples?namespace=permissions&object=oc2plus.apikey.manage` → ได้ tuple เดียว company `d9fca606-aea6-4ef3-b10c-4a0a8dcf0dcd` role `sellsuki.role:88892` → query `namespace=roles&object=sellsuki.role:88892` → user `378e1998-5323-4085-8a32-187fa777ec1f` · ⚠️ curl | python3 โดนrtk filter — เขียนลงไฟล์ก่อนแล้วค่อย parse
+
+**🔴 บั๊กที่เจอ (OC-4466, แก้แล้ว MR !213):** `RequireApiKeyScope` (!210) mount ทั้ง group `/v2/openapi` และบังคับ `X-Api-Key-Id`/`X-Company-Id` ต้องไม่ว่าง — แต่ `/v2/openapi/auth/whoami` คือ `check_session_url` ของ Oathkeeper เอง มาถึงพร้อม key/secret ดิบเท่านั้น ⇒ whoami 401 → bearer_token ล้ม → ตก anonymous → ทุก endpoint 401 **ทุก key ที่ถูกต้อง ตั้งแต่ 2026-08-10** · `v2NoScopeRequired` ยกเว้นแค่ scope ไม่ได้ยกเว้น identity
+- พิสูจน์: whoami ตรง pod = 401 ใน 40ms (ไม่ถึง bcrypt) · ใส่ `X-Api-Key-Id: dummy` + `X-Company-Id: dummy` = **200 ใน 252ms** คืนค่าถูกหมด
+- suite เขียวเพราะ `TestRequireApiKeyScope_whoamiNeedsNoScope` ส่ง identity header ที่ของจริงไม่มีทางมี — test เขียนจาก mental model เดียวกับบั๊ก
+- fix = map `v2CredentialVerification` + `return c.Next()` ก่อนด่าน identity (handler verify bcrypt เองอยู่แล้ว)
+
+**🔴 OC-4467 (ส่ง SRE):** `/.well-known/scopes` 200 ที่ pod แต่ **404 ที่ gateway** — rule.yaml จับแค่ `/v1<.*>` กับ `/v2/openapi<.*>` ⇒ FE ยัง hardcode scope ต่อ = ปัญหาที่ OC-4426 ตั้งใจปิดยังเปิดอยู่
+
+**ที่ verify ว่าใช้งานได้จริง:** สร้าง key ผ่าน backoffice-api ผ่านครบ 4 ด่าน (201) · revoke ได้ (204, หายจาก list) · OC-4431 redaction ทำงานจริงบน dev (log โชว์ `X-Api-Key: [redacted]`)
+
+⚠️ **scope ownership เคาะแล้ว (user 2026-08-28):** ความหมายของ scope + การบังคับ = ของ service ที่กิน key **keyring ห้ามรู้ domain ของผู้เรียก** → ข้อเสนอ "ให้ keyring มี scope catalog" ถอนออกจาก artifact แล้ว เหลือแค่กฎ namespace (ทะเบียน app ที่เก็บแค่ชื่อ app + เจ้าของ)
+
 ## ✅ 2026-08-10 18:05 — bcrypt→shared module / MR !207 unblock / OC-4425 จุดสุดท้าย ปิดหมด
 
 - **bcrypt → shared module**: ก่อนย้าย ตรวจ version-bump risk ก่อน (`git diff v1.7.3..v1.9.6` ทั้งเวอร์ชันและเจาะเฉพาะ package ที่ 2 service import จริง) → diff เจาะจงว่างเปล่า (ของจริงที่เปลี่ยนคือ `.claude/*` config + ไฟล์ใหม่ล้วนใน `member/`/`theme/`) = bump ปลอดภัย · สร้าง package `apikey/secret.go` (`HashSecret`/`VerifySecret`/`IsBcryptHash`, เอาเวอร์ชัน 3rdparty-api ที่มี legacy-plaintext fallback เป็นตัวหลัก) ใน repo `entity` branch `feature/oc-2275-apikey-secret-hashing` → **[MR !58](https://gitlab.sellsuki.com/sellsuki/oc2plus/line-crm/backend/entity/-/merge_requests/58)** → main (ยังไม่ merge — shared module กระทบ consumer อื่น ไม่ merge/tag เอง ต้องรอ user review) · **ค้างจริง**: หลัง !58 merge+tag (จะเป็น v1.9.7) ต้องกลับมาบั้ม go.mod ทั้ง backoffice-api + 3rdparty-api แล้วลบ `secret.go` ในเครื่อง ทั้งสองที่
