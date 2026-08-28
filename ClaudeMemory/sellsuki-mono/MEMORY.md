@@ -174,3 +174,5 @@
 - [Auth endpoint behind its own guard](reference_auth_endpoint_behind_own_guard.md) — identity middleware over check_session_url → everything 401s; the 40ms tell
 - [Audit Action is a closed enum](reference_audit_action_is_closed_enum.md) — card-specified event names/metadata.* can't be implemented literally; use EntityRefs
 - [OC2Plus TEST_KEY prod gate](project_oc2plus_test_key_production_gate.md) — impersonation hole closed 2026-08-28; SRE must still delete the secret value
+- [CCS Go module broken](reference_ccs_go_module_path_broken.md) — go.mod path ≠ repo path → 404; vendor the proto; CCS gRPC has no auth at all
+- [Company list derived not asked](project_chatcore_company_list_derived_not_asked.md) — CCS ListCompanyThatHaveAccess returns empty for workspace-tier operators
