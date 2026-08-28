@@ -160,3 +160,5 @@
 - [OC-4464 OCR vendor](project_oc4464_ocr_vendor_decision.md) — iApp chosen; Textract has no Thai at all; the พ.ศ. +543 trap
 - [Turbo cache false green](reference_turbo_cache_crosssession_false_green.md) — "4 successful" can replay another session's logs; use `turbo run --force` to verify
 - [AI board In Review](reference_ai_board_in_review_means_merged_unverified.md) — In Review = merged but unverified; To Do ≠ not started
+- [chat-core is the admin BFF](reference_chatcore_is_the_admin_bff.md) — owns 7 template stores, no companies table; rag-core has no service actor
+- [keyring vs OC-2275](project_sellsuki_keyring_vs_oc2275.md) — central key service exists (PAT-2640, unmerged); overlaps only the mint side
