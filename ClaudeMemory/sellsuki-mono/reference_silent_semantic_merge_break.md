@@ -81,3 +81,23 @@ FE verification set: `pnpm type-check`, `pnpm lint`, `pnpm test`.
 **GitLab does not auto-retarget stacked MRs in this group.** When a base branch
 merges, the MR stacked on it keeps pointing at the dead branch and still reports
 `mergeable` with a green pipeline. Re-point by hand; check every stacked MR.
+
+**CSS belongs on that list too, and its verification set does not.** Resolving
+`inbox.css` by concatenating both sides of each hunk produced two rules whose
+closing brace was swallowed (`.bubble__delivery-badge--pending {` immediately
+followed by the next selector) and one rule that lost its declarations
+outright. **`pnpm type-check`, `pnpm lint` and all 274 unit tests passed on the
+broken file** — none of them parse CSS. Only `pnpm build` failed, at postcss
+`Unclosed block`. So: a frontend merge touching stylesheets is unverified until
+`pnpm build` has run. Rebuild CSS as a union of whole RULES (main's file as the
+base, append the rules only the branch has), then assert braces balance and no
+selector from either side went missing. Duplicate selectors that already exist
+on main are not yours to fix — check before "cleaning" them.
+
+**An `add/add` test file is the same trap wearing a different hat.** Two lines
+each created `MessageBubble.test.tsx`; git reported add/add, no content
+conflict, and neither side could see the other. After merging both suites the
+real incompatibility surfaced: main's tests render the component without a prop
+this branch made REQUIRED. Nothing flagged it until tsc saw both files at once.
+Merge both suites, assert the test count equals the sum, keep the other side's
+tests verbatim, and adapt only what the type checker forces.
