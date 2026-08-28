@@ -178,3 +178,4 @@
 - [Company list derived not asked](project_chatcore_company_list_derived_not_asked.md) — CCS ListCompanyThatHaveAccess returns empty for workspace-tier operators
 - [chat-core route tests time out under load](reference_chatcore_route_tests_timeout_under_load.md) — 603s = killed at Go timeout, not a failure; re-run the package alone
 - [Teleport session kills dev-th](reference_teleport_session_kills_devth_access.md) — kubectl EOF + dev-th timeout พร้อมกัน แต่ gitlab ปกติ = session หมด ไม่ใช่ service พัง
+- [.bak restore drops comments](reference_bak_restore_drops_comments.md) — mutation-restore silently reverted 101 comment lines; check diff for unintended deletions
