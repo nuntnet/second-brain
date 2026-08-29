@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: cac73755-22e9-4905-b12d-0973d98763b2
-  modified: 2026-08-29T16:30:44.494Z
+  modified: 2026-08-29T16:55:49.112Z
 ---
 
 In sellsuki_mono, `codegraph_context` — the tool the MCP server advertises as
@@ -26,6 +26,13 @@ alarm (it compares to the MCP server's root) — ignore it.
 
 `codegraph_search` / `callers` / `callees` / `impact` / `trace` are accurate at
 monorepo scope, 0.2–0.5s. Only `context` needs scoping.
+
+**Inside a git worktree the banner is real, not false.** A worktree has no index,
+so codegraph walks up and answers from the MAIN tree — different branch, your edits
+invisible, deleted code still present. Read which tree the banner names:
+`Running in: /Users/nunt/sellsuki_mono` = false alarm, ignore;
+`Running in: …/.claude/worktrees/<name>` = wrong branch, run
+`scripts/codegraph-sync.sh --here` first or use grep.
 
 **Why:** the repo has ~26 backend + 13 frontend submodules; FTS ranking across all
 of them has no way to prefer the service you meant, and 53% of the monorepo graph

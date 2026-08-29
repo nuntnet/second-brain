@@ -181,3 +181,5 @@
 - [.bak restore drops comments](reference_bak_restore_drops_comments.md) — mutation-restore silently reverted 101 comment lines; check diff for unintended deletions
 - [AI admin port↔backend map](project_ai_admin_port_backend_map.md) — "no backend" comments understate it; KB is rag-core's and complete; blocker is a seam
 - [codegraph needs projectPath](reference_codegraph_context_needs_projectpath.md) — codegraph_context answers from the wrong service unless scoped to a repo-local index
+- [rag-core visibility tiers](reference_rag_core_visibility_tiers.md) — 3 tiers; internal reaches customers only via impersonation, breaks silently when fixed
+- [KB entries: 3 blockers not 1](reference_kb_entries_three_blockers.md) — rag-core CRUD on an unmerged branch; a test pinned the wording, not the truth
