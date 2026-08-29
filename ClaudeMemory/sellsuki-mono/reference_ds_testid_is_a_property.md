@@ -1,6 +1,6 @@
 ---
 name: reference-ds-testid-is-a-property
-description: "testId on an ssk-* component is a Lit property, never a data-testid attribute — getByTestId finds nothing and it looks exactly like the element not rendering"
+description: "testId on an ssk-* component is a Lit property — invisible in jsdom, and in a real browser it lands INSIDE the shadow root where its text is empty and clicking it does not reach the control"
 metadata:
   node_type: memory
   type: reference
@@ -21,3 +21,14 @@ So `screen.getByTestId(...)` and `[data-testid="..."]` selectors find nothing �
 Two related mistakes made while learning this (2026-08-25): counting *enabled* `ssk-button`s to test a permission gate is wrong on any page with modals — modal buttons render into the DOM whether open or not; assert the action row is ABSENT instead. And a page under AppShell reads `{session, workspaces}` from `useOutletContext`, so rendering it in isolation throws — `renderWithProviders` takes an `outletContext` rather than mocking the hook, because mocking it would stop the page's own permission derivation from being exercised.
 
 Depends on [[reference_lit_react_node_condition_hollows_tests]] — without that pin every property reads `undefined` anyway.
+
+## In a real browser (Playwright), the same property bites differently (2026-08-29)
+
+Under a real DOM the DS *does* stamp `data-testid` — but on an element **inside its shadow root**, not on the host. Two consequences, each of which looked like a broken app rather than a broken selector:
+
+- **Text assertions read whitespace.** The label is a slotted LIGHT-dom child of the host, so the shadow element carrying the testId contains only the `<slot>`. `toHaveText('[data-testid="lead-stage-x"]', "ติดต่อแล้ว")` receives `"\n \n"`. Assert on the plain `<li>`/`<div>` row that owns the component instead.
+- **Clicking it does nothing.** A click on `[data-testid="notify-enabled-toggle"]` left `ssk-toggle.checked` false — the control never changed, so everything downstream was dead and the failure surfaced three assertions later as "Test send is disabled". `ssk-dropdown` is worse: it forwards no testId at all, exposes no button/input/combobox, and its slotted `ssk-dropdown-option`s are never visible.
+
+**How to apply:** drive DS form controls through the element contract — set the property on the HOST and dispatch the mapped event (`SskToggle`/`SskDropdown` map `onChange` → `change`, and the app reads `e.target.checked` / `e.target.value`). That still exercises the app's own handler; whether the DS's shadow widget responds to a click is the DS's test, not the app's. Plain `SskButton` clicks are fine — those are ordinary DOM clicks on the host.
+
+See `apps/admin/e2e/leads.spec.ts` (notify settings) for the worked example.

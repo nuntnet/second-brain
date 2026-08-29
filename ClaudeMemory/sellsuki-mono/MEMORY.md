@@ -75,7 +75,7 @@
 - [AI Chat Platform plan](project_ai_chat_platform_plan.md) — CTO 7-service platform, vendor insurance pilot; BOLA freezes/bridges
 - [Parallel sessions git safety](feedback_parallel_sessions_git_safety.md) — check branch+status before mutating; never add -A/amend blindly; claim Jira via In Progress + 🔒
 - [GitLab private Go module CI](reference_gitlab_private_go_module_ci.md) — cross-repo fetch needs job-token allowlist + git credential rewrite
-- [rtk hook filters git output](reference_rtk_git_output_filtering.md) — can return compressed/empty output; use full git binary path for fidelity
+- [rtk hook rewrites commands](reference_rtk_git_output_filtering.md) — compressed/empty/wrong output, even a `diff` that falsely says "identical"; run verifications by full binary path
 - [Caddy host-networking](reference_caddy_host_networking_gotcha.md) — *.sellsuki.local refused → force-recreate caddy container
 - [OC2Plus primary-invariant](project_oc2plus_primary_invariant_pattern.md) — seed-default + single-active-primary + atomic set + no-delete-last pattern
 - [OC2Plus consent model](project_oc2plus_consent_enforcement_model.md) — OC-3897/4089/4340: 3 layers (type/doc/binding) + server-side gate
@@ -140,7 +140,7 @@
 - [Jira sprint ids not contiguous](reference_jira_sprint_ids_not_contiguous.md) — ids are global across boards; a wrong id files cards into another team's sprint silently
 - [Timing-dependent concurrency tests](reference_timing_dependent_concurrency_tests.md) — goroutine-race tests pass locally against broken code; stage the end state instead
 - [Lit/React node condition hollows tests](reference_lit_react_node_condition_hollows_tests.md) — vitest gets the SSR build; DS props all undefined, tests prove nothing
-- [DS testId is a property](reference_ds_testid_is_a_property.md) — not data-testid; getByTestId finds nothing and looks like "not rendered"
+- [DS testId is a property](reference_ds_testid_is_a_property.md) — invisible in jsdom; in a browser it sits inside the shadow root where text is empty and clicks miss the control
 - [rps ListAssignedRoles = reverse lookup](reference_rps_list_assigned_roles_reverse_lookup.md) — the "no such endpoint" GAP note was wrong
 - [chat-core CI gaps](reference_chatcore_ci_gaps.md) — integration_test never runs on main; MR jobs pinned to staging-th
 - [List open MRs before opening one](feedback_list_open_mrs_before_opening_one.md) — parallel sessions duplicated a fix; session-start listing is stale

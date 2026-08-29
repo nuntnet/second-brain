@@ -23,4 +23,12 @@ Observed cases:
   onto `read`, so the flag became garbage. Nothing was read at all. Use the Read tool, or `/usr/bin/tail`,
   when tailing a file matters.
 
-**Rule:** when a conclusion depends on a line being absent — a missing script, a missing config key, an empty diff/commit — re-verify with a targeted `grep`/`rg`, or invoke the tool by full path to bypass the hook. Never report "X is missing" from rtk-filtered output alone.
+- 2026-08-29: the worst case so far — `diff old new` reported **"✅ Files are identical"** for two files that
+  genuinely differed (the edit had landed). A rewritten `diff` that lies in the *affirmative* is not caught by
+  "re-grep when something looks missing": it looks like successful verification. `/usr/bin/diff` showed the
+  change immediately. Same session: a `cat > file <<'EOF'` heredoc failed with "no such file or directory"
+  (write never happened — use python or the Write tool), and `npx playwright test --reporter=json > out.json`
+  wrote the hook's own 16-line summary into the file instead of the JSON, until run as
+  `./node_modules/.bin/playwright`.
+
+**Rule:** never let a verification step run through the hook. When a conclusion depends on what a command printed — a line missing, a diff empty, a file written, a test report parsed — invoke the binary by full path (`/usr/bin/diff`, `/bin/ls`, `./node_modules/.bin/<tool>`) or use the built-in Read/Write/Edit tools. Re-grep when something looks absent, and distrust a *clean* result just as much: the hook has reported "files are identical" for files that were not.
