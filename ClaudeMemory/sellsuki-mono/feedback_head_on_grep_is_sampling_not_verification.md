@@ -44,3 +44,22 @@ negative ones never are.
 
 Related: [[feedback_verify_absence_claims]] (same failure via a lying clone
 refspec), [[feedback_ground_claims_file_line]], [[reference_rtk_git_output_filtering]].
+
+**Third variant, 2026-08-29 (`ai-platform-kit-go`): a command that ERRORED, read
+as "no matches".** Checking whether AI-71 AC8 had an enforcing test, I ran
+
+```bash
+grep -rlniE "go list|deps.*redis" llmclient/ *_test.go
+```
+
+from a directory with no top-level `*_test.go`, so zsh failed the glob:
+`(eval):3: no matches found: *_test.go`. **grep never ran.** The output pane was
+empty, I read empty as "nothing found", and reported "no guard test exists" to
+the user as a verified finding. Re-running it properly the next turn happened to
+confirm the conclusion — which is luck, not method.
+
+Empty output has at least three causes and they are not distinguishable by
+looking: no matches, a shell error before the command ran, and rtk filtering
+eating the result (seen again in the same turn — `grep -c` said 6 while the
+listing of the same pattern printed nothing). Check `echo $?`, or redirect to a
+file and `wc -l` it, before treating empty as evidence.
