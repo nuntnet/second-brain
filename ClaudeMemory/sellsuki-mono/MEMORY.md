@@ -183,3 +183,5 @@
 - [codegraph needs projectPath](reference_codegraph_context_needs_projectpath.md) — codegraph_context answers from the wrong service unless scoped to a repo-local index
 - [rag-core visibility tiers](reference_rag_core_visibility_tiers.md) — 3 tiers; internal reaches customers only via impersonation, breaks silently when fixed
 - [KB entries: 3 blockers not 1](reference_kb_entries_three_blockers.md) — rag-core CRUD on an unmerged branch; a test pinned the wording, not the truth
+- [Mainline is not main](project_monorepo_mainline_is_not_main.md) — chore/ai-mvp-local-run is the working mainline; main is 2 months stale and diverged both ways
+- [Fix must reach everyone](feedback_fix_must_reach_everyone.md) — enumerate consumers (sessions, worktrees, fresh clone, branches) and say which are NOT covered
