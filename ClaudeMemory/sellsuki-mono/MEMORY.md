@@ -179,3 +179,4 @@
 - [chat-core route tests time out under load](reference_chatcore_route_tests_timeout_under_load.md) — 603s = killed at Go timeout, not a failure; re-run the package alone
 - [Teleport session kills dev-th](reference_teleport_session_kills_devth_access.md) — kubectl EOF + dev-th timeout พร้อมกัน แต่ gitlab ปกติ = session หมด ไม่ใช่ service พัง
 - [.bak restore drops comments](reference_bak_restore_drops_comments.md) — mutation-restore silently reverted 101 comment lines; check diff for unintended deletions
+- [AI admin port↔backend map](project_ai_admin_port_backend_map.md) — "no backend" comments understate it; KB is rag-core's and complete; blocker is a seam
