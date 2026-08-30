@@ -187,3 +187,4 @@
 - [Fix must reach everyone](feedback_fix_must_reach_everyone.md) — enumerate consumers (sessions, worktrees, fresh clone, branches) and say which are NOT covered
 - [Backend with no FE is invisible](reference_backend_without_frontend_is_invisible.md) — GAP markers only record the port-with-no-backend direction
 - [AI-150 members read-only](project_ai150_members_read_only.md) — read-only by design; CCS owns every grant the platform can express
+- [E8 remaining blockers](project_e8_remaining_blockers.md) — which AI-9 cards are really blocked and on what (verified 2026-08-30)
