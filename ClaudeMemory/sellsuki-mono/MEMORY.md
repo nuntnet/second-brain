@@ -185,3 +185,5 @@
 - [KB entries: 3 blockers not 1](reference_kb_entries_three_blockers.md) — rag-core CRUD on an unmerged branch; a test pinned the wording, not the truth
 - [Mainline is not main](project_monorepo_mainline_is_not_main.md) — chore/ai-mvp-local-run is the working mainline; main is 2 months stale and diverged both ways
 - [Fix must reach everyone](feedback_fix_must_reach_everyone.md) — enumerate consumers (sessions, worktrees, fresh clone, branches) and say which are NOT covered
+- [Backend with no FE is invisible](reference_backend_without_frontend_is_invisible.md) — GAP markers only record the port-with-no-backend direction
+- [AI-150 members read-only](project_ai150_members_read_only.md) — read-only by design; CCS owns every grant the platform can express
