@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: cac73755-22e9-4905-b12d-0973d98763b2
-  modified: 2026-08-29T16:55:49.112Z
+  modified: 2026-08-30T07:29:18.278Z
 ---
 
 In sellsuki_mono, `codegraph_context` — the tool the MCP server advertises as
@@ -42,8 +42,13 @@ outranks real symbols.
 **How to apply:** `codegraph_search` first to find the repo, then
 `codegraph_context` with `projectPath`. Refresh repo-local indexes with
 `make codegraph-sync` (they have no file watcher — only the monorepo-wide index
-auto-syncs). Never `rm -rf` a `.codegraph/` while a session is live: the running
-MCP server keeps serving the deleted inode, so the CLI is right and the tool is
-stale with no error. Use `scripts/codegraph-sync.sh --rebuild` instead. Full
+auto-syncs). Never `rm -rf` a `.codegraph/` while anything is running — use
+`scripts/codegraph-sync.sh --rebuild` instead. Every MCP server on the machine
+dials **one shared daemon** over `.codegraph/daemon.sock`, and that daemon keeps
+the deleted inode open, cached per project path with no eviction. So the CLI goes
+right while the MCP tool stays wrong with no error, and **restarting your session
+does not fix it** (the new MCP dials the same daemon); nor does changing the
+projectPath string or querying other repos. Only killing the daemon PID — which
+every other live session routes through — or that session ending clears it. Full
 detail in `.claude/rules/codegraph.md`. Related: [[reference-submodules-are-shallow-clones]],
 [[feedback-head-on-grep-is-sampling-not-verification]].

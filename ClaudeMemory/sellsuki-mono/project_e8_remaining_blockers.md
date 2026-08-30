@@ -16,14 +16,23 @@ were missing; both now built. What genuinely remains is AI-7's production
 adapter (endpoint answers 503 without it) and `provenance`/`confidence`/
 `schema version`, which are not fields on `context_assembler.Fact`.
 
-**AI-149 (quota banner) — blocked on AI-82.** `ai-platform-kit-go/llmclient/gate.go`
-declares `QuotaGate`, and chat-core wires **no adapter**, so the default
-`allowAllGate` applies — the kit's own doc calls this "the honest state of the
-world until AI-82 ships an adapter". No hard cap can fire, so the banner would
-describe an impossible state. `degrade.ReasonQuotaExhausted` exists but comes
-from a provider **402** per request (`llmclient/transport.go:74`) — not a
-readable per-workspace state, and there is no "limit" value anywhere.
-See [[quota-not-feature-gate]].
+**AI-149 (quota banner) — NOT blocked; I got this wrong too, the same way.**
+I searched only chat-core, found `QuotaGate` unwired there (default
+`allowAllGate`), and concluded no hard cap could fire. True about chat-core,
+wrong as a conclusion: **the whole quota model lives in sellsuki-ai-agent**,
+branch `feat/AI-82-hard-cap-gate` — `src/entity/quota_status/` has
+`level` (green/yellow/red/exhausted/**rate_limited**), `used`, `ceiling`,
+`used_percent`, `reset_at`, and `ai_disabled_since`. chat-core MR !46
+(`feat/AI-155-quota-status-proxy`) proxies it at
+`GET /v1/companies/:company_id/quota/status` with the tenant check the agent
+cannot make. FE built 2026-08-30 (`d8058ae`); both backends still unmerged, so
+it answers 503 and renders no indicator until they land.
+
+Traps found building it: quota is metered per **company**, not per workspace
+(one pool, several workspaces). `rate_limited` is NOT a hard cap — it clears in
+seconds. `ceiling` is nullable and must stay null, never 0 (0 = no capacity,
+the opposite of unmetered). And there is **no quota event on any
+browser-facing transport**, so a live indicator is impossible today — poll.
 
 **AI-148 (unmapped fact queue) — blocked on AI-7 + AI-16.** Needs an extraction
 path and a schema to compare against; neither exists. `FactSchemaSource.ListFieldKeys`
@@ -37,7 +46,11 @@ kind). See [[ai150-members-read-only]], [[entity-lib-tenant-kinds]].
 **AI-108 / AI-110 / AI-112 / AI-119** — PWA/Capacitor placeholder, billing read
 model, provider dashboard. No backend anywhere; platform-level scope.
 
-Method that mattered: I declared two "no backend" blockers and one was wrong.
+Method that mattered: I declared three "no backend" blockers and TWO were wrong
+(AI-193 and AI-149). Both times the code was in a repo I had not searched.
+**Search every submodule, not the one you are standing in** — and check
+checkout branches: `sellsuki-ai-agent` was sitting on `feat/AI-82-hard-cap-gate`
+the whole time.
 Grep the PORT and its call sites, not just the repository directory — a port
 with real callers and only a mock implementation looks identical to "missing"
 until you check which. [[verify-absence-claims]],
