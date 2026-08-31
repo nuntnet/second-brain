@@ -1,191 +1,129 @@
 # Memory Index
 
-- [Merchant portal](project_merchant_portal.md) — merchant portal = shipmunk-frontend, not what the name suggests
-- [Ch.Erawan Next](project_ch_erawan_next.md) — separate car-dealer website + career site, not related to main platform
-- [CATS ATS system](reference_cats_ats_system.md) — user's custom in-house ATS on ds1, no accessible API/docs
-- [NAS DS1 access](reference_nas_ds1.md) — SSH via Tailscale only: `ssh -p 2022 <host>`
-- [Helio platform](project_helio.md) — control-tower platform arch, component status, Phase 0 hermes↔n8n bridge
-- [SecondBrain vault](reference_secondbrain_vault.md) — Obsidian vault ~/SecondBrain used as Claude memory backing store
-- [User writes Thai](user_language_thai.md) — user writes in Thai and prefers Thai responses
-- [BOLA Jira project](reference_bola_jira_project.md) — BOLA tickets are in Jira project BOLA (id 10126), not OC/PAT
-- [Bundle product](project_bundle_in_catalog.md) — bundle/set product lives in catalog-service, not elsewhere
-- [Segment export snapshot](project_segment_export_static_snapshot.md) — BOLA static segment export must be a snapshot, not live query
-- [OC2Plus Jira project](reference_oc2plus_jira_project.md) — OC2Plus Jira project key is "OC" (id 10001)
-- [OC-4207 LINE optional](project_oc4207_line_optional_design.md) — empty string = no LINE, not null/undefined
-- [QMS CCS2 reframe](project_qms_ui.md) — OC-4257 Plan-centric: Plan bundle ≠ Quota primitive
-- [MS-687 reserve needs location](project_ms687_reserve_needs_company_location.md) — OMS↔inventory reserve needs company location set
-- [Decisive execution](feedback_decisive_deep_execution.md) — be sharper/decisive — investigate & act, don't just report options
-- [Self-explaining UX](feedback_selfexplaining_ux.md) — ทุกหน้า/ฟีเจอร์ต้องอธิบายตัวเอง + กดอ่านต่อได้
-- [Subagent model tiering](feedback_subagent_model_tiering.md) — tier sub-agent models by task difficulty (haiku→opus)
-- [PIS frontend local](project_pis_frontend_local_testing.md) — pis-frontend points at dev-th STAGING by default
-- [PIS FF-only push](feedback_ff_only_force_push_ok.md) — PIS repos are FF-only → rebase+force-push is the correct fix, not an error
-- [CCS config namespaces](reference_ccs_config_namespaces.md) — CCS config namespace list and ownership
-- [Patona Jira project](reference_pat_jira_project.md) — Patona Jira key PAT, board 71
-- [Provider FE/BE routing](project_provider_frontend_backend_routing.md) — provider-management-frontend routing quirks
-- [BOLA auth mode](project_bola_auth_mode_deployment.md) — BOLA auth: SaaS=kratos, self-host=local
-- [Overmind restart quirk](project_overmind_restart_quirk.md) — use `overmind restart <name>` for dead services, not stop+start
-- [OC epic backlog triage](project_oc_epic_backlog_triage.md) — OC board ~127 non-Done epics is stale clutter; 26 real
-- [OC×BOLA boundary](project_oc_bola_domain_boundary.md) — OC-4200: LIFF register belongs to OC2Plus, not BOLA
-- [OC2Plus member frontend](reference_oc2plus_member_frontend.md) — customer member-register LIFF app facts
-- [OC-4267 standalone](project_oc4267_standalone_no_qms.md) — descoped to standalone binding, no QMS dependency
-- [OC↔PAT board rule](feedback_oc_pat_board_ownership_rule.md) — ขารับ = OC2Plus board owns it, not PAT
-- [SukiPay audit table](project_sukipay_audit_log.md) — table is `transaction_audit_logs`, not `trails`
-- [BOLA Kratos SSO staging](project_bola_kratos_sso_staging.md) — API must be on same cookie domain as Kratos
-- [BOLA migrations on boot](project_bola_migrations_jsonb.md) — bola runs migrations on boot; Fatal crashloops all replicas
-- [Control Tower](project_control_tower.md) — site at docs/control-tower/, purpose and update flow
-- [Akita/Patona strategy](project_akita_patona_migration_strategy.md) — ยุทธศาสตร์หลัก: Patona = Akita migration target
-- [Env URL convention](reference_env_urls.md) — dev=.dev-th, staging=.staging-th, prod=none
-- [PAT epic links unwired](project_pat_epic_links_unwired.md) — epic↔child `parent` field not wired, grouped by label instead
-- [SukiPay void rename](project_sukipay_void_rename.md) — transaction state rename history
-- [Jira editIssue ADF break](reference_jira_editissue_adf_breakage.md) — editJiraIssue markdown breaks ADF formatting
-- [Jira MCP search quirks](reference_jira_mcp_search_quirks.md) — parallel calls collide, fields ignored; sweep boards via subagent+TSV, verify via count+text~
-- [Background agent resume](reference_background_agent_resume_patterns.md) — spend-limit/529 kills resume via SendMessage; po-lead needs "จบในเทิร์นเดียว" nudges; 529 storm → sleep 600 then retry
-- [SukiPay refund cluster](project_sukipay_refund_cluster.md) — refund cluster roles: 2424 produces, 2289 consumes
-- [Quota ≠ feature gate](project_quota_not_feature_gate.md) — quota-management = usage metering only, no gating logic
-- [OMS2 gaps 2026Q3](project_oms2_plan_gaps_2026q3.md) — 2026-07-03: OMS 2.0 has zero shipped SPs yet
-- [PAT sprint truth](reference_pat_board_sprints.md) — sprint truth = board 71 JQL on customfield_10020
-- [User pain evidence gap](project_user_pain_evidence_gap.md) — org has no real user pain research; QA bugs ≠ user research
-- [Loyalty point cluster](project_loyalty_point_cluster.md) — OC-4295/4297/4335/4339 purchase-earn cluster
-- [Card = user story, not tech](feedback_card_user_story_flows.md) — การ์ดห้ามเป็น technical concept ล้วน — ต้องมี user flow
-- [No scope change in sprint](feedback_no_scope_change_in_sprint.md) — ห้ามแก้ scope การ์ด In Progress ใน sprint
-- [Messaging backend central](reference_messaging_backend.md) — sellsuki-messaging-backend = central OTP/SMS service
-- [OMS2 Decouple decision](project_oms2_decouple_decision.md) — chose Decouple (PAT-2540); children cards follow
-- [Customer App program](project_customer_app_program.md) — replaces posh-medica: 5 epics under this label
-- [Invite→app chain](project_invite_multiapp_chain.md) — PAT-2553 return_to email chain across apps
-- [QA guide required](feedback_qa_reproduce_guide.md) — การ์ดต้องมี QA Reproduce & Test Guide
-- [Ground claims file:line](feedback_ground_claims_file_line.md) — ทุก claim ในการ์ดต้องยึด file:line จริง
-- [SukiPay offline payment](project_sukipay_offline_payment.md) — bankTransferOffline wired end-to-end
-- [BOLA workspace scoping bugs](project_bola_workspace_scoping_bugs.md) — multi-tenant split → 65 confirmed leaks
-- [BOLA Kratos deploy gap](project_bola_saas_kratos_deploy_gap.md) — SaaS v1.0.24 deploy fail = missing k8s secret
-- [BOLA is_enabled mismatch](project_bola_is_enabled_int_bool_mismatch.md) — is_enabled columns int vs bool inconsistency
-- [BOLA deploy values in repo](project_bola_deploy_values_in_repo.md) — non-secret env values committed in repo
-- [BOLA contact profile model](project_bola_contact_profile_model.md) — contact/profile entity relationship
-- [BOLA staging Loki](reference_bola_staging_loki.md) — query staging BOLA logs via Loki, system-logging ns
-- [BOLA APM webhook design](project_bola_apm_webhook_design.md) — webhook_setting overloaded, now split
-- [Plan/capability/quota anchor](project_plan_capability_quota_anchor.md) — Commercial Plan is the anchor entity
-- [BOLA contacts upsert API](reference_bola_contacts_upsert_api.md) — POST /v1/contacts/upsert testing notes
-- [OC2Plus merge to develop](feedback_oc2plus_merge_to_develop.md) — OC2Plus MRs target develop only, never main (platform service กลาง)
-- [OC2Plus API-key gap](project_oc2plus_3rdparty_apikey_gap.md) — OC-2275 epic rewritten; 10-scope catalog; WS1-A coded 2026-07-22 unlanded; apikey.manage decision
-- [BOLA ops = CCS1 not CCS3](project_bola_ops_visibility_ccs1.md) — self-service workspaces have no company; proxy via CCS; BOLA outside AMS gateway
-- [BOLA RBAC = Keto-direct](project_bola_rbac_keto_direct.md) — SaaS=PERMISSION_PROVIDER=keto (BOLA-118); sync MRs superseded
-- [BOLA reply-token epic](project_bola_reply_token_epic.md) — BOLA-294 5-card plan; group-fallback bug at webhook.go:533-535
-- [BOLA deploy topology](project_bola_deploy_topology.md) — repo-chart (staging) vs SRE bola-tenants chart (self-host); kratos-admin port-80 gotcha
-- [BOLA chatbot personalization](project_bola_ai_chatbot_personalization.md) — keyword-RAG live, no asker context; gaps: stub embeddings, plaintext key
-- [APM scheduled+batch epic](project_apm_scheduled_batch_epic.md) — cron auto-push-flush, text-only batch phase 1, render-at-receive
-- [AI Chat Platform plan](project_ai_chat_platform_plan.md) — CTO 7-service platform, vendor insurance pilot; BOLA freezes/bridges
-- [Parallel sessions git safety](feedback_parallel_sessions_git_safety.md) — check branch+status before mutating; never add -A/amend blindly; claim Jira via In Progress + 🔒
-- [GitLab private Go module CI](reference_gitlab_private_go_module_ci.md) — cross-repo fetch needs job-token allowlist + git credential rewrite
-- [rtk hook rewrites commands](reference_rtk_git_output_filtering.md) — compressed/empty/wrong output, even a `diff` that falsely says "identical"; run verifications by full binary path
-- [Caddy host-networking](reference_caddy_host_networking_gotcha.md) — *.sellsuki.local refused → force-recreate caddy container
-- [OC2Plus primary-invariant](project_oc2plus_primary_invariant_pattern.md) — seed-default + single-active-primary + atomic set + no-delete-last pattern
-- [OC2Plus consent model](project_oc2plus_consent_enforcement_model.md) — OC-3897/4089/4340: 3 layers (type/doc/binding) + server-side gate
-- [Entity pure / zod = DTO](feedback_entity_pure_zod_dto.md) — domain layer zero-dependency; zod only at boundary
-- [chat-core role bootstrap](project_chatcore_role_bootstrap_and_eastwest_auth.md) — self-bootstrap-by-name; SERVICE_TOKEN confirmed correct
-- [GitLab review-bot targets](reference_gitlab_review_bot_targets.md) — bot reviews only main/develop MRs; feature branches need manual review
-- [rps dual mainline](reference_rps_dual_mainline.md) — main→staging (manual gate), develop→dev; number migrations past both
-- [AI platform deploy gating](project_ai_platform_deploy_gating.md) — CI_JOB_ENABLE + missing k8s secret gate chat-core deploys
-- [AI Sprint 2-4 run](project_ai_sprint234_autonomous_run.md) — all done 2026-08-06 on pushed branches WITHOUT MRs; merge order matters
-- [Monorepo remotes](reference_monorepo_no_origin.md) — origin→monorepo.git is real; glab-base→BOLA repo is a trap
-- [chat-core stack merge order](project_ai_chatcore_merge_order.md) — fix/AI-32 must merge to main BEFORE the 9-branch AI stack
-- [AI chat frontend design](reference_ai_chat_frontend_design.md) — Claude Design project via DesignSync; DS conflict unresolved
-- [AI chat MVP integration](project_ai_mvp_integration.md) — end-to-end works locally to token_unavailable; 3 blockers before real test
-- [GORM pgx/lib-pq AutoMigrate](reference_gorm_pgx_libpq_automigrate.md) — fails only on 2nd boot; test with 3× calls
-- [Lease/claim ownership bug](reference_lease_claim_ownership_bug_class.md) — release-by-id without claim-token → double-processing, hit 3×
-- [PG partial-index ON CONFLICT](reference_pg_partial_index_onconflict_generic_plan.md) — 42P10 sometimes on 1st exec not 6th; target-less DO NOTHING; goqu can't express the bug
-- [Loyalty contract sheet](project_loyalty_canonical_contract.md) — OC-4413 = hub/SoT; OC-4415/PAT-2604/OC-4419 downstream
-- [Sellsuki Product KB](project_sellsuki_product_kb.md) — docs/product-kb/ for BD/MKT; verified/asserted/hypothesis/GAP tags required
-- [Outline MCP VPN blocker](reference_outline_mcp_vpn_blocker.md) — internal 10.x unreachable off-VPN; use publish-to-outline.py
-- [Verify as user sees it](feedback_verify_as_the_user_sees_it.md) — done only when opened in a real logged-in session, not curl 200
-- [Product marketing voice](feedback_product_marketing_voice.md) — write KB as PMM not auditor; pain = customer job, not bug
-- [Search before declaring GAP](feedback_search_before_declaring_gap.md) — previously wrote "no pricing" while it existed in docs §8
-- [OC-2275 audit+action plan](project_oc2275_audit_actionplan.md) — nearly closed 2026-08-10; open: entity MR !58, OC-4433/4430
-- [OC2Plus = company not store](reference_oc2plus_company_not_store.md) — store_id=0 throughout; Patona has real stores, different layer
-- [Verify before "ไม่มี X"](feedback_verify_absence_claims.md) — clone refspec can lie; grep actual repo names, watch rtk filtering
-- [OC2Plus API-key local run](project_oc2plus_apikey_local_run.md) — UI=linecrm-backoffice /apikey; 4 auth gates; setup.sh had 4 wrong envs
-- [ssk-* DS docs in node_modules](reference_ssk_components_docs.md) — isCustomElement REQUIRED for Vue binding, not a warning
-- [Central audit log](project_central_audit_log.md) — PAT-2611: stdout→fluentd→Loki→CCS-backend→CCS1/2/3 UI, separate from SukiPay audit
-- [Dead 'staging' runner tag](reference_dead_staging_runner_tag.md) — old generic-frontend-npm.yml queues forever; use -th variant
-- [CCS env topology](reference_ccs_env_topology.md) — dev = ns sellsuki-dev on staging-th cluster; Loki blind for these pods
-- [BOLA-293 chain state](project_bola293_chain_state.md) — landed to dev 2026-08-11; left: SPA !15, kratos password gaps
-- [DS 1.0 beta gotchas](reference_ds_1_0_beta_gotchas.md) — semver inversion (pin exact); font tokens provider-scoped/unpublished
-- [rps is_system_role trap](reference_rps_is_system_role_trap.md) — matches thousands of rows; filtering alone can hang minutes
-- [Local bola overmind socket](reference_local_bola_own_overmind_socket.md) — .overmind-bola.sock + Procfile.bola; 502 = not started
-- [CCS3 frontend facts](reference_ccs3_frontend_facts.md) — admin.sellsuki.com; members UI=/users; company from session not URL
-- [messaging-backend repo traps](reference_messaging_backend_shared_repo_traps.md) — .env tracked (repoints others); no MR CI; develop↔main lead flipped — measure both
-- [Local i18n/config seeding](reference_local_i18n_config_seeding.md) — pulls staging's public API; admin APIs need Keto role on sellsuki.system
-- [AI platform arch artifact](reference_ai_platform_architecture_artifact.md) — source at docs/ai-platform-architecture.md; `&amp;` double-escapes in mermaid
-- [BOLA SaaS access model](project_bola_saas_access_model.md) — CCS3=org scope, BOLA=workspace, Kratos=identity, Keto enforces
-- [AI Conversation Intelligence](project_ai_conversation_intelligence.md) — Case/Checkpoint/Memory-lanes decided 2026-08-11; stage must bind case_id
-- [AI board stale cards](reference_ai_board_stale_cards.md) — AI-38 still says pgvector though spike closed as Milvus
-- [Quota has no allow/deny RPC](reference_quota_no_allow_deny_rpc.md) — metering only; also no usage dimensions, no idempotency key, no billing period
-- [Local identity hardcode loop](reference_local_identity_hardcode_loop.md) — .env.dev X-User-Id not in Kratos = infinite AMS bounce; fixed via forward_auth
-- [Ambiguous 404 fails open](reference_ambiguous_404_fail_open.md) — "no record" vs "no endpoint" both 404; branch on error_code
-- [ai-agent is stateless](project_ai_agent_stateless.md) — chat-core owns config+eval harness; config travels on the request
-- [GORM Updates drops false](reference_gorm_updates_drops_false.md) — bool→false never persists though UPDATE succeeds; needs DB round-trip test
-- [Flag without enforcement](reference_flag_without_enforcement.md) — FlatAdminGuard vs WorkspaceGuard drift, ~40 routes unguarded
-- [Kafka fails silently on staging](reference_kafka_silent_publish_failure.md) — BOLA pods missing KAFKA_SERVERS (BOLA-319); check key vs payload
-- [OC2Plus Customer App auth plan](project_oc2plus_customer_app_auth_plan.md) — OC-4344: self-build device-trust/password/OIDC on member-api; reject Better Auth + own OIDC Provider
-- [Browser surfaces here](reference_browser_surfaces_this_workspace.md) — pane DOES reach localhost; real blockers are Kratos return_to + member repo's node_modules symlink (never npm install there)
-- [chat-core migrations break at 0066](reference_chatcore_migrations_break_at_0066.md) — clean DB can't migrate; 0067 checkpoint tables exist nowhere
-- [AI merge topology risk](project_ai_merge_topology_risk.md) — codex/ai176-* baselines must be CLOSED not merged; 19 stranded files split BE+FE
-- [Shared identity infra is a SPOF](reference_shared_identity_infra_singleton.md) — kratos/keto/hydra all 1-replica, colocate on one node; hit 2x in one day
-- [AI backlog gap sweep 2026-08](project_ai_backlog_gap_sweep_202608.md) — E12 ปิดครบ (AI-178/179/180/181); AI-150 ติด decision A-vs-B; ผลตรวจ guardrail §5.11
-- [Design handoff = full fidelity](feedback_design_handoff_full_fidelity.md) — implement ทั้งเฟรม + follow-through, no-mock ใช้กับ data เท่านั้น
-- [Submodules are shallow](reference_submodules_are_shallow_clones.md) — merge-base/history checks lie; unshallow before judging ancestry
-- [git @{u} false zero](reference_git_upstream_false_zero.md) — no upstream → "0 unpushed"; compare origin/<branch>..HEAD
-- [FB page dev-mode gate](project_fb_page_dev_mode_gate.md) — real page 268502970215081; only role-holders reach the webhook
-- [Parallel sessions duplicate symbols](reference_parallel_sessions_duplicate_symbols.md) — clean auto-merge ≠ correct; same test written twice won't compile
-- [SLA ladder engine state](project_sla_ladder_engine_state.md) — epic shipped; MRs open (ai-agent !4 first → chat-core !18 → FE !4); tier1 migrations renumbered 0076-0079; CronJob in-repo
-- [entity lib tenant kinds](reference_entity_lib_tenant_kinds.md) — IsActor allowlist gates rps tenant tiers; open the MR yourself; local submodule versions lie
-- [Jira sprint ids not contiguous](reference_jira_sprint_ids_not_contiguous.md) — ids are global across boards; a wrong id files cards into another team's sprint silently
-- [Timing-dependent concurrency tests](reference_timing_dependent_concurrency_tests.md) — goroutine-race tests pass locally against broken code; stage the end state instead
-- [Lit/React node condition hollows tests](reference_lit_react_node_condition_hollows_tests.md) — vitest gets the SSR build; DS props all undefined, tests prove nothing
-- [DS testId is a property](reference_ds_testid_is_a_property.md) — invisible in jsdom; in a browser it sits inside the shadow root where text is empty and clicks miss the control
-- [rps ListAssignedRoles = reverse lookup](reference_rps_list_assigned_roles_reverse_lookup.md) — the "no such endpoint" GAP note was wrong
-- [chat-core CI gaps](reference_chatcore_ci_gaps.md) — integration_test never runs on main; MR jobs pinned to staging-th
-- [List open MRs before opening one](feedback_list_open_mrs_before_opening_one.md) — parallel sessions duplicated a fix; session-start listing is stale
-- [chat-core unprefixed chat_workspace](reference_chatcore_unprefixed_chat_workspace.md) — AssignOperator stays broken after rps !107 without a kit bump
-- [CCS global config permission gate](reference_ccs_global_config_permission_gate.md) — even global-scope configs need sellsuki.configsystem.config.view on tenant sellsuki.user:""
-- [Local Kratos identity debugging](reference_local_kratos_identity_debugging.md) — don't guess from /admin/identities; check a backend's own request logs instead
-- [Node 25 breaks jsdom localStorage](reference_node25_localstorage_jsdom_conflict.md) — this machine only has Node v25.8.0, no version manager, repos pin v20
-- [Harness classifier blocks secrets/mutations](reference_harness_classifier_blocks_secrets_and_mutations.md) — chat "yes" doesn't unlock it; needs interactive prompt or settings rule
+## User & how-to-work feedback
+- [User writes Thai](user_language_thai.md) — prefers Thai responses
+- [Decisive execution](feedback_decisive_deep_execution.md) — investigate & act, don't just list options
+- [Self-explaining UX](feedback_selfexplaining_ux.md) — ทุกหน้าต้องอธิบายตัวเอง
+- [Subagent model tiering](feedback_subagent_model_tiering.md) — tier by difficulty haiku→opus
+- [Card = user story](feedback_card_user_story_flows.md) · [No scope change in sprint](feedback_no_scope_change_in_sprint.md) · [QA guide required](feedback_qa_reproduce_guide.md) · [Ground claims file:line](feedback_ground_claims_file_line.md) — card-writing rules
+- [Verify as user sees it](feedback_verify_as_the_user_sees_it.md) — real logged-in session, not curl
+- [Search before GAP](feedback_search_before_declaring_gap.md) · [Verify absence](feedback_verify_absence_claims.md) · [head on grep = sampling](feedback_head_on_grep_is_sampling_not_verification.md) — never claim "no X" without full search
+- [PMM voice](feedback_product_marketing_voice.md) — write KB as PMM, not auditor
+- [Parallel git safety](feedback_parallel_sessions_git_safety.md) · [List MRs before opening](feedback_list_open_mrs_before_opening_one.md) — parallel-session discipline
+- [Design handoff fidelity](feedback_design_handoff_full_fidelity.md) — implement ทั้งเฟรม; no-mock = data only
+- [Fix must reach everyone](feedback_fix_must_reach_everyone.md) — enumerate consumers not covered
+- [Central ≠ caller domain](feedback_central_service_no_caller_domain.md) — scope belongs to consumer
+- [Entity pure / zod = DTO](feedback_entity_pure_zod_dto.md) — zod only at boundary
+- [Report wrong cards, don't edit](feedback_report_wrong_cards_dont_edit.md) — surface contradictions; user decides
+- [OC↔PAT board rule](feedback_oc_pat_board_ownership_rule.md) — ขารับ = OC board owns
+- [OC2Plus merge target](feedback_oc2plus_merge_to_develop.md) — MRs → develop, never main
+- [PIS FF-only push](feedback_ff_only_force_push_ok.md) — rebase+force-push is correct there
 
-- [OC-4362 claim cluster](project_oc4362_claim_cluster_gaps.md) — OC-4461..4465 เข้า Sprint 128 แล้ว; scope/schema naming ยังชนกัน
-- [OC2Plus schema is external](reference_oc2plus_schema_lives_in_external_repo.md) — migration อยู่ repo แยก ไม่ใช่ submodule; DDL ใหม่ไปที่ member-api/migrations/004
-- [Silent semantic merge break](reference_silent_semantic_merge_break.md) — two green MRs; clean auto-merge then won't compile; dry-run the merge
-- [rps identity kind must be prefixed](reference_rps_identity_kind_must_be_prefixed.md) — bare "user"/"chat_workspace" → identity invalid; read path 503s, write path silently never grants
-- [file-service Keto subject kind](reference_file_service_keto_subject_kind.md) — grant kind must match X-User-Kind or it 403s with the role right there
-- [member-api test-mode login](reference_oc2plus_member_api_test_mode_login.md) — mint a local member session without LINE; which rows must exist first
-- [Permission generator churn](reference_permission_generator_nondeterministic.md) — entity's populate_permission reorders blocks per run; regenerate carefully or the diff is 260 lines of nothing
-- [OC-4464 OCR vendor](project_oc4464_ocr_vendor_decision.md) — iApp chosen; Textract has no Thai at all; the พ.ศ. +543 trap
-- [Turbo cache false green](reference_turbo_cache_crosssession_false_green.md) — "4 successful" can replay another session's logs; use `turbo run --force` to verify
-- [AI board In Review](reference_ai_board_in_review_means_merged_unverified.md) — In Review = merged but unverified; To Do ≠ not started
-- [chat-core is the admin BFF](reference_chatcore_is_the_admin_bff.md) — owns 7 template stores, no companies table; rag-core has no service actor
-- [keyring vs OC-2275](project_sellsuki_keyring_vs_oc2275.md) — central key service exists (PAT-2640, unmerged); overlaps only the mint side
-- [testify permissive default wins](reference_testify_permissive_default_wins.md) — helper pre-stubs win over a test's own .On(); test passes whatever the code does
-- [rag-core dual embedding paths](project_ragcore_dual_embedding_paths.md) — two clients live at once; one bypasses metering in prod
-- [ai-agent CI gaps](reference_ai_agent_ci_gaps.md) — code_analyse always red (allow_failure); gosec blocks on G118
-- [CCS AI-chat config namespace](reference_ccs_ai_chat_config_namespace.md) — AI-19 already gives versioning/audit/rollback/Keto; no provider scope
-- [glab ci stale pipeline](reference_glab_ci_status_stale_pipeline.md) — --branch can show the previous run; check the SHA
-- [FF merge silently reverts](reference_fast_forward_merge_silently_reverts.md) — main-is-ancestor = fast-forward; drops the other mainline fixes with no conflict
-- [head on grep is sampling](feedback_head_on_grep_is_sampling_not_verification.md) — never claim "X does not exist" from a truncated grep; count first
-- [Central service ≠ caller domain](feedback_central_service_no_caller_domain.md) — scope meaning/enforcement belongs to the consuming service, not the central one
-- [dev-th cluster access](reference_dev_th_cluster_access.md) — kubectl into octoplus-dev/share-dev + Keto reverse lookup for a permitted user
-- [Auth endpoint behind its own guard](reference_auth_endpoint_behind_own_guard.md) — identity middleware over check_session_url → everything 401s; the 40ms tell
-- [Audit Action is a closed enum](reference_audit_action_is_closed_enum.md) — card-specified event names/metadata.* can't be implemented literally; use EntityRefs
-- [OC2Plus TEST_KEY prod gate](project_oc2plus_test_key_production_gate.md) — impersonation hole closed 2026-08-28; SRE must still delete the secret value
-- [CCS Go module broken](reference_ccs_go_module_path_broken.md) — go.mod path ≠ repo path → 404; fix open in MR !301 unmerged; CCS gRPC has no auth at all
-- [Company list derived not asked](project_chatcore_company_list_derived_not_asked.md) — CCS ListCompanyThatHaveAccess returns empty for workspace-tier operators
-- [chat-core route tests time out under load](reference_chatcore_route_tests_timeout_under_load.md) — 603s = killed at Go timeout, not a failure; re-run the package alone
-- [Teleport session kills dev-th](reference_teleport_session_kills_devth_access.md) — kubectl EOF + dev-th timeout พร้อมกัน แต่ gitlab ปกติ = session หมด ไม่ใช่ service พัง
-- [.bak restore drops comments](reference_bak_restore_drops_comments.md) — mutation-restore silently reverted 101 comment lines; check diff for unintended deletions
-- [AI admin port↔backend map](project_ai_admin_port_backend_map.md) — "no backend" comments understate it; KB is rag-core's and complete; blocker is a seam
-- [codegraph needs projectPath](reference_codegraph_context_needs_projectpath.md) — codegraph_context answers from the wrong service unless scoped to a repo-local index
-- [rag-core visibility tiers](reference_rag_core_visibility_tiers.md) — 3 tiers; internal reaches customers only via impersonation, breaks silently when fixed
-- [KB entries: 3 blockers not 1](reference_kb_entries_three_blockers.md) — rag-core CRUD on an unmerged branch; a test pinned the wording, not the truth
-- [Mainline is not main](project_monorepo_mainline_is_not_main.md) — chore/ai-mvp-local-run is the working mainline; main is 2 months stale and diverged both ways
-- [Fix must reach everyone](feedback_fix_must_reach_everyone.md) — enumerate consumers (sessions, worktrees, fresh clone, branches) and say which are NOT covered
-- [Backend with no FE is invisible](reference_backend_without_frontend_is_invisible.md) — GAP markers only record the port-with-no-backend direction
-- [AI-150 members read-only](project_ai150_members_read_only.md) — read-only by design; CCS owns every grant the platform can express
-- [E8 remaining blockers](project_e8_remaining_blockers.md) — which AI-9 cards are really blocked and on what (verified 2026-08-30)
-- [Report wrong cards, don't edit](feedback_report_wrong_cards_dont_edit.md) — surface card contradictions for the user to decide; fix small defects in code instead of opening cards
+## Personal / machine / infra
+- [Merchant portal](project_merchant_portal.md) — = shipmunk-frontend
+- [Ch.Erawan Next](project_ch_erawan_next.md) — separate car-dealer site
+- [CATS ATS](reference_cats_ats_system.md) · [NAS DS1](reference_nas_ds1.md) — in-house ATS on ds1; SSH via Tailscale `-p 2022`
+- [Helio platform](project_helio.md) — control-tower arch
+- [SecondBrain vault](reference_secondbrain_vault.md) — Obsidian ~/SecondBrain
+- [Control Tower](project_control_tower.md) — docs/control-tower/
+- [Env URLs](reference_env_urls.md) — dev=.dev-th, staging=.staging-th, prod=none
+- [rtk rewrites commands](reference_rtk_git_output_filtering.md) — false output; verify via full binary path
+- [Caddy host-networking](reference_caddy_host_networking_gotcha.md) — refused → force-recreate
+- [Browser surfaces](reference_browser_surfaces_this_workspace.md) — pane reaches localhost; never npm install member repo
+- [Outline VPN blocker](reference_outline_mcp_vpn_blocker.md) — use publish-to-outline.py
+- [Harness classifier blocks](reference_harness_classifier_blocks_secrets_and_mutations.md) — chat "yes" doesn't unlock
+- [Overmind restart quirk](project_overmind_restart_quirk.md) · [Local bola overmind](reference_local_bola_own_overmind_socket.md) — restart for dead services; .overmind-bola.sock
+- [dev-th access](reference_dev_th_cluster_access.md) · [Teleport kills dev-th](reference_teleport_session_kills_devth_access.md) — kubectl+Keto lookup; EOF = session หมด
+- [Monorepo remotes](reference_monorepo_no_origin.md) — glab-base→BOLA is a trap
+- [Mainline ≠ main](project_monorepo_mainline_is_not_main.md) — chore/ai-mvp-local-run is mainline
+- [codegraph projectPath](reference_codegraph_context_needs_projectpath.md) — else wrong service
+- [Background agent resume](reference_background_agent_resume_patterns.md) — 529 kills resume; nudge "จบในเทิร์นเดียว"
+
+## Jira
+- [BOLA Jira](reference_bola_jira_project.md) · [OC2Plus Jira](reference_oc2plus_jira_project.md) · [Patona Jira](reference_pat_jira_project.md) — BOLA id 10126 · OC id 10001 · PAT board 71
+- [Jira MCP quirks](reference_jira_mcp_search_quirks.md) · [editIssue ADF break](reference_jira_editissue_adf_breakage.md) · [Sprint ids global](reference_jira_sprint_ids_not_contiguous.md) — no parallel calls; markdown breaks ADF; wrong sprint id files silently
+- [PAT sprint truth](reference_pat_board_sprints.md) · [PAT epic links unwired](project_pat_epic_links_unwired.md) — customfield_10020; grouped by label
+
+## Git / CI gotchas
+- [FF merge reverts](reference_fast_forward_merge_silently_reverts.md) · [Silent semantic break](reference_silent_semantic_merge_break.md) · [Parallel dup symbols](reference_parallel_sessions_duplicate_symbols.md) — clean merges lie; dry-run
+- [Submodules shallow](reference_submodules_are_shallow_clones.md) · [git @{u} false zero](reference_git_upstream_false_zero.md) — unshallow first; compare origin/<b>..HEAD
+- [.bak restore drops comments](reference_bak_restore_drops_comments.md) — check diff for deletions
+- [GitLab Go module CI](reference_gitlab_private_go_module_ci.md) · [Review-bot targets](reference_gitlab_review_bot_targets.md) · [Dead 'staging' runner](reference_dead_staging_runner_tag.md) · [glab ci stale](reference_glab_ci_status_stale_pipeline.md) — CI traps
+
+## Test gotchas
+- [testify default wins](reference_testify_permissive_default_wins.md) · [Timing concurrency tests](reference_timing_dependent_concurrency_tests.md) · [Turbo false green](reference_turbo_cache_crosssession_false_green.md) — tests that pass on broken code
+- [Lit/React SSR hollow](reference_lit_react_node_condition_hollows_tests.md) · [DS testId property](reference_ds_testid_is_a_property.md) · [Node 25 jsdom](reference_node25_localstorage_jsdom_conflict.md) — DS/jsdom traps; machine has only Node v25
+
+## Go / DB gotchas
+- [GORM AutoMigrate 2nd boot](reference_gorm_pgx_libpq_automigrate.md) · [GORM Updates drops false](reference_gorm_updates_drops_false.md) — needs 3× boot + DB round-trip tests
+- [Lease/claim bug class](reference_lease_claim_ownership_bug_class.md) · [PG partial-index ON CONFLICT](reference_pg_partial_index_onconflict_generic_plan.md) — double-processing; 42P10
+- [Ambiguous 404](reference_ambiguous_404_fail_open.md) · [Auth behind own guard](reference_auth_endpoint_behind_own_guard.md) — branch on error_code; 40ms tell
+- [Kafka silent failure](reference_kafka_silent_publish_failure.md) — missing KAFKA_SERVERS
+
+## Identity / CCS / rps
+- [Identity infra SPOF](reference_shared_identity_infra_singleton.md) — kratos/keto/hydra 1-replica
+- [Local identity loop](reference_local_identity_hardcode_loop.md) · [Local Kratos debugging](reference_local_kratos_identity_debugging.md) — forward_auth fix; read backend logs
+- [Local i18n/config seed](reference_local_i18n_config_seeding.md) — pulls staging public API
+- [CCS config namespaces](reference_ccs_config_namespaces.md) · [CCS AI config ns](reference_ccs_ai_chat_config_namespace.md) — AI-19 covers versioning/audit; no provider scope
+- [CCS env topology](reference_ccs_env_topology.md) · [CCS3 frontend facts](reference_ccs3_frontend_facts.md) — dev ns on staging-th; members=/users
+- [CCS global config gate](reference_ccs_global_config_permission_gate.md) · [CCS Go module broken](reference_ccs_go_module_path_broken.md) — view perm on sellsuki.user:""; MR !301 unmerged, gRPC no auth
+- [rps dual mainline](reference_rps_dual_mainline.md) · [is_system_role trap](reference_rps_is_system_role_trap.md) · [kind must be prefixed](reference_rps_identity_kind_must_be_prefixed.md) · [ListAssignedRoles](reference_rps_list_assigned_roles_reverse_lookup.md) — rps facts
+- [entity lib tenant kinds](reference_entity_lib_tenant_kinds.md) · [Permission generator churn](reference_permission_generator_nondeterministic.md) — IsActor allowlist; reorders per run
+- [file-service Keto kind](reference_file_service_keto_subject_kind.md) — must match X-User-Kind
+- [Messaging backend](reference_messaging_backend.md) · [repo traps](reference_messaging_backend_shared_repo_traps.md) — central OTP/SMS; .env tracked, no MR CI
+- [Central audit log](project_central_audit_log.md) — PAT-2611 stdout→Loki→CCS UI
+- [Audit Action closed enum](reference_audit_action_is_closed_enum.md) — use EntityRefs
+
+## BOLA
+- [Access model](project_bola_saas_access_model.md) · [auth mode](project_bola_auth_mode_deployment.md) · [RBAC keto-direct](project_bola_rbac_keto_direct.md) · [ops=CCS1](project_bola_ops_visibility_ccs1.md) · [Kratos SSO staging](project_bola_kratos_sso_staging.md) — CCS3=org, BOLA=workspace; SaaS=kratos+keto; outside AMS
+- [Deploy topology](project_bola_deploy_topology.md) · [Kratos deploy gap](project_bola_saas_kratos_deploy_gap.md) · [values in repo](project_bola_deploy_values_in_repo.md) · [migrations on boot](project_bola_migrations_jsonb.md) — charts, secrets, crashloops
+- [Contact profile](project_bola_contact_profile_model.md) · [contacts upsert](reference_bola_contacts_upsert_api.md) · [is_enabled mismatch](project_bola_is_enabled_int_bool_mismatch.md) · [segment export](project_segment_export_static_snapshot.md) — data model facts
+- [Workspace scoping bugs](project_bola_workspace_scoping_bugs.md) — 65 confirmed leaks
+- [Reply-token epic](project_bola_reply_token_epic.md) · [chatbot personalization](project_bola_ai_chatbot_personalization.md) · [APM webhook](project_bola_apm_webhook_design.md) · [APM scheduled+batch](project_apm_scheduled_batch_epic.md) — feature state
+- [Staging Loki](reference_bola_staging_loki.md) · [BOLA-293 chain](project_bola293_chain_state.md) · [FB page dev-mode](project_fb_page_dev_mode_gate.md) — ops facts
+
+## OC2Plus
+- [OC-4207 LINE optional](project_oc4207_line_optional_design.md) — empty string = no LINE
+- [OC epic triage](project_oc_epic_backlog_triage.md) — ~127 non-Done epics; 26 real
+- [OC×BOLA boundary](project_oc_bola_domain_boundary.md) — LIFF register = OC2Plus
+- [Member frontend](reference_oc2plus_member_frontend.md) · [member-api test login](reference_oc2plus_member_api_test_mode_login.md) — LIFF app; local session without LINE
+- [OC-4267 standalone](project_oc4267_standalone_no_qms.md) — no QMS dependency
+- [API-key gap](project_oc2plus_3rdparty_apikey_gap.md) · [OC-2275 audit](project_oc2275_audit_actionplan.md) · [API-key local run](project_oc2plus_apikey_local_run.md) · [TEST_KEY prod gate](project_oc2plus_test_key_production_gate.md) · [keyring vs OC-2275](project_sellsuki_keyring_vs_oc2275.md) — OC-2275 cluster
+- [= company not store](reference_oc2plus_company_not_store.md) — store_id=0 throughout
+- [Primary-invariant](project_oc2plus_primary_invariant_pattern.md) · [consent model](project_oc2plus_consent_enforcement_model.md) — patterns
+- [Schema external](reference_oc2plus_schema_lives_in_external_repo.md) — DDL → member-api/migrations
+- [OC-4362 claim cluster](project_oc4362_claim_cluster_gaps.md) · [OC-4464 OCR vendor](project_oc4464_ocr_vendor_decision.md) — Sprint 128; iApp, พ.ศ. trap
+- [Customer App program](project_customer_app_program.md) · [auth plan](project_oc2plus_customer_app_auth_plan.md) — 5 epics; OC-4344 self-build
+- [Invite→app chain](project_invite_multiapp_chain.md) — PAT-2553 return_to
+- [Loyalty point cluster](project_loyalty_point_cluster.md) · [contract sheet](project_loyalty_canonical_contract.md) — OC-4413 = SoT
+
+## Patona / OMS / QMS / SukiPay
+- [Akita/Patona strategy](project_akita_patona_migration_strategy.md) — Patona = Akita migration target
+- [OMS2 gaps](project_oms2_plan_gaps_2026q3.md) · [Decouple decision](project_oms2_decouple_decision.md) — PAT-2540
+- [MS-687 reserve](project_ms687_reserve_needs_company_location.md) — needs company location
+- [QMS CCS2 reframe](project_qms_ui.md) · [Quota ≠ gate](project_quota_not_feature_gate.md) · [no allow/deny RPC](reference_quota_no_allow_deny_rpc.md) · [Plan anchor](project_plan_capability_quota_anchor.md) — quota=metering (pre-AI-196); Commercial Plan = anchor
+- [SukiPay audit table](project_sukipay_audit_log.md) · [void rename](project_sukipay_void_rename.md) · [refund cluster](project_sukipay_refund_cluster.md) · [offline payment](project_sukipay_offline_payment.md) — SukiPay facts
+- [User pain evidence gap](project_user_pain_evidence_gap.md) — no real user research exists
+- [Product KB](project_sellsuki_product_kb.md) — docs/product-kb/; verified/asserted/GAP tags
+- [Bundle product](project_bundle_in_catalog.md) · [PIS frontend local](project_pis_frontend_local_testing.md) · [Provider FE/BE routing](project_provider_frontend_backend_routing.md) — misc service facts
+- [ssk-* DS docs](reference_ssk_components_docs.md) · [DS 1.0 beta gotchas](reference_ds_1_0_beta_gotchas.md) — isCustomElement required; pin exact
+
+## AI Chat Platform
+- [Platform plan](project_ai_chat_platform_plan.md) — CTO 7-service; insurance pilot
+- [Arch artifact](reference_ai_platform_architecture_artifact.md) — docs/ai-platform-architecture.md
+- [Deploy gating](project_ai_platform_deploy_gating.md) — CI_JOB_ENABLE + k8s secret
+- [Sprint 2-4 run](project_ai_sprint234_autonomous_run.md) · [merge order](project_ai_chatcore_merge_order.md) · [merge topology risk](project_ai_merge_topology_risk.md) — branches without MRs; codex baselines CLOSE not merge
+- [FE design](reference_ai_chat_frontend_design.md) · [MVP integration](project_ai_mvp_integration.md) — DesignSync; works to token_unavailable
+- [Board stale cards](reference_ai_board_stale_cards.md) · [In Review = merged unverified](reference_ai_board_in_review_means_merged_unverified.md) — never trust AI board status
+- [ai-agent stateless](project_ai_agent_stateless.md) · [ai-agent CI gaps](reference_ai_agent_ci_gaps.md) — config on request; code_analyse always red
+- [chat-core = admin BFF](reference_chatcore_is_the_admin_bff.md) · [role bootstrap](project_chatcore_role_bootstrap_and_eastwest_auth.md) · [unprefixed kind](reference_chatcore_unprefixed_chat_workspace.md) · [company list derived](project_chatcore_company_list_derived_not_asked.md) — chat-core facts
+- [migrations 0066](reference_chatcore_migrations_break_at_0066.md) · [route tests timeout](reference_chatcore_route_tests_timeout_under_load.md) · [CI gaps](reference_chatcore_ci_gaps.md) — chat-core traps
+- [rag-core dual embedding](project_ragcore_dual_embedding_paths.md) · [visibility tiers](reference_rag_core_visibility_tiers.md) · [KB 3 blockers](reference_kb_entries_three_blockers.md) — rag-core facts
+- [Conversation Intelligence](project_ai_conversation_intelligence.md) — Case/Checkpoint/Memory-lanes
+- [Gap sweep 2026-08](project_ai_backlog_gap_sweep_202608.md) — E12 ปิดครบ; AI-150 ติด decision
+- [SLA ladder state](project_sla_ladder_engine_state.md) — MR order ai-agent !4 → chat-core !18 → FE !4
+- [Flag without enforcement](reference_flag_without_enforcement.md) — ~40 routes unguarded
+- [Admin port↔backend map](project_ai_admin_port_backend_map.md) · [Backend w/o FE invisible](reference_backend_without_frontend_is_invisible.md) — blocker is a seam; GAP markers one-directional
+- [AI-150 members read-only](project_ai150_members_read_only.md) — CCS owns grants
+- [E8 remaining blockers](project_e8_remaining_blockers.md) — verified 2026-08-30
+- [Placeholder cards review](project_ai_placeholder_cards_review.md) — AI-108 close / 119 split-4 / 113 ask Data / 110+112 park; DEC-1..6; E9 stranded unpushed
