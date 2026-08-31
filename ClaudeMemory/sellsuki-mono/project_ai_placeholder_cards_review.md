@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: 7a551d99-154b-4aa3-b896-e16e49d26658
-  modified: 2026-08-31T16:40:10.441Z
+  modified: 2026-08-31T21:20:23.333Z
 ---
 
 รีวิว po-team 2026-08-31 — การ์ด AI 5 ใบที่ dev บอกว่า "develop ไม่ได้":
@@ -16,7 +16,7 @@ metadata:
 - **AI-112 / AI-110** → placeholder ถูกแล้ว อย่าดึงเข้า sprint จนเคาะ DEC
 - **DEC ค้าง:** DEC-1 ads pipeline (ทีม Data) · DEC-2 OMS-invoice vs Peak Engine (แนะนำ Peak) · DEC-3 O3 package↔Plan mapping ไม่มีเจ้าของ · DEC-4 token mode vs PAT-2587 · DEC-5 provider dashboard UI location · DEC-6 เจ้าของ domain "company จ่าย Sellsuki" (OMS ไม่มี invoice concept, SukiPay กลับทิศ)
 
-⚠️ **Data-loss risk:** งาน E9 (AI-97/AI-98 ที่ทำให้ status ขึ้น In Review) อยู่บน branch local ที่**ไม่เคย push** (`feature/AI-97-etl-scaffold`, `feature/AI-98-dashboard-api`, `fix/e9-review-fixes`) และ repo เป้าหมาย `ai_chat_data_pipeline` (GitLab group `sellsuki/data-pipeline` นอก monorepo) **ไม่เคยถูกสร้าง** — clone ใหม่งานหายหมด
+**E9 rescued 2026-09-01:** โค้ด AI-97/AI-98 ถูก subtree-split จาก monorepo branch `fix/e9-review-fixes` (tip รวมทั้งสอง) แล้ว push เป็น main ของ repo ใหม่ https://gitlab.sellsuki.com/sellsuki/data-pipeline/ai_chat_data_pipeline (18 commits, history ครบ) — เคาะโดย user. หมายเหตุ: branch monorepo ทั้ง 3 ยัง local อยู่และถือ wiring ระดับ monorepo (Procfile/Caddyfile/docs/control-tower) ที่**ไม่ได้**ไปกับ repo ใหม่; build ยังไม่ได้ verify หลังย้าย
 
 ต้นตอร่วม: `docs/ai-chat-assistant-platform-plan.md` + `docs/ai-platform-architecture.md` ไม่มี `Status:` header ตาม [[design-doc-authority]] และ decision ที่ถูกแทน (Capacitor, token mode) ไม่เคยถูก mark superseded
 
