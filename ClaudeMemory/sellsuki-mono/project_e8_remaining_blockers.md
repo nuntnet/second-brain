@@ -34,13 +34,34 @@ seconds. `ceiling` is nullable and must stay null, never 0 (0 = no capacity,
 the opposite of unmetered). And there is **no quota event on any
 browser-facing transport**, so a live indicator is impossible today — poll.
 
-**AI-148 (unmapped fact queue) — blocked on AI-7 + AI-16.** Needs an extraction
+**AI-148 — HALF the blocker is gone.** AI-16 shipped: the kit's `customerfact`
+package has Schema, `SchemaService.ApplyPatch` (admin adds a field),
+`WriteGate.Validate` returning **`UnknownFieldError`** (= the unmapped-fact
+signal), HTTP routes, consent, encryption, audit. What is still missing is a
+PRODUCER (AI-7 — nothing extracts facts and writes them through the gate) and a
+store for the queue itself. Nothing imports `customerfact` yet.
+
+⚠️ `chat-core/src/entity/context_assembler.IsFactVisible` DUPLICATES the kit's
+`customerfact.IsFactVisible`, and a comment says to delete the local copy once
+AI-16 merged. **Do not** — the local one takes `factCaseID`/`readerCaseID` and
+the kit's does not, so deleting it drops Case isolation (AI-193 depends on it).
+The kit needs Case scope first.
+
+**OLD note:** Needs an extraction
 path and a schema to compare against; neither exists. `FactSchemaSource.ListFieldKeys`
 is declared twice and **called** (`lead_rule/config.go:44`, `lead_data/gate.go:48`)
 but has only mocks — no production adapter. No fact WRITE path exists anywhere
 (`SetFacts`/`WriteFact`/`UpsertFact` all empty in chat-core and the kit).
 
-**AI-183 — blocked on entity!43** (rps rejects `sellsuki.chat_workspace` tenant
+**AI-183 — DONE 2026-08-31, and the blocker had expired a week earlier.**
+entity!43 merged and shipped in entity **v0.31.0** on 2026-08-24; **rps already
+pinned v0.31.0**. Only the kit (still entity v0.22.0, `DefaultTenantKinds()`
+Workspace empty) and chat-core were behind. Fixed: kit !13 merged and tagged
+**v0.3.0**; chat-core !49 bumps entity+kit, no code change needed. authctx now
+honours a workspace-scoped Operator grant; AI-150 rows flip to editable with no
+UI change. ⚠️ pin ≠ deploy — rps must be RUNNING >= v0.31.0.
+
+**OLD note (kept as the lesson):** was recorded as blocked on entity!43 (rps rejects `sellsuki.chat_workspace` tenant
 kind). See [[ai150-members-read-only]], [[entity-lib-tenant-kinds]].
 
 **AI-108 / AI-110 / AI-112 / AI-119** — PWA/Capacitor placeholder, billing read
