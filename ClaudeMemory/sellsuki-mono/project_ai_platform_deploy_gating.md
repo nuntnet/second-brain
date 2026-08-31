@@ -44,3 +44,30 @@ tag), development = `develop`/`develop-th`. A repo with only `main` can never ru
 - gosec + govulncheck CI gates live in chat-core `.gitlab-ci.yml` (AI-15 AC3, MR!9); Go image family must stay on a **supported** Go line (1.24 fell out of support → stdlib CVEs were 9 of the 17 findings).
 
 Related: [[project-ai-sprint234-autonomous-run]]
+
+**sellsuki-ai-agent has NO deploy wiring on main at all (measured 2026-08-31).**
+Not "gated off" like chat-core — absent. `origin/main` has no `deployment/`
+directory, and its `.gitlab-ci.yml` contains zero matches for `CI_JOB_ENABLE`,
+`KUBE_NAMESPACE`, `HELM_UPGRADE_ADDITIONAL_ARGS` or `deploy_staging_th_arm`.
+The SRE include is present, so build/test jobs run; nothing ever deploys.
+
+The only copy of `deployment/values-base.yml` + `values-staging.yml` lives on
+the stale MR !3 (`codex/ai176-agent-baseline`), and it is now **wrong**:
+
+- it sets `ENVIRONMENT=staging`, but main reads **`APP_ENV`**. With `APP_ENV`
+  unset the service decides it is a developer machine and takes the plaintext
+  `LLM_API_KEY` path — silently skipping AI-88's "deployed ⇒ Vault or refuse to
+  boot" gate, which is the one thing that gate exists to prevent.
+- no `VAULT_*` at all.
+- none of E5's 18 env vars.
+- its runner tags point at the `staging` pool that main's own CI header
+  documents as retired.
+
+So resurrecting the file is worse than writing a new one. Main's CI comment
+also states that moving build/deploy jobs is **an SRE decision, not a one-line
+override** (they build linux/arm64 and target an ARM node) — so the wiring is
+not ours to invent. E5 cannot be verified on staging until this is owned.
+
+`.env.example` on main documented **none** of the 21 vars the code reads until
+ai-agent MR !18. Audit with:
+`git grep -hoE '(os\.Getenv|envOr|envBool|envInt|envFloat|envDuration)\("[A-Z_]+"'`

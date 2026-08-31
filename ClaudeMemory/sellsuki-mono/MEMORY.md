@@ -188,3 +188,4 @@
 - [Backend with no FE is invisible](reference_backend_without_frontend_is_invisible.md) — GAP markers only record the port-with-no-backend direction
 - [AI-150 members read-only](project_ai150_members_read_only.md) — read-only by design; CCS owns every grant the platform can express
 - [E8 remaining blockers](project_e8_remaining_blockers.md) — which AI-9 cards are really blocked and on what (verified 2026-08-30)
+- [Report wrong cards, don't edit](feedback_report_wrong_cards_dont_edit.md) — surface card contradictions for the user to decide; fix small defects in code instead of opening cards
