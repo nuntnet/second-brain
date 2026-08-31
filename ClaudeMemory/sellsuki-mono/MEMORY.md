@@ -126,4 +126,4 @@
 - [Admin port↔backend map](project_ai_admin_port_backend_map.md) · [Backend w/o FE invisible](reference_backend_without_frontend_is_invisible.md) — blocker is a seam; GAP markers one-directional
 - [AI-150 members read-only](project_ai150_members_read_only.md) — CCS owns grants
 - [E8 remaining blockers](project_e8_remaining_blockers.md) — verified 2026-08-30
-- [Placeholder cards review](project_ai_placeholder_cards_review.md) — AI-108 close / 119 split-4 / 113 ask Data / 110+112 park; DEC-1..6; E9 stranded unpushed
+- [Placeholder cards review](project_ai_placeholder_cards_review.md) — DEC-1..6 เคาะแล้ว 2026-09-01 (D10/OMS ยืน, token mode ตัด); E9 rescued → ai_chat_data_pipeline
