@@ -4,7 +4,7 @@ description: "how to find WHICH local Kratos identity a real browser session act
 metadata:
   type: reference
   originSessionId: a0710894-5349-411a-b947-f53b13519857
-  modified: 2026-08-26T04:23:13.373Z
+  modified: 2026-09-01T04:57:25.875Z
 ---
 
 When a local `*.sellsuki.local` browser session needs a specific identity (e.g. to grant it an RPS permission), do **not** try to guess it from Kratos's admin API:
@@ -16,3 +16,7 @@ When a local `*.sellsuki.local` browser session needs a specific identity (e.g. 
 **What actually works:** check the request logs of *any* backend service the browser is already successfully authenticating against through Caddy's `forward_auth` (e.g. `oc2plus-line-crm-service-backoffice-api`'s structured JSON logs record the resolved `X-User-Id` per request). Capture via `tmux -L <overmind-socket> capture-pane -t <service> -p -S -N | grep -i "X-User-Id"` and use that exact identity — it's the one Caddy is actually forwarding for the live session, not a guess.
 
 **How to apply:** any time you need "the identity behind this local browser session" (to grant a role, check ownership, etc.), go straight to a backend's own access logs first — treat Kratos admin lookups as a last resort, not a starting point.
+
+**Generalizes to staging/dev-th too, not just local.** Same principle, different capture command: `kubectl logs -n <namespace> <backend-pod> --since=15m | grep -oE '"X-User-Id":"[0-9a-f-]{36}"'` against the real backend pod in the target cluster namespace (e.g. `octoplus` = staging-th's OC2Plus namespace on the staging-th Teleport cluster, `octoplus-dev` = dev-th's). Confirmed identity from staging backoffice-api's structured JSON logs this way (`X-User-Id` field, same log shape as local).
+
+**Also learned debugging staging directly:** a real deployed gateway (unlike local Caddy, which has a deliberate curl-testing bypass for an explicit `X-User-Id` header) will **not** honor a client-supplied `X-User-Id`/`X-User-Kind` from outside — it only trusts what it derives itself from a real session/JWT. Hitting the public domain (e.g. `api.staging-th.sellsuki.com`) with a manually-set identity header gets ignored, producing a misleading "unauthenticated" error. To test/debug a staging service *as a specific identity* the way you can locally, `kubectl port-forward` straight to the service's ClusterIP/pod (bypassing the public gateway entirely) and set the header on that direct connection instead.
