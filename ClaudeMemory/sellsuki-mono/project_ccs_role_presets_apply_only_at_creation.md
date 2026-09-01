@@ -26,7 +26,19 @@ preset change.
 `cmd/backfill_role_permission` in the rps repo (dry-run by default, `--apply`
 writes, idempotent). It goes through the repository layer so both the Postgres
 array and the per-tenant-ref Keto tuples are written; a role with no tenant refs
-is reported, not written. Needs `DATABASE_ROLE_POSTGRESQL_URI` +
-`ORY_KETO_{READ,WRITE}_GRPC_SERVER`, so a port-forward is enough — it does not
-need to be deployed. Landed as rps !111 (develop) / !112 (main); rps has two
+is reported, not written. The rps image ships it at `/app/backfill-role-permission`, next to `/app/app`
+and `/app/migrations`, so it runs with the pod's own env and no credentials
+leave the cluster:
+
+```
+kubectl -n sellsuki exec -it deploy/sellsuki-role-and-permission-management-backend -- \
+  /app/backfill-role-permission --permission <code>          # report
+```
+
+**Scale is bigger than it looks:** staging had **10,287** `Company Owner` roles
+(~440 already held the new permission — those are companies created after the
+preset change). Each write is a lock + two reads + a write + a Keto sync, so a
+full run is tens of minutes. Check the dry-run count before applying, especially
+on production. Beware [[reference-rps-listroles-pointer-pagination]] — run the
+dry-run twice and only trust matching numbers. Landed as rps !111 (develop) / !112 (main); rps has two
 live mainlines, see [[reference-rps-dual-mainline]].

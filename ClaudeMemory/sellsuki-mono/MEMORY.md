@@ -67,7 +67,8 @@
 - [CCS config namespaces](reference_ccs_config_namespaces.md) · [CCS AI config ns](reference_ccs_ai_chat_config_namespace.md) — AI-19 covers versioning/audit; no provider scope
 - [CCS env topology](reference_ccs_env_topology.md) · [CCS3 frontend facts](reference_ccs3_frontend_facts.md) — dev ns on staging-th; members=/users
 - [CCS global config gate](reference_ccs_global_config_permission_gate.md) · [CCS Go module broken](reference_ccs_go_module_path_broken.md) — view perm on sellsuki.user:""; MR !301 unmerged, gRPC no auth
-- [ListRoles pointer paging](reference_rps_listroles_pointer_pagination.md) — value opts = no LIMIT, infinite loop
+- [ListRoles paging traps](reference_rps_listroles_pointer_pagination.md) — value opts = no LIMIT; no unique sort = OFFSET skips rows
+- [Keto staging lookup](reference_keto_staging_permission_lookup.md) — ns share port-forward; prove a 403 instead of guessing
 - [Presets only at creation](project_ccs_role_presets_apply_only_at_creation.md) — new permission needs the rps backfill
 - [rps dual mainline](reference_rps_dual_mainline.md) · [is_system_role trap](reference_rps_is_system_role_trap.md) · [kind must be prefixed](reference_rps_identity_kind_must_be_prefixed.md) · [ListAssignedRoles](reference_rps_list_assigned_roles_reverse_lookup.md) — rps facts
 - [entity lib tenant kinds](reference_entity_lib_tenant_kinds.md) · [Permission generator churn](reference_permission_generator_nondeterministic.md) — IsActor allowlist; reorders per run
