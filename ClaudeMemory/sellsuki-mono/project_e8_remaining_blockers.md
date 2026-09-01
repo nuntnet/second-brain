@@ -64,8 +64,28 @@ UI change. ⚠️ pin ≠ deploy — rps must be RUNNING >= v0.31.0.
 **OLD note (kept as the lesson):** was recorded as blocked on entity!43 (rps rejects `sellsuki.chat_workspace` tenant
 kind). See [[ai150-members-read-only]], [[entity-lib-tenant-kinds]].
 
-**AI-108 / AI-110 / AI-112 / AI-119** — PWA/Capacitor placeholder, billing read
-model, provider dashboard. No backend anywhere; platform-level scope.
+**AI-113 — IN PROGRESS 2026-09-01** (chat-core MR !50): entity + store + use
+case + audit + route, mutation-checked. Key is `(workspace_id, year_month)`,
+which is correct ONLY because messaging-backend refuses a workspace with more
+than one FB Page binding (409, "the pilot's single-connection model") — if that
+rule is ever lifted the key must grow an `fb_page_id` or two Pages' spend sums
+into one figure. FE was already fully built against a mock; swapping it to the
+real adapter is the last step and should wait for !50 to land.
+
+**AI-119 — bundle/perf shipped** (frontend MR !28, −7.1%); push and
+standalone-auth deferred by the user. See [[ai119-push-deferred]] and
+[[ds-bundle-dominates-and-cannot-treeshake]].
+
+**AI-108 — closed Done** by the user; its own Out of Scope said "no
+implementation in the pilot".
+
+**AI-110 / AI-112 — genuinely not ready, and not for technical reasons.**
+AI-110 is `blocked-by` two API cards **that have never been opened** (OMS
+billing history, SukiPay payment method) plus O3. AI-112 is a `platform-track`
+placeholder with an unresolved decision in the card itself (provider view in
+the AI admin panel vs in provider-management-frontend) and depends on the E9
+warehouse (AI-97/98), which does not exist. Deciding AI-112's UI location now
+would produce an answer that is forgotten before it can be used.
 
 Method that mattered: I declared three "no backend" blockers and TWO were wrong
 (AI-193 and AI-149). Both times the code was in a repo I had not searched.

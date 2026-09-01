@@ -132,3 +132,7 @@
 - [AI-150 members read-only](project_ai150_members_read_only.md) — CCS owns grants
 - [E8 remaining blockers](project_e8_remaining_blockers.md) — verified 2026-08-30
 - [Placeholder cards review](project_ai_placeholder_cards_review.md) — DEC-1..6 เคาะแล้ว 2026-09-01 (D10/OMS ยืน, token mode ตัด); E9 rescued → ai_chat_data_pipeline
+- [Search the whole stack](feedback_search_the_whole_stack_not_one_layer.md) — 4 wrong "blocked" calls from searching one repo/layer; check every submodule and code-on-main, not branch ancestry
+- [DS is 94% of the FE bundle](reference_ds_bundle_dominates_and_cannot_treeshake.md) — single export + no sideEffects = no tree-shaking; route-split gave 7%, rest is upstream
+- [route/workspace flaky under load](reference_chatcore_route_workspace_flaky_under_load.md) — different test each full run, passes alone; MigrateUp per test
+- [AI-119 push deferred](project_ai119_push_deferred.md) — not the live inbox (that's AI-33 WebSocket, already working); iOS needs installed PWA
