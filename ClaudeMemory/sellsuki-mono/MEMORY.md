@@ -6,6 +6,7 @@
 - [Self-explaining UX](feedback_selfexplaining_ux.md) — ทุกหน้าต้องอธิบายตัวเอง
 - [Subagent model tiering](feedback_subagent_model_tiering.md) — tier by difficulty haiku→opus
 - [Card = user story](feedback_card_user_story_flows.md) · [No scope change in sprint](feedback_no_scope_change_in_sprint.md) · [QA guide required](feedback_qa_reproduce_guide.md) · [Ground claims file:line](feedback_ground_claims_file_line.md) — card-writing rules
+- [Reproduce the number first](feedback_reproduce_the_number_before_asking.md) — อย่าให้ user เคาะตัวเลขที่ผมยังไม่รันเอง
 - [Verify as user sees it](feedback_verify_as_the_user_sees_it.md) — real logged-in session, not curl
 - [Search before GAP](feedback_search_before_declaring_gap.md) · [Verify absence](feedback_verify_absence_claims.md) · [head on grep = sampling](feedback_head_on_grep_is_sampling_not_verification.md) — never claim "no X" without full search
 - [PMM voice](feedback_product_marketing_voice.md) — write KB as PMM, not auditor
@@ -49,6 +50,7 @@
 - [Submodules shallow](reference_submodules_are_shallow_clones.md) · [git @{u} false zero](reference_git_upstream_false_zero.md) — unshallow first; compare origin/<b>..HEAD
 - [.bak restore drops comments](reference_bak_restore_drops_comments.md) — check diff for deletions
 - [GitLab Go module CI](reference_gitlab_private_go_module_ci.md) · [Review-bot targets](reference_gitlab_review_bot_targets.md) · [Dead 'staging' runner](reference_dead_staging_runner_tag.md) · [glab ci stale](reference_glab_ci_status_stale_pipeline.md) — CI traps
+- [Coverage gate on DB-less job](reference_coverage_gate_on_dbless_job.md) — E2E_TEST_SCRIPT ไม่มี DB → 46.5 ปลอม; ยังค้างใน space-go + ai-agent
 
 ## Test gotchas
 - [testify default wins](reference_testify_permissive_default_wins.md) · [Timing concurrency tests](reference_timing_dependent_concurrency_tests.md) · [Turbo false green](reference_turbo_cache_crosssession_false_green.md) — tests that pass on broken code
@@ -136,3 +138,5 @@
 - [DS is 94% of the FE bundle](reference_ds_bundle_dominates_and_cannot_treeshake.md) — single export + no sideEffects = no tree-shaking; route-split gave 7%, rest is upstream
 - [route/workspace flaky under load](reference_chatcore_route_workspace_flaky_under_load.md) — different test each full run, passes alone; MigrateUp per test
 - [AI-119 push deferred](project_ai119_push_deferred.md) — not the live inbox (that's AI-33 WebSocket, already working); iOS needs installed PWA
+- [AI-115 goal = backend only](project_ai115_conversation_goal_backend_only.md) — conversation-goal API มีครบ, frontend 0; คนละตัวกับ Playbook
+- [AI-146 onboarding wizard ยังไม่เริ่ม](project_ai146_onboarding_wizard_not_started.md) — plan §5.11 สั่งไว้ <30 นาที; ไม่มี setup checklist ในระบบ
