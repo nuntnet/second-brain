@@ -91,6 +91,8 @@
 - [OC×BOLA boundary](project_oc_bola_domain_boundary.md) — LIFF register = OC2Plus
 - [Member frontend](reference_oc2plus_member_frontend.md) · [member-api test login](reference_oc2plus_member_api_test_mode_login.md) — LIFF app; local session without LINE
 - [OC-4267 standalone](project_oc4267_standalone_no_qms.md) — no QMS dependency
+- [OC-2275 remaining blocked](project_oc2275_remaining_blocked_on_decisions.md) — only member.read was buildable
+- [CRM migrations by hand](project_oc2275_crm_migrations_run_by_hand.md) — migration repo has zero CI
 - [API-key gap](project_oc2plus_3rdparty_apikey_gap.md) · [OC-2275 audit](project_oc2275_audit_actionplan.md) · [API-key local run](project_oc2plus_apikey_local_run.md) · [TEST_KEY prod gate](project_oc2plus_test_key_production_gate.md) · [keyring vs OC-2275](project_sellsuki_keyring_vs_oc2275.md) — OC-2275 cluster
 - [= company not store](reference_oc2plus_company_not_store.md) — store_id=0 throughout
 - [Primary-invariant](project_oc2plus_primary_invariant_pattern.md) · [consent model](project_oc2plus_consent_enforcement_model.md) — patterns
