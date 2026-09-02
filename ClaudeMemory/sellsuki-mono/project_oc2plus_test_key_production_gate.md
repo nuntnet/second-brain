@@ -28,3 +28,14 @@ the gate they silently took the LINE path and still passed because the mock
 returned the same profile. Same shape as
 [[reference_testify_permissive_default_wins]]. Staging/development test mode is
 unchanged and still works.
+
+## ⚠️ SECRET_TESTER_KEY — คนละคีย์ ยังเปิดอยู่ (2026-08-29)
+
+`oc2plus-line-crm-service-3rdparty-api` ไม่ได้อ่าน `TEST_KEY` เลย (env ตาย) — มัน
+อ่าน **`SECRET_TESTER_KEY`** จาก secret ก้อนเดียวกัน ใช้ที่ `me.go:243` / `me.go:323`
+(`isValidTesting`) สลับ OTP repo เป็น `NewTestingLocal` ตอนเปลี่ยนเบอร์สมาชิก — mock
+นั้น `VerifyOTP` return nil เป็น default และผู้เรียกคุม refNo เองผ่าน header →
+**ข้าม OTP ได้ ถ้าถือ OAuth token ของสมาชิกอยู่แล้ว**. ยังไม่ได้ gate. ล้างค่าใน
+vault prod (ตั้งค่าว่าง อย่าลบ key — pod จะ CreateContainerConfigError เพราะ
+helm chart ไม่ใส่ optional:true) หรือทำ gate แบบ member-api. ผู้ใช้ล้าง `TEST_KEY`
+เป็นค่าว่างแล้ว แต่ `SECRET_TESTER_KEY` ยังไม่แตะ.
