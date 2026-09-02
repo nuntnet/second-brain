@@ -140,3 +140,4 @@
 - [AI-119 push deferred](project_ai119_push_deferred.md) — not the live inbox (that's AI-33 WebSocket, already working); iOS needs installed PWA
 - [AI-115 goal = backend only](project_ai115_conversation_goal_backend_only.md) — conversation-goal API มีครบ, frontend 0; คนละตัวกับ Playbook
 - [AI-146 onboarding wizard ยังไม่เริ่ม](project_ai146_onboarding_wizard_not_started.md) — plan §5.11 สั่งไว้ <30 นาที; ไม่มี setup checklist ในระบบ
+- [case_type ตั้งค่าไม่ได้](project_case_type_setting_has_no_home.md) — เก็บใน chat-core, repo อ่านอย่างเดียว, ไม่มี editor; AI-152 อ้าง CCS + ห้าม migration ซึ่ง git ค้านอยู่
