@@ -1,6 +1,6 @@
 ---
 name: project_case_type_setting_has_no_home
-description: case_type config is stored in chat-core with no write path and no editor; AI-152 assumes it lives in CCS config and forbids migrations, which git already contradicts
+description: RULED 2026-09-02 — one case_type per workspace, set at creation, immutable after; catalog lives in chat-core not CCS (undocumented deviation), so AI-152's AC is impossible
 metadata:
   type: project
 ---
@@ -51,3 +51,34 @@ card). A whole E12 chain rests on a setting nothing can write.
 adding that only a migration or direct SQL can change it today. Relates to
 [[project_ai146_onboarding_wizard_not_started]],
 [[reference_ccs_config_namespaces]] and [[reference_ai_board_stale_cards]].
+
+
+## เคาะแล้ว 2026-09-02 — 1 workspace = 1 case_type, ตั้งตอนสร้าง แก้ไม่ได้เลย
+
+The plan contradicted itself: §5.13.1 rule 4 constrains a **Case** ("1 case = 1
+case_type immutable") and `AllowedTypes` is a list of up to 50, while §5.11 says
+*"Workspace = app instance: company เดียวมี workspace ขาย + workspace HR ได้"*.
+**§5.11 wins.** A second template is a second workspace. There is **no editor** —
+the value is chosen at workspace creation and never again.
+
+The runtime already only supported that shape, which is what decided it:
+- `resolveInboundCase` opens every Case **without passing a case_type** → every
+  Case a customer starts gets `DefaultType`; **no classifier exists anywhere**
+- `checkpoint_playbooks` is keyed by `workspace_id` + unique `is_current` ⇒
+  **one playbook per workspace**
+- `checkpoint.Compute(playbook, facts, language)` **never receives the Case's
+  case_type** ⇒ a second allowed type is served by the first type's playbook,
+  silently (the mismatch AI-128 exists to catch)
+
+Landed: plan §5.13.1 now carries both the deviation note and this ruling
+(monorepo commit `226ed0d`); the misleading "future E8 admin editor" comment is
+gone (chat-core MR !52, merged `5c9a2866`).
+
+**Still open, needs a decision:** whether to narrow `AllowedTypes []string` to a
+single value (it belongs to AI-126, which is Done), and which feature keeps the
+word **"goal"** — AI-115's conversion target, the checkpoint position (i18n says
+*"the conversation-goal position"*), or AI-152's template component.
+
+**Still to build:** a template picker on the workspace creation form (it has only
+name + FB page id + token today) and a write path — `CaseRepository` still has no
+write method at all.
