@@ -43,4 +43,28 @@ rag-core's `resolve_kb_editor_scope` only checks employee + a GLOBAL group; it
 names AI-12 as the owner of real per-workspace entitlement. The BFF adds that
 on the console path only — direct rag-core callers are unchanged.
 
+## Status 2026-09-03 — 2 of the 3 are closed, the last hop is not
+
+Re-verified hop by hop, and the branch topology moved since the note above:
+
+- **this app** `createChatCoreKbEntryAdapter` merged (AI-96) — blocker 2 gone.
+- **chat-core** `route/kb_entry` + `repository/rag_core_client` (which calls
+  `GET/POST/PUT/DELETE {base}/v1/rag/knowledge/entries`) merged to its `main`
+  — blocker 3 gone, the BFF seam exists.
+- **rag-core** still NOT merged, and it is not one branch: `GET /entries` (the
+  admin listing) is on `feat/AI-43-service-actor` and
+  `feature/AI-46-retrieval-acl`, while `feature/AI-43-kb-editor` carries
+  POST/PUT/DELETE only. rag-core `main` has none of the four.
+
+So the KB tab is wired end to end and returns **5xx against a rag-core
+deployed from `main`**. Only rag-core merging AI-43 closes it.
+
+⚠️ rag-core is **Python**, not Go. A `git grep --include='*.go'` sweep for
+these routes returns empty, which reads exactly like "the endpoint does not
+exist". It was the first thing that misled me here.
+
+Two comments in the FE described this wrongly in opposite directions — main's
+said no listing endpoint exists at all, MR !24's said the blocker was the
+missing seam. Both closed; !30 states it per hop instead.
+
 Related: [[rag-core-visibility-tiers]], [[chatcore-is-the-admin-bff]]
