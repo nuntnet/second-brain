@@ -28,3 +28,26 @@ The customer-facing OC2Plus **member registration LIFF frontend** already exists
 **Audit conclusion (2026-06-26, OC-4200 chain):** line-crm group = exactly 2 backend + 2 frontend + 1 testing repo. Only **OC-4289 is misplaced** (built in backoffice-api, card says member-api). OC-4207 ✅, OC-4267 ✅ (both correctly in backoffice-api — admin/schema domain; OC-4267 owns `oc2plus_bola_bindings`), BOLA-264 ✅, OC-4245 ✅ (frontend-member). OC-4241/4242/4290 → backoffice-api + frontend-backoffice (admin); OC-4263/4291 → provider-mgmt-frontend + CCS. **member tables (`member`,`member_identity`) live in a SHARED DB** owned by external module `line-crm/backend/entity` v1.7.3 — both backoffice-api (raw SQL) and member-api (goqu) connect to the same `POSTGRES_CRM_DB_NAME`. The new tables OC-4289/4207 created (`member_bola_follower_link`,`member_line_snapshot`,`otp_sessions`) sit in that shared DB. **member-api existing `POST /v1/member` is LINE-coupled** (requires line_access_token → calls api.line.me for profile, keys identity on LINE user id, NO OTP, NO BOLA link) — 180° opposite to OC-4289's LINE-agnostic design. Recommended fix = move OC-4289 to member-api as a NEW endpoint `POST /v1/members` (LINE-agnostic) alongside existing `/v1/member` (don't break login); port OTP/SMS/bola-contact/link-table code + migrations from backoffice-api; binding_status (OC-4267, stays in backoffice-api) becomes a cross-service read.
 
 Mistake made 2026-06-26: I scaffolded a NEW repo `frontend/oc2plus-linecrm-frontend-liff` (React18/Vite/@line/liff, port 5183) + wired the monorepo (commit `bfb944d` on `feat/oc-4200-member-follower`) believing no customer frontend existed — because I only checked local submodules. The `-liff` GitLab project never existed (404). Corrected by discarding the scaffold + adding the real `-member` repo as submodule. See [[project_oc_bola_domain_boundary]].
+
+## node_modules: `bun install` works — the symlink hack is wrong (2026-09-03)
+
+The member frontend's `node_modules` was symlinked to
+`../oc2plus-linecrm-frontend-backoffice/node_modules`. That is broken: member
+imports the **unscoped** `sellsuki-components@^0.7.71` while backoffice uses the
+**scoped** `@sellsuki-org/sellsuki-components@^0.26`, and backoffice's tree also
+lacks `@sentry/vue` and others member needs. So the member UI never rendered in
+a browser through the symlink — `vite:import-analysis` fails on
+`import "sellsuki-components"` (then `@sentry/vue`, whack-a-mole).
+
+**Fix that works**: remove the symlink and run `bun install` in the member repo.
+`~/.npmrc` already maps `@sellsuki:registry=https://gitlab.sellsuki.com/api/v4/packages/npm/`
+with a token, and the unscoped `sellsuki-components@0.7.71` resolves from public
+npm — 681 packages in ~22s, clean. (The old "never npm install, E401" warning
+was npm-specific; `bun install` with the global .npmrc is fine.) After it, App.vue
+/ router / PointClaimNewView all transform 200 and the app boots.
+
+To point the dev UI at LOCAL member-api instead of dev-th: set
+`VITE_SERVICE_MEMBER_BASE_URL=` (empty) in `.env.development` and add a Vite
+`server.proxy` for `/v1` → `http://localhost:8102` (same-origin so the
+`oc2plus_crm_session` cookie is sent; member-api CORS is `*` which browsers
+reject with credentials). Both are local-only — do not commit.
