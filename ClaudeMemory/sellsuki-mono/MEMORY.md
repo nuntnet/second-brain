@@ -140,7 +140,8 @@
 - [AI-119 push deferred](project_ai119_push_deferred.md) — not the live inbox (that's AI-33 WebSocket, already working); iOS needs installed PWA
 - [AI-115 goal = backend only](project_ai115_conversation_goal_backend_only.md) — conversation-goal API มีครบ, frontend 0; คนละตัวกับ Playbook
 - [AI-146 onboarding wizard ยังไม่เริ่ม](project_ai146_onboarding_wizard_not_started.md) — plan §5.11 สั่งไว้ <30 นาที; ไม่มี setup checklist ในระบบ
-- [case_type ตั้งค่าไม่ได้](project_case_type_setting_has_no_home.md) — เก็บใน chat-core, repo อ่านอย่างเดียว, ไม่มี editor; AI-152 อ้าง CCS + ห้าม migration ซึ่ง git ค้านอยู่
+- [case_type write path มีแล้ว](project_case_type_setting_has_no_home.md) — AI-203 ปิดแล้ว (1:N:N, append-only); CCS half ของ AI-152 ยังทำไม่ได้
+- [zero-value UseCase panic](reference_chatcore_zero_value_usecase_panics.md) — route test ที่ใช้ &UseCase{} SIGSEGV ถ้า use case เปิด span
 - [OC-4415 base rate state](project_oc4415_base_rate_state.md) — config CRUD merged main+develop; system campaign NOT seeded, entity NOT bumped; not closed per AC
 - [Grep origin not stale branch](reference_grep_stale_branch_not_origin.md) — a feature branch predates later merges; grep origin/develop explicitly, not the working tree
 - [Prod v2 apikey unverified](project_oc2plus_prod_v2_apikey_unverified.md) — OC-4425: prod /v2/openapi has no key verification; oathkeeper rule is dev-only

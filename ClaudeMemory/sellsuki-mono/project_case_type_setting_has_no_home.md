@@ -1,11 +1,15 @@
 ---
 name: project_case_type_setting_has_no_home
-description: RULED 2026-09-02 — one case_type per workspace, set at creation, immutable after; catalog lives in chat-core not CCS (undocumented deviation), so AI-152's AC is impossible
+description: SUPERSEDED 2026-09-03 — the catalog now HAS a write path (AI-203) and the ruling is 1:N:N, not one type per workspace; the CCS half of AI-152's AC is still impossible
 metadata:
   type: project
 ---
 
-There is **no way to change a workspace's `case_type` catalog** in the running
+> ⚠️ **Read the update at the bottom first.** The body below described the
+> state up to 2026-09-02 and two of its central claims are now false: the
+> catalog has a write path, and a workspace may hold MANY case types.
+
+There *was* no way to change a workspace's `case_type` catalog in the running
 product, and the card that depends on doing so assumes a storage location that
 does not exist.
 
@@ -82,3 +86,52 @@ word **"goal"** — AI-115's conversion target, the checkpoint position (i18n sa
 **Still to build:** a template picker on the workspace creation form (it has only
 name + FB page id + token today) and a write path — `CaseRepository` still has no
 write method at all.
+
+---
+
+## Update 2026-09-03 — AI-203 shipped, two claims above are now false
+
+**1. The catalog has a write path.** chat-core `!57` added
+`GET`/`PUT /v1/workspaces/{id}/case-type-config` (read = operator, write =
+company_admin), `PutCaseTypeConfig` + `CountCasesByCaseType` on
+`CaseRepository`, and FE `!31` added the console: Settings › Case types, a
+Solution Template picker at workspace creation, and a read-only row on the
+setup checklist. So "no use case, no route, no OpenAPI path, no frontend" is
+all obsolete, and AI-146's wizard now has something to call.
+
+**2. The ruling is 1 workspace : N case_type : N playbook**, not one type per
+workspace. The earlier ruling was replaced on 2026-09-02 and the runtime
+objection it rested on is gone — `checkpoint_playbooks` (`!53`) and
+`lead_workflow_configs` (`!56`) are both keyed by `(workspace_id, case_type)`.
+`AllowedTypes` being a slice is the design, not a field that can hold a
+forbidden state.
+
+The three rules "immutable" was conflating:
+
+| | rule |
+|---|---|
+| `Case.case_type` | never changes for the life of a Case |
+| `AllowedTypes` | append-only — removal refused with `allowed_type_removed`, naming the values kept |
+| `DefaultType` | freely changed, affects only Cases opened later |
+
+**What is STILL true:** the catalog lives in chat-core's own Postgres, not
+CCS, because chat-core has no CCS client at all. So AI-152's "อยู่ใน AI-19 /
+CCS config" half remains impossible — only its "no migration" half is now
+satisfiable.
+
+### Two traps worth keeping
+
+**`allowed_types` is ONE comma-separated text column.** A value containing a
+comma splits into two on the next read. Unreachable until AI-203, because every
+value had arrived by migration; the write path is the first thing that lets a
+request choose the string. Guarded by `ValidateCaseTypeValue`
+(`^[a-z][a-z0-9_]{0,62}$`), applied to ADDED values only — checking the whole
+list would let one legacy value lock a workspace out of appending anything.
+
+**Every workspace permanently allows `sales_lead`.** chat-core seeds the
+catalog on first read and append-only means the seed cannot come off, so a
+workspace created with a different template ends up allowing both. Inert under
+1:N:N; the real fix is for creation itself to seed the chosen value. Raised on
+AI-203 as a decision, not fixed.
+
+Related: [[chatcore-zero-value-usecase-panics]]
