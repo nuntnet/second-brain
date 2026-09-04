@@ -42,6 +42,7 @@
 
 ## Jira
 - [BOLA Jira](reference_bola_jira_project.md) · [OC2Plus Jira](reference_oc2plus_jira_project.md) · [Patona Jira](reference_pat_jira_project.md) — BOLA id 10126 · OC id 10001 · PAT board 71
+- [Jira MCP crosses responses between sessions](reference_jira_mcp_crosses_responses_between_sessions.md) — got another session's transitionJiraIssue result for my createJiraIssue; verify writes with a query, never the response
 - [Jira MCP quirks](reference_jira_mcp_search_quirks.md) · [editIssue ADF break](reference_jira_editissue_adf_breakage.md) · [Sprint ids global](reference_jira_sprint_ids_not_contiguous.md) — no parallel calls; markdown breaks ADF; wrong sprint id files silently
 - [PAT sprint truth](reference_pat_board_sprints.md) · [PAT epic links unwired](project_pat_epic_links_unwired.md) — customfield_10020; grouped by label
 
@@ -131,7 +132,7 @@
 - [rag-core dual embedding](project_ragcore_dual_embedding_paths.md) · [visibility tiers](reference_rag_core_visibility_tiers.md) · [KB 3 blockers](reference_kb_entries_three_blockers.md) — rag-core facts
 - [Conversation Intelligence](project_ai_conversation_intelligence.md) — Case/Checkpoint/Memory-lanes
 - [Gap sweep 2026-08](project_ai_backlog_gap_sweep_202608.md) — E12 ปิดครบ; AI-150 ติด decision
-- [PAT-2658 number collision](project_pat2658_reference_collision.md) — usage-trigger work filed under an unrelated OMS card; unresolved, user decides
+- [PAT-2658 number collision](project_pat2658_reference_collision.md) — = PAT-2689 (resolved); wrong number permanent in commits + 8 source comments
 - [SLA ladder state](project_sla_ladder_engine_state.md) — MR order ai-agent !4 → chat-core !18 → FE !4
 - [Flag without enforcement](reference_flag_without_enforcement.md) — ~40 routes unguarded
 - [Admin port↔backend map](project_ai_admin_port_backend_map.md) · [Backend w/o FE invisible](reference_backend_without_frontend_is_invisible.md) — blocker is a seam; GAP markers one-directional

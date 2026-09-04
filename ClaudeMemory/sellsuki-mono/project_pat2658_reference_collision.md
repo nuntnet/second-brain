@@ -1,6 +1,6 @@
 ---
 name: project_pat2658_reference_collision
-description: "The QMS usage-trigger persistence work was filed under PAT-2658, which is actually an unrelated OMS 2.0 schema card — wrong number is now in merged commits, MR !16's title and Jira comments on AI-90/AI-196; unresolved"
+description: "The QMS usage-trigger persistence work was filed under PAT-2658, an unrelated OMS 2.0 card. RESOLVED 2026-09-04: real card is PAT-2689; wrong number remains permanently in merged commits and in 8 source comments on main"
 metadata:
   node_type: memory
   type: project
@@ -28,10 +28,23 @@ The neighbouring numbers ARE correct and should not be touched: **PAT-2657** =
 billing period on `GetCurrentPlanResponse` + renewal CronJob; **PAT-2526** =
 metering hooks (idempotent, overage-aware). Both Ready To Test.
 
-**Still unresolved** — the user was asked whether to open a correctly numbered
-card and post correction comments, and has not answered. Do not renumber
-unilaterally: the board is theirs
-([[feedback-report-wrong-cards-dont-edit]]).
+**Resolved 2026-09-04.** The real card is **PAT-2689** — "[Quota][BE] Trigger
+payload + idempotency_key อ่านกลับได้บน Transaction และ plan_revision บน
+GetCurrentPlan". Correction comments posted on PAT-2689, PAT-2658, AI-196 and
+AI-90.
+
+Still outstanding, tracked as PAT-2689 AC5: **8 source files on QMS `main`
+carry `PAT-2658` in comments** — `flow_context/transaction.go:43`,
+`assign_plan_service.proto:190,299` (and the generated `.pb.go` mirroring
+them), `dto_context.go:39`, `server.go:171`,
+`transaction_repository/postgres_gorm_model.go:62`,
+`internal_assign_plan.go:174`, `internal_usage_idempotency_test.go:258`.
+Fix the `.proto` and regenerate; do not hand-edit `.pb.go`.
+
+Also worth knowing for anyone tracing this: `b25ba92`/`58152e1` never merged
+to `main` directly — they went into `feat/PAT-2526-usage-idempotency` (MR !16,
+`17e6150`) and rode that branch up at `c23a9f9`. Searching the MR list finds a
+different path than `git log main --grep`.
 
 The general lesson, which is why this is written down: **check a Jira key exists
 and matches before putting it in a branch name or commit message.** A wrong key
