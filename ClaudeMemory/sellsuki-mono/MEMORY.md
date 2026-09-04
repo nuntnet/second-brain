@@ -50,6 +50,9 @@
 - [Submodules shallow](reference_submodules_are_shallow_clones.md) · [git @{u} false zero](reference_git_upstream_false_zero.md) — unshallow first; compare origin/<b>..HEAD
 - [.bak restore drops comments](reference_bak_restore_drops_comments.md) — check diff for deletions
 - [GitLab Go module CI](reference_gitlab_private_go_module_ci.md) · [Review-bot targets](reference_gitlab_review_bot_targets.md) · [Dead 'staging' runner](reference_dead_staging_runner_tag.md) · [glab ci stale](reference_glab_ci_status_stale_pipeline.md) — CI traps
+- [GitLab rules de-scope jobs](reference_gitlab_rules_silently_descope_jobs.md) — 1 MR-scoped job drops rules-less jobs from the MR pipeline; no $CI_COMMIT_TAG = tag pipeline has 0 jobs
+- [Library skips SRE template = skips its scans](reference_shared_library_skips_sre_template.md) — kit carried 19 reachable CVEs, green forever; gosec still missing
+- [worktree remove rewinds main checkout](reference_worktree_remove_rewinds_main_checkout.md) — stale files vs new HEAD; check `git diff --cached` before committing
 - [Coverage gate on DB-less job](reference_coverage_gate_on_dbless_job.md) — E2E_TEST_SCRIPT ไม่มี DB → 46.5 ปลอม; ยังค้างใน space-go + ai-agent
 
 ## Test gotchas
@@ -128,6 +131,7 @@
 - [rag-core dual embedding](project_ragcore_dual_embedding_paths.md) · [visibility tiers](reference_rag_core_visibility_tiers.md) · [KB 3 blockers](reference_kb_entries_three_blockers.md) — rag-core facts
 - [Conversation Intelligence](project_ai_conversation_intelligence.md) — Case/Checkpoint/Memory-lanes
 - [Gap sweep 2026-08](project_ai_backlog_gap_sweep_202608.md) — E12 ปิดครบ; AI-150 ติด decision
+- [PAT-2658 number collision](project_pat2658_reference_collision.md) — usage-trigger work filed under an unrelated OMS card; unresolved, user decides
 - [SLA ladder state](project_sla_ladder_engine_state.md) — MR order ai-agent !4 → chat-core !18 → FE !4
 - [Flag without enforcement](reference_flag_without_enforcement.md) — ~40 routes unguarded
 - [Admin port↔backend map](project_ai_admin_port_backend_map.md) · [Backend w/o FE invisible](reference_backend_without_frontend_is_invisible.md) — blocker is a seam; GAP markers one-directional
