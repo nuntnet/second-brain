@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: 80b5b310-7a4e-49dc-8932-34d4eb091c9a
-  modified: 2026-08-12T18:47:59.247Z
+  modified: 2026-09-06T17:05:42.518Z
 ---
 
 การแก้ Jira card ผ่าน `editJiraIssue` (Jira MCP) ด้วย markdown → มี **markdown↔ADF round-trip breakage** ที่รู้จากการ rename VOID→COMPENSATING (11 cards):
@@ -37,5 +37,7 @@ metadata:
 **🔴 ห้ามส่งข้อความไทยเป็น `\uXXXX` escape ใน payload ของ editJiraIssue (ยืนยัน 2026-08-13 — เจอ 4 agent ใน session เดียว):** escape ผิดตัวเดียวได้คำเพี้ยนที่อ่านผ่านตาไม่เห็น — พบจริง: `กฎ`→`กฏ`, `เกณฑ์`→`เกณฏ์`, `บริโภค`→`บริโกค`, `การคำนวณ`→`การคำนวຓ` (อักษรลาว!), `เรื่องหนึ่ง`→`เรื่อหนึ่ง`, `หนึ่ง`→`หนี่ง` · สระ/วรรณยุกต์หายแบบเงียบและ Jira ไม่ error ⇒ **เขียนไทยตรง ๆ ใน payload** และถ้าจำเป็นต้อง escape ต้อง re-fetch มาอ่านคำที่แก้ทีละคำ
 
 **🔴 response ตอบกลับเป็นการ์ดคนละใบ (2026-08-12):** `editJiraIssue` ของ AI-45 คืน payload ของ AI-133 · `createIssueLink` เคยคืน getJiraIssue ของ BOLA-313 ที่ไม่เกี่ยวเลย — **ของถูกเขียนถูกใบ** เป็น response mix-up ⇒ ยิ่งตอกย้ำว่าต้อง re-fetch ใบที่ตั้งใจแก้แยกเสมอ
+
+**🟢 วิธีที่ใช้ได้จริงสำหรับ full rewrite (ยืนยัน 2026-09-06 — เขียน OC-4477/78/79 เป็น full DoR):** `editJiraIssue` ด้วย **`fields: {description: "...markdown..."}` + `contentFormat: "markdown"`** → render ครบทุก table/heading/bold/enum ไม่พัง (ต่างจาก createJiraIssue markdown ที่พัง `\n`). เขียนไทยตรงๆ ใน fields.description ได้ (ไม่ต้อง \uXXXX). editJiraIssue tool signature จริง = required `fields` (object keyed by field name) ไม่ใช่ top-level `description` param — ส่ง `description` เดี่ยวๆ = "Required at fields". นี่คือวิธี set description ยาวที่เชื่อได้สุดตอนนี้.
 
 **Best practice:** (0) **re-fetch verify เสมอ** ไม่ใช่แค่ตอนมีรูป — content loss แบบเงียบมีจริง (ดูข้อบน). (1) การ์ดที่มีรูปฝัง/smartlink — เลี่ยง full rewrite ผ่าน markdown; แก้ target เฉพาะจุด หรือใช้ ADF format. (2) หลัง rewrite ทุกครั้ง **ตรวจ format** โดยเฉพาะใบที่มี media/smartlink. (3) re-edit ผ่าน markdown ซ้ำ = เสี่ยงเกิด escape ซ้ำ. (4) เนื้อหายาว/หลาย section → อย่าใช้ createJiraIssue markdown ตรงๆ ใช้ editJiraIssue set description. ใช้ประกอบ [[project_sukipay_void_rename]].
