@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: b7f8ac01-fa37-4ae8-9246-e1a4f66c3859
-  modified: 2026-09-07T13:58:58.658Z
+  modified: 2026-09-07T15:03:26.853Z
 ---
 
 **The approve→award foundation for OC-4362 EXISTS but is unmerged.** As of
@@ -92,6 +92,29 @@ paddle/gemini). Monorepo submodule refs NOT bumped (stacked on unmerged branches
   index already prevents a second claim per order_ref, so the registry violation is a
   defensive/cross-transport guard (POS/Kafka future) — its concrete value now is making the
   table live + the result snapshot.
+
+**Phase-3 review gates RUN + findings FIXED (2026-09-07):** ran /code-review + /security-review
+(all 4 repos) + /design-review + /accessibility-review (2 FEs) via 6 opus subagents. NO 🔴 correctness/
+tenant/keto blockers anywhere. Fixed + pushed:
+- **member-api `4618e38`** (MR !98): 🔒 OTPLogin didn't consume the OTP → one code minted unlimited
+  sessions for 5 min (test-mode = trivial replay). Now consumes after member-resolve: MarkUsedAtomically
+  (GETDEL, concurrent gate) + persist UsedAt (checkOtpSessionState blocks sequential/test-mode replay).
+  +replay-blocked test. Also fixed stale integration_id comment.
+- **backoffice FE `37c2aed`** (MR !572): 🔴 date input no label → id+aria-label; 🔴 OCR checkbox no
+  accessible name → aria-label on the NATIVE input (ssk-checkbox renders its input in shadow DOM with a
+  broken internal `<label for>` and NO aria-name hook — host aria-label can't cross the boundary, so
+  native+aria-label is the accessible choice, documented inline); role=alert on mismatch/errors + sr-only
+  live mirror for ssk-input's shadow error; money right-aligned; visible focus ring.
+- **member FE `e334429`** (MR !35): OTP autofill (`autocomplete=one-time-code`)+paste-distribute (was
+  truncated to box 1); resend failure now surfaced on OTP screen + cooldown reverted; phone/OTP labels +
+  role=group + aria-live error regions; DUPLICATE_IMAGE error cleared on photo re-pick.
+- **backoffice-api `aae4ad7`** (gated branch): approve audit EntityRefs gains `ocr_mismatch_acknowledged`
+  when admin overrides the §A gate (fraud trail).
+Flagged as backlog (NOT fixed — DS-level / systemic / pre-existing): ssk-modal no role=dialog/aria-modal,
+ssk-input no aria-invalid/describedby, hardcoded-px matches sibling convention, `.badge`/`.toast`/`.btn`
+DaisyUI bare-class collisions in touched views, login has no audit trail (matches LineLogin), submit
+rate-limit TOCTOU, award_dedup registry skipped at 0 points, VLM PII is prompt-only (iApp/paddle drop it
+structurally).
 
 **OCR full-pipeline proof CLOSED end-to-end with REAL Gemini (2026-09-07):**
 submit (member-api 201) → OCR worker (backoffice-api) → native Gemini → `read_items`
