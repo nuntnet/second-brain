@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: b7f8ac01-fa37-4ae8-9246-e1a4f66c3859
-  modified: 2026-09-07T07:28:10.187Z
+  modified: 2026-09-07T11:50:48.481Z
 ---
 
 **The approve→award foundation for OC-4362 EXISTS but is unmerged.** As of
@@ -115,8 +115,30 @@ while the local stack runs under overmind/air **crashed the whole OC2Plus overmi
 `.overmind.sock`). Ports don't auto-recover. Don't run 2+ build-heavy agents concurrently against
 a live local stack — serialize them, or expect to restart the stack. See [[project_overmind_restart_quirk]].
 
+**Per-brand epic completion — planned as 4 NEW cards under OC-2743 (2026-09-07):**
+- **OC-4480** [Spike] lock 5 decisions (brand-source, match method+threshold, customer amount field,
+  OCR reliability bar, award engine) — blocks the other 3.
+- **OC-4481** auto-match OCR items ↔ PIS/resolved_skus + pre-tick in review (piece 3) — blocked by
+  OC-4480 + OC-4421; depends on OC-4464 §B (done).
+- **OC-4482** member submit: derive/optional purchase_amount for per-brand campaigns.
+- **OC-4483** customer claim result: per-item earned/not-earned breakdown.
+Dependencies are in each card's description (tables); formal issue-links NOT yet created.
+
+**⚠️ OCR real-image proof BLOCKED on provider creds:** backoffice-api `.env` has
+`RECEIPT_OCR_VLM_BASE_URL=https://openrouter.ai/api/v1` but the key `AQ.Ab8RN…` is NOT an
+OpenRouter key (`sk-or-`) → 401 → OCR job PROVIDER_ERROR. The vlm.go code is correct (fetched image,
+asked for items, reached the provider). Fix = user edits .env (native-Gemini base URL to match the
+Google-looking key, OR a real sk-or- key) + restart backoffice-api; then resubmit
+`real-receipt-items.jpg` (in scratchpad, 5 lines incl 2 โฟร์โมสต์). Provider=vlm, worker ticks ~30s,
+5/member/24h submit cap (DB CountByMemberSince — age claims to reset).
+
+**Services I hand-started (outside overmind, user's root overmind session died):** backoffice-api
+:8089 (air), backoffice FE :5176 (bun), consent :8096 (air), member-api :8102 (air). rps :9998 /
+keto :4466 / mongo / kafka / redis survived. To restore normal setup: kill these + `make stop` then
+`make dev`. See [[project_overmind_restart_quirk]].
+
 Remaining OC-2743 loyalty concerns:
-per-brand **auto-matching** receipt items ↔ PIS/`resolved_skus` (OC-4413 piece 3) + the full
+per-brand **auto-matching** receipt items ↔ PIS/`resolved_skus` (OC-4481, carded) + the full
 campaign award engine (not base-rate) — the big automation. See
 [[project_oc4362_claim_cluster_gaps]] [[project_loyalty_point_cluster]]
 [[reference_daisyui_progress_class_collision]].
