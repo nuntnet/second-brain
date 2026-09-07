@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: b7f8ac01-fa37-4ae8-9246-e1a4f66c3859
-  modified: 2026-09-07T11:50:48.481Z
+  modified: 2026-09-07T13:58:58.658Z
 ---
 
 **The approve→award foundation for OC-4362 EXISTS but is unmerged.** As of
@@ -92,6 +92,39 @@ paddle/gemini). Monorepo submodule refs NOT bumped (stacked on unmerged branches
   index already prevents a second claim per order_ref, so the registry violation is a
   defensive/cross-transport guard (POS/Kafka future) — its concrete value now is making the
   table live + the result snapshot.
+
+**OCR full-pipeline proof CLOSED end-to-end with REAL Gemini (2026-09-07):**
+submit (member-api 201) → OCR worker (backoffice-api) → native Gemini → `read_items`
+populated. Claim `766a9b29` came back `job_status=partial`, `read_items`=5 lines
+(2× นมโฟร์โมสต์ ฿15, ขนมปัง ฿22, โค้ก ฿35, มาม่า ฿7), `read_source_reference=RCPT-2026-778899`,
+`read_purchase_amount=123.00`. Status is **partial (not succeeded) because §A receipt-number
+cross-check FIRED live** — member typed `RCPT-FULLPIPE-02`, OCR read `RCPT-2026-778899` off the
+image → mismatch. That is the gate working, a bonus proof, not a defect.
+
+TWO REAL BUGS fixed in `receipt_ocr_repository/vlm.go` (commit **`24ca497`** on branch
+`feat/oc-4362-admin-edit-claim`, tests green, monorepo ref NOT bumped — stacked on unmerged):
+1. **MaxTokens:500 truncated thinking-model output** (the actual PROVIDER_ERROR).
+   gemini-2.5-flash is a *reasoning* VLM: hidden reasoning tokens count against `max_tokens`.
+   At 500 a real read spent ~476 tokens thinking → `finish_reason:"length"` → JSON cut at
+   `{"source_reference":"RCPT-2026-778899` → `extractJSONObject` fails → `unparsable_extraction`
+   → surfaced to admin as spurious PROVIDER_ERROR. Raised to **2048** → `finish_reason:"stop"`,
+   full JSON. A non-thinking model is unaffected. THIS is why direct curl "worked" earlier: my
+   ad-hoc curl used a short prompt/high budget; the worker's real 500 budget was the difference.
+2. **vlm borrowed iApp's 20s `requestTimeout`** — added its own `vlmRequestTimeout=45s`
+   (a thinking VLM's latency is higher+variable, measured 9–15s; 20s caused spurious
+   PROVIDER_TIMEOUT + retry churn).
+
+⚠️ **RE-TESTING GOTCHA:** to re-run OCR on a claim you must reset `attempt_count=0` too, not just
+`job_status='pending'`+`error_code=NULL`. `ListPendingJobs` filters `attempt_count < maxAutomaticAttempts`
+(=3, migration 006 CHECK). After 3 retries the row stays `pending` forever but is never selected
+(looks stuck; worker silent because `ProcessPointClaimOCR` only logs on error).
+
+⚠️ **ENV GOTCHA (hand-started services):** backoffice-api main.go has **no godotenv** — it reads
+config from the *process* environment. air rebuilds the binary on file change but the child inherits
+the air *parent's* env, fixed at launch. A `nohup air` started without `set -a; . ./.env` runs OCR on
+`envDefault` (openrouter base + empty key), so provider is misconfigured with NO error until a job
+runs. Fix = restart air with `.env` sourced; confirm boot line `Receipt OCR enabled provider=vlm`.
+Verified via `ps eww <pid> | grep RECEIPT_OCR` (0 matches = stale env).
 
 **OC-4464 §B OCR line-items (capture + admin-visual pick) — DONE + committed, LIVE VERIFY PENDING (2026-09-07):**
 - member-api migration `712285d`: `point_claim_ocr_result.read_items jsonb` (011, APPLIED locally).
