@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: b7f8ac01-fa37-4ae8-9246-e1a4f66c3859
-  modified: 2026-09-07T01:41:22.554Z
+  modified: 2026-09-07T02:25:49.581Z
 ---
 
 **OC-4348** = "[Customer App] Web/Desktop login (non-LIFF, OTP) — MVP". The
@@ -41,8 +41,26 @@ customer-facing 401-after-OTP bug traces here: member-api today mints an
 2. **Resolve company from member row** (not add company_id column): guard becomes
    `GetByID(sess.MemberID).CompanyID`. Safe because LineLogin resolves member via
    `GetByIdentAndCompany(inte.CompanyID,…)` ⇒ `member.CompanyID == inte.CompanyID`.
-   Web-OTP session stores `integration_id = ""` (empty string satisfies NOT NULL varchar,
-   guard ignores it now). No migration.
+
+**⚠️ SCHEMA REALITY (verified 2026-09-07, corrects earlier wrong assumption):**
+`session.integration_id` is **`uuid NOT NULL` with FK → integration(integration_id)**
+(FK is `NOT VALID` but still enforces new inserts) — NOT a plain string. So storing
+`""` is a SQL error (`invalid input syntax for type uuid`) → the OTPLogin path 500'd.
+The "no migration" hope was wrong. Fix that shipped: **migration 009 `ALTER TABLE
+session ALTER COLUMN integration_id DROP NOT NULL`** + repo stores `NULL` for web-OTP
+sessions (`postgresSession.IntegrationID` is now `sql.NullString`; `""`→NULL insert,
+NULL→"" on scan). `GetActiveSessionByToken` uses `session AS i` (self-alias, NOT a
+join to integration) so NULL doesn't drop the row. Migrations run by hand on local
+(docker `sellsuki_mono-postgres-1`, db `oc2plus_crm`) — see
+[[project_oc2275_crm_migrations_run_by_hand]] [[reference_oc2plus_schema_lives_in_external_repo]].
+
+**Verified end-to-end 2026-09-07:** slug `localtest`→company `1111…`; seeded member
+phones `0895556666`/`0818800346`; OTP test-mode via `X-Test-Secret` (member FE vite
+proxy injects `local-dev-test-key`, OTP=`000000`). HTTP: login 204+cookie →
+`/me/point-claims` 200 (was 401). Browser `/localtest/login` → phone→OTP→redirect
+`/localtest/point-claims`. OTP error contract: BE emits lower-case `otp_invalid`/
+`otp_expired`(now distinct)/`otp_locked`/`otp_rate_limited`/`validation_failed`; register
+flow deliberately folds wrong+expired — login distinguishes them.
 3. Contract: **reuse** `POST /v1/company/{slug}/members/otp` for OTP request; **new**
    `POST /v1/company/{slug}/auth/login` `{phone,otp_code}` → 204+cookie. Errors
    404 MEMBER_NOT_FOUND / 400 INVALID_OTP / 400 OTP_EXPIRED / 429 OTP_RATE_LIMITED.
