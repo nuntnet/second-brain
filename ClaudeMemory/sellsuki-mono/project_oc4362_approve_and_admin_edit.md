@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: b7f8ac01-fa37-4ae8-9246-e1a4f66c3859
-  modified: 2026-09-07T15:03:26.853Z
+  modified: 2026-09-07T16:01:13.561Z
 ---
 
 **The approve→award foundation for OC-4362 EXISTS but is unmerged.** As of
@@ -92,6 +92,29 @@ paddle/gemini). Monorepo submodule refs NOT bumped (stacked on unmerged branches
   index already prevents a second claim per order_ref, so the registry violation is a
   defensive/cross-transport guard (POS/Kafka future) — its concrete value now is making the
   table live + the result snapshot.
+
+**UX/UI pass (B1/B2/B3) SHIPPED 2026-09-07 — all pushed, all MRs → develop:**
+- **B1 member FE `9d0c5c8`** (MR !35): company logo+name header on all 3 claim screens, purpose strip
+  (why here / what you get — mechanism only, member-api has NO earn-rate/points-preview endpoint),
+  status meaning lines, rejected→resubmit CTA, empty-state CTA; brand theme via existing
+  `useThemeStore` `--c-primary/--c-font` vars; fixed 4 more DaisyUI bare-class collisions
+  (`.badge/.toast/.label/.btn` → prefixed/pinned). Rejected-row branch verified via DOM clone only.
+- **B2 backoffice FE `2e90fe5`** (MR !572): OCR status panel (STATUS/WHY/WHAT-TO-DO) in new pure
+  `src/entities/point-claim-ocr-status.ts` — prefers `failure_reason`, falls back to `error_code`
+  substring match; bad_image → reject CTA + NO retry; provider_unavailable → ลองอ่านใหม่ (409/429 inline);
+  misconfigured → แจ้งผู้ดูแล, no retry. Scan-first layout (photo | 4-col comparison `<table>`, renders
+  with no OCR result). Real cursor pagination (stores cursor-that-produced-page-i → Previous works),
+  20/page, total only on pending. Fixed latent v-else-if bug hiding the read table + DS slot
+  `suffix`→`postfix`. 42 i18n keys.
+- **B3 backoffice-api `baa3104`** (gated branch) + **member-api migration 012 `cbef55e`** (MR !98):
+  `failure_reason` enum `bad_image|provider_unavailable|misconfigured|unknown` — sentinels
+  `ErrOCRBadInput`/`ErrOCRMisconfigured` multi-%w-wrapped with `ErrOCRPermanent` in `classifyStatus`;
+  pure `ocrFailureReason(code,cause)` (table-tested); stored on the row at fail time (provider status
+  not kept), cleared on every re-queue; exposed as optional enum on ocr-result (omitted when absent).
+  **LIVE-PROVEN:** re-ran the 1×1-PNG claim `0747d2b4` → `failed|PROVIDER_ERROR|bad_image`, API returns
+  `"failure_reason":"bad_image"`. `nullableString` in this repo takes `*string` (compile trap).
+- Local config files (`.env.development`, `vite.config.ts`, `bun.lock`, `.bak`) deliberately NOT
+  committed in either FE — they carry local caddy/port overrides.
 
 **Phase-3 review gates RUN + findings FIXED (2026-09-07):** ran /code-review + /security-review
 (all 4 repos) + /design-review + /accessibility-review (2 FEs) via 6 opus subagents. NO 🔴 correctness/
