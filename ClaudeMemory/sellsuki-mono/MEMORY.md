@@ -105,6 +105,8 @@
 - [Schema external](reference_oc2plus_schema_lives_in_external_repo.md) — DDL → member-api/migrations
 - [OC-4362 claim cluster](project_oc4362_claim_cluster_gaps.md) · [OC-4464 OCR vendor](project_oc4464_ocr_vendor_decision.md) — Sprint 128; iApp, พ.ศ. trap
 - [Customer App program](project_customer_app_program.md) · [auth plan](project_oc2plus_customer_app_auth_plan.md) — 5 epics; OC-4344 self-build
+- [OC-4348 web-OTP session minter](project_oc4348_web_otp_session_minter.md) — 401-after-OTP root cause; company-from-member decision; front-runs OC-4345 spike
+- [backoffice/member codegen is Go](reference_oc2plus_backoffice_codegen_is_go.md) — edit v1.yaml → go run generate_fiber_interface; NOT TypeSpec/blocked
 - [Invite→app chain](project_invite_multiapp_chain.md) — PAT-2553 return_to
 - [Loyalty point cluster](project_loyalty_point_cluster.md) · [contract sheet](project_loyalty_canonical_contract.md) — OC-4413 = SoT
 
