@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: b7f8ac01-fa37-4ae8-9246-e1a4f66c3859
-  modified: 2026-09-07T06:52:11.013Z
+  modified: 2026-09-07T07:28:10.187Z
 ---
 
 **The approve→award foundation for OC-4362 EXISTS but is unmerged.** As of
@@ -93,8 +93,30 @@ paddle/gemini). Monorepo submodule refs NOT bumped (stacked on unmerged branches
   defensive/cross-transport guard (POS/Kafka future) — its concrete value now is making the
   table live + the result snapshot.
 
-Remaining OC-2743 loyalty concerns (scope-extension comments posted on the cards):
-OCR **capture items[]** (OC-4464 §B), per-brand matching (OC-4413) — the big per-brand
-automation. See
+**OC-4464 §B OCR line-items (capture + admin-visual pick) — DONE + committed, LIVE VERIFY PENDING (2026-09-07):**
+- member-api migration `712285d`: `point_claim_ocr_result.read_items jsonb` (011, APPLIED locally).
+- backoffice-api `c1f301a` (branch feat/oc-4362-admin-edit-claim): `PointClaimOCRLineItem`
+  {Name,UnitPrice,Quantity,LineAmount} on the OCR read model; iApp maps
+  `processed.items[].{itemName,itemUnitCost}` (VLM/paddle best-effort); persisted+scanned;
+  ocr-result response carries `items`. **Privacy: issuer name/tax id still NOT captured**,
+  only item name+price (iApp leak test updated). 1309 tests pass.
+- backoffice FE `d2c4f18` (branch feat/oc4362-approve-button): OCR column shows the items
+  table; pending-claim checkboxes → selected-sum (exact BigInt decimal math) → button
+  "ตั้งเป็นยอดซื้อ" sets the §B edit amount (no auto-save). 43/43 tests.
+- **per-brand = admin picks the brand's items by eye (PIS auto-match is the LATER piece 3).**
+- ⚠️ **Live browser proof NOT done** — the local OC2Plus stack (:8102/:8089/:5176/:5183) CRASHED
+  mid-verify. Seeded OCR items on claim `LOCAL-NOLINE-1788691244` (bc254b1b): 2 โฟร์โมสต์
+  ฿15+฿15 + 2 others, ready to test once the stack is back.
+
+⚠️ **OPERATIONAL LESSON (2026-09-07):** dispatching **two heavy `developer` agents in parallel**
+(each running `go build ./...` + `go run generate_fiber_interface` codegen + `vitest run`)
+while the local stack runs under overmind/air **crashed the whole OC2Plus overmind session**
+(member-api/backoffice-api/both frontends went down together; postgres/redis survived; no root
+`.overmind.sock`). Ports don't auto-recover. Don't run 2+ build-heavy agents concurrently against
+a live local stack — serialize them, or expect to restart the stack. See [[project_overmind_restart_quirk]].
+
+Remaining OC-2743 loyalty concerns:
+per-brand **auto-matching** receipt items ↔ PIS/`resolved_skus` (OC-4413 piece 3) + the full
+campaign award engine (not base-rate) — the big automation. See
 [[project_oc4362_claim_cluster_gaps]] [[project_loyalty_point_cluster]]
 [[reference_daisyui_progress_class_collision]].
