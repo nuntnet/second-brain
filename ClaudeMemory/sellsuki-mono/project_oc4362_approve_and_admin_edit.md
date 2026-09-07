@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: b7f8ac01-fa37-4ae8-9246-e1a4f66c3859
-  modified: 2026-09-07T04:51:34.203Z
+  modified: 2026-09-07T05:39:30.444Z
 ---
 
 **The approve→award foundation for OC-4362 EXISTS but is unmerged.** As of
@@ -42,8 +42,26 @@ submodule branch `feat/oc-4421-product-scope-core` → `feat/oc-4362-admin-edit-
 `git stash`ed backoffice-api `cmd/generics_server/main.go` (local OCR provider config —
 paddle/gemini). Monorepo submodule refs NOT bumped (stacked on unmerged branches).
 
+**§A OCR cross-check gate (OC-4464) — DONE + verified 2026-09-07:**
+- backend `feat/oc-4362-admin-edit-claim` commit `9a7087d`: `ApprovePointClaim` gained
+  `acknowledgeReceiptMismatch bool`; before the base-rate lookup it reads the OCR result
+  (`pointClaimOCRRepository.GetByClaim`) and if `compare_result.source_reference ==
+  "mismatch"` and not acknowledged → `ErrPointClaimReceiptMismatch` → **422
+  `OCR_RECEIPT_MISMATCH`**. OCR absent/errored/unreadable never blocks (pure helper
+  `receiptNumberMismatchBlocksApprove`, 7 unit cases). Approve body is optional
+  `{acknowledge_receipt_mismatch?: bool}`.
+- frontend `feat/oc4362-approve-button` commit `e161eeb`: flipped `APPROVE_ENABLED=true`;
+  approve-confirm modal shows a red warning when `compareResult.source_reference==='mismatch'`
+  and sends the ack on confirm; defensive catch of `OCR_RECEIPT_MISMATCH`. Verified in
+  the admin UI (:5176): Shopee #2408… mismatch → warning → confirm → DB approved.
+- The OCR per-field compare (`compare_result`, `mismatch_count`) already existed +
+  persisted; §A only turned the receipt-number mismatch into a gate. §A phase-2
+  (per-company hard-block-vs-warn config) NOT done — MVP is "must acknowledge".
+- **Test-data note:** approving during verification moved claims 24539127/82dd758d/
+  46afad3d/2408SHOPEE1788705310 pending→approved (awards written, not reversed).
+
 Remaining OC-2743 loyalty concerns (scope-extension comments posted on the cards):
-§C image-hash dedup + wire `award_dedup_registry` (OC-4362/4420), OCR cross-check gate +
-capture items[] (OC-4464), per-brand matching (OC-4413). See
+§C image-hash dedup + wire `award_dedup_registry` (OC-4362/4420), OCR **capture items[]**
+(OC-4464 §B), per-brand matching (OC-4413). See
 [[project_oc4362_claim_cluster_gaps]] [[project_loyalty_point_cluster]]
 [[reference_daisyui_progress_class_collision]].
