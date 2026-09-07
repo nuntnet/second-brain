@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: b7f8ac01-fa37-4ae8-9246-e1a4f66c3859
-  modified: 2026-09-07T05:39:30.444Z
+  modified: 2026-09-07T06:23:02.341Z
 ---
 
 **The approve→award foundation for OC-4362 EXISTS but is unmerged.** As of
@@ -60,8 +60,24 @@ paddle/gemini). Monorepo submodule refs NOT bumped (stacked on unmerged branches
 - **Test-data note:** approving during verification moved claims 24539127/82dd758d/
   46afad3d/2408SHOPEE1788705310 pending→approved (awards written, not reversed).
 
+**§C image-hash dedup (OC-4362) — DONE + verified 2026-09-07:**
+- member-api `feat/oc-4407-marketplace-claim` commit `83cff74`: `point_claim.image_hash`
+  varchar(64) = SHA256 hex of the uploaded bytes (migration **010**, APPLIED locally);
+  partial unique index `crm_point_claim_company_image_hash_uidx (company_id, image_hash)
+  WHERE status IN ('pending','approved')` mirrors the order_ref index. Both submit paths
+  (`SubmitPointClaim` + `SubmitMarketplaceClaim`, shared `pointClaimImageHash` helper) set
+  it; `CreateSubmission` maps the constraint → `ErrPointClaimDuplicateImage` → **409
+  `DUPLICATE_IMAGE`**, handled like DUPLICATE_RECEIPT (photo orphaned).
+- member FE `feat/oc-4462-my-claims` commit `75cc83c`: DUPLICATE_IMAGE → inline error
+  near photo, i18n "รูปใบเสร็จนี้เคยส่งเข้ามาแล้ว".
+- **Verified HTTP:** submit image → 200; same image + DIFFERENT receipt number → 409
+  DUPLICATE_IMAGE (order_ref would have missed it). Exact-hash MVP; **perceptual hash
+  (re-photographed receipt) is phase-2** (needs image lib + Hamming search).
+- Submit rate-limit = **5/member/24h** (DB `CountByMemberSince`, not Redis). Migration
+  010 must be applied wherever this deploys (run-by-hand CRM schema).
+
 Remaining OC-2743 loyalty concerns (scope-extension comments posted on the cards):
-§C image-hash dedup + wire `award_dedup_registry` (OC-4362/4420), OCR **capture items[]**
+wire `award_dedup_registry` (OC-4420), OCR **capture items[]**
 (OC-4464 §B), per-brand matching (OC-4413). See
 [[project_oc4362_claim_cluster_gaps]] [[project_loyalty_point_cluster]]
 [[reference_daisyui_progress_class_collision]].
