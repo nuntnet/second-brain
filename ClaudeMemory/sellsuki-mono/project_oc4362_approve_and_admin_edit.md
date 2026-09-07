@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: b7f8ac01-fa37-4ae8-9246-e1a4f66c3859
-  modified: 2026-09-07T06:23:02.341Z
+  modified: 2026-09-07T06:52:11.013Z
 ---
 
 **The approve→award foundation for OC-4362 EXISTS but is unmerged.** As of
@@ -76,8 +76,25 @@ paddle/gemini). Monorepo submodule refs NOT bumped (stacked on unmerged branches
 - Submit rate-limit = **5/member/24h** (DB `CountByMemberSince`, not Redis). Migration
   010 must be applied wherever this deploys (run-by-hand CRM schema).
 
+**award_dedup_registry wiring (OC-4420) — DONE + verified 2026-09-07:**
+- backoffice-api `feat/oc-4362-admin-edit-claim` commits `d8017df` + test `07149ad`.
+  The table (migration 008) shipped dormant — no code touched it. Wired into
+  `ApproveAndAward`/`awardWithinTx` (`point_claim_repository/postgresql.go`): the approve
+  UPDATE now RETURNs `order_ref`+`channel`; inside the same txn a registry row
+  `(company_id, order_ref, member_id, channel, result-jsonb)` is inserted after the award.
+  A 23505 on `award_dedup_registry_company_order_ref_uidx` → `isUniqueViolation` →
+  `ErrPointClaimAlreadyAwarded` → **409 ALREADY_AWARDED**, whole txn rolls back.
+- NOTE: `awardWithinTx` on this branch ALREADY back-fills `point_claim.member_point_activity_id`
+  (my earlier "never written" scope note was from the pre-approve OC-4421 tree).
+- Verified: approve INV-DEDUP-AAA → registry row `receipt:INV-DEDUP-AAA | manual |
+  {"points":14,...}`, claim linked; a duplicate (company, order_ref) insert is rejected by
+  the unique index. In the current receipt/marketplace-only world the submit-side partial
+  index already prevents a second claim per order_ref, so the registry violation is a
+  defensive/cross-transport guard (POS/Kafka future) — its concrete value now is making the
+  table live + the result snapshot.
+
 Remaining OC-2743 loyalty concerns (scope-extension comments posted on the cards):
-wire `award_dedup_registry` (OC-4420), OCR **capture items[]**
-(OC-4464 §B), per-brand matching (OC-4413). See
+OCR **capture items[]** (OC-4464 §B), per-brand matching (OC-4413) — the big per-brand
+automation. See
 [[project_oc4362_claim_cluster_gaps]] [[project_loyalty_point_cluster]]
 [[reference_daisyui_progress_class_collision]].
