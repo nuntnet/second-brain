@@ -71,3 +71,4 @@
 - [Completeness audit 2026-09-07](reference_ai_chatbot_completeness_audit.md) — docs/audits/; flow matrix F01-F15 + 1,418 AC ledger; done = AC evidence, not merged MR; 0 staging-verified
 - [preferred_language = constant th](project_preferred_language_is_constant_th.md) — hardcoded "" → default th, no detection, no write path; AC leaning on it leans on a constant
 - Decisions 2026-09-07: [AI-16 field set = admin-configurable](project_ai16_field_set_admin_configurable.md) · [AI-125 = long-lived + server-side code flow](project_ai125_oauth_long_lived_server_side.md) · [AI-33 WebSocket required](project_ai33_websocket_is_required.md) · [F08 = schema vs values](project_f08_fact_schema_versus_values.md)
+- [Stuck CI job holds its resource_group](reference_stuck_ci_job_holds_resource_group.md) — staging-th tags = never claimed; retry re-holds the lock, CANCEL instead; 578s stuck → 33s success

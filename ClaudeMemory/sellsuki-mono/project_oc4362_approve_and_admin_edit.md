@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: b7f8ac01-fa37-4ae8-9246-e1a4f66c3859
-  modified: 2026-09-07T16:17:12.477Z
+  modified: 2026-09-07T16:43:18.607Z
 ---
 
 **The approve→award foundation for OC-4362 EXISTS but is unmerged.** As of
@@ -92,6 +92,26 @@ paddle/gemini). Monorepo submodule refs NOT bumped (stacked on unmerged branches
   index already prevents a second claim per order_ref, so the registry violation is a
   defensive/cross-transport guard (POS/Kafka future) — its concrete value now is making the
   table live + the result snapshot.
+
+**Phase-3 BACKLOG CLOSED 2026-09-07 late (everything that was "flag as backlog" and actually fixable):**
+- member-api `4a9f61b` (!98): audit line on every session mint (LineLogin + OTPLogin), entity
+  `oc2plus.crm.session`, refs `[sess.ID, line_login|otp_login]`, ids only.
+- backoffice-api `2cd8897` (gated branch): award_dedup_registry row written even on a 0-point approval —
+  `registerAwardWithinTx` split out of `awardWithinTx`, 409 handling covers both paths, snapshot points=0.
+- backoffice FE `67c6ce5` (!572): `sumDecimalStrings` normalises grouping commas (`1,234.00` was silently
+  dropped), strict plain-decimal regex, `sumDecimalStringsDetailed{sum, skipped}`; spec 20/20.
+- member FE `dcf2e30` (!35): last DaisyUI bare-class collisions (`.label`/`.btn` pinned, `.toast`→
+  `.member-toast`) in LoginView/MembershipView/IdentityModal — found by intersecting scoped selectors
+  with daisyui/dist/styled.css; `member_not_found` strict on error_code, bare 404 → `not_found` copy, no
+  register CTA.
+- B1 rejected-card branch VERIFIED with real data: rejected `IC0626-0001` (member 06e811bd = the local
+  session's member) → badge + meaning line + admin reason + "แจ้งใบเสร็จใบใหม่ →" button render.
+  `INV-LOCAL-0002` (member 44444444, the 1×1-PNG claim) also rejected as test data — it is NOT this
+  session's member, which is why it never showed in :5183.
+- Jira status comments posted (not transitions — user decides status): OC-4362 #44546, OC-4464 #44547,
+  OC-4348 #44548 (that card is still `To Do` with code in MRs — flagged for PO).
+Still deliberately NOT done: DS-level a11y (ssk-modal role=dialog, ssk-input aria-invalid), systemic
+hardcoded px, submit rate-limit TOCTOU, §A phase-2 per-company hard-block config, Phase-2 marketplace OCR.
 
 **!538 (approve base-rate → develop) READINESS, checked 2026-09-07 late:** `has_conflicts: false`,
 `merge_status: can_be_merged`, `blocking_discussions_resolved: true`, no approvers required. The ONLY
