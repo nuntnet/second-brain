@@ -104,6 +104,8 @@
 - [Primary-invariant](project_oc2plus_primary_invariant_pattern.md) · [consent model](project_oc2plus_consent_enforcement_model.md) — patterns
 - [Schema external](reference_oc2plus_schema_lives_in_external_repo.md) — DDL → member-api/migrations
 - [OC-4362 claim cluster](project_oc4362_claim_cluster_gaps.md) · [OC-4464 OCR vendor](project_oc4464_ocr_vendor_decision.md) — Sprint 128; iApp, พ.ศ. trap
+- [OC-4362 approve+admin-edit](project_oc4362_approve_and_admin_edit.md) — approve foundation on local/approve-plus-ocr (base-rate); §B edit-before-approve done+verified, unmerged
+- [DaisyUI class collision](reference_daisyui_progress_class_collision.md) — bare .progress/.badge/.card etc. collide with your scoped classes; prefix them
 - [Customer App program](project_customer_app_program.md) · [auth plan](project_oc2plus_customer_app_auth_plan.md) — 5 epics; OC-4344 self-build
 - [OC-4348 web-OTP session minter](project_oc4348_web_otp_session_minter.md) — 401-after-OTP root cause; company-from-member decision; front-runs OC-4345 spike
 - [backoffice/member codegen is Go](reference_oc2plus_backoffice_codegen_is_go.md) — edit v1.yaml → go run generate_fiber_interface; NOT TypeSpec/blocked
