@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: b7f8ac01-fa37-4ae8-9246-e1a4f66c3859
-  modified: 2026-09-07T16:01:13.561Z
+  modified: 2026-09-07T16:17:12.477Z
 ---
 
 **The approve→award foundation for OC-4362 EXISTS but is unmerged.** As of
@@ -92,6 +92,16 @@ paddle/gemini). Monorepo submodule refs NOT bumped (stacked on unmerged branches
   index already prevents a second claim per order_ref, so the registry violation is a
   defensive/cross-transport guard (POS/Kafka future) — its concrete value now is making the
   table live + the result snapshot.
+
+**!538 (approve base-rate → develop) READINESS, checked 2026-09-07 late:** `has_conflicts: false`,
+`merge_status: can_be_merged`, `blocking_discussions_resolved: true`, no approvers required. The ONLY
+blocker is `detailed_merge_status: ci_must_pass` — its pipeline 57105 "failed" with
+`stuck_or_timeout_failure`, `runner: null` = never ran (the `staging-th` runner fleet outage, see
+[[reference_dead_staging_runner_tag]]). Code proven green locally on the exact sha `f0016f2` in a
+detached worktree: `go build ./...` OK, `go test ./src/...` 19 pkgs ok / 0 FAIL. Fresh MR pipeline
+**57557** queued (auto-runs when a runner returns). My glab token shows `project_access: null` →
+cannot arm merge-when-pipeline-succeeds; that is a maintainer's one click. Once !538 lands, the
+gated backend branch `feat/oc-4362-admin-edit-claim` (8 commits) rebases onto develop in one step.
 
 **UX/UI pass (B1/B2/B3) SHIPPED 2026-09-07 — all pushed, all MRs → develop:**
 - **B1 member FE `9d0c5c8`** (MR !35): company logo+name header on all 3 claim screens, purpose strip
