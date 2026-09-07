@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: b7f8ac01-fa37-4ae8-9246-e1a4f66c3859
-  modified: 2026-09-07T15:35:01.766Z
+  modified: 2026-09-07T17:31:56.165Z
 ---
 
 **Context (2026-09-07):** root overmind died; OC2Plus services were hand-started. A browser console
@@ -64,6 +64,46 @@ to resend" from "OCR down". Product fix belongs in the review dialog: classify 4
 5xx/timeout→"ระบบ OCR ขัดข้อง", 401/403→"ตั้งค่า OCR ผิด". Fetch an attachment like the worker:
 `GET $FILE_SERVICE_URL/access/private?refID=sellsuki.company:<id>&fileRecordID=<n>` with
 `X-User-Id: $FILE_SERVICE_API_KEY`, `X-User-Kind: sellsuki.system`.
+
+**Backoffice FE: "เมนูคำขอแต้มหาย" after granting MORE permissions = permission-store race, not Keto.**
+`stores/permission` was a single slot (`permission.value = null` then `= <this call's results>`) shared by
+19 `usePermissions()` askers (App.vue panel gate, SideBar, mounted view) → last resolver erased the others'
+keys → `GetPermissionStatus('oc2plus.pointclaim.review')` false by timing. Broader grants = more askers =
+worse. Backend was fine (`POST /v1/company/{id}/permission` → is_allow:true). Fixed `ba13a2d` (!572):
+merged `Record<name,bool>`, in-flight counter for `loading`, `SetGrants()` for tests. Signature: a menu
+that flickers/vanishes while `POST …/permission` says true.
+
+**Backoffice FE company picker is a LOCAL STUB, not the backend.** `vite.config.ts` (UNCOMMITTED, the
+user's) has `localCompanyListPlugin` answering `GET /backoffice/v1/user/company` with company `localtest`
+and `localProfilePlugin` answering `/profile` as "Nuntawit (local)". Requests never reach :8089. An
+"empty picker" in the user's Chrome while the pane shows the company = the user's tab is a stale bundle
+from before a Vite restart (old `VITE_SERVICE_BACKOFFICE_BASE_URL` → dev-th → 401 → caught → `[]`);
+hard-reload fixes it. `.env.development.local` (highest priority) holds the local overrides.
+
+**Theme logo broken locally = wrong file host, not the theme.** `GET /company/{slug}/theme` returns
+`logo` as an S3 OBJECT KEY (`/<company-uuid>/public/<ts>-logo-<ts>.png`); member-FE `services/theme`
+runs it through `utils/file-url.ts` `toFileUrl()` = `VITE_FILE_SERVICE_BASE_URL + key`. Default env points
+at `https://file.dev-th.sellsuki.com` (cloud) but the upload went to LOCAL file-service → MinIO
+(`sellsuki_mono-minio-1` :9000, bucket `file-service`). file-service :8087 does NOT serve public objects
+(all paths 404) and the bucket policy was `private` (anon GET 403). Fix (local only): both FEs'
+`.env.development.local` → `VITE_FILE_SERVICE_BASE_URL=http://localhost:9000/file-service`; MinIO anonymous
+read scoped to `arn:aws:s3:::file-service/*/public/*` via `docker exec sellsuki_mono-minio-1 sh -c 'mc alias
+set local http://localhost:9000 "$MINIO_ROOT_USER" "$MINIO_ROOT_PASSWORD"; mc anonymous set-json <policy>
+local/file-service'` (creds never leave the container; the minio shell has no grep/awk — filter on host).
+Verified: logo 200, a `/private/…rc.jpg` receipt still 403. Pre-existing: uploads are stored as
+`application/octet-stream` (file-service ignores X-Original-Content-Type) — browsers sniff `<img>` fine.
+
+**App switcher "ไม่แสดงชื่อ app" = the registry fetch, not the data.** `portal-app-registry` (central-config)
+at version 1 already holds Sellsuki/Akita/Patona/Oc2plus (icons on `assets.staging.sellsuki.com`); it read
+`apps: []`/version 0 only while central-config was freshly restarted. The FE hit
+`https://central-config.sellsuki.local/v1` → Kratos forward_auth 401 (Chrome) / ERR_NAME_NOT_RESOLVED
+(pane) → store error → no tiles. Fix (local): `vite.config.ts` proxy `/central-config` → :8085 with the
+same injected X-User-Id/Kind as `/backoffice`, and `.env.development.local`
+`VITE_CENTRAL_CONFIGURATION_SYSTEM_URL=/central-config/v1`. Writing a GLOBAL config needs
+`sellsuki.configsystem.config.update` on tenant `sellsuki.user:` (EMPTY id) via a role (rps roles 61/62
+are the existing global viewers) — created role **66 "Local Config Admin"** for that; my ad-hoc PUT failed
+schema validation (400) and was not needed. `PUT /v1/configuration/{service}?userId=&location=` body
+`{"data":{…}}`, validated against the seeded schema (0002).
 
 **Re-test note:** resetting OCR rows only re-runs claims still `status='pending'` (`ListPendingJobs`
 joins on that); approved/rejected claims stay failed by design. Also reset `attempt_count=0`.
