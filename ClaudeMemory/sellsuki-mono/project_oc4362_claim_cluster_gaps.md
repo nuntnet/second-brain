@@ -135,3 +135,11 @@ not yet). NOT persisted, no list badge, no revalidate — those are slice 2 (nee
 per-rule "why unknown" copy. Browser trap: after `resize_window` the pane may snap back to 800×625 and `find` refs
 keep 1280-frame coords → click by screenshot coords instead.
 
+
+## OC-4421 persistence slice (2026-09-08)
+- Table `campaign_product_scope` (oc2plus_crm, member-api migration 014, applied locally): 1:1 side table of campaign — product_ids, resolved_skus jsonb (`{sku,product_id,variant_id,name,variant_name,option_values[],price}`), resolved_count, resolved_at, updated_by. No row = product_scope all.
+- backoffice-api branch `feat/oc-4421-product-scope-core` (7a61f2e + UTC fix): `CampaignProductScopeRepository{Get,Upsert,Delete,ListResolvedSKUsActiveAt}` postgres; use cases Get/Set/Refresh(confirm); routes `GET/PUT /company/{id}/campaign/{campaign_id}/product-scope`, `POST …/product-scope/refresh {confirm}`. Merged into the admin-edit chain (40bce44): matcher now reads `ListResolvedSKUsActiveAt` (live statuses scheduled/published/expired, purchase-day window) — Dummy deleted.
+- Proven live on :5176: claim 4937046a "เม็ดอัดกาแฟคั่วเข้ม 250" → CF-DARK confidence 1, pre-ticked, validation product pass / price pass / store unknown / risk low.
+- Local fixtures (not in any seed): PIS product 49 "เม็ดอัดกาแฟ" (variants 15 CF-DARK, 16 CF-MED @250, ref sellsuki.company:11111111-…) in db `products`; campaign 60f99747 `OC4421-SCOPE` published 2026-09-01..12-31 + draft `OC4421-ALL` (b4eeab8a). Direct SQL inserts.
+- Traps: `timestamp without time zone` + lib/pq → write UTC or GET returns +7h; rtk appends `INSERT 0 1` to `psql -Atc` output → filter before using as a shell var; PIS list via backoffice `/campaign/product` returned unexpected_error for company 11111111 but detail `/campaign/product/{id}` works (unresolved, not needed for scope).
+- Still open on 4421: wizard product picker UI (data source = existing `/campaign/product` list); publish-time re-resolve (snapshot is taken at save + explicit refresh); engine (3rdparty-api) has no loader for ResolvedSKUs yet.
