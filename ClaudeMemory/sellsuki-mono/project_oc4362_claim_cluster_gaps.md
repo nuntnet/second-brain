@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: b7f8ac01-fa37-4ae8-9246-e1a4f66c3859
-  modified: 2026-08-26T04:39:22.603Z
+  modified: 2026-09-08T11:51:27.175Z
 ---
 
 2026-08-26: เปิดการ์ดต่อยอด OC-4362 (ใบเสร็จไม่มี QR) / OC-4407 (marketplace) เข้า epic OC-2743:
@@ -73,4 +73,19 @@ backoffice-api go.mod v0.28.0→v0.32.0 + สลับ 6 จุดใน `point_
 ดู [[reference-harness-classifier-blocks-secrets-and-mutations]]
 
 OCR vendor ของ OC-4464 เคาะแล้ว ดู [[project-oc4464-ocr-vendor-decision]]
+
+## 2026-09-08 — OC-4481 (auto-match OCR ↔ PIS) rewritten จาก code facts; OC-4480/4421 ได้ comment
+
+ข้อเท็จจริงที่บังคับ design (อ่านจากโค้ดจริง): OCR line item มีแค่ `name/unit_price/quantity/line_amount`
+**ไม่มี barcode/SKU** (`vlm.go:60`) · PIS product-level `Barcode/SKU/Price` deprecated ว่างเสมอ ค่าจริงอยู่
+`Variant[]` · backoffice-api `model.ProductVariant` **ทิ้ง barcode** ตอน map · `resolved_skus` (branch
+`feat/oc-4421-product-scope-core`) เก็บ `SKU,ProductID,VariantID,Name(=product name)` ไม่มี variant name/ราคา ·
+PIS catalog ต่อบริษัท = pool เดียว **ปนของรางวัล** (เมนู backoffice "สินค้าและของรางวัล" ฝัง PIS iframe).
+**Decision ที่เสนอ (รอ PO เคาะแค่ตัวเลข threshold):** นิยามแบรนด์ = `resolved_skus` ของแคมเปญ active ณ
+purchase_date เท่านั้น (ไม่ใช่ทั้ง catalog) · match v1 = normalize+token overlap ชื่อ (product+variant) + ราคา
+±10% บวก / >50% ลบ · pre-tick ≥0.8, "น่าจะเป็น" 0.5–0.8 · **ห้ามเรียก PIS ใน review path** (snapshot only ⇒
+PIS ล่มไม่กระทบ + admin ไม่ต้องมี `productsystem.view`) · barcode/SKU exact = v2 (ต้องเพิ่ม `code` ใน OCR
+output + `Barcode` ใน model ก่อน). ขอ OC-4421 เพิ่ม `VariantName` + `Price` ใน snapshot (comment 44558)
+ก่อน publish ครั้งแรก. Comment facts+ข้อเสนอลง OC-4480 = 44557. การ์ด OC-4481 มี 11 AC, Rule 1–6, ตาราง facts.
+วิธีเขียน: `editJiraIssue fields.description markdown` แล้ว re-fetch นับ AC — ผ่านครบ ไม่มี content loss.
 
