@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: b7f8ac01-fa37-4ae8-9246-e1a4f66c3859
-  modified: 2026-09-08T13:21:10.615Z
+  modified: 2026-09-08T14:52:08.397Z
 ---
 
 2026-08-26: เปิดการ์ดต่อยอด OC-4362 (ใบเสร็จไม่มี QR) / OC-4407 (marketplace) เข้า epic OC-2743:
@@ -113,4 +113,14 @@ never auto-tick); qty markers (x2, 2 ชิ้น, จำนวน 2) stripped; 
 (price bonus clamp faked ties — real bug caught by test). backoffice-api `51e9dba`. OC-4421 ask now = VariantName +
 **OptionValues[]** + Price (comment 44563). OC-4483 needs approve path to persist admin-confirmed items (not in
 slice 1). OC-4481 description patched with Rule 2b + 3 new AC.
+
+**OC-4483 SHIPPED across 4 repos (2026-09-08):** backoffice-api `b8dbbe8` (approve takes
+`confirmed_item_indexes[]`; `buildPointClaimItemBreakdown` pure; snapshot jsonb `point_claim.item_breakdown` written
+in the SAME UPDATE as pending→approved; nil≠[]; 400 on bad index; audit `items_earned=N/M`) · member-api `325558c`
+on `feat/oc-4407-marketplace-claim` (!98) — NOTE member-api's live chain branch is 4407 not 4462; migration 013 lives
+in member-api/migrations (schema-location rule) and was applied to local oc2plus_crm by hand · backoffice FE
+`aac0395` (dialog emit → both tabs → store → service; body omitted when nothing to send) · member FE `e7e4580`
+(section `point-claim-detail.breakdown`, label = campaign product name, receipt text underneath). Live: approve
+bc254b1b with [0,9]→400, [0,1]→200, DB snapshot earned t/t/f/f. Local fixture member 44444444-… had NULL phone →
+set 0899999999 (local only) to OTP-login via :5183 proxy (X-Test-Secret injected by vite proxy, OTP 000000).
 
