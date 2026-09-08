@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: b7f8ac01-fa37-4ae8-9246-e1a4f66c3859
-  modified: 2026-09-08T04:50:40.626Z
+  modified: 2026-09-08T05:33:11.208Z
 ---
 
 **Context (2026-09-07):** root overmind died; OC2Plus services were hand-started. A browser console
@@ -122,6 +122,20 @@ schema validation (400) and was not needed. `PUT /v1/configuration/{service}?use
 - ⚠️ `DEV_USER_ID` default in seed-dev.sh is `d46da77b-5f10-479a-9006-f91939a0b85f`, NOT the user's real
   Kratos id `317c3e2a-…` — always run `DEV_USER_ID=<id> make seed-dev`. Monorepo has NO origin; its only
   remote `glab-base` is the BOLA repo — never push there.
+
+**seed-dev.sh was lying until 2026-09-08 — the full-run audit found 7 false-success paths:** bare host
+`psql` absent → every SQL step no-op'd but printed ✓ (now `psql_db` = compose exec); Kafka container
+hardcoded `repos-kafka-1` (real `sellsuki_mono-kafka-1`) → 5/6 topics never existed; provider/company
+SQL aimed at empty `sellsuki_central` (CCS uses `local_sellsuki_central`); store INSERT aimed at db
+`postgres` (table is space-go's `space.store`); quota `InternalCreateQuota` payload predated the
+wrapped proto (`{"quota":{owner{id,kind:"sellsuki.provider"},…,state:<JSON string>,usage_flow}}`)
+and exit code unchecked → 6 plans "(created)" that didn't exist; config-schema POST went via Caddy →
+Kratos 401/403 reported as "central-config down" (now direct `:8085` + identity headers); and the
+big one — 5 role blocks assigned ONLY when CreateRole succeeded, so with roles pre-existing a new
+`DEV_USER_ID` got nothing (now `grant_role` = find-or-create + assign; rps dup-assign error
+"user already has this role in this tenant" = ok). CCS `HealthCheck` hangs when sellsuki-pay :50070
+is down — readiness probe is now `grpcurl list`. Lesson: a seed that swallows stderr and prints a
+fixed success string is worse than no seed; verify by exit code, re-run twice, diff rps roles.
 
 **Re-test note:** resetting OCR rows only re-runs claims still `status='pending'` (`ListPendingJobs`
 joins on that); approved/rejected claims stay failed by design. Also reset `attempt_count=0`.
