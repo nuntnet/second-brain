@@ -5,6 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: 9e057444-0352-41d3-9463-fb0dd304ba9a
+  modified: 2026-09-08T06:26:27.536Z
 ---
 
 `frontend/pis-frontend` `.env.development` sets `VITE_APP_BASE_API_URL=https://api.dev-th.sellsuki.com/pis`
@@ -38,3 +39,14 @@ the UI you must repoint + fake identity.
    (the `?ref_id=` query is REQUIRED — `routeGuard.ts` reads it into the iframe store; without it →
    session-expired). pis DB is named `products` (Postgres). MS-623 weight/dimension fields appear on a
    Physical product only after picking single/multi structure.
+
+**PIS has THREE embedding hosts, not one (verified 2026-09-08 — I wrongly told the user OC2Plus had
+none):** CCS3 `pages/Product/Product.svelte`, Sellercenter, and the **OC2Plus backoffice** menu
+"เครื่องมือ → ของรางวัล" (`views/Reward/RewardMain.vue`, since commit "pis iframe" 2024-09) which loads
+`VITE_APP_IFAME_PIS/product-list|add-product` with `ref_id=sellsuki.company:<id>&app_name=oc2plus`, gated
+by `oc2plus.reward.manage` on the OC2Plus side AND `sellsuki.productsystem.*` inside pis-api. backoffice-api
+also calls pis-api directly (`product_repository/rest.go`, `PIS_ENDPOINT`, `GET /products/{id}/refID/{ref}`)
+from `use_case/campaign.go` — campaign rewards ARE PIS products; redeem shipments follow from them. Point-claim
+OCR line items (OC-4464 §B) are NOT matched to PIS — admin picks by eye. Locally the backoffice iframe points
+at cloud `pis.dev.sellsuki.com` unless `.env.development.local` overrides `VITE_APP_IFAME_PIS`, so it shows
+session-expired for the local company; role 65 (localtest owner) lacks `productsystem.*`.
