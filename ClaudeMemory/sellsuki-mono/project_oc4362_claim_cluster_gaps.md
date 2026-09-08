@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: b7f8ac01-fa37-4ae8-9246-e1a4f66c3859
-  modified: 2026-09-08T14:52:08.397Z
+  modified: 2026-09-08T15:52:26.518Z
 ---
 
 2026-08-26: เปิดการ์ดต่อยอด OC-4362 (ใบเสร็จไม่มี QR) / OC-4407 (marketplace) เข้า epic OC-2743:
@@ -123,4 +123,15 @@ in member-api/migrations (schema-location rule) and was applied to local oc2plus
 (section `point-claim-detail.breakdown`, label = campaign product name, receipt text underneath). Live: approve
 bc254b1b with [0,9]→400, [0,1]→200, DB snapshot earned t/t/f/f. Local fixture member 44444444-… had NULL phone →
 set 0899999999 (local only) to OTP-login via :5183 proxy (X-Test-Secret injected by vite proxy, OTP 000000).
+
+**OC-4478 slice 1 SHIPPED (2026-09-08):** backoffice-api `802c9be` + FE `5d1e008`. `EvaluatePointClaimValidation(channel,
+marketplace, items, matches, scopeAvailable, cfg)` pure; product from 4481 verdicts (pass all / warn some / fail none —
+**unknown when !scopeAvailable**, the key Rule-2 trap); store = marketplace vs env allowlist
+`POINT_CLAIM_VALIDATION_ALLOWED_MARKETPLACES` (paper receipt = unknown until OCR reads issuer + OC-4477); price =
+unit_price vs matched SKU price ±15%; risk 40/40/20 over checked rules only, `RiskKnown=false` ⇒ no badge. Attached
+to ocr-result as `validation` for succeeded/partial only; approve audit gets `validation=product:…,risk:…` (reject
+not yet). NOT persisted, no list badge, no revalidate — those are slice 2 (need `point_claim_validation` table).
+`matchOCRItemsForClaim` now returns `(matches, scopeAvailable)`. FE panel `point-claim.detail.validation` with
+per-rule "why unknown" copy. Browser trap: after `resize_window` the pane may snap back to 800×625 and `find` refs
+keep 1280-frame coords → click by screenshot coords instead.
 
