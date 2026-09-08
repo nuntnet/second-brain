@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: b7f8ac01-fa37-4ae8-9246-e1a4f66c3859
-  modified: 2026-09-08T12:45:31.393Z
+  modified: 2026-09-08T13:21:10.615Z
 ---
 
 2026-08-26: เปิดการ์ดต่อยอด OC-4362 (ใบเสร็จไม่มี QR) / OC-4407 (marketplace) เข้า epic OC-2743:
@@ -101,4 +101,16 @@ path only. **Next for 4481:** when 4421 persists snapshot → write `campaign_pr
 (campaign active at purchase_date → ResolvedSKU → candidate incl. VariantName/Price), swap Dummy in helper.go.
 Traps hit: rtk rewrites `npx vue-tsc …| grep` into `npm vue-tsc` → use `rtk proxy`; repo has 288 pre-existing
 tsc errors → filter by touched files; pis-api `GET /products` requires `type` param.
+
+**OC-4480 CLOSED (Done, 2026-09-08) — decisions:** #1 brand = `resolved_skus` of campaign active at purchase_date ·
+#2 bigram+price, tick 0.8 / suggest 0.5, config · #3 customer amount = optional cross-check only (OC-4482 → (c)+(b);
+recommended: optional always, no campaign lookup in member-api) · #4 no separate OCR reliability gate · #5 full
+campaign engine, eligible_amount = Σ admin-confirmed lines. **Variant identity finding (user's concern, verified on
+`pis_product_variants`):** PIS auto-names variant = option values joined "/" (`ดำ/redSW`) and it is editable ⇒ matcher
+compares 5 spellings (product / variant / product+variant / options / product+options); **ambiguity rule** = winner
+< 0.02 above a different SKU → capped below tick (product-only receipt line vs multi-variant product = "น่าจะเป็น",
+never auto-tick); qty markers (x2, 2 ชิ้น, จำนวน 2) stripped; Thai numerals → ASCII; scores compared UNclamped
+(price bonus clamp faked ties — real bug caught by test). backoffice-api `51e9dba`. OC-4421 ask now = VariantName +
+**OptionValues[]** + Price (comment 44563). OC-4483 needs approve path to persist admin-confirmed items (not in
+slice 1). OC-4481 description patched with Rule 2b + 3 new AC.
 
