@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: b7f8ac01-fa37-4ae8-9246-e1a4f66c3859
-  modified: 2026-09-07T17:31:56.165Z
+  modified: 2026-09-08T04:50:40.626Z
 ---
 
 **Context (2026-09-07):** root overmind died; OC2Plus services were hand-started. A browser console
@@ -104,6 +104,24 @@ same injected X-User-Id/Kind as `/backoffice`, and `.env.development.local`
 are the existing global viewers) — created role **66 "Local Config Admin"** for that; my ad-hoc PUT failed
 schema validation (400) and was not needed. `PUT /v1/configuration/{service}?userId=&location=` body
 `{"data":{…}}`, validated against the seeded schema (0002).
+
+**FORMALIZED 2026-09-08 — the local-dev setup is now committed, not per-machine:**
+- backoffice FE `013a38f` (!572) / member FE `5f919fa` (!35): `vite.config.ts` reads `.env.development.local`
+  via `loadEnv`; the stub/proxy layer is gated on `VITE_LOCAL_DEV_IDENTITY_ID` (backoffice) /
+  `VITE_LOCAL_DEV_MEMBER_API_TARGET` (member), OTP test header from `VITE_LOCAL_DEV_TEST_SECRET` (must equal
+  member-api `TEST_KEY`; verified via Redis `otp_session…` `"IsTestMode":true`). Committed
+  `.env.development.local.example` in both; real `.env.development.local` stays gitignored (`*.local`).
+- monorepo `38e7e49`: `scripts/seed-dev.sh` section **4c** = CCS `local_sellsuki_central.companies` row for
+  11111111 (NOT `sellsuki_central`, which is empty), `oc2plus_crm.oc2plus_bola_bindings` slug row, rps roles
+  **"OC2Plus Company Owner (local dev)"** (12 oc2plus.* + sellsuki company-scoped, owner=company) and **"Local
+  Config Admin (user-scope)"** (configsystem.config.*, owner `sellsuki.user:""`), MinIO anonymous read on
+  `file-service/*/public/*` via `docker compose exec -T minio mc anonymous set-json`. `find_or_create_role`
+  matches by name under owner (needs `jq`) → idempotent; my hand-made roles 65/66 were RENAMED to those
+  names so the seed finds them. `8a2dfa4`: CLAUDE.md points `make seed-dev` at
+  `.claude/knowledge/local-dev-oc2plus.md` (the end-to-end guide).
+- ⚠️ `DEV_USER_ID` default in seed-dev.sh is `d46da77b-5f10-479a-9006-f91939a0b85f`, NOT the user's real
+  Kratos id `317c3e2a-…` — always run `DEV_USER_ID=<id> make seed-dev`. Monorepo has NO origin; its only
+  remote `glab-base` is the BOLA repo — never push there.
 
 **Re-test note:** resetting OCR rows only re-runs claims still `status='pending'` (`ListPendingJobs`
 joins on that); approved/rejected claims stay failed by design. Also reset `attempt_count=0`.
