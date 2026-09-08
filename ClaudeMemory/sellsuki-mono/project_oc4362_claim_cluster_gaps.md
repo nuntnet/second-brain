@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: b7f8ac01-fa37-4ae8-9246-e1a4f66c3859
-  modified: 2026-09-08T11:51:27.175Z
+  modified: 2026-09-08T12:45:31.393Z
 ---
 
 2026-08-26: เปิดการ์ดต่อยอด OC-4362 (ใบเสร็จไม่มี QR) / OC-4407 (marketplace) เข้า epic OC-2743:
@@ -88,4 +88,17 @@ PIS ล่มไม่กระทบ + admin ไม่ต้องมี `produ
 output + `Barcode` ใน model ก่อน). ขอ OC-4421 เพิ่ม `VariantName` + `Price` ใน snapshot (comment 44558)
 ก่อน publish ครั้งแรก. Comment facts+ข้อเสนอลง OC-4480 = 44557. การ์ด OC-4481 มี 11 AC, Rule 1–6, ตาราง facts.
 วิธีเขียน: `editJiraIssue fields.description markdown` แล้ว re-fetch นับ AC — ผ่านครบ ไม่มี content loss.
+
+**OC-4481 slice 1 SHIPPED 2026-09-08:** backoffice-api `03c7c65` (feat/oc-4362-admin-edit-claim, same chain as !538) +
+FE `4b0faa3` (!572). Matcher = `use_case/point_claim_ocr_match.go` (bigram Dice, unit canonicalization, digit
+disagreement −0.2, price ±10% +0.1 / ≥50% −0.3 & cap < tick), config `POINT_CLAIM_OCR_MATCH_*` via
+`AppConfig.OCRMatch` + `Normalized()`. Source = `repository.CampaignProductScopeRepository.ListActiveCandidates
+(company, purchaseDate)` — **only `campaign_product_scope_repository.Dummy` exists** (returns nil) because 4421
+never persists `resolved_skus`; wire omits `matched` when matching didn't run, `matched_sku:null` = ไม่พบในแคมเปญ.
+FE: `entities/point-claim-ocr-match.ts` (badge/label/initialSelection/summary), pre-tick only when `canEdit`,
+badges `.ocr-match-badge--{matched|suggested|none}`, i18n `pointClaim.ocr.items.match.*`. Live-verified degrade
+path only. **Next for 4481:** when 4421 persists snapshot → write `campaign_product_scope_repository/postgresql.go`
+(campaign active at purchase_date → ResolvedSKU → candidate incl. VariantName/Price), swap Dummy in helper.go.
+Traps hit: rtk rewrites `npx vue-tsc …| grep` into `npm vue-tsc` → use `rtk proxy`; repo has 288 pre-existing
+tsc errors → filter by touched files; pis-api `GET /products` requires `type` param.
 
