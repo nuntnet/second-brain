@@ -74,3 +74,4 @@
 - Decisions 2026-09-07: [AI-16 field set = admin-configurable](project_ai16_field_set_admin_configurable.md) · [AI-125 = long-lived + server-side code flow](project_ai125_oauth_long_lived_server_side.md) · [AI-33 WebSocket required](project_ai33_websocket_is_required.md) · [F08 = schema vs values](project_f08_fact_schema_versus_values.md)
 - [Stuck CI job holds its resource_group](reference_stuck_ci_job_holds_resource_group.md) — staging-th tags = never claimed; retry re-holds the lock, CANCEL instead; 578s stuck → 33s success
 - [Fact vocabulary collision RESOLVED](project_fact_vocabulary_collision.md) — phone_captured/name_captured = derived signals not facts (2026-09-08); 4th ConditionSource + closed catalog; delta workaround deleted
+- [AI-96 template catalog reality](project_ai96_template_catalog_reality.md) — 4/5 families already have read+write; only follow-up missing; blocker = port shape not backend; unavailable-adapter notes go stale
