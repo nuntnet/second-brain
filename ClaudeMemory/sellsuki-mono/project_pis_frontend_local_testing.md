@@ -50,3 +50,11 @@ from `use_case/campaign.go` — campaign rewards ARE PIS products; redeem shipme
 OCR line items (OC-4464 §B) are NOT matched to PIS — admin picks by eye. Locally the backoffice iframe points
 at cloud `pis.dev.sellsuki.com` unless `.env.development.local` overrides `VITE_APP_IFAME_PIS`, so it shows
 session-expired for the local company; role 65 (localtest owner) lacks `productsystem.*`.
+
+**2026-09-09 — OC2Plus backoffice iframe now wired to local PIS:** backoffice FE `.env.development.local`
+has `VITE_APP_IFAME_PIS=https://pis-app.sellsuki.local`; Caddyfile `pis-app.sellsuki.local` block injects
+`X-User-Id 317c3e2a-…` (the user's local Kratos id — uncommitted local edit; the committed value is the seed
+DEV_USER_ID which has no role in company 11111111); `web-pis` runs under its own overmind socket
+`.overmind-pis.sock` (`OVERMIND_SOCKET=./.overmind-pis.sock overmind start -f Procfile -l web-pis -N -D`).
+Verified via `curl --resolve`: SPA 200, `/permissions?ref_id=…11111111…` → view/create/update/delete.
+Remaining: `/etc/hosts` lacks `pis-app.sellsuki.local` (needs sudo) — until added the iframe renders blank.
