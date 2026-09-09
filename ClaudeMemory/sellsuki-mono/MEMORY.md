@@ -75,3 +75,4 @@
 - [Stuck CI job holds its resource_group](reference_stuck_ci_job_holds_resource_group.md) — staging-th tags = never claimed; retry re-holds the lock, CANCEL instead; 578s stuck → 33s success
 - [Fact vocabulary collision RESOLVED](project_fact_vocabulary_collision.md) — phone_captured/name_captured = derived signals not facts (2026-09-08); 4th ConditionSource + closed catalog; delta workaround deleted
 - [AI-96 template catalog reality](project_ai96_template_catalog_reality.md) — 4/5 families already have read+write; only follow-up missing; blocker = port shape not backend; unavailable-adapter notes go stale
+- [Provider create lives in CCS1](project_provider_create_lives_in_ccs1.md) — system-mgmt-FE 5179 not 5178 (Keto SellsukiSystem ns); AI-21 AC1 names the wrong app; that repo's line is develop not main
