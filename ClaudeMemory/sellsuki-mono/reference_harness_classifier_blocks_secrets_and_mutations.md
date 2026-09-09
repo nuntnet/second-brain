@@ -12,3 +12,8 @@ Independent of anything said in chat, Claude Code's own auto-mode classifier can
 **Why it matters:** a user's chat-level "yes, do it" does **not** unlock this — it's a harness-level gate, separate from conversational consent. Retrying the identical call sometimes succeeds on a later attempt (observed inconsistency, cause unclear — possibly session-level re-evaluation), but there's no reliable way to force it from inside the conversation. The only real unlocks are an interactive approval prompt appearing for the user, or the user adding a Bash permission rule in their Claude Code settings.
 
 **How to apply:** when a command gets this specific denial (`"Permission for this action was denied by the Claude Code auto mode classifier"`), don't loop retrying it or try to rephrase/obfuscate the command to slip past the filter. Explain plainly to the user what the command was for, and either (a) hand them the exact command to run themselves in their own terminal, or (b) try once more later in the same session (sometimes clears) — but don't treat a single retry failure as fatal, and don't treat one success as proof the gate is now open for similar future calls.
+
+- 2026-09-09: also blocked (auto mode): `kubectl exec … psql` applying DDL to the staging/dev CRM
+  database, and `glab mr merge` of develop→main release MRs (= staging deploy). `glab mr merge`
+  into develop and `glab mr create` to main were allowed. Hand the exact commands to the user
+  instead of retrying; both blocks were "Blocked by classifier", not transient.
