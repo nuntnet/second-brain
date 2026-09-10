@@ -43,3 +43,25 @@ Sidebar menus here are gated by env flag only, no permission check —
 `VITE_DISABLE_<FEATURE>_FEATURE` read through a local `toBoolean` in
 `src/components/Layout.svelte:53` that correctly treats the string `"false"` as false
 (`value.toLowerCase() === 'true'`), so a quoted `"false"` in `.env.*` does NOT hide the menu.
+
+### Staging deploy is a manual gate, and `prepare_staging_frontend` gets stuck
+
+Merging to `main` does **not** put CCS3 on staging by itself. The pipeline runs
+`prepare_staging_frontend` -> tests -> `build_code_staging` automatically, then
+**`deploy_staging` sits at `manual`** waiting for a click (job play via
+`POST /projects/:id/jobs/<id>/play`).
+
+`prepare_staging_frontend` is also the flaky one: the 2026-09-07 run on `main`
+12d55d68 failed with `stuck_or_timeout_failure` (no runner claimed it), which cascaded
+every later job to `skipped` — so staging silently stayed on `main` a4185a1d from
+2026-09-04 for three days with nobody noticing. It succeeded on the retry
+(pipeline 58139, 2026-09-10) with no code change, so treat it as transient — but
+check `failure_reason` before blaming code. See [[reference_dead_staging_runner_tag]]
+and [[reference_stuck_ci_job_holds_resource_group]] (cancel, do not retry, when a job
+holds a resource_group).
+
+CI installs with **`npm ci`** and runs `npm run test:ci` (= `vitest run && npm run check`),
+so `package-lock.json` is what CI needs while `bun.lock` serves local dev only. A commit
+that adds a dep on `main` therefore updates package-lock and leaves bun.lock stale —
+after merging main into develop, `bun install --frozen-lockfile` fails while CI stays
+green. Regenerate bun.lock as part of any such sync (done in !505 for `jsdom`).
