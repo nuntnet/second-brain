@@ -38,3 +38,28 @@ fixture-created company's slug. Most OTP TCs were un-skipped in July via route i
 **How to apply:** OC-4370 is "adopt project 808 + fill gaps", not "build a harness"; OC-4491 is
 "add 3 flows + unskip 3 TC" (size L → M). Recorded in comments 44640 (OC-4370) and 44641 (OC-4491).
 Related: [[project_oc2plus_member_react_migration]] [[reference_oc2plus_member_frontend]]
+
+## อัปเดต 2026-09-10 — clone เข้าโมโนรีโปแล้ว และ CI ไม่เคยเขียวเลย
+
+**ตอนนี้ track แล้ว** ที่ `testing/oc2plus-line-crm-e2e-playwright` (monorepo commit `182bcb4`) · ก่อนหน้านี้ไม่อยู่ใน `.gitmodules` = มองไม่เห็นจากโมโนรีโป (อาการเดียวกับ ai-chat-e2e) · default branch **`main`** ไม่ใช่ develop · ยิงไปที่ `member.staging-th.oc2.plus`
+
+### 🔴 CI พังเพราะ placeholder ที่ลืมแก้
+
+`.gitlab-ci.yml:10` ตั้ง `AUTOMATE_REPOSITORY` → `sellsuki/oc2plus/oc2plus-e2e-test-playwright.git` ซึ่ง **404 Project Not Found** · ของจริงคือ `sellsuki/oc2plus/line-crm/oc2plus-line-crm-e2e-playwright` · มี `TODO[OC2PLUS]` กำกับบรรทัดบนอยู่แล้ว (scaffold มาจาก patona-e2e ไม่เคยแก้) → นี่คือเหตุของ `script_failure`
+
+**pipeline ทั้งประวัติ = 3 ครั้ง: canceled / canceled / failed — ไม่เคยเขียว** · `projects/808/variables` = **0 ตัว** แต่ suite อ่าน env 18 ตัวรวม `POSTGRESQL_USER/PASSWORD`, `BOLA_DIAGNOSTIC_EMAIL/PASSWORD`, `BASEURL_MEMBER`, `KRATOS_URL` · **ไม่มี `.env` ในรีโป** → รันในเครื่องก็ไม่ได้ รันใน CI ก็ไม่ได้
+
+**ผล: AC "E2E baseline เขียว" ของ OC-4495/4496/4497/4501–4505 ทุกใบพิงตาข่ายที่ไม่เคยมีอยู่จริง** — อาการเดียวกับ unit test ที่ `echo "1 + 1"` ก่อน OC-4492 · เขียนไว้ที่ OC-4370 comment 44662 + OC-4491 comment 44660/44661
+
+### กับดักการนับ coverage
+
+TS-009 ใช้ fixture wrapper เอง (`testLiffRegister`, `testLiffForcedScreen`, `testLiffRegisterMockable`, `testLiffForcedScreenMockable`, `testLiffThemeApiFail`, `testLiffThemed`, `testLiffTenantIsolation`) → **`grep -c "test("` ได้ 0 ทั้งไฟล์** · ของจริง 832 บรรทัด / **42 case invocation**
+
+### coverage จริงของ customer app = register เท่านั้น
+
+7 spec: TS-009-Liff-Register (customer app) · TS-002-Campaign · TS-003-Point-Base-Rate · TS-008-Contact · TS-010-Theme · TS-011-Bola-Menu(+real-account) = backoffice/BOLA
+
+**ขาด 3 flow ไม่ใช่ 2**: member login (เบอร์+OTP) · point-claims list/detail · point-claims submit
+- `point-claim`/`pointClaim`/`point_claim` → **0 ไฟล์ทั้งรีโป**
+- ⚠️ `resources/pages/login.page.ts` = **login ของ staff/backoffice** (identifier+password+google+forgot) **ไม่ใช่ member** · `resources/pages/member.page.ts` = **หน้ารายชื่อสมาชิกในหลังบ้าน** ไม่ใช่ member app — ห้าม reuse ผิด
+- 15 ไฟล์ยังมี `TODO[OC2PLUS]` ค้าง
