@@ -48,6 +48,7 @@
 - [Messaging backend](reference_messaging_backend.md) · [repo traps](reference_messaging_backend_shared_repo_traps.md) · [Central audit log](project_central_audit_log.md) — central OTP/SMS; PAT-2611 stdout→Loki→CCS UI
 
 ## BOLA
+- [CCS→BOLA provisioning unwired](project_ccs_bola_provisioning_unwired.md) — BOLA_API_BASE_URL/TOKEN in no values file; create-workspace 500 everywhere
 - [§6a invite via CCS](project_bola309_invite_via_ccs.md) — BOLA offers Invite, calls CCS with acting admin's X-User-Id (no service token); CCS authz widened to admin.manage on bola.workspace; **CCS side still unmerged**
 - [§6a lane 2 = direct rps grant](project_bola309_lane2_add_existing_member.md) — existing identity → grant role + Active row, no invite; register-then-access already worked; BOLA enforces from its own role column (110 RequireRole); BE !170 / FE !113
 - [Access model](project_bola_saas_access_model.md) · [auth mode](project_bola_auth_mode_deployment.md) · [RBAC keto-direct](project_bola_rbac_keto_direct.md) · [ops=CCS1](project_bola_ops_visibility_ccs1.md) · [Kratos SSO staging](project_bola_kratos_sso_staging.md) — CCS3=org, BOLA=workspace; SaaS=kratos+keto
