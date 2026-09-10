@@ -32,3 +32,18 @@ non-Done epics, 26 real).
 
 Related: [[ground-claims-file-line]], [[verify-absence-claims]],
 [[decisive-deep-execution]].
+
+## Update 2026-09-10: surface first, then one blanket go-ahead unlocks editing
+
+The 2026-08-31 ruling still holds as the *default*, but it is not "never edit".
+After I reported three wrong cards with evidence (OC-4370/4491/4492 — harness
+assumed missing but existed, pnpm blocker that wasn't real), the user replied
+**"การ์ดไหนผิดอีกแก้ไขได้เลย"** — one blanket authorization covering the whole
+cluster, given *after* seeing the evidence.
+
+**How to apply:** report the contradiction with file:line evidence and a
+recommendation, do not edit yet. Once the user says go, treat it as standing
+permission for that cluster and rewrite the cards fully — do not re-ask per
+card. Keep the "what changed and why" in a comment on each card so the edit is
+auditable, and keep flagging cards you did NOT touch.
+

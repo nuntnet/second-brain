@@ -6,7 +6,7 @@
 - [Reproduce the number first](feedback_reproduce_the_number_before_asking.md) · [Verify as user sees it](feedback_verify_as_the_user_sees_it.md) — run it myself; real logged-in session, not curl
 - [Check the norm before calling it broken](feedback_check_the_norm_before_calling_it_broken.md) — compare siblings; a convention isn't a defect
 - [Search before GAP](feedback_search_before_declaring_gap.md) · [Verify absence](feedback_verify_absence_claims.md) · [head on grep = sampling](feedback_head_on_grep_is_sampling_not_verification.md) · [Search the whole stack](feedback_search_the_whole_stack_not_one_layer.md) — never claim "no X" from one layer/partial grep
-- [PMM voice](feedback_product_marketing_voice.md) · [Design handoff fidelity](feedback_design_handoff_full_fidelity.md) · [Fix must reach everyone](feedback_fix_must_reach_everyone.md) · [Central ≠ caller domain](feedback_central_service_no_caller_domain.md) · [Entity pure / zod = DTO](feedback_entity_pure_zod_dto.md) · [Report wrong cards, don't edit](feedback_report_wrong_cards_dont_edit.md)
+- [PMM voice](feedback_product_marketing_voice.md) · [Design handoff fidelity](feedback_design_handoff_full_fidelity.md) · [Fix must reach everyone](feedback_fix_must_reach_everyone.md) · [Central ≠ caller domain](feedback_central_service_no_caller_domain.md) · [Entity pure / zod = DTO](feedback_entity_pure_zod_dto.md) · [Report wrong cards, then edit on go-ahead](feedback_report_wrong_cards_dont_edit.md)
 - [Parallel git safety](feedback_parallel_sessions_git_safety.md) · [List MRs before opening](feedback_list_open_mrs_before_opening_one.md) · [OC↔PAT board rule](feedback_oc_pat_board_ownership_rule.md) · [OC2Plus merge target](feedback_oc2plus_merge_to_develop.md) · [PIS FF-only push](feedback_ff_only_force_push_ok.md) — OC MRs → develop never main (+auto-MR-to-main trap); ขารับ = OC owns
 
 ## Personal / machine / infra
@@ -21,7 +21,7 @@
 
 ## Jira
 - [BOLA Jira](reference_bola_jira_project.md) · [OC2Plus Jira](reference_oc2plus_jira_project.md) · [Patona Jira](reference_pat_jira_project.md) — BOLA 10126 · OC 10001 · PAT board 71
-- [Jira MCP crosses responses between sessions](reference_jira_mcp_crosses_responses_between_sessions.md) · [Jira MCP quirks](reference_jira_mcp_search_quirks.md) · [editIssue ADF break](reference_jira_editissue_adf_breakage.md) · [Sprint ids global](reference_jira_sprint_ids_not_contiguous.md) — verify writes by query; no parallel calls; markdown breaks ADF; wrong sprint id files silently
+- [Jira MCP crosses responses between sessions](reference_jira_mcp_crosses_responses_between_sessions.md) · [Jira MCP quirks](reference_jira_mcp_search_quirks.md) · [editIssue ADF break + Thai mangling](reference_jira_editissue_adf_breakage.md) · [Sprint ids global](reference_jira_sprint_ids_not_contiguous.md) — verify writes by query; no parallel calls; markdown breaks ADF; wrong sprint id files silently
 - [PAT sprint truth](reference_pat_board_sprints.md) · [PAT epic links unwired](project_pat_epic_links_unwired.md) — customfield_10020; grouped by label
 
 ## Git / CI gotchas

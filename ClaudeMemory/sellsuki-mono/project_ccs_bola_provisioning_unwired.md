@@ -44,3 +44,39 @@ call here, check the values files of the *caller* before believing the feature w
 
 Related: [[project_bola309_invite_via_ccs]] · [[reference_ccs3_frontend_facts]] ·
 [[reference_flag_without_enforcement]]
+
+## How these secrets are actually managed (2026-09-10)
+
+`sellsuki-central-common-secret` and `bola-backoffice-secret` are **External Secrets
+Operator** targets, not hand-made secrets. The tell is the annotation
+`reconcile.external-secrets.io/data-hash` on the Secret. **`kubectl edit secret` is
+reverted within the 300s refresh** — the value goes into Vault.
+
+- ClusterSecretStore `vault-backend` -> `http://vault-server-active.system-security.svc.cluster.local:8200`, KV **v2**, no `path` set so the mount is the first path segment
+- mount: **`kubernetes-secret`**
+- each ExternalSecret uses `dataFrom.extract`, i.e. it pulls **every key** at one path,
+  so adding a key in Vault needs **no ExternalSecret/YAML change**
+
+| what | Vault path (mount `kubernetes-secret`) |
+|---|---|
+| CCS staging | `sellsuki/sellsuki-central-common-secret` |
+| CCS development | `sellsuki-dev/sellsuki-central-common-secret` |
+| BOLA staging (source of `SYSTEM_ADMIN_TOKEN`) | `bola/bola-backoffice-secret` |
+| BOLA development | `bola-dev/bola-backoffice-secret` |
+
+UI: `https://vault.internal.staging-th.sellsuki.com/ui/vault/secrets/kubernetes-secret/show/<ns>/<secret>`
+
+**Two traps that actually cost time here:**
+1. `sellsuki` and `sellsuki-dev` are sibling folders one character apart. A write to the
+   dev path looks identical in the UI and syncs perfectly — into the wrong environment.
+   Always check the breadcrumb, and verify per namespace with
+   `kubectl -n <ns> get secret <name>` (compare the key list, never print values).
+2. KV v2: **`vault kv put` replaces the whole secret**. Adding one key with `put` would
+   wipe `POSTGRES_DB_CENTRAL_SERVICE_URI` and take CCS down. Use
+   `vault kv patch -mount=kubernetes-secret <path> KEY=value`, or the UI's
+   "Create new version", which carries the existing keys forward.
+
+**How to tell "not synced yet" from "written to the wrong place":** read
+`status.refreshTime` and `status.syncedResourceVersion` on the ExternalSecret. If
+refreshTime is *after* the write and syncedResourceVersion is unchanged, the value is
+not at that path — waiting longer will not help.

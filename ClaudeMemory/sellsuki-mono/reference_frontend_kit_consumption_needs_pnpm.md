@@ -60,3 +60,15 @@ resolve from the registry). Filed on OC-4499 (comment 44643) and OC-4492.
 **How to apply:** the package-manager decision belongs to the first card that actually installs the
 kit (OC-4499), never to a toolchain/CI card in the prep lane — M1–M8 never install it.
 Related: [[reference_frontend_kit_state]] [[project_oc2plus_member_react_migration]]
+
+## node:22 on the internal mirror is UNVERIFIED (2026-09-10)
+
+Every frontend `.gitlab-ci.yml` in this monorepo pins
+`registry.fountain.sellsuki.com/dockerhub/library/node:20` — ai-chat-admin-frontend,
+bola-frontend, sellercenter, company/provider/invitation, oc2plus backoffice and member.
+**Nothing here has ever used node:22.** The registry needs auth (anonymous
+`/v2/.../tags/list` and a manifest HEAD both return 401), so tag availability cannot be
+checked from the CLI. If a pipeline that bumps to node:22 dies on image pull, that is the
+cause, and the fallback is node:20 — Vite 5 + vitest 1 run fine on it; only frontend-kit
+(Node >= 22.18) actually needs 22, and that lands with OC-4499.
+
