@@ -21,3 +21,5 @@ metadata:
 - Jira: epic PAT-2587 (To Do; design of record = claude artifact + `docs/ai-chat-assistant-platform-plan.md` §5.5.1/§5.6.11). Cards: PAT-2591 spike Done · PAT-2659 Phase1 repo/CI In Progress · PAT-2660 Phase2 api/auth/permissions In Progress · PAT-2676 Phase3 core ports To Do (7 subtasks 2677-2683). First consumer = AI-118 (ai-chat-admin) still To Do. Epic rule already decided: React for all new apps incl. LIFF + Expo; legacy migration = route-level strangler behind one domain; RN mapping of sellsuki-components is out of scope.
 
 See [[project_oc2plus_member_react_migration]] for how this applies to the OC2Plus member frontend.
+
+**Re-verified 2026-09-10 — ไม่ขยับเลยจาก 2026-09-08:** `projects/856/packages` ยัง `[]`, MR !1 ยัง Draft (`spike/walking-skeleton -> main`), PAT-2659/PAT-2660 ยัง In Progress (updated 2026-09-08), PAT-2676 ยัง To Do. **นัยสำคัญ:** pnpm 10.30 เป็นข้อกำหนดของการ *พัฒนา* kit ไม่ใช่การ *consume* — ทั้ง registry version และ vendor tarball ติดตั้งด้วย npm ได้ ดังนั้นการรอ CI template สาย pnpm จาก SRE ไม่ใช่ blocker จริงของ repo ที่จะมาเป็น consumer
