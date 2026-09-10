@@ -25,6 +25,7 @@
 - [PAT sprint truth](reference_pat_board_sprints.md) · [PAT epic links unwired](project_pat_epic_links_unwired.md) — customfield_10020; grouped by label
 
 ## Git / CI gotchas
+- [CRLF .vue reflows on text rewrite](reference_crlf_vue_files_reflow_on_text_rewrite.md) — Default.vue is CRLF; scripted text edits flip the whole file; edit in binary mode and check diff --stat
 - [FF merge reverts](reference_fast_forward_merge_silently_reverts.md) · [Silent semantic break](reference_silent_semantic_merge_break.md) · [Parallel dup symbols](reference_parallel_sessions_duplicate_symbols.md) · [.bak restore drops comments](reference_bak_restore_drops_comments.md) · [worktree remove rewinds main checkout](reference_worktree_remove_rewinds_main_checkout.md) · [Grep origin not stale branch](reference_grep_stale_branch_not_origin.md) — clean merges lie; check diff --cached; grep origin/develop
 - [Submodules shallow](reference_submodules_are_shallow_clones.md) · [git @{u} false zero](reference_git_upstream_false_zero.md) — unshallow first; compare origin/<b>..HEAD
 - [Review bot: finding right, reason wrong](reference_review_bot_finding_right_reason_wrong.md) — verify its premise and run its patch against the whole suite before applying
