@@ -54,3 +54,43 @@ never exact copy or color on a page slated for redesign (amended in OC-4491 comm
   four tabs — there is no news tab; ของรางวัล and ประวัติ take its place.
 
 Related: [[project_oc2plus_member_react_migration]] [[project_oc2plus_liff_shell_is_the_line_entry]]
+
+## Card sweep completed 2026-09-10 (summary on OC-4344, comment 44653)
+
+Rewrote: OC-4370, 4346, 4490, 4491, 4492, 4493, 4494, 4496, 4499, 4501, 4502, 4503, 4504, 4505.
+AC-amendment comments only (body was ~90% right): OC-4500 (44651), OC-4506 (44652).
+Verified already-correct, untouched: OC-4495.
+
+**Card claims that did not match the code** (all cards were written 2026-09-09 and drifted or were
+invented; treat every file:line in this lane as needing re-verification before use):
+
+- **OC-4505 cited seven `liff.*` call sites in `HomeView.vue` that do not exist.** The LIFF SDK is
+  imported once (`src/stores/integration/index.ts:5`) and called from exactly two places:
+  `liffInit` / `liffGetAccessToken` in that store, and `liff.logout()` in
+  `src/views/Error/ErrorKindView.vue:69`. `HomeView.vue` only reads the `liff.state` query param
+  (`:51-52`) and names a Sentry tag `'liff.sendMessages.welcome'` (`:150`).
+- OC-4494: `services/auth` is **103** lines, not 71. And `stores/auth/index.ts:79` has
+  `else phoneError.value = 'invalid'` — a fall-through that flattens `member_not_found`,
+  `otp_expired`, `otp_locked`, `otp_invalid` into "wrong phone number". Preserve or change it
+  deliberately; do not let a refactor silently alter it.
+- OC-4496: every line reference had shifted, and it omitted `isForbidden` (`:54-56`). `fetchDetail`
+  now splits **four** ways (401 `:161` / not_found `:162` / forbidden `:163` / network `:164`) —
+  a usecase returning fewer states silently reverts OC-4498.
+- LOC drift: PointClaimList 783→**795**, PointClaimDetail 798→**812**, HomeView 189→**197**.
+  Error views are **four** files now (NotFound 34, ErrDataAccessDenied 38, ErrUnexpected 38,
+  **ErrorKindView 115**) with a new route `/error/:kind` (`router:85`).
+- Router has **10** routes, not 9 (OC-4500/OC-4506 both said 9).
+- OC-4502: design adds a **birthday** field — `birthdate` exists in the DB and repository
+  (`member_repository/postgresql.go:30`, column `i.birthdate`) but **not in `v1.yaml`**, so it needs
+  an API change. Design also merges first/last name into one input while the API takes them apart.
+- OC-4504: there is **no client-side file size/type check** — only `accept=...` at
+  `PointClaimNewView.vue:768`; rejection comes back from the server as `photo_invalid`.
+  `DRAFT_TTL_MS` is 24h (`pointClaimDraft.ts:22`), drafts live in **IndexedDB**, and an expired one
+  is deleted by `loadDraft` (`:140`), not merely hidden. `SUBMIT_ERROR_CODES` (`:58-63`) holds five
+  codes plus `unauthenticated` = six outcomes.
+
+**Three cards are blocked on a design question, not on engineering:** design v2 has no login screen
+(OC-4501), no claims-list counterpart (OC-4503 — `tabHistory` reads as points history, a different
+domain), and no receipt-submit screen (OC-4504 — only `ovScan`). Each says "cannot decide = cannot
+start" rather than guessing.
+
