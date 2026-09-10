@@ -42,3 +42,19 @@ Sprint ที่เซ็ตจริง (verified ด้วย JQL): **129 (id 
 - views ตอนนี้ 9 ไฟล์ **5,327 LOC** (PointClaimNewView 1452, MembershipView 1152, PointClaimDetail 812, PointClaimList 795, LoginView 694, HomeView 197)
 - OC-4498 (M8) **merged เข้า develop แล้ว** (!37, commits 5226c84+9c9626e) และ !38 develop→main ยังเปิด — status board = code review
 - `package.json` name ยังเป็น `vue-projectoc2plus-linecrm-frontend-backoffice`, CI = template `generic-frontend-vue-npm-th` + `node:20`, UNIT/E2E/INTEGRATION script ยัง `echo "1 + 1"`
+
+
+## Sprint ladder ที่จัดใหม่ 2026-09-10 (ของเดิมไม่เคยลงจริง)
+
+ก่อนแก้ **15 จาก 17 การ์ดกองอยู่ Sprint 129 พร้อมกันหมด** รวม OC-4506 (ปลด Vue) · มีแค่ 4495/4496 อยู่ 131 · Sprint 130 ว่าง → บอร์ดอ่านว่าย้ายทั้งแอปจบใน sprint เดียว
+
+ladder ที่ลงจริงแล้ว (ยืนยันด้วย JQL):
+
+* **129 (1365)** — 4490 ประสาน kit · 4491 E2E baseline · 4492 CI gate (**Done แล้ว**) · 4493 token · 4494 usecase login → ไม่พึ่ง kit เลย
+* **130 (1366)** — 4495 · 4496 · 4497 usecase ที่เหลือ
+* **131 (1991)** — 4499 React boot · 4500 strangler → ใบแรกที่ install kit จริง ต้องรอ 4490
+* **ไม่มี sprint** — 4501–4506 (หน้าที่ต้องย้าย) รอ 4499/4500 + 4 ใบแรกยังมี 🔴 design ค้าง
+
+OC-4498 คงไว้ 129 (การ์ด product ที่พลอยติด label)
+
+⚠️ ในตัว description ของแต่ละการ์ดยังมีบรรทัด "Size / Sprint ที่เสนอ" ค่าเก่าคนละค่า (129/131/132/133/134/135) — **เลิกใช้ ให้ยึด sprint field** · ไม่แก้ใน description เพราะ rewrite ยาวผ่าน API ทำภาษาไทยเพี้ยน (ดู [[reference_jira_editissue_adf_breakage]]) · ladder ฉบับจริงอยู่ที่ OC-4344 comment 44656
