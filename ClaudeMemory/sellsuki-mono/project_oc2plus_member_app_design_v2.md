@@ -1,6 +1,6 @@
 ---
 name: project_oc2plus_member_app_design_v2
-description: "OC2Plus member app design of record = 'OC2 Plus Loyalty v2 - Friendly.dc.html' (4-tab app, 11 overlays); it uses ZERO ssk-* DS custom elements, brand #32a9ff == the app's existing --c-primary default; PO decided 2026-09-10 to port straight to this design in one pass"
+description: "OC2Plus member app design of record = 'OC2 Plus Loyalty v2 - Friendly.dc.html' (4-tab app, 10 overlays); it uses ZERO ssk-* DS custom elements, brand #32a9ff == the app's existing --c-primary default; PO decided 2026-09-10 to port straight to this design in one pass"
 metadata:
   node_type: memory
   type: project
@@ -18,7 +18,7 @@ metadata:
 Zip mtimes are all identical (zip creation time) — they cannot tell you which is newest.
 
 **Structure (v2):** 4 tabs `หน้าแรก / ของรางวัล / ประวัติ / โปรไฟล์` · auth `isSplash → isRegister →
-isOtp → isApp` with a 6-box OTP and `otpError` · overlays `ovQR ovScan ovStamp ovReward ovCoupons
+isOtp → isApp` with a 6-box OTP and `otpError` · overlays `ovQR ovScan ovReward ovCoupons
 ovCampaign ovCampaignsAll ovConfirm ovSuccess ovMissions ovLucky` · `selPhysical`/`isShip` (physical
 reward → address + shipping) · `showLiffBar` · `historyEmpty` · `toast` · `hasScrim` · language TH/EN
 in profile.
