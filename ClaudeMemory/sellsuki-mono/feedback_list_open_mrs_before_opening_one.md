@@ -44,3 +44,5 @@ including retracting criticism written before reading the other side's CI job
 definition, which is what made me wrongly claim !14 had the dash bug.
 
 Related: [[reference_silent_semantic_merge_break]], [[reference_ai_board_in_review_means_merged_unverified]].
+
+**Stacked MR trap, seen for real 2026-09-10 (backoffice-api):** !553 targeted the feature branch of !551. !551 merged to develop at 08:02:11; !553 merged into that (already-merged) branch at 08:02:21. GitLab shows !553 as **merged**, yet its code never reached develop — `git show origin/develop:<file>` proved the route was absent. Rule: when stacking, merge the BOTTOM MR last, or re-point the child at develop before merging the parent; after any stacked merge, verify content on develop by file, not by the MR badge. Recovery = new MR from the same source branch to develop (became !555).

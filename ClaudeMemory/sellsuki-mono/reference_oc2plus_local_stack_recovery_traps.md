@@ -142,3 +142,7 @@ joins on that); approved/rejected claims stay failed by design. Also reset `atte
 
 Related: [[project_overmind_restart_quirk]] [[reference_local_bola_own_overmind_socket]]
 [[reference_keto_staging_permission_lookup]] [[project_oc4362_approve_and_admin_edit]].
+
+**Two different local identities (2026-09-10).** The browser acts as `VITE_LOCAL_DEV_IDENTITY_ID` (vite.config `identityProxy` injects it on /backoffice/*), which on this machine is `28c87280-dbf5-4469-9555-2eb9acb6977c` — NOT the `317c3e2a-d977-44d8-a3a5-3cd2bcbfa542` used in curl and in older notes. `/v1/user/company` is derived from rps role assignments, so each identity sees a different company list and "Local Test Company" (`11111111-1111-4111-8111-111111111111`) was invisible in choose-company for the browser. Fix without reseeding: `grpcurl -plaintext localhost:9998 role_and_permission.RoleAndPermissionService/AssignRole` with role ids owned by that company (65 OC2Plus Company Owner, 82 Company Owner, 64 File Service Access), tenant `sellsuki.company:<company>`, user = the browser identity; re-assign is a harmless "already has this role". Read the browser's real identity from `/private/tmp/oc2plus-backoffice-api.log` request headers rather than the .env.
+
+**Logout can't work in local:** identity is a header the vite proxy injects, so "ออกจากระบบ" only clears localStorage and bounces to the AMS logout URL (accounts.sellsuki.local rejects a localhost `return_to`) — you always land back on choose-company still authenticated. Not a bug.
