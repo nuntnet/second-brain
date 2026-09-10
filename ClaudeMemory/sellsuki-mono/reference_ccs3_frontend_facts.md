@@ -20,3 +20,26 @@ metadata:
   - Verify without a browser: `curl -sk https://company.sellsuki.local/src/lib/axios-client-v2.ts | grep <uuid>` — vite inlines env into served modules, so the new id appearing there proves the restart took.
 
 See [[reference-local-bola-own-overmind-socket]] for the per-stack overmind socket pattern used to start it without disturbing other sessions.
+
+## Branch -> environment (verified 2026-09-10 from the deployments API)
+
+- **`develop` -> development** (deploys reliably; `develop` 30e6de8a succeeded 2026-09-10 10:26)
+- **`main` -> staging** — last *successful* `deploy_staging` was 2026-09-04 at `main` a4185a1d.
+  A later run at `main` 12d55d68 (2026-09-07) came back **`skipped`**, so "there is a
+  staging deployment" and "the last pipeline deployed" are different questions — filter
+  the deployments API by `status=success` before concluding anything.
+- **production <- tags** (last: `v1.8.0`, 2026-07-14)
+
+**Correction:** an earlier note in this workspace claimed CCS3 frontend has *no* staging
+environment. That is wrong — environment ids are staging 396, production 397,
+development 400. The confusion came from reading a `skipped` deployment as an absent one.
+
+`develop` runs far ahead of `main` (119 commits ahead, 9 behind on 2026-09-10), so a
+feature merged to `develop` is on **development only** and invisible on staging until
+someone merges `develop` -> `main`. The BOLA Workspaces menu hit exactly this: present on
+`develop` (`src/pages/BolaWorkspace/`, 3 files + the sidebar entry), **absent from `main`**.
+
+Sidebar menus here are gated by env flag only, no permission check —
+`VITE_DISABLE_<FEATURE>_FEATURE` read through a local `toBoolean` in
+`src/components/Layout.svelte:53` that correctly treats the string `"false"` as false
+(`value.toLowerCase() === 'true'`), so a quoted `"false"` in `.env.*` does NOT hide the menu.
