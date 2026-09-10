@@ -26,3 +26,26 @@ code; report "CI infra" explicitly. Backoffice-api / member-api / FE MRs use `ci
 nothing there can merge until the mirror is fixed; 3rdparty-api MRs show `mergeable` (no CI gate)
 but should not be merged on a red pipeline knowingly. Check whether it is fixed with the latest
 pipeline on any branch: `glab api "projects/:id/pipelines?per_page=5"`.
+
+## 2026-09-10 22:26–23:30+ Thai — ล่มอีกรอบ ต้นเหตุ = runner ตัวเดียวที่มี tag `staging-th` offline
+
+**วิธีวินิจฉัยที่เร็วที่สุด (ทำซ้ำได้):**
+
+```bash
+glab api "runners/5153" | python3 -c "import json,sys; d=json.load(sys.stdin); print(d['description'], d['online'], d['tag_list'])"
+```
+
+**id 5153 = `Staging-th Runner General`, tags `['general','docker','sellsuki','amd','staging-th']`** — เป็น **runner ตัวเดียว** ที่มี tag `staging-th` · ทุก job ของ project 529 ต้องการ tags `['amd','docker','general','sellsuki','staging-th']` ครบชุด · runner อื่นที่ online (5125 `Production Private Gitlab Ru`, 5127 `Production Gitlab Runner`) มี tag `production` ไม่มี `staging-th` → **รับงานแทนไม่ได้**
+
+วันนั้น pipeline 58187 เขียวปกติที่ 13:26 UTC บน runner ตัวนี้ แล้วมันหลุด offline ช่วง 13:26–15:26 UTC · ผลคือ pipeline ค้าง **7 ตัวพร้อมกัน**
+
+### แยกสองสถานะให้ออก ก่อนจะไปแก้ผิดที่
+
+| status | ความหมาย | ทางแก้ |
+| --- | --- | --- |
+| `pending` | job แรกของ pipeline **หา runner ไม่ได้** | ไม่มีอะไรทำได้ รอ runner กลับ |
+| `waiting_for_resource` | ติดคิว resource_group ที่ pipeline เก่ากว่าถืออยู่ | ปกติคือ cancel ตัวที่ถือ ([[reference_stuck_ci_job_holds_resource_group]]) |
+
+**แต่ถ้าตัวที่ถือ lock เป็น `pending` เพราะไม่มี runner → cancel ไม่ช่วยเลย** เพราะ pipeline ถัดไปก็จะ pending ต่อ · วันนั้น 58225 (develop, จาก push ที่ merge !39) เป็น `pending` แล้ว 5 ตัวหลังเป็น `waiting_for_resource` เรียงกัน — ถ้าดูแค่ status ของตัวหลังจะเข้าใจผิดว่าเป็น lock แล้วไป cancel เปล่า ๆ
+
+**เช็ค tags ของ job ที่เคยสำเร็จ vs ที่ค้าง เป็นตัวชี้ขาด** — ถ้าเหมือนกันเป๊ะและ runner name เดิม แปลว่าไม่ใช่ config ของ MR แต่เป็น infra
