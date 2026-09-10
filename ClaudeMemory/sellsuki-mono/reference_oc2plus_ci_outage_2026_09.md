@@ -13,8 +13,15 @@ Every OC2Plus pipeline (backoffice-api, member-api, 3rdparty-api, both FEs) has 
 - 09-09: "Staging-th Runner General" is back but `registry.fountain.sellsuki.com/dockerhub/library/golang:1.24`
   fails with ImagePullBackOff / DeadlineExceeded → `runner_system_failure`. Retrying the job
   (`glab api -X POST projects/:id/jobs/<id>/retry`) reproduces it — the mirror, not the job.
+- 09-09 16:08Z → 21:00Z: 9 MR pipelines (backoffice-api/FE/CCS3/bola) sat `stuck_or_timeout_failure`
+  runner=None for ~5h, then on 09-10 retry the runner picks them up but the mirror
+  `registry.fountain.sellsuki.com` answers `TLS handshake timeout` for alpine:3.15 / node:20 /
+  golang → `runner_system_failure` after ~25s. Intermittent: some retries pass. Pipeline-level retry
+  (`pipelines/:id/retry`) reruns only failed jobs and keeps skipped ones `created` — fine.
 
-**How to apply:** read `failure_reason` and the first WARNING lines of the trace before touching
+**How to apply:** a poll loop that retries `runner_system_failure`/`stuck_or_timeout_failure` jobs
+up to ~4× (60s cadence) rides out the intermittency; only `script_failure` means look at code.
+ read `failure_reason` and the first WARNING lines of the trace before touching
 code; report "CI infra" explicitly. Backoffice-api / member-api / FE MRs use `ci_must_pass`, so
 nothing there can merge until the mirror is fixed; 3rdparty-api MRs show `mergeable` (no CI gate)
 but should not be merged on a red pipeline knowingly. Check whether it is fixed with the latest
