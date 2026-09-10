@@ -148,3 +148,7 @@ keep 1280-frame coords → click by screenshot coords instead.
 
 **2026-09-10 review-dialog UX (OC-4524):** dialog now opens split — receipt image panel left 46% (`ReceiptImagePanel.vue`, zoom/rotate/thumbs, own scroll) + compare/items right (own scroll), modal 1400px; FE !581. Root cause of "250 vs 12,500": VLM prompt read only `unit_price` per line → backoffice-api !554 asks `quantity` + `line_total` too (fills existing Quantity/LineAmount); FE shows unit × editable qty = amount (`effectiveLineAmount`, exact BigInt multiply) and captions OCR total as ยอดรวมท้ายใบเสร็จ. Next: OCR bounding boxes to highlight lines on the image (not started).
 
+**Approve semantics (2026-09-10, !554 f01324c + !581 cbe4197):** points = `computeBaseRatePoints(purchase_amount)`; `POST …/approve` now takes `purchase_amount` (selected lines' sum; validated via `parseAmountToSatang` > 0; written in the same UPDATE) and `item_quantities` (→ `item_breakdown[].quantity` + computed `line_amount`). FE sends purchase_amount whenever lines are ticked and the confirm modal names it. Matching (OC-4481) + price rule (OC-4478) compare OCR `unit_price` against the campaign's PIS snapshot price — per unit, unchanged.
+
+**OCR qty proven 2026-09-10:** new VLM prompt (!554) returned `quantity 50 / unit_price 250.0 / line_amount 12500.0` on the real local receipt; FE prefills the qty box. Old readings need admin retry — `point_claim_ocr_result.admin_retry_count` caps retries (reset locally via psql to re-test).
+
