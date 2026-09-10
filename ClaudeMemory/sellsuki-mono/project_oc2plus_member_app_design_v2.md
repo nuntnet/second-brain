@@ -94,3 +94,11 @@ invented; treat every file:line in this lane as needing re-verification before u
 domain), and no receipt-submit screen (OC-4504 — only `ovScan`). Each says "cannot decide = cannot
 start" rather than guessing.
 
+
+## Card sweep — OC-4352 / OC-4354 (2026-09-10)
+
+**OC-4352** โปรโมชันกับของรางวัลเป็น **สอง surface แยกกัน** (`tabReward` vs `ovCampaignsAll`) ไม่ใช่หน้าเดียว · ตัวกรองหมวดที่การ์ดเดิมเขียนว่า "ไม่อยู่ใน MVP" อยู่ในขอบเขตแล้ว (design มี `cats` 5 + `campCats` 5 + toggle "แสดงเฉพาะที่แลกได้") · รายละเอียดของรางวัลเป็น **overlay ไม่ใช่ route** → กระทบ route table ของ OC-4500
+
+**OC-4354** design มีขั้น `selPhysical` "รับสินค้าอย่างไร" → **รับที่หน้าร้าน / จัดส่งที่บ้าน** ซึ่ง **ยกเลิก Rule 4 เดิม** ที่บังคับ `shipping_address_id` กับ product ทุกกรณี — ตอนนี้บังคับเฉพาะ `delivery` · ต้องมี field ใหม่ `fulfilment_method` (`pickup`|`delivery`) ที่ contract ยังไม่มี → เคาะไม่ได้ = เริ่มไม่ได้ · `isShip` แสดง "แต้มคงเหลือหลังแลก" เป็น preview ก่อน confirm (ค่าจริงต้องมาจาก response) · `ovCoupons` "คูปองของฉัน" (รหัสแบบ `CPN-4F82-90KD` + วันหมดอายุ + "ใช้เลย") คือ artifact หลังแลกที่ยังไม่มีการ์ดและ contract ไม่ได้คืนมา
+
+ช่องว่างทั้ง 4 ข้อของ contract เขียนไว้ที่ [[reference_oc2plus_jira_project]] OC-4347 comment 44654 (BFF เป็นเจ้าของ ไม่ใช่การ์ดหน้าจอ)
