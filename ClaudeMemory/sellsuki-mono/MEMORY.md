@@ -70,6 +70,7 @@
 - [QMS CCS2 reframe](project_qms_ui.md) · [Quota ≠ gate](project_quota_not_feature_gate.md) · [no allow/deny RPC](reference_quota_no_allow_deny_rpc.md) · [Plan anchor](project_plan_capability_quota_anchor.md) — quota=metering; Commercial Plan = anchor
 - [SukiPay audit table](project_sukipay_audit_log.md) · [void rename](project_sukipay_void_rename.md) · [refund cluster](project_sukipay_refund_cluster.md) · [offline payment](project_sukipay_offline_payment.md) — SukiPay facts
 - [User pain evidence gap](project_user_pain_evidence_gap.md) · [Product KB](project_sellsuki_product_kb.md) · [Bundle product](project_bundle_in_catalog.md) · [PIS frontend local + 3 embed hosts incl. OC2Plus ของรางวัล](project_pis_frontend_local_testing.md) · [Provider FE/BE routing](project_provider_frontend_backend_routing.md) — no real user research; docs/product-kb/
+- [Invented DS props render nothing](reference_ds_invented_props_render_nothing.md) — `errormessage` isn't in the DS; 3 call sites vs 25 for `helperText`+`error`; modal bodies scroll so errors go at the top + toast
 - [ssk-* DS docs](reference_ssk_components_docs.md) · [DS 1.0 beta gotchas](reference_ds_1_0_beta_gotchas.md) · [DS is 94% of the FE bundle](reference_ds_bundle_dominates_and_cannot_treeshake.md) · [DS inputs cost seconds in bulk](reference_ds_inputs_expensive_on_first_paint.md) · [i18next mutates your imported JSON](reference_i18next_mutates_the_json_you_import.md) — isCustomElement; no tree-shaking; 232 inputs = 32s; addResource corrupts module
 
 ## AI Chat Platform
