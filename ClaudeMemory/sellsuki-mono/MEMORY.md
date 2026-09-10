@@ -63,6 +63,7 @@
 - [OC-4362 claim cluster](project_oc4362_claim_cluster_gaps.md) · [OC-4464 OCR vendor](project_oc4464_ocr_vendor_decision.md) · [OC-4362 approve+admin-edit](project_oc4362_approve_and_admin_edit.md) — §A/§B/§C + OCR items + Phase-3 fixes done; backend gated on !538; full-pipeline proven with real Gemini
 - [Customer App program](project_customer_app_program.md) · [auth plan](project_oc2plus_customer_app_auth_plan.md) · [OC-4348 web-OTP session minter](project_oc4348_web_otp_session_minter.md) · [Invite→app chain](project_invite_multiapp_chain.md) — 5 epics; company-from-member; PAT-2553 return_to
 - [OC-4511..4514 UX cluster](project_oc4511_4514_ux_cluster.md) — 2026-09-09 all MRs open →develop; !553 stacked on !551; BOLA needs `/v1/system` base URL + SYSTEM_TOKEN; CUSTOMER_APP_* values unset
+- [LIFF shell = the LINE entry](project_oc2plus_liff_shell_is_the_line_entry.md) — BOLA per-OA LIFF → /liff/shell → flow destination (web URL) + identity handoff; OC-4511 `CUSTOMER_APP_LIFF_ID` and first OC-4514 impl contradict it, rework pending
 
 ## Patona / OMS / QMS / SukiPay
 - [Akita/Patona strategy](project_akita_patona_migration_strategy.md) · [OMS2 gaps](project_oms2_plan_gaps_2026q3.md) · [Decouple decision](project_oms2_decouple_decision.md) · [MS-687 reserve](project_ms687_reserve_needs_company_location.md) — Patona = Akita target; PAT-2540
