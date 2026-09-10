@@ -1,6 +1,6 @@
 ---
 name: project-oc4464-ocr-vendor-decision
-description: OC-4464 OCR vendor เคาะแล้วเป็น iApp Thai Receipt OCR — และ Textract ใช้ไม่ได้เพราะไม่มีภาษาไทย
+description: "OC-4464 OCR vendor: เคาะ iApp ไว้ 2026-08-28 แต่ 2026-09-10 เลิกใช้แล้ว ของจริงคือ VLM (OpenRouter gemini-2.5-flash); adapter iApp ถูกลบ, default = vlm — และ Textract ใช้ไม่ได้เพราะไม่มีภาษาไทย"
 metadata:
   type: project
 ---
@@ -29,3 +29,14 @@ metadata:
 เลขใบเสร็จผิด 1 ตัวได้
 
 Related: [[project-oc4362-claim-cluster-gaps]]
+
+**2026-09-10 — ยกเลิก iApp:** ของที่รันจริงคือ **VLM reader** (`RECEIPT_OCR_PROVIDER=vlm`) ยิงผ่าน
+OpenRouter ไปที่ `google/gemini-2.5-flash` (`src/repository/receipt_ocr_repository/vlm.go`) พิสูจน์กับ
+ใบเสร็จจริงแล้วอ่าน quantity/unit_price/line_total ได้ · adapter `iapp.go`/`iapp_test.go` ถูกลบ ค่าคงที่
+ที่ใช้ร่วมกันย้ายไป `shared.go` (รวม `init()` ที่ตั้ง logger ให้เทสต์ ไม่งั้น paddle test panic) · default
+ของ `RECEIPT_OCR_PROVIDER` เปลี่ยนจาก `iapp` เป็น `vlm` เพราะ default เดิม + key ว่าง = เลือก reader ที่
+ไม่มีใครมี credential แล้วอ่านล้มเงียบทุก environment · เหลือ `vlm` กับ `paddle` เท่านั้น ชื่ออื่น = ปิด OCR
+
+**กับดักที่เจอตอน audit (2026-09-10):** `RECEIPT_OCR_*` ไม่เคยถูกใส่ใน `deployment/values-*.yml`
+เลยสักไฟล์ → OCR ปิดอยู่ทุก environment ตั้งแต่วันแรกที่ merge โดยไม่มี error ให้เห็น (Rule 3 ทำให้คิว
+ทำงานปกติ แค่ตารางเทียบว่าง) เพิ่งเติมทั้ง 3 env พร้อม key จาก secret `oc2plus-crm-secret`
