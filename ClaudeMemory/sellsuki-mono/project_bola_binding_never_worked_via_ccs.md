@@ -1,6 +1,6 @@
 ---
 name: project_bola_binding_never_worked_via_ccs
-description: "การผูก BOLA workspace อัตโนมัติตอนสร้างบริษัทพังทุก environment ตั้งแต่ย้ายมาสร้างผ่าน CCS (BOLA-317) เพราะ client ส่งแต่ X-System-Token ไม่ส่ง identity — แก้แล้ว 2026-09-10 (backoffice-api !559)"
+description: "เส้นทางสร้าง BOLA workspace ผ่าน CCS ส่งแต่ X-System-Token ไม่ส่ง identity → CCS ตอบ unauthenticated เสมอ; แต่ CREATE_BOLA_WORKSPACE_VIA_CCS ปิดอยู่ทุก env จึงยังไม่กระทบ production — แก้แล้ว !559/!560 พร้อม retry ที่กู้เองได้ (2026-09-10)"
 metadata:
   type: project
 ---
@@ -35,3 +35,23 @@ CCS `BOLA_SYSTEM_TOKEN` และ BOLA `SYSTEM_ADMIN_TOKEN`) และ `CCS_SERV
 สร้างย้อนหลังผ่าน CCS ในนามเจ้าของ แล้ว UPDATE แถว binding เป็น active ด้วยมือ
 
 เชื่อม [[project_oc2plus_liff_shell_is_the_line_entry]] [[reference_oc2plus_local_stack_recovery_traps]] [[project_bola_saas_access_model]]
+
+**แก้ให้ตัวเองตรงนี้ (สำคัญ):** ตอนแรกผมสรุปว่า "พังทุก environment" ซึ่ง**ผิด** · เส้นทาง CCS อยู่หลัง
+feature flag `CREATE_BOLA_WORKSPACE_VIA_CCS` (`cmd/generics_server/main.go`, envDefault `false`) และ
+**ไม่ได้ตั้งไว้ในไฟล์ values ของ env ไหนเลย** → dev/staging/production ยังสร้าง workspace ตรงไปที่ BOLA
+(`BOLA_SERVICE_ENDPOINT` + system token) ซึ่ง config ครบ · บั๊ก missing-identity จึงเป็นระเบิดเวลา
+สำหรับวันที่เปิด flag ไม่ใช่สาเหตุที่ production พัง
+
+**สาเหตุจริงบนเครื่อง local:** `BOLA_SERVICE_ENDPOINT` ไม่ได้ตั้งใน `.env` และ **ค่า default ในโค้ดคือ
+`http://localhost:8085`** ซึ่งบนเครื่องนี้คือ central-configuration-system → `POST /v1/workspaces` ได้ 404
+ทุกครั้ง (BOLA local อยู่ 8097) · เติม `BOLA_SERVICE_ENDPOINT=http://localhost:8097` แล้ว sweep กู้ binding
+กลับมา active ได้เองในรอบเดียว และใช้ workspace เดิมไม่สร้างซ้ำ
+
+**เพิ่มเติมที่ทำใน !560:** retry ใช้ owner ที่เก็บไว้ (`owner_user_id`, migration member-api 015 merged),
+adopt workspace ที่ CCS มีอยู่แล้วแทนการสร้างซ้ำ, และ response `customer-app` มี `binding_status`
+(active/pending/failed) ให้หน้าจอสมาชิกแยกข้อความ "กำลังเตรียม" กับ "ล้มเหลว" (FE !591 merged)
+
+**กับดักการดีบักที่เสียเวลาที่สุด:** log ของ service อ่านไม่ได้เพราะ process เป็น orphan (air ถูก launchd
+รับเลี้ยง หลัง overmind session เดิมตาย) · ย้ายมารันใต้ overmind socket ใหม่ (`.overmind-oc2api.sock`,
+`overmind start -l oc2plus-api -D`) แล้วถึงอ่าน pane ได้ และเห็น 404 จาก 8085 ทันที
+
