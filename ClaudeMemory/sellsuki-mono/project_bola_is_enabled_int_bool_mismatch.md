@@ -14,6 +14,20 @@ goes out as OID 16 and Postgres refuses:
 ERROR: column "is_active" is of type integer but expression is of type boolean
 ```
 
+The message in the logs is pgx's, not Postgres's — pgx picks the encode plan
+from the parameter's declared OID and gives up client-side, so the statement is
+never sent (`[rows:0]` on the INSERT):
+
+```
+failed to encode args[14]: unable to encode true into binary format
+for int4 (OID 23): cannot find encode plan
+```
+
+`args[N]` is a zero-based index into the INSERT's column list — count the columns
+in the logged statement to find which one. The server-side message
+(`column ... is of type integer but expression is of type boolean`) only appears
+if you send the parameter with psql; grep the logs for "cannot find encode plan".
+
 **Writes fail, reads do not** — `database/sql` converts an `int64` of 0/1 into a
 `bool`. So list/get endpoints look healthy and only create/update 500. That
 asymmetry is why instances survive for months.
