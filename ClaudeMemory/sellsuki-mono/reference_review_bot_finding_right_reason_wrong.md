@@ -29,3 +29,5 @@ check optional *in behaviour*, not just in appearance).
 before believing it, (2) run the suggested patch against the whole suite not just
 the new test, (3) reply saying which part you took and which part you rejected and
 why. See [[reference_gitlab_review_bot_targets]] for when the bot runs at all.
+
+**2026-09-10, backoffice-api !551 (second instance):** bot asked for `t.Parallel()` because it is "used universally in the surrounding test suite" — actually 18 of 80 `_test.go` files, and the nearest neighbours (`point_claim_test.go`, `campaign_test.go`, `campaign_product_scope_v1_test.go`) do not use it. Fix still worth making (those files touch no global; `-race` clean) → adopt the fix, correct the premise in the reply. Never let "the bot says it's the convention" stand in for `grep -rl` over the suite.
