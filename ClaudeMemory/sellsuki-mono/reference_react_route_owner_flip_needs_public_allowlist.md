@@ -30,3 +30,28 @@ unit tests both pass. The guard is only reachable through the shell.
 `publicRoutes.ts` in the same commit, and keep the test that asserts **every** `owner:'react'`
 route has a deliberate public/protected decision. Public entries today: `react-probe`,
 `login`, `register-by-slug`. Related: [[project_oc2plus_member_react_migration]]
+
+
+## 2026-09-11 (evening) — it was live on `develop` and worse than first reported
+
+PO hit it in the browser. On `develop`, `PUBLIC_REACT_ROUTE_NAMES` held only
+`react-probe`, so **every** react-owned route sat behind the guard — including
+`login`, which is AuthGuard's own redirect target. Measured on the local dev
+server: a real page load of `/{slug}/history` settled at `/{slug}/login` with
+`document.body` empty, 0 child nodes, no `data-testid`. `/{slug}/home` the same.
+The guard rejected its own redirect and rendered `null`, so the whole app was a
+dead end for anyone not already signed in.
+
+`publicRoutes.spec.ts` **asserted the bug** (`isPublicRouteName('login') === false`),
+and `LoginPage.spec.tsx` renders the page directly, bypassing `AppShell` — which is
+why 490 unit tests and type-check stayed green over a completely unusable app.
+
+Fixed in **MR !68** (`fix/oc-4501-login-blank-for-anonymous`), a one-line change plus
+a spec that locks the general rule: **a route that RESOLVES the "no session" state can
+never be gated on having one.** Verified after: same navigation renders `login.page`,
+`login.phone.input.phone`, `login.phone.button.submit`. MR !65 (OC-4502) carries the
+same fix plus `register-by-slug`, but !68 is small enough to merge first.
+
+**Diagnostic that works:** unit tests cannot see this. Load the page for real and read
+`document.body.innerText.length` / child count — a guard-blanked page is 0/0 while the
+URL looks correct.
