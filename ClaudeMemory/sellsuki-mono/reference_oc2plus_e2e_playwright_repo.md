@@ -63,3 +63,19 @@ TS-009 ใช้ fixture wrapper เอง (`testLiffRegister`, `testLiffForcedS
 - `point-claim`/`pointClaim`/`point_claim` → **0 ไฟล์ทั้งรีโป**
 - ⚠️ `resources/pages/login.page.ts` = **login ของ staff/backoffice** (identifier+password+google+forgot) **ไม่ใช่ member** · `resources/pages/member.page.ts` = **หน้ารายชื่อสมาชิกในหลังบ้าน** ไม่ใช่ member app — ห้าม reuse ผิด
 - 15 ไฟล์ยังมี `TODO[OC2PLUS]` ค้าง
+
+## 2026-09-11 — CI root cause #2 found, and member specs proven green without secrets
+
+**Member-app specs pass on staging with ZERO secrets.** Ran locally:
+`ENV=staging BASEURL_MEMBER=https://member.staging-th.oc2.plus CI=1 npx playwright test tests/TS-009-Liff-Register.spec.ts tests/TS-012-Member-Login.spec.ts --reporter=line --workers=4`
+→ **PASS 56 / FAIL 1** in 24s. The only failure is TC-LIFF-REGISTER-29 (`testLiffThemed`), which seeds a company via Kratos+DB and dies on empty `KRATOS_URL`. Everything else uses route interception on a random slug, so it needs no credentials at all. TS-012 (member login, OC-4491 part 1) is already merged on `main`.
+
+**The `AUTOMATE_REPOSITORY` fix (commit `44f1e04`) worked** — the pipeline now gets past clone and fails one line later:
+`cp $ENV_STAGING utils/.env.staging` → `cp: missing destination file operand`, because `projects/808/variables` is still **0 variables**.
+`ENV_STAGING` is a **File-type CI variable holding the whole `.env`**. Every sibling e2e repo has it: 690 sellsuki-e2e (File, protected, 1189 bytes) · 547 patona-e2e (File) · 847 ams-e2e (File, scope staging). Only 808 lacks it. Needs a Maintainer to create — it contains staging DB + BOLA diagnostic passwords.
+
+**Two more traps waiting after that:** (1) the SRE job script is a bare `ENV=staging npx playwright test` — runs the WHOLE suite, so backoffice/BOLA specs drag the pipeline red even when customer-app is green; the repo's own `AUTOMATE_E2E_TS_PATH` is a **dead variable** (only the Robot-Framework templates read `AUTOMATE_E2E_TS_PATH_AND_TAG`, the Playwright one ignores it). (2) `projects/808/pipeline_schedules` = `[]`; the job rule is `CI_COMMIT_BRANCH == "main" && CI_REGRESSION_E2E_JOB_ENABLE == "true"` so it only runs on push to main.
+
+Job definition lives in SRE `templates/regression.template.yml` → `.execute_play_wright_e2e_testing` (image `mcr.microsoft.com/playwright:v1.59.1-noble`), wired by `pipelines/gitlab-ci-pipeline.generic-arm64-th.yml:186` as `play_wright_e2e_test_staging_th_arm`. `main` is a protected branch on 808.
+
+**Proposal recorded in OC-4370 comment 44700:** add a second job that overrides `before_script` (no `ENV_STAGING`), passes only the non-secret `BASEURL_MEMBER`, and greps the customer-app tags — that yields 808's first green pipeline without waiting on any credential.
