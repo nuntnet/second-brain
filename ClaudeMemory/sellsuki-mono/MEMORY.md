@@ -15,6 +15,7 @@ Titles are short on purpose — each file's own `description:` carries the detai
 - [Env URLs](reference_env_urls.md) — dev=.dev-th, staging=.staging-th · [Monorepo remotes](reference_monorepo_no_origin.md) · [Mainline ≠ main](project_monorepo_mainline_is_not_main.md)
 - [OC2Plus stack traps](reference_oc2plus_local_stack_recovery_traps.md) · [Stale branches per repo](reference_local_stack_stale_branches_per_repo.md) · [Stray dev server](reference_stray_claude_dev_server_squats_port.md) · [Stale postgres pod](reference_datastore_stale_postgres_pod.md)
 - [Overmind restart](project_overmind_restart_quirk.md) · [bola overmind sock](reference_local_bola_own_overmind_socket.md) · [Caddy host net](reference_caddy_host_networking_gotcha.md) · [Browser surfaces](reference_browser_surfaces_this_workspace.md)
+- [brew simdjson breaks node](reference_brew_simdjson_breaks_homebrew_node.md) — every node call exits 134; /usr/local node is v16
 - [rtk rewrites cmds](reference_rtk_git_output_filtering.md) — use /usr/bin/… · [Classifier blocks](reference_harness_classifier_blocks_secrets_and_mutations.md) · [Outline VPN](reference_outline_mcp_vpn_blocker.md) · [Agent resume](reference_background_agent_resume_patterns.md) · [codegraph projectPath](reference_codegraph_context_needs_projectpath.md)
 - [dev-th access](reference_dev_th_cluster_access.md) · [Teleport kills dev-th](reference_teleport_session_kills_devth_access.md)
 
@@ -28,6 +29,7 @@ Titles are short on purpose — each file's own `description:` carries the detai
 - [Pipeline retry ships skipped deploys](reference_pipeline_retry_runs_skipped_deploy_jobs.md) — retry jobs by id, never the pipeline · [Private Go module CI](reference_gitlab_private_go_module_ci.md) · [Review-bot targets](reference_gitlab_review_bot_targets.md) · [Dead staging runner](reference_dead_staging_runner_tag.md) · [glab ci stale](reference_glab_ci_status_stale_pipeline.md) · [rules de-scope jobs](reference_gitlab_rules_silently_descope_jobs.md) · [Library skips SRE tpl](reference_shared_library_skips_sre_template.md) · [Coverage on DB-less](reference_coverage_gate_on_dbless_job.md)
 
 ## Test gotchas
+- [Sentry dual hub on skew](reference_sentry_dual_hub_on_version_skew.md) — two @sentry/core = events vanish silently
 - [Stub too permissive](reference_test_stub_more_permissive_than_service.md) · [testify default wins](reference_testify_permissive_default_wins.md) · [Timing concurrency](reference_timing_dependent_concurrency_tests.md) · [Turbo false green](reference_turbo_cache_crosssession_false_green.md) · [Lit/React SSR](reference_lit_react_node_condition_hollows_tests.md) · [DS testId](reference_ds_testid_is_a_property.md) · [Node 25 jsdom](reference_node25_localstorage_jsdom_conflict.md)
 
 ## Go / DB gotchas
