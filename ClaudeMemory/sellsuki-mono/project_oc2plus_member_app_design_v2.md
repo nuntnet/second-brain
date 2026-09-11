@@ -230,3 +230,27 @@ radius ที่ใช้: `9999px ×63, 8px ×35, 12px ×26, 14px ×17, 6px ×1
 **โครง v3 จากคอมเมนต์ในไฟล์:** `SPLASH → REGISTER → OTP → APP` · APP มี 4 แท็บ `HOME/REWARD/HISTORY/PROFILE` · HOME มี tier card, points strip, daily check-in, play zone (ปุ่มไอคอนปัดได้) · overlay 18 ตัว: `SCRIM, SCAN, REWARD SHEET, CONFIRM, SUCCESS, COUPONS, CAMPAIGN, ALL CAMPAIGNS, BENEFITS, RECEIPT, EDIT PROFILE, ADDRESS BOOK, ADD ADDRESS, SETTINGS, NOTIFICATIONS, CHECK-IN, MISSIONS, LUCKY DRAW, TOAST`
 
 ⚠️ **description ของการ์ดเก่าหลายใบยังเขียนว่า v2 เป็น design of record** (เช่น OC-4346) ถ้าเจอความขัดแย้ง **ยึด v3** ตามที่ PO ยืนยันตอนส่ง zip มาให้ 2026-09-11
+
+## Where the design files actually are, and v3's ovReceipt (2026-09-11)
+
+The canvas export is at **`~/Downloads/Sellsuki loyalty app design (1).zip`** (the older
+`Sellsuki loyalty app design.zip`, no suffix, has only the three v2-era files — **no v3**).
+Nothing is unpacked in the monorepo; `find` for `*.dc.html` under `sellsuki_mono` returns nothing,
+which is why a session can wrongly conclude the design is unavailable. Unzip to a scratch dir:
+`unzip -oq "$HOME/Downloads/Sellsuki loyalty app design (1).zip" -d <scratch>` → four files,
+design of record = **`OC2 Plus Loyalty v3 - Tier.dc.html`, 1,937 lines**.
+
+**v3 DOES contain the receipt-submit screen** — this retires the 🔴 "เคาะไม่ได้ = เริ่มการ์ดนี้ไม่ได้"
+blocker on OC-4504, which was written against v2. It is overlay **`ovReceipt` at line 883**:
+title "สะสมแต้มด้วยใบเสร็จ" (`:887`), receipt-number field (`:894`, hint `:896`), photo attach
+(`:917`, `:921-922`), attached state (`:930`), submit "ส่งใบเสร็จเพื่อรับแต้ม" → `submitReceipt`
+(`:940`), a "ใบเสร็จที่ส่งไปแล้ว" list (`:945`), and a rules line (`:961`). Entry point is the
+`ovScan` overlay's (`:583`) button "สแกนไม่ได้? กรอกเลขใบเสร็จ" → `goReceipt` (`:595`).
+Recorded with line numbers in OC-4504 comment 44704.
+
+Three deltas vs the shipped app, flagged so nobody implements them as a freebie: design shows it as a
+**bottom sheet, the app has a real route** `/:slug/point-claims/new` (keep the route — strangler needs a
+path and LINE deep-links into it); the design puts a recent-receipts list **on the same screen** while
+the app has a separate page; the design's **"ส่งย้อนหลังได้ไม่เกิน 7 วัน" is a business rule** that
+member-api may not enforce; and the design has **no marketplace/order-id channel** at all, though the
+app supports it.
