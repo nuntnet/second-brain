@@ -29,9 +29,37 @@ one vertical is a **preset or per-workspace config**, never a default.
   language for phones, car parts and appliances, so those shops had customer
   questions escalated to a human and never answered, with no way to turn it off.
 
+- `sellsuki-ai-agent` MR !34 — that service holds a **copy** of the guardrail
+  package (chat-core checks the inbound message, ai-agent checks the outbound
+  reply) and `EvaluateOutputGuardrail` falls back to the same default. Fix both
+  or the platform enforces two policies depending on direction.
+- `ai-platform-kit-go` MR !23 — `customerfact.DefaultV1Schema` provisioned
+  `health_notes` (PDPA sensitive, encrypted, consent-gated) onto every workspace
+  that ever saves a schema, and fields can only be **deprecated, never removed**
+  (`Field.Deprecated` / `ValidatePatch`), so it was permanent for a bookshop or
+  a garage. Moved to `InsuranceV1Fields()`. `product_interest`'s label also went
+  from "ความสนใจผลิตภัณฑ์ประกัน" to "ความสนใจผลิตภัณฑ์".
+  ⚠️ chat-core pins the kit **by tag** (`v0.5.0` in go.mod) — merging ships
+  nothing until a new tag plus a bump in each consumer.
+
+**Audited and already vertical-neutral** (do not re-audit):
+`escalation.DefaultNegativeKeywords`, `lead.DefaultLeadWorkflowConfig`
+(cold/warm/hot/close_deal), `lead_rule.DefaultConfig` (phone+name captured),
+`case_.DefaultCaseTypeConfig` (sales_lead), and the followup / lead_reminder /
+degrade / no-data / disclosure templates.
+
+**Deliberately left vertical-flavoured, with reasons** — these are decisions,
+not misses:
+- ai-agent `DefaultRestrictedTopicKeywords` keeps its claims block: it only
+  applies in `faq_only` mode, where routing anything transactional to staff is
+  right for any business.
+- ai-agent `premiumCoverageContextPattern` keeps insurance vocabulary: for other
+  verticals it never fires, so it is *missing* coverage, not *wrong* coverage.
+  Generalising it means a per-workspace "sensitive figure vocabulary" config.
+
 **Still insurance-flavoured, comments only (code is generic)**
-`src/entity/lead/default_template.go`, `src/entity/sheet_export/config.go`,
-`src/entity/case_/subject.go`.
+chat-core `src/entity/lead/default_template.go`, `src/entity/sheet_export/config.go`,
+`src/entity/case_/subject.go`, `src/entity/checkpoint/compute.go`.
 
 **Not a real signal:** rps roles 10/17/18/96 (`Insurance Provider Owner`,
 `AI Chat Company Admin`, `Chat Workspace Operator`, `Chat workspace onboarding`)
