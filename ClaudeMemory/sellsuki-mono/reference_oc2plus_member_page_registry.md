@@ -17,6 +17,19 @@ metadata:
 ประกาศไว้ 4 หน้า (ตรงกับที่มีอยู่จริงก่อนงานรอบนี้):
 `/{slug}/register` (สมัครสมาชิก) · `/{slug}/login` (เข้าสู่ระบบสมาชิก) · `/{slug}/point-claims/new` (แจ้งใบเสร็จสะสมแต้ม) · `/{slug}/point-claims` (คำขอแต้มของฉัน)
 
+**เพิ่มอีก 5 หน้าแล้วใน MR !569 (2026-09-11):** `home` หน้าแรก · `reward` ของรางวัล · `history` ประวัติ · `profile` โปรไฟล์ · `address-book` สมุดที่อยู่ → รวม 9 หน้า
+ป้ายใช้ **ชื่อตาม design v3 ที่สมาชิกเห็นบนจอ** (`LOCALES.TH/EN` ของ nav + ชื่อ overlay ใน `OC2 Plus Loyalty v3 - Tier.dc.html`) ไม่ใช่ชื่อการ์ด Jira — PO เคาะไว้
+
+## เพิ่ม key ใหม่ = แก้ 4 ที่ ไม่ใช่ 1
+
+`CustomerAppPageKey` เป็น **enum ใน OpenAPI spec** ด้วย ไม่ใช่แค่ const ใน Go:
+1. `src/interface/fiber_server/spec/v1.yaml` → `CustomerAppPage.key.enum` (บรรทัดเดียว list ทุก key)
+2. `make gen-http-fiber` → regenerate `spec/v1/spec.gen.go` (diff จะโต ~800 บรรทัดเพราะ swagger blob ที่ embed เป็น base64+gzip — **เป็นเรื่องปกติ ไม่ใช่ noise**)
+3. `CustomerAppPages()` + const block ใน `src/use_case/model/customer_app.go`
+4. เทส 5 จุดที่ hard-assert `require.Len(t, …Pages, 4)` — `use_case/customer_app_test.go` ×5, `use_case/model/customer_app_test.go`, `interface/fiber_server/route/customer_app_v1_test.go` (ตอนนี้อนุมานจาก `len(CustomerAppPages())` แล้ว)
+
+**ห้าม merge registry ก่อน FE:** path ที่ยังไม่ merge จะ fall through ไป Vue `NotFoundView` → แอดมินได้ลิงก์ที่เปิดมาเจอ 404
+
 ## ทางที่ข้อมูลไหล
 
 `GET /backoffice/v1/company/{companyId}/customer-app` (backoffice-api) → `RestCustomerAppResponse{ slug, pages[]{ key, label{th,en}, path, web_url } }`
