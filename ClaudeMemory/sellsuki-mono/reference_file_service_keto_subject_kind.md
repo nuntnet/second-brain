@@ -1,8 +1,11 @@
 ---
 name: reference-file-service-keto-subject-kind
 description: file-service builds its Keto subject from X-User-Id AND X-User-Kind — a grant under the wrong kind 403s while the role sits right there
-metadata:
+metadata: 
+  node_type: memory
   type: reference
+  originSessionId: 41c262a6-ad41-4523-a0a4-bb8e9de6e4b3
+  modified: 2026-09-11T04:46:50.760Z
 ---
 
 file-service checks `sellsuki.filesystem.*` on the company refID for **every**
@@ -32,5 +35,11 @@ must be assigned to that kind. Measured on the running stack, same upload:
 - `accessMode` values are **uppercase** (`ACCESS_URL`, `PRESIGNED_URL`, …) —
   lowercase gives a 400 that reads like a bad request, not a typo.
 
+**Re-confirmed on staging 2026-09-11, and the whitelist does NOT include the CCS3 admin origin.** `WHITE_LIST` on staging (`deployment/values-staging.yml:45`) is `pis.staging*`, `api.staging*`, `reward.stg*.posh.oc2.plus`, `api.staging-th.ship-munk.com` — **not** `admin.staging-th.sellsuki.com`. `CheckWhiteList` is a `strings.Contains` over that list, so a fetch from the CCS3 admin app falls through to the permission check and gets `403 permission_denied` (measured: `POST /file/upload/public?refID=…` from `https://admin.staging-th.sellsuki.com` → 403). That also re-proves the "nobody is granted `sellsuki.filesystem.*`" point above, on staging, a year later.
+
+⚠️ **Do not reach for the bypass.** Because the check is `Contains` on the `Origin` header, running the same fetch from a page on a whitelisted host (e.g. a `pis.staging-th.*` tab) skips the permission check entirely. That is circumventing an authorization control, not an integration path — get `sellsuki.filesystem.create` granted instead.
+
+**`POST /upload/public` is the right endpoint for permanent public assets** (app-switcher tile icons, logos): multipart `file` + optional `context`/`metadata`, **omit `retention_days`** or the file auto-purges, and the response is `data.fileAccessURL` — a permanent public URL, which is what the `portal-app-registry` icon schema demands ("Never a pre-signed URL - they expire"). `/upload/private` is the wrong tool for icons for exactly that reason. `refID` only has to be non-empty (`helper/route_util.go:30-51` checks nil/blank, nothing more).
+
 Related: [[reference-rps-identity-kind-must-be-prefixed]],
-[[project-oc4362-claim-cluster-gaps]]
+[[project-oc4362-claim-cluster-gaps]], [[reference_ccs_global_config_permission_gate]]

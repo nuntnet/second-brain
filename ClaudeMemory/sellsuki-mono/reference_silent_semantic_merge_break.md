@@ -101,3 +101,48 @@ real incompatibility surfaced: main's tests render the component without a prop
 this branch made REQUIRED. Nothing flagged it until tsc saw both files at once.
 Merge both suites, assert the test count equals the sum, keep the other side's
 tests verbatim, and adapt only what the type checker forces.
+
+## The defence that actually works for union/enum additions: an exhaustive `never` guard
+
+OC2Plus member-FE, 2026-09-11. Same failure shape, caught *by design* this time.
+
+`!45` (OC-4407) added `duplicate_mp_order` to the `PointClaimErrorCode` union while
+`OC-4497` was in flight extracting the submit path into a usecase. `!45` merged to
+develop mid-flight. The textual conflict was trivial (one branch added a member to
+`SUBMIT_ERROR_CODES`, the other deleted the array). **Resolving that conflict the
+obvious way compiles the new code straight into the generic `network` bucket** — a
+member hitting a marketplace duplicate would have seen "network problem".
+
+It didn't happen because the refactor replaced the array with a `switch` that is
+exhaustive over the FULL union and ends in:
+
+```ts
+default: {
+  const unhandledCode: never = result.code
+  return unhandledCode
+}
+```
+
+Merging develop produced `TS2322: Type 'string' is not assignable to type 'never'`
+until a real case was added. **This is the only mechanism in this class that fires
+without anyone remembering to look.**
+
+Safe only when the value provably cannot leave the union at runtime — here the
+service's `errorHandler` is a closed mapper whose last line is
+`return new PointClaimApiError('network', …)`, so `default` is genuinely
+unreachable. If unknown values *can* arrive, keep a runtime fallback next to the
+`never` assignment or you convert a wrong message into no message.
+
+### The test gap it exposed — check for this shape specifically
+
+`duplicate_mp_order` had two tests and **neither covered the store's mapping**:
+the service spec stopped at `axios error → code`, and the view spec did
+`store.submitError = 'duplicate_mp_order'` directly. So collapsing the case into
+`network` left the whole suite green. **A view test that assigns store state
+directly tests the view, not the store** — when a new enum member arrives, grep
+for a test that drives it through the real mapping, and if the only hits are a
+mapper spec and a direct state assignment, the mapping is uncovered.
+
+Prove a new test works by mutation: delete the case, watch that one test fail,
+put it back. Related: [[reference_testify_permissive_default_wins]],
+[[feedback_verify_absence_claims]].
