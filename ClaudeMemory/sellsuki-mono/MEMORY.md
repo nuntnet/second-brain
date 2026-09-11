@@ -68,6 +68,7 @@ Titles are short on purpose — each file's own `description:` carries the detai
 
 ## AI Chat Platform
 - [Platform plan](project_ai_chat_platform_plan.md) · [Arch artifact](reference_ai_platform_architecture_artifact.md) · [E0 structure](project_ai_chatsystem_e0_structure.md) · [Deploy gating](project_ai_platform_deploy_gating.md) · [FE design](reference_ai_chat_frontend_design.md) · [MVP integration](project_ai_mvp_integration.md)
+- [Chat platform is vertical-neutral](project_chat_platform_is_vertical_neutral.md) — no insurance in defaults; guardrail floor vs opt-in preset; the rps "Insurance Provider Owner" role is local test data, not product naming
 - [Sprint 2-4 run](project_ai_sprint234_autonomous_run.md) · [Merge order](project_ai_chatcore_merge_order.md) · [Merge topology risk](project_ai_merge_topology_risk.md) · [SLA ladder](project_sla_ladder_engine_state.md)
 - [Board stale](reference_ai_board_stale_cards.md) · [In Review = merged](reference_ai_board_in_review_means_merged_unverified.md) · [Placeholder cards](project_ai_placeholder_cards_review.md) · [Gap sweep 2026-08](project_ai_backlog_gap_sweep_202608.md) · [E8 blockers](project_e8_remaining_blockers.md) · [Completeness audit](reference_ai_chatbot_completeness_audit.md)
 - [ai-agent stateless](project_ai_agent_stateless.md) · [ai-agent CI gaps](reference_ai_agent_ci_gaps.md) · [Flag w/o enforcement](reference_flag_without_enforcement.md) · [PAT-2658 collision](project_pat2658_reference_collision.md)
