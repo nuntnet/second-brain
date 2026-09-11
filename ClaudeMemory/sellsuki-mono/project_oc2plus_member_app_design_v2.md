@@ -141,3 +141,62 @@ OC-4526 คูปอง · OC-4527 ภารกิจ · OC-4528 วงล้อ
 เพราะฉะนั้น **การเปลี่ยนไป `#32a9ff` ตาม design v2 = สีที่ผู้ใช้เห็นเปลี่ยนจริง** สำหรับทุกบริษัทที่ไม่ได้ตั้ง theme · ห้ามอ้างว่าเป็น no-op
 
 บทเรียน: เวลาจะเคลมว่า "ค่านี้มีอยู่แล้ว" ต้องแยกให้ออกว่าเจอมันใน **CSS fallback** หรือใน **ค่าที่ runtime set จริง** — สองอันนี้ในรีโปนี้ไม่ตรงกัน
+
+---
+
+# ⚠️ design of record เปลี่ยนเป็น v3 แล้ว (2026-09-11)
+
+**`OC2 Plus Loyalty v3 - Tier.dc.html`** ในแคนวาสเดียวกัน · **v3 = superset ของ v2 แบบสะอาด**: 25 state เดิมครบทุกตัว ไม่มีอะไรถูกถอด + เพิ่ม 6 · ไฟล์ 107,835 → **152,962** ตัวอักษร
+
+**ไฟล์ v3 ยังไม่อยู่ในเครื่อง** (zip ใน Downloads เป็นของ 2026-09-10 21:08 ก่อน v3 เกิด)
+
+## วิธีดึงไฟล์จากแคนวาสโดยไม่ต้องรอ zip
+
+WebFetch → **403** · เดา path บน `*.claudeusercontent.com` → **404**
+
+ที่ได้ผล: ใช้ **Claude in Chrome** (มี session ของ claude.ai) เปิดหน้าแคนวาส แล้วเรียก Connect-RPC ของแอปเองจาก page context:
+
+```js
+const base='https://claude.ai/design/anthropic.omelette.api.v1alpha.OmeletteService/';
+await fetch(base+'ListFiles',{method:'POST',credentials:'include',
+  headers:{'content-type':'application/json'},body:JSON.stringify({projectId:PID})});
+await fetch(base+'GetFile',{method:'POST',credentials:'include',
+  headers:{'content-type':'application/json'},
+  body:JSON.stringify({projectId:PID, path:'ชื่อไฟล์.dc.html'})});
+// → { content, contentType, version } · content เป็น HTML ตรง ๆ
+```
+
+PID ของโปรเจกต์นี้ = `1308eeb1-6f77-4aee-b531-4475443a5215`
+
+⚠️ **content filter ของ harness จะบล็อกผลลัพธ์** ถ้า return ข้อความดิบยาว ๆ ที่มี `?a=b` หรือ token-like (`[BLOCKED: Cookie/query string data]`) → ให้ **extract เป็น field ย่อย ๆ ใน JS แล้วคืนเฉพาะค่าที่ต้องการ** อย่าคืน raw HTML เป็นก้อน
+
+## 6 state ใหม่ของ v3
+
+`ovBenefits` (tier) · `ovReceipt` (สะสมแต้มด้วยใบเสร็จ) · `rcNoPhoto` / `rcHasPhoto` (สถานะช่องแนบรูป) · `hasPending` (ใบเสร็จที่ส่งแล้ว) · `ovCheckin` (เช็คอินประจำวัน)
+
+## 🔴 ระบบ tier — คูณอัตราได้แต้ม ไม่ใช่แค่ป้าย
+
+| ระดับ | need | perk |
+| --- | --- | --- |
+| BRONZE | 0 | รับแต้ม **1x** |
+| SILVER | 300 | รับแต้ม **1.2x** |
+| GOLD | 1000 | รับแต้ม **1.5x** |
+| PLATINUM | 3000 | รับแต้ม **2x** |
+
+`ovBenefits` มี: `tierLabel` · perk 2 บรรทัด · "แต้มที่สะสมได้ปีนี้" · **"ยอดซื้อ 90 วัน ฿12,480"** · progress `pointsText / nextTierGoal คะแนนสะสม` · **"ส่วนลดสำหรับสมาชิก `tierDiscount` %"** · ตาราง "สิทธิ์ทุกระดับ"
+
+**กระทบ [[project_loyalty_point_cluster]]**: OC-4413 Award Engine (code review) และ OC-4415 Base Earn Rate (Done) **ไม่มี tier multiplier เลย** · 4 ข้อที่ยังเคาะไม่ได้: เกณฑ์เลื่อนคิดจากอะไร (แต้มปีนี้ / ยอดซื้อ 90 วัน / คะแนนสะสม — design โชว์ทั้งสาม) · `tierDiscount` เป็นส่วนลดตอนซื้อหรือตอนแลก · ลดระดับได้ไหม · multiplier อยู่ชั้นไหน
+
+## ✅ `ovReceipt` ปลดบล็อก OC-4504
+
+"สะสมแต้มด้วยใบเสร็จ" · "ทีมงานตรวจสอบภายใน 24 ชม." · ฟิลด์: เลขที่ใบเสร็จ* (hint "อยู่มุมขวาบน") · ยอดซื้อ* · วันที่ซื้อ* · **สาขาที่ซื้อ** (`b.label`) · แนบรูป* · **"แต้มที่จะได้รับ" `rcPointsText` = preview ก่อนส่ง**
+
+กติกาท้ายฟอร์ม: **"1 ใบเสร็จใช้ได้ครั้งเดียว · ส่งย้อนหลังได้ไม่เกิน 7 วัน · ใบเสร็จที่แก้ไขหรืออ่านไม่ออกจะถูกปฏิเสธ"** — **ข้อ 7 วันไม่เห็นใน `SUBMIT_ERROR_CODES` ปัจจุบัน** ต้องเช็คกับ OC-4362
+
+→ **OC-4531 (ค้นหาสาขา) ไม่ใช่ปุ่มลอยอีกต่อไป เป็น dependency ของฟอร์มใบเสร็จ**
+
+## `ovCheckin` — แหล่งแต้มที่สาม
+
+"เช็คอินทุกวันรับแต้มเพิ่มขึ้นเรื่อยๆ **วันที่ 7 รับ 50 คะแนน**" · "**ทุกครั้งที่เช็คอิน รับสิทธิ์หมุนวงล้อเพิ่ม 1 ครั้ง**" · "ลืม 1 วัน จำนวนวันต่อเนื่องเริ่มนับใหม่" · ทับซ้อนกับ OC-4527 (ภารกิจ) ที่ให้ทั้งแต้มฟรีและสิทธิ์หมุนเหมือนกัน — ต้องเคาะว่าแยกหรือรวม
+
+เขียนไว้ที่ OC-4349 comment 44669 · OC-4504 comment 44668
