@@ -1,6 +1,6 @@
 ---
 name: project_oc2plus_member_app_design_v2
-description: "OC2Plus member app design of record = 'OC2 Plus Loyalty v2 - Friendly.dc.html' (4-tab app, 10 overlays); it uses ZERO ssk-* DS custom elements, brand #32a9ff == the app's existing --c-primary default; PO decided 2026-09-10 to port straight to this design in one pass"
+description: "OC2Plus member app design of record is now **v3** ('OC2 Plus Loyalty v3 - Tier.dc.html'), a clean superset of v2 — 4 tabs HOME/REWARD/HISTORY/PROFILE + 18 overlays, ZERO ssk-*, brand #32a9ff (42 uses), and unlike v2 it DOES ship 21 semantic CSS tokens but NO type-role classes (inline font shorthand only). PO exported the whole canvas as a zip on 2026-09-11 so all four .dc.html files plus DBHeaventRounded woff2 x4 are on disk."
 metadata:
   node_type: memory
   type: project
@@ -148,7 +148,7 @@ OC-4526 คูปอง · OC-4527 ภารกิจ · OC-4528 วงล้อ
 
 **`OC2 Plus Loyalty v3 - Tier.dc.html`** ในแคนวาสเดียวกัน · **v3 = superset ของ v2 แบบสะอาด**: 25 state เดิมครบทุกตัว ไม่มีอะไรถูกถอด + เพิ่ม 6 · ไฟล์ 107,835 → **152,962** ตัวอักษร
 
-**ไฟล์ v3 ยังไม่อยู่ในเครื่อง** (zip ใน Downloads เป็นของ 2026-09-10 21:08 ก่อน v3 เกิด)
+~~**ไฟล์ v3 ยังไม่อยู่ในเครื่อง**~~ — **แก้ 2026-09-11: PO export ทั้งแคนวาสเป็น zip ให้แล้ว** (`~/Downloads/Sellsuki loyalty app design (1).zip`, 22 ไฟล์ 5.5 MB) แตกไว้ที่ scratchpad ของ session · มีครบ: 4 ไฟล์ `.dc.html` (v3 Tier, v2 Friendly, Mobile Prototype, Loyalty Customer App), `fonts/DBHeaventRounded-{Regular,Med,Bold,Black}.woff2`, `assets/` (โลโก้/ไอคอน), `uploads/` · **นี่คือทางที่ควรใช้** — Claude Design canvas RPC ต้องผ่าน Chrome ที่ login แล้ว และ content ที่ได้เป็น base64 ที่ตัวกรองบล็อกตอนส่งค่ากลับ ขอ zip เร็วกว่ามาก
 
 ## วิธีดึงไฟล์จากแคนวาสโดยไม่ต้องรอ zip
 
@@ -214,3 +214,19 @@ OC-3559 มีของดีที่ต้องไม่ทำหาย: sche
 "เช็คอินทุกวันรับแต้มเพิ่มขึ้นเรื่อยๆ **วันที่ 7 รับ 50 คะแนน**" · "**ทุกครั้งที่เช็คอิน รับสิทธิ์หมุนวงล้อเพิ่ม 1 ครั้ง**" · "ลืม 1 วัน จำนวนวันต่อเนื่องเริ่มนับใหม่" · ทับซ้อนกับ OC-4527 (ภารกิจ) ที่ให้ทั้งแต้มฟรีและสิทธิ์หมุนเหมือนกัน — ต้องเคาะว่าแยกหรือรวม
 
 เขียนไว้ที่ OC-4349 comment 44669 · OC-4504 comment 44668
+
+
+## สิ่งที่นับได้จาก v3 ตอนวางชั้น token จริง (2026-09-11, OC-4535)
+
+**v3 มี CSS custom property 21 ตัว เป็นระบบ semantic** — ต่างจาก v2 ที่มี **0 ตัว** (เขียน hex ตรง ๆ):
+`surface, surface-2, surface-3, line, line-soft, ink, ink-solid, ink-2, ink-3, muted(#5b6472), faint, brand-ink(#1473e1), brand-soft, brand-line, warn-soft/line/ink, ok-soft/line/ink, danger-ink`
+
+**สีแบรนด์ไม่ได้เปลี่ยน** — `#32a9ff` ยังเป็นสีหลักและ v3 ใช้ **42 ครั้ง** (v2 ใช้ 33) ส่วน `--brand-ink: #1473e1` เป็น token สำหรับตัวอักษร/เส้นบนพื้นแบรนด์ · เคยเข้าใจผิดว่า v3 ย้ายแบรนด์ไปสีเข้ม
+
+**กับดักที่สำคัญสุด: v3 ไม่มี type-role class เลย** เขียน `font: <weight> <size> 'DB HeaventRounded'` แบบ inline ทั้งไฟล์ · ขนาด 16/17/18/19/20/21/22/24, น้ำหนัก 400/500/700/900, คู่บ่อยสุด 400/17 ×28, 500/18 ×21, 400/19 ×18 · line-height มี 13 ค่าไม่สม่ำเสมอ · **พอร์ตตรง ๆ = hardcode px ทั้งแอป ซึ่งขัด `feature-dod.md` เอง** → OC-4535 จึงตั้ง type role 12 ตัวขึ้นมาเอง และพิสูจน์ด้วยเทส totality ว่าคู่ (weight,size) ที่ v3 ใช้จริงทั้ง **34 คู่** ลงครบทั้ง 12 role
+
+radius ที่ใช้: `9999px ×63, 8px ×35, 12px ×26, 14px ×17, 6px ×12, 20px ×10, 16px ×9, 16px 16px 0 0 ×4` (ตัวท้าย = bottom sheet) · shadow: `0 1px 2px rgba(0,0,0,.05)` + focus ring `0 0 0 3px rgba(50,169,255,.22)` · gap: `12/10/8/14/6/7/9/2px`
+
+**โครง v3 จากคอมเมนต์ในไฟล์:** `SPLASH → REGISTER → OTP → APP` · APP มี 4 แท็บ `HOME/REWARD/HISTORY/PROFILE` · HOME มี tier card, points strip, daily check-in, play zone (ปุ่มไอคอนปัดได้) · overlay 18 ตัว: `SCRIM, SCAN, REWARD SHEET, CONFIRM, SUCCESS, COUPONS, CAMPAIGN, ALL CAMPAIGNS, BENEFITS, RECEIPT, EDIT PROFILE, ADDRESS BOOK, ADD ADDRESS, SETTINGS, NOTIFICATIONS, CHECK-IN, MISSIONS, LUCKY DRAW, TOAST`
+
+⚠️ **description ของการ์ดเก่าหลายใบยังเขียนว่า v2 เป็น design of record** (เช่น OC-4346) ถ้าเจอความขัดแย้ง **ยึด v3** ตามที่ PO ยืนยันตอนส่ง zip มาให้ 2026-09-11
