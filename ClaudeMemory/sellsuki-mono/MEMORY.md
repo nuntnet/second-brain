@@ -62,6 +62,7 @@ Titles are short on purpose — each file's own `description:` carries the detai
 - [SukiPay audit](project_sukipay_audit_log.md) · [void rename](project_sukipay_void_rename.md) · [refund cluster](project_sukipay_refund_cluster.md) · [offline payment](project_sukipay_offline_payment.md)
 - [User pain gap](project_user_pain_evidence_gap.md) · [Product KB](project_sellsuki_product_kb.md) · [Bundle in catalog](project_bundle_in_catalog.md) · [PIS FE + embeds](project_pis_frontend_local_testing.md) · [Provider routing](project_provider_frontend_backend_routing.md)
 - [DS invented props](reference_ds_invented_props_render_nothing.md) · [ssk-* docs](reference_ssk_components_docs.md) · [DS 1.0 beta](reference_ds_1_0_beta_gotchas.md) · [DS = 94% bundle](reference_ds_bundle_dominates_and_cannot_treeshake.md) · [DS inputs slow](reference_ds_inputs_expensive_on_first_paint.md) · [i18next mutates JSON](reference_i18next_mutates_the_json_you_import.md)
+- [Svelte `$:` self-dependency freezes the tab](reference_svelte_reactive_self_dependency_freezes_tab.md) — block reads a var it assigns; already-resolved promise starves the event loop, devtools goes dead, freeze looks role-dependent
 
 ## AI Chat Platform
 - [Platform plan](project_ai_chat_platform_plan.md) · [Arch artifact](reference_ai_platform_architecture_artifact.md) · [E0 structure](project_ai_chatsystem_e0_structure.md) · [Deploy gating](project_ai_platform_deploy_gating.md) · [FE design](reference_ai_chat_frontend_design.md) · [MVP integration](project_ai_mvp_integration.md)
