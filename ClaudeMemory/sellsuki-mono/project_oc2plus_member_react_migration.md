@@ -58,3 +58,18 @@ ladder ที่ลงจริงแล้ว (ยืนยันด้วย J
 OC-4498 คงไว้ 129 (การ์ด product ที่พลอยติด label)
 
 ⚠️ ในตัว description ของแต่ละการ์ดยังมีบรรทัด "Size / Sprint ที่เสนอ" ค่าเก่าคนละค่า (129/131/132/133/134/135) — **เลิกใช้ ให้ยึด sprint field** · ไม่แก้ใน description เพราะ rewrite ยาวผ่าน API ทำภาษาไทยเพี้ยน (ดู [[reference_jira_editissue_adf_breakage]]) · ladder ฉบับจริงอยู่ที่ OC-4344 comment 44656
+
+## ชุดแรกลง develop จริงแล้ว 2026-09-11 (ทั้ง 4 ใบ + develop เขียวหลังรวม)
+
+| MR | การ์ด | merge commit | develop pipeline หลัง merge |
+|---|---|---|---|
+| !42 | OC-4494 `src/usecases/result.ts` + auth usecases | 80b3a17 | 58278 ✅ |
+| !43 | OC-4495 membership usecases | eeefd31 | 58290 ✅ |
+| !44 | OC-4493 slice 1 design token | ad1283c | 58291 ✅ |
+| !46 | OC-4493 slice 2 ปลด `ssk-*` | 62d288d | 58301 ✅ |
+
+**พิสูจน์ด้วยของจริงบน develop ไม่ใช่ badge:** `git grep ssk- origin/develop -- '*.vue'` = **0 ไฟล์**
+
+**บทเรียนที่ต้องทำซ้ำทุกครั้ง:** ยิง pipeline ใหม่ก่อน merge ทุกใบ (58279/58280/58293) เพราะ develop ขยับไปแล้วจาก OC-4462 + ใบก่อนหน้าในชุดเดียวกัน — badge เดิมของ MR พิสูจน์คู่ combination ที่ไม่มีอยู่จริงแล้ว · และ GitLab **ไม่ retarget stacked MR ให้อัตโนมัติ** หลัง parent merge ต้อง `PUT projects/529/merge_requests/{iid}` `target_branch=develop` เอง
+
+**ผลข้างเคียงที่ user มองเห็น (OC-4493):** `src/theme/defaultTheme.ts` `primary` เปลี่ยน `#1A73E8` → `#32a9ff` — บริษัทที่ไม่ได้ตั้ง theme สีเปลี่ยนจริง ไม่ใช่ no-op (เคยจดผิดว่าเท่ากันอยู่แล้ว ดู [[project_oc2plus_member_app_design_v2]])
