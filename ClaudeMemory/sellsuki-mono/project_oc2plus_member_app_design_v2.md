@@ -185,7 +185,21 @@ PID ของโปรเจกต์นี้ = `1308eeb1-6f77-4aee-b531-447544
 
 `ovBenefits` มี: `tierLabel` · perk 2 บรรทัด · "แต้มที่สะสมได้ปีนี้" · **"ยอดซื้อ 90 วัน ฿12,480"** · progress `pointsText / nextTierGoal คะแนนสะสม` · **"ส่วนลดสำหรับสมาชิก `tierDiscount` %"** · ตาราง "สิทธิ์ทุกระดับ"
 
-**กระทบ [[project_loyalty_point_cluster]]**: OC-4413 Award Engine (code review) และ OC-4415 Base Earn Rate (Done) **ไม่มี tier multiplier เลย** · 4 ข้อที่ยังเคาะไม่ได้: เกณฑ์เลื่อนคิดจากอะไร (แต้มปีนี้ / ยอดซื้อ 90 วัน / คะแนนสะสม — design โชว์ทั้งสาม) · `tierDiscount` เป็นส่วนลดตอนซื้อหรือตอนแลก · ลดระดับได้ไหม · multiplier อยู่ชั้นไหน
+**มีการ์ด tier อยู่แล้ว = OC-3559** "Member tier [CRM] — ระดับสมาชิกจากแต้มสะสม + อายุ 1 ปีต่อรอบ" (label `business` ไม่ใช่ `customer-app-program` ผมเลยค้นไม่เจอรอบแรก — ดู [[feedback_search_before_declaring_gap]])
+
+**design v3 ขัดกับ OC-3559:**
+
+| | OC-3559 | design v3 |
+| --- | --- | --- |
+| ชื่อระดับ | Silver/Gold/Platinum/**Diamond** | **BRONZE**/Silver/Gold/Platinum |
+| เกณฑ์ | 0 / 5,000 / 20,000 / 50,000 | 0 / 300 / 1,000 / 3,000 |
+| tier ทำหน้าที่ | **คุมสิทธิ์** ใครได้แต้ม (L7 + AC9) | **ตัวคูณ** ได้กี่แต้ม 1x→2x |
+| ส่วนลดสมาชิก | ไม่มี | `tierDiscount %` |
+| ฐานวัด | แต้มที่ได้รับในรอบ 1 ปีต่อคน (L1+L3) | โชว์ทั้ง "แต้มที่สะสมได้ปีนี้" และ "ยอดซื้อ 90 วัน" |
+
+**แถวที่สามหนักสุด** — คุมสิทธิ์ vs ตัวคูณ เป็นกลไกคนละตัว · ตัวคูณไหลเข้า Award Engine: OC-4413 (code review) และ OC-4415 (Done) **ไม่มี tier multiplier เลย** และ audit ต้องเก็บ multiplier ที่ใช้จริง
+
+OC-3559 มีของดีที่ต้องไม่ทำหาย: schema 3 ตาราง (`member_tier` / `member_tier_state` / `member_tier_history`) · daily sweep (ไม่ใช่ cron รายปี เพราะรอบเป็นของแต่ละคน) · sync BOLA ด้วย flag `oc2plus_tier_gte_*` เพื่อเลี่ยงที่ BOLA ไม่มี `gte` และ 1 segment = 1 operator · เขียนเทียบไว้ที่ OC-3559 comment 44670 · 4 ข้อที่ยังเคาะไม่ได้: เกณฑ์เลื่อนคิดจากอะไร (แต้มปีนี้ / ยอดซื้อ 90 วัน / คะแนนสะสม — design โชว์ทั้งสาม) · `tierDiscount` เป็นส่วนลดตอนซื้อหรือตอนแลก · ลดระดับได้ไหม · multiplier อยู่ชั้นไหน
 
 ## ✅ `ovReceipt` ปลดบล็อก OC-4504
 
