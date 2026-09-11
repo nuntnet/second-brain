@@ -39,8 +39,10 @@ one vertical is a **preset or per-workspace config**, never a default.
   (`Field.Deprecated` / `ValidatePatch`), so it was permanent for a bookshop or
   a garage. Moved to `InsuranceV1Fields()`. `product_interest`'s label also went
   from "ความสนใจผลิตภัณฑ์ประกัน" to "ความสนใจผลิตภัณฑ์".
-  ⚠️ chat-core pins the kit **by tag** (`v0.5.0` in go.mod) — merging ships
-  nothing until a new tag plus a bump in each consumer.
+  Released as kit **v0.6.0** (2026-09-11) — the kit is pinned **by tag**, so the
+  merge shipped nothing until the tag plus a go.mod bump in each consumer
+  (chat-core !85, ai-agent !35). `messaging-backend` still pins a 2026-08-01
+  pseudo-version and was left alone.
 
 **Audited and already vertical-neutral** (do not re-audit):
 `escalation.DefaultNegativeKeywords`, `lead.DefaultLeadWorkflowConfig`
