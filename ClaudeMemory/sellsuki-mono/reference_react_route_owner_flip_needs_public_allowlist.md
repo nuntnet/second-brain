@@ -55,3 +55,31 @@ same fix plus `register-by-slug`, but !68 is small enough to merge first.
 **Diagnostic that works:** unit tests cannot see this. Load the page for real and read
 `document.body.innerText.length` / child count — a guard-blanked page is 0/0 while the
 URL looks correct.
+
+
+## 2026-09-12 — the same file is now a REBASE tripwire (clean merge, red test)
+
+OC-4503 replaced the bare name set with a `DECISIONS` map — every `owner:'react'`
+route must carry `{skipsShellGuard, why}`, and `publicRoutes.spec.ts` fails if one
+is missing. That is the right design, and it means **every stacked port branch goes
+red the moment it is rebased onto a `develop` that landed new react routes**, with
+no conflict marker to warn you: git merges the map cleanly, the spec then fails on
+routes the branch has never heard of.
+
+Hit rebasing !65/!66/!69 onto the OC-4344/OC-4349 shell wave. Two distinct failures:
+
+- pre-DECISIONS spec asserted `reactOwned.every(isPublicRouteName) === true`
+  ("everything react-owned is public") — its own comment named it a tripwire for
+  the first protected page, and `home`/`history`/`reward`/`address-book`/`profile`
+  had already landed. Fix: assert the public SUBSET, not "all".
+- post-DECISIONS spec asserted no route is undecided — the five shell pages had no
+  entry. Fix: add them as `skipsShellGuard: false` (born inside the shell, no Vue
+  behaviour to preserve, no E2E locking a page-owned 401 — the opposite of the
+  point-claim pages, which must skip the guard).
+
+**Every port MR in this wave conflicts on the same four files** — `routeTable.ts`,
+`routeTable.spec.ts`, `AppShell.tsx`, `publicRoutes.ts`/`.spec.ts` — and the
+resolution is always a **union**, never "take one side". Watch the two list orders:
+`routeTable.spec.ts` expects ROUTE_TABLE **file order**, `publicRoutes.spec.ts`
+expects `.sort()` order (`point-claim-detail` < `point-claim-new` < `point-claims`;
+`register-by-slug` < `reward`). Related: [[reference_silent_semantic_merge_break]].

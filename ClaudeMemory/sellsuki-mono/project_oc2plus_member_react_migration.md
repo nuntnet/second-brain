@@ -90,3 +90,29 @@ OC-4498 คงไว้ 129 (การ์ด product ที่พลอยติ
 - 🔴 **OC-4501 shipped a blank login page** — see [[reference_react_route_owner_flip_needs_public_allowlist]]. Fixed inside MR !65. Not on `main` yet (main has only the OC-4499 probe; 10 commits pending on develop). **Do not merge develop→main until !65 lands.** Recorded at OC-4501 comment 44702.
 - 🔴 **OC-4537 opened** (Bug, parent OC-4344): (1) `PointClaimDetailView.vue:66-69` redirects a 401 to `register-by-slug` while `PointClaimListView.vue:95-98` correctly redirects to `login` — an existing member with an expired session is sent to signup; (2) `services/pointClaim/index.ts:74` checks `status === 400` before the `error_code` branches at `:83`/`:86`, so `VALIDATION_FAILED` and `PHOTO_INVALID` are dead code and surface as `invalid_pagination` — **and the comment at `:80-82` claims the opposite of what the code does**. Same bug class the repo already documented in `services/auth/index.ts` (404-slug read as member_not_found) and that frontend-kit's README warns about.
 - **E2E binds to CSS classes, not only testids** (`h3.title`, `.control--error`, `.name-row` siblings, `getComputedStyle` on `--c-primary`) — a pure inline-style port compiles, passes unit tests, and reds the whole suite. Matters for OC-4503/4504/4505.
+
+## 2026-09-12 — the port stack landed its first link; !67 blocked on a NAME, not a conflict
+Stack was `develop ← !65 (OC-4502) ← !66 (OC-4503) ← !69 (OC-4504)`, with `!67`
+(OC-4505) **also** cut from !65 rather than from develop. All four sat ~25 commits
+behind after the OC-4344/OC-4349 shell wave merged.
+
+- **!65 merged to develop** after a rebase (`fdf0243` → `3a45282`), pipeline 58503.
+- !66 restacked → `1fd11c8` (818 tests), !69 restacked → `3ca5aad` (885 tests);
+  both pipelines green, zero conflicts, blocked **only** by `draft_status`.
+- Conflict resolutions are documented in
+  [[reference_react_route_owner_flip_needs_public_allowlist]] — they recur on every
+  branch in this wave.
+
+🔴 **!67 (OC-4505) cannot be restacked mechanically.** It adds
+`src/react/pages/Home/HomePage.tsx` for the **LIFF splash at `/`** (design v3
+`isSplash`), but develop already has that exact path from OC-4350 — the **HOME tab
+at `/:slug/home`** (tier card / points strip / check-in). Two unrelated pages, one
+path, plus a second collision on `HomePageLazy.tsx`. Resolving the add/add conflict
+is not enough: it leaves one folder meaning two things. The fix is a rename
+(`pages/LiffEntry/` or `pages/Splash/` for OC-4505), which is a product-naming call,
+not a merge. !67 also still carries the pre-rebase `fdf0243` OC-4502 commit, so it
+needs `rebase --onto origin/develop fdf0243` as well.
+
+Project settings that shape all of this: `merge_method: merge` (not FF),
+`squash_option: never`, `only_allow_merge_if_pipeline_succeeds: true` — so a green
+badge on an old SHA never merges; push, wait for the new pipeline, then merge.

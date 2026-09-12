@@ -23,3 +23,19 @@ The user runs **several Claude sessions in parallel on the same monorepo checkou
 6. Before claiming any card: check its Jira status (In Progress/In Review = taken) AND verify the target repo's remote — `git ls-remote --heads` + `glab mr list --all` — a stale conversation summary is NOT ground truth.
 7. Claim before coding: transition the card to In Progress + drop a 🔒 comment naming the branch, so the other session sees it.
 8. Pick disjoint lanes by repo: work in a fresh scratchpad clone, never in the shared monorepo submodule tree another session is sitting on.
+
+**Update 2026-09-11 — a parallel session finished the task mid-request, twice in one sitting.**
+Asked to "rebase !65 and fix the conflicts" in `oc2plus-linecrm-frontend-member`: by the time I
+acted, another session had already rebased the branch (`fdf0243` → `3a45282`, reflog showed
+`rebase (finish)` + `commit (amend)` at 23:45). Asked next to "close !68 and merge !65": !65 was
+already `merged` at 23:51 before I issued anything. Both actions carried the user's own git
+identity, so `git log` author/committer cannot distinguish my work from theirs.
+
+9. **Re-read live state immediately before every mutating action, not once at the top of the
+   turn.** `glab api projects/<id>/merge_requests/<iid>` + `git fetch` cost one call and are the
+   only thing standing between you and a redundant force-push or a double merge. A status read
+   from earlier in the same conversation is already stale.
+10. **When the work is already done, say so plainly and do not claim it.** Check
+    `git reflog show <branch>` and the commit's *committer* date (the author date stays at the
+    original commit) to see whether a rebase happened and when. Report "someone else did this at
+    HH:MM", then verify their result instead of redoing it — verification is the remaining value.
