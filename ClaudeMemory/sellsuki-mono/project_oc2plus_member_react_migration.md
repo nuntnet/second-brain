@@ -116,3 +116,28 @@ needs `rebase --onto origin/develop fdf0243` as well.
 Project settings that shape all of this: `merge_method: merge` (not FF),
 `squash_option: never`, `only_allow_merge_if_pipeline_succeeds: true` — so a green
 badge on an old SHA never merges; push, wait for the new pipeline, then merge.
+
+### 2026-09-12 (later) — the whole port wave landed; the strangler now has ZERO Vue routes
+`develop` head `7c2e4d0`. Merged in order: **!65** (OC-4502 `3a45282`) → **!66**
+(OC-4503 `447b71d`) → **!69** (OC-4504 `53497af`) → **!67** (OC-4505 `0bb5d19`).
+Each was rebased onto the *current* develop and re-piped before merging, per this
+file's own earlier lesson — develop moved twice mid-run (OC-3126 profile read, then
+each merge), so the badge on the old SHA proved a combination that no longer existed.
+
+**`src/routeTable.ts` on develop is now 16 entries, all `owner: 'react'`, zero `'vue'`.**
+Consequences to expect rather than debug:
+- `AppShell.spec.tsx`'s `describe.skipIf(!VUE_PATH)` blocks now **skip** (5 tests). That
+  is by design — the file's own comment says it "just runs out of paths" — not a
+  regression. Suite reads `981 passed | 5 skipped`.
+- The Vue views, `src/router/index.ts` routes and Pinia stores are all still in the
+  tree: that IS the rollback mechanism, and `routeTable.spec.ts`'s
+  `ROLLBACK_KEPT_VUE_PATHS` now lists all ten moved paths. OC-4506 is what deletes them.
+
+**OC-4505's page was renamed out of the collision**: `src/react/pages/LiffEntry/`
+(`LiffEntryPage.tsx` / `LiffEntryPageLazy.tsx` / `useLiffEntry.ts`), leaving
+`pages/Home/` to OC-4350's HOME tab. The two `publicRoutes.ts` refactors were converged
+on OC-4503's `DECISIONS` map (`hasGuardDecision`), so OC-4505's `PUBLIC_`/`PROTECTED_`
+two-set design and `hasExplicitAccessDecision` no longer exist anywhere.
+
+GitLab reported a **stale** `detailed_merge_status: conflict` on !69 and !67 after each
+force-push — see [[reference_gitlab_stale_conflict_after_force_push]].
