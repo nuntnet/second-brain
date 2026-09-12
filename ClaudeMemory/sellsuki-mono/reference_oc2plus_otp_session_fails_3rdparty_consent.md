@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: 15cd28d0-899f-4256-bc49-d982e954e8ed
-  modified: 2026-09-11T16:46:01.142Z
+  modified: 2026-09-12T15:20:38.628Z
 ---
 
 ทุก endpoint ของ 3rdparty-api ที่อยู่หลัง `checkAuthenAndAuthroize` เช็ค consent แบบนี้:
@@ -31,6 +31,21 @@ LINE แล้วเขียว แต่เว็บแดงหมด ดู�
 consent จาก member/company เมื่อไม่มี integration_id (หรือให้ OC-4345 เคาะ) — ยังไม่มี
 การ์ดรองรับ ณ 2026-09-11 และเป็น prerequisite ของทุก endpoint ที่ยังต้อง proxy จริง
 (redeem inquiry/confirm, address write) ใน [[project_oc2plus_customer_bff_reads_direct_not_proxy]]
+
+## อัปเดต 2026-09-12 — อาการจริงคือ 500 ไม่ใช่ 403 แล้ว
+
+ยืนยันสดในเบราว์เซอร์บน customer app (ดู [[reference_oc2plus_member_app_local_qa_session]]):
+`integration_id=""` ถูกส่งเข้า query ที่ column เป็น uuid ตรง ๆ →
+`pq: invalid input syntax for type uuid: ""` (`consent_integration_repository/postgresql.go:83`
+เรียกจาก `consent.go:48`) → 3rdparty-api ตอบ **500 unexpected_error** →
+member-api แปลงต่อเป็น **502** ให้ FE
+
+แปลว่า **ไปไม่ถึง ConsentNotFound ด้วยซ้ำ** ไม่ได้ 403 อย่างที่จดไว้ตอนแรก —
+ใครเสิร์ชด้วย "403 member_not_accept_consent" จะไม่เจอเคสนี้
+
+ผลที่ผู้ใช้เห็น: แท็บ หน้าแรก / ของรางวัล / ประวัติ ขึ้น "ไม่สามารถโหลด...ได้"
+ทั้งสามแท็บ เหลือแค่ โปรไฟล์ ที่ทำงาน (เพราะ `/me/profile` อยู่ใน member-api เอง
+ไม่ผ่าน 3rdparty-api)
 
 เกี่ยวข้อง: [[project_oc4348_web_otp_session_minter]] · [[project_oc2plus_consent_enforcement_model]] ·
 [[reference_oc2plus_register_did_not_mint_a_session]]
