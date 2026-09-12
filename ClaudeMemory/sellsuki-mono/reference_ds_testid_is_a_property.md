@@ -32,3 +32,19 @@ Under a real DOM the DS *does* stamp `data-testid` — but on an element **insid
 **How to apply:** drive DS form controls through the element contract — set the property on the HOST and dispatch the mapped event (`SskToggle`/`SskDropdown` map `onChange` → `change`, and the app reads `e.target.checked` / `e.target.value`). That still exercises the app's own handler; whether the DS's shadow widget responds to a click is the DS's test, not the app's. Plain `SskButton` clicks are fine — those are ordinary DOM clicks on the host.
 
 See `apps/admin/e2e/leads.spec.ts` (notify settings) for the worked example.
+
+## พ่วง: `:disabled` บน ssk-* เรนเดอร์เป็น `disabled="false"` ไม่ใช่ "ไม่มี attribute"
+
+`<ssk-button :disabled="x">` เป็น web component → bind เป็น **attribute** เสมอ
+ปุ่มที่ **เปิดใช้งานอยู่** จึงได้ `disabled="false"` ไม่ใช่ attribute หาย
+
+```ts
+// ❌ ผ่านทั้งที่ปุ่มถูก disable จริง
+expect(btn.attributes('disabled')).toBeUndefined()
+// ✅
+const attr = btn.attributes('disabled')
+expect(attr !== undefined && attr !== 'false').toBe(false)
+```
+
+เจอ 2026-09-12 ตอนเขียน `MemberTierFormDialog.spec.ts` — assertion แบบ HTML ปกติ
+ให้ false negative เงียบ ๆ ดู [[project_oc3559_member_tier_state]]

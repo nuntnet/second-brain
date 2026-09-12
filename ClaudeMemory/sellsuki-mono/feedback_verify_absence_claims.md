@@ -27,6 +27,18 @@ metadata:
 
 3. **rtk hook คืน output ที่ถูกกรอง/ว่าง** — `git diff --name-status A...B` เคยคืนว่างทั้งที่มี diff จริง ทำให้เกือบสรุปว่า "branch merge ไปแล้ว" · ใช้ `/usr/bin/git` เมื่อคำตอบขึ้นกับความครบของ output (ดู [[reference_rtk_git_output_filtering]])
 
+4. 🔴 **`.worktrees/` มองไม่เห็นจาก grep ที่ scope ไว้ที่ `src/`** — 2026-09-12 การ์ด OC-3559
+   เขียนใน SUPPORT ว่า `grep -i tier` ใน member-api = **0** ซึ่งจริงเฉพาะ `src/` แต่ผิดเรื่องรีโป:
+   มี branch `feat/oc-3559-tier` อยู่ใน `.worktrees/oc-3559` พร้อม migration `016_*.sql` + repo +
+   route ครบแล้ว · ผมเขียน `016_create_member_tier.up.sql` ซ้ำจนเกือบชนกัน (ไฟล์เลขเดียวกัน 2 ไฟล์
+   = `migrate-all.sh` apply ตาม sort order พัง)
+   ```bash
+   git worktree list                      # ก่อนพูดว่า "ยังไม่มีใครทำ"
+   git branch -a | grep -i <feature>
+   find . -iname "*<feature>*" -not -path "*/node_modules/*"   # ไม่ใช่แค่ src/
+   ```
+   งาน in-flight ของคนอื่น/เซสชันอื่นอยู่ใน worktree เสมอในรีโปนี้ ดู [[reference_parallel_sessions_duplicate_symbols]]
+
 **นับ endpoint ให้ตรง surface** — "3rd-api มี 33 endpoints ที่ไม่มี scope" ผิด เพราะรวมเส้น customer-session เข้าไป · API-key surface จริงมี 4 · ก่อนสรุป coverage ให้แยก auth model ก่อนนับ
 
 ดู [[project_oc2plus_3rdparty_apikey_gap]] · [[feedback_ground_claims_file_line]]

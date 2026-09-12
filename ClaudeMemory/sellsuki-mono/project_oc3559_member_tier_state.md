@@ -18,11 +18,26 @@ and I nearly wrote a duplicate `016_*.sql` before finding it. Two files with the
 same number collide in `migrate-all.sh`'s sort-order apply.
 See [[reference_parallel_sessions_duplicate_symbols]].
 
+**3. FE `feat/oc-3559-tier-admin`** (worktree `frontend/oc2plus-linecrm-frontend-backoffice/.worktrees/oc-3559`,
+1 commit) — หน้า `เครื่องมือ > ระดับสมาชิก` + tier panel บน Member Detail + แก้
+`MemberDetail.vue:654` ที่ hardcode `memberTier=""` (การ์ดบอก :648 — drift แล้ว)
+**verify ในเบราว์เซอร์จริงแล้ว** ต่อ API ของ branch นี้บน DB จริง: เมนู, หน้า, point-unit
+selector, empty state, `/member/{id}/tier` + `/tier/history` = 200, history เรนเดอร์ชื่อชั้น
+เหตุผล วันที่ พ.ศ. และ note ของ manual override
+
+⚠️ **RPS/Keto ที่เครื่องนี้ไม่มี tuple ของ company `11111111-…`** → `membertier.manage` = false
+หน้าจึงขึ้นโหมด read-only (ถูกต้อง) · จะทดสอบ manage path ในเบราว์เซอร์ต้อง grant สิทธิ์ก่อน
+ตอนนี้คุมด้วย component test แทน
+
 **2. backoffice-api `feat/oc-3559-tier-admin`** (worktree `.worktrees/oc-3559-tier-admin`,
 4 commits) — the write side: entity ladder validation (AC1/AC15), repository,
 program+ladder CRUD, `EvaluateMemberTierOnEarn` (AC2/3/4/14), `SweepExpiredTiers`
 (AC5/AC6), override (AC13), 8 HTTP endpoints, `cmd/tier_sweep` with `-dry-run`.
-Plus rps `2d15f96` seeding the two permission catalog rows.
+Plus rps `2d15f96` seeding the two permission catalog rows (รันจริงแล้ว idempotent).
+
+**เจอตอน verify ด้วยตา ไม่ใช่ตอนอ่านโค้ด:** history เรนเดอร์ actor เป็น uuid ดิบ →
+แก้โดย resolve เป็นชื่อฝั่ง server ด้วย `resolveCreatedByName` (ตัวเดียวกับที่
+`adjusted_by_name` ของ OC-4294 ใช้) แล้ว FE fallback เป็น `แอดมิน · <8 ตัวแรก>`
 
 ## Card facts that are WRONG — report, don't follow
 - Permission prefix: card says `sellsuki.oc2plus.membertier.manage`. Every real
