@@ -9,6 +9,7 @@ Titles are short on purpose — each file's own `description:` carries the detai
 - [Grep the service, not the spec](feedback_grep_the_spec_is_not_grep_the_service.md) — spec-only absence check + `head -40` on 41 branches = duplicate endpoints built
 - [Search before GAP](feedback_search_before_declaring_gap.md) · [Verify absence](feedback_verify_absence_claims.md) · [head = sampling](feedback_head_on_grep_is_sampling_not_verification.md) · [Whole stack](feedback_search_the_whole_stack_not_one_layer.md)
 - [PMM voice](feedback_product_marketing_voice.md) · [Design fidelity](feedback_design_handoff_full_fidelity.md) · [Fix reaches all](feedback_fix_must_reach_everyone.md) · [Central ≠ caller](feedback_central_service_no_caller_domain.md) · [Entity pure](feedback_entity_pure_zod_dto.md) · [Report, don't edit](feedback_report_wrong_cards_dont_edit.md)
+- [Codex ทำงานคู่ขนาน](feedback_user_runs_codex_in_parallel.md) — branch `codex/*`; เช็ค git state ก่อนเสมอ, ห้ามแก้ไฟล์ที่อีกฝั่งค้างไว้
 - [Parallel git safety](feedback_parallel_sessions_git_safety.md) · [List MRs first](feedback_list_open_mrs_before_opening_one.md) · [OC↔PAT boards](feedback_oc_pat_board_ownership_rule.md) · [OC → develop](feedback_oc2plus_merge_to_develop.md) · [PIS FF push](feedback_ff_only_force_push_ok.md)
 
 ## Personal / machine / infra

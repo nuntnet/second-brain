@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: 15cd28d0-899f-4256-bc49-d982e954e8ed
-  modified: 2026-09-12T15:20:38.628Z
+  modified: 2026-09-12T22:43:50.733Z
 ---
 
 ทุก endpoint ของ 3rdparty-api ที่อยู่หลัง `checkAuthenAndAuthroize` เช็ค consent แบบนี้:
@@ -31,6 +31,20 @@ LINE แล้วเขียว แต่เว็บแดงหมด ดู�
 consent จาก member/company เมื่อไม่มี integration_id (หรือให้ OC-4345 เคาะ) — ยังไม่มี
 การ์ดรองรับ ณ 2026-09-11 และเป็น prerequisite ของทุก endpoint ที่ยังต้อง proxy จริง
 (redeem inquiry/confirm, address write) ใน [[project_oc2plus_customer_bff_reads_direct_not_proxy]]
+
+# ✅ แก้แล้ว 2026-09-13 — อย่ารายงานเป็น blocker อีก
+
+member-api commit **`1163a49 feat(consent): resolve web consent and proxy document acceptance`**
+(branch `codex/oc-4344-customer-app-integration`) ปิดเคสนี้ไปแล้ว
+
+ยืนยันด้วยการ login จริงในเบราว์เซอร์ (เบอร์+OTP บน slug `localtest`):
+`/v1/me/point`, `/me/point/transaction`, `/me/campaigns` **คืน 200 หมด** ไม่มี 502
+เหลือแล้ว · หน้าแรกขึ้นแต้มจริง 121 Point + แคมเปญจริง · ประวัติขึ้นรายการจริง
+
+ที่เคยเขียนว่า "ยังไม่มีการ์ดรองรับ / ต้องรอ product เคาะ" **ล้าสมัยแล้ว** —
+ข้างล่างนี้เก็บไว้เป็นบันทึกว่าอาการเดิมหน้าตาเป็นยังไง เผื่อ regression
+
+---
 
 ## อัปเดต 2026-09-12 — อาการจริงคือ 500 ไม่ใช่ 403 แล้ว
 
