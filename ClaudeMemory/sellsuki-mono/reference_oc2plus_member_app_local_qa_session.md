@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: fa22ebb1-f715-4667-85a1-61ebbcc816ab
-  modified: 2026-09-13T01:02:15.571Z
+  modified: 2026-09-13T02:55:11.367Z
 ---
 
 ทำได้จริงเมื่อ 2026-09-12 ใช้เวลาหาพอสมควร — จดไว้ให้ไม่ต้องไล่ใหม่
@@ -60,8 +60,11 @@ consent docs ให้บริษัท `11111111-…` (ตาราง `consen
 `network` + ปุ่ม Retry ที่กดไม่มีวันผ่าน ทั้งที่เทส 29/29 เขียว (ไม่มี `describe('getDocument')`)
 — ตัวอย่างสดของ [[reference_test_stub_more_permissive_than_service]]
 
-รีโปนี้ยังมี consent gate **สองชุดซ้อน**: `ConsentGate/useConsentGate/ConsentModal` (ไม่ได้ wire)
-กับ `WebConsentGate` (ตัวที่ live) — ยังไม่เคาะว่าอันไหน canonical แก้ผิดตัวได้ง่าย
+consent gate **มีตัวเดียว = `WebConsentGate`** (PO เคาะ 2026-09-13) · ชุดเก่า
+`ConsentGate/useConsentGate/ConsentModal` + chain ของมัน (`ConsentViewer`, `useConsentKeywords`,
+`i18n/consentKeywords`, `consent.css`, `usecases/consent/versionRenewPort`) **ถูกลบไปแล้ว 12 ไฟล์**
+— ถ้าเจอชื่อพวกนี้ในบันทึกเก่า/คอมเมนต์ อย่าไปหา · ที่ยังอยู่จริง: `WebConsentGate`,
+`webConsent.css`, `ConsentRecovery` (Code + RewardRedemption ใช้), `ConsentDocuments` (Profile ใช้)
 
 ## สิ่งที่เห็นแล้วต้องไม่ตกใจ: 3 ใน 4 แท็บขึ้น error
 
