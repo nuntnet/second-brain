@@ -32,6 +32,7 @@ metadata:
    ให้ตรงกับไฟล์ใน **MR !86** ของ `oc2plus-line-crm-migration` → `db-migrate up -e dev` จะข้ามเอง ไม่ชน
 
 🟡 **staging/prod ยังไม่ได้ทั้ง migration และ backfill** · 🟡 `oc2plus.news.manage` ยังเป็น local const ใน `news.go` ต้องเพิ่มลง entity `access_control/permission_list.go` แล้ว bump
+✅ **`019_create_coupon` (OC-4526) apply บน dev แล้ว** 2026-09-13 15:29 UTC ด้วยสูตรเดียวกับข้างบน + MR **!87** ที่ repo migration ([[project_oc4526_coupon_wallet]]) — staging/prod ยังไม่ได้
 🟡 **`member_tier` (OC-3559) ยังไม่ apply บน dev** — ledger dev หยุดที่ `campaign-product-scope`; ไฟล์อยู่ใน repo migration แล้ว จะติดไปกับ `db-migrate up` ครั้งหน้า
 
 วิธีตรวจซ้ำ: port-forward keto-read แล้ว `GET /relation-tuples?namespace=permissions&object=<perm>` · DB: resolve pod จาก endpoints ของ svc/postgresql ก่อน ([[reference_datastore_stale_postgres_pod]])

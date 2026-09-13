@@ -1,9 +1,44 @@
 ---
 name: project_oc3559_member_tier_state
-description: OC-3559 member tier — what is built on which branch, and the three things still genuinely blocked (2026-09-12)
-metadata:
+description: "OC-3559 member tier — what is built on which branch, the three things still genuinely blocked, and the 2026-09-13 benefits-field scope addition"
+metadata: 
+  node_type: memory
   type: project
+  originSessionId: 1794f9b5-56ea-4edf-b5b3-a11df81d7cb5
+  modified: 2026-09-13T15:30:23.216Z
 ---
+
+## 2026-09-13 — PO added a new field mid-flight, on purpose, despite card already Ready to test
+
+User (PO) asked for a per-tier free-text "สิทธิประโยชน์" (benefits) list — what a
+tier gives beyond points/discount, e.g. "ของขวัญวันเกิด", "เมนูพิเศษเฉพาะสมาชิก" —
+referencing a competitor's LINE member LIFF (Maguro) where each tier card shows a
+spend threshold + a bullet list of perks. None of the existing fields
+(`earn_multiplier`, `discount_percent`, `qualify_points`) cover this — it's pure
+marketing copy, not something the engine reads.
+
+I flagged that all 3 implementation branches (member-api tier engine,
+backoffice-api CRUD, FE admin page) were already **Ready to test (DEV)**, and per
+[[feedback_no_scope_change_in_sprint]] recommended a new follow-up card instead
+of editing OC-3559 in place. **User explicitly chose to edit OC-3559 directly
+anyway** — a deliberate one-off override of that standing rule, not a reversal of
+it; don't assume future advanced-status cards get the same treatment without
+asking again.
+
+Added directly to OC-3559's description (full-rewrite via `editJiraIssue` +
+`contentFormat: markdown`, ~28k→~30k chars, still under the 32,767 cap — see
+[[reference_jira_editissue_adf_breakage]]):
+- New PO-decision callout dated 2026-09-13 (parallel to the existing 2026-09-11 one)
+- **L13**: `benefits` is pure marketing text, not read by any logic (unlike
+  `earn_multiplier`/`discount_percent`) — ordered list per tier, not one blob
+- **S1**: `member_tier.benefits` (jsonb, ordered array of short text, default `[]`)
+- Flow A step 4, backoffice UI bullet, customer app `ovBenefits` UI bullets
+  (must render the FULL list, not truncate to design's 2-line mock)
+- **AC21** + QA test row 22
+
+This means: whichever branch/dev picks this back up needs to add the `benefits`
+column + CRUD + FE list-editor + customer app rendering on top of what's already
+built — it's real incremental work, not just a description change.
 
 **Tier work lives on TWO unmerged branches in different repos. Neither is on develop.**
 

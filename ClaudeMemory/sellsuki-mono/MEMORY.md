@@ -32,6 +32,7 @@ Titles are short on purpose — each file's own `description:` carries the detai
 - [Stale narrow fix MR reverts the broad one](reference_stale_narrow_fix_mr_reverts_the_broad_one.md)
 - [Generated-file conflict → regenerate](reference_generated_file_merge_conflict_regenerate.md)
 - [Stale conflict after force-push](reference_gitlab_stale_conflict_after_force_push.md)
+- [glab merge 405 = pipeline ยังรัน](reference_glab_mr_merge_405_means_pipeline_running.md) — ไม่ใช่เรื่องสิทธิ์ รอ pipeline แล้วสั่งใหม่
 - [Pipeline retry ships skipped deploys](reference_pipeline_retry_runs_skipped_deploy_jobs.md) · [Private Go module CI](reference_gitlab_private_go_module_ci.md) · [Review-bot targets](reference_gitlab_review_bot_targets.md) · [Dead staging runner](reference_dead_staging_runner_tag.md) · [glab ci stale](reference_glab_ci_status_stale_pipeline.md) · [rules de-scope jobs](reference_gitlab_rules_silently_descope_jobs.md) · [Library skips SRE tpl](reference_shared_library_skips_sre_template.md) · [Coverage on DB-less](reference_coverage_gate_on_dbless_job.md)
 
 ## Test gotchas
@@ -61,6 +62,7 @@ Titles are short on purpose — each file's own `description:` carries the detai
 - [LINE optional](project_oc4207_line_optional_design.md) · [Epic triage](project_oc_epic_backlog_triage.md) · [OC×BOLA boundary](project_oc_bola_domain_boundary.md) · [OC-4267 standalone](project_oc4267_standalone_no_qms.md) · [Company not store](reference_oc2plus_company_not_store.md) · [Tier per-company](project_oc2plus_tier_is_per_company_config.md)
 - [BO FE red on develop](reference_oc2plus_backoffice_fe_red_on_develop.md)
 - [FE worktree → branch API](reference_oc2plus_backoffice_fe_local_against_branch_api.md)
+- [OC-4086 editor ไม่มีจริง](reference_oc4086_rich_text_editor_not_in_monorepo.md) — Done แต่โค้ดไม่อยู่ใน monorepo อย่าไล่หา
 - [e2e repo (proj 808)](reference_oc2plus_e2e_playwright_repo.md) · [SRE slots no `&&`](reference_sre_test_job_slots_cannot_chain.md) · [Kit needs pnpm](reference_frontend_kit_consumption_needs_pnpm.md) · [Kit state](reference_frontend_kit_state.md) · [CI outage 2026-09](reference_oc2plus_ci_outage_2026_09.md)
 - [Unset KAFKA_TOPIC_* = 500 cannot_publish_message](reference_unset_kafka_topic_is_a_500.md)
 - [file-service grant is per-company](reference_file_service_grant_is_per_company.md)
@@ -70,7 +72,8 @@ Titles are short on purpose — each file's own `description:` carries the detai
 - [React route flip needs public allow-list](reference_react_route_owner_flip_needs_public_allowlist.md)
 - [gender enum typo in backoffice spec](reference_oc2plus_gender_enum_typo_in_backoffice_spec.md)
 - [Local QA session for the member app](reference_oc2plus_member_app_local_qa_session.md)
-- [OC-4356 News dev blockers](project_oc4356_news_cms_dev_blockers.md) — deploy แล้วแต่ตาราง news ไม่มี + news.manage 0 tuple; member_card_token (017) ก็ยังไม่ apply บน dev
+- [OC-4356 News dev blockers](project_oc4356_news_cms_dev_blockers.md) — 017+018 apply แล้ว + news.manage granted 4536 roles (2026-09-13); เหลือ 019 coupon + member_tier และ staging/prod
+- [OC-4526 กระเป๋าคูปอง](project_oc4526_coupon_wallet.md) — พนักงานสแกนถึงตัดคูปอง, expired คำนวณตอนอ่าน; dev พร้อมแล้ว แต่ยังไม่มีใครออกคูปอง
 - [OC-4530 สแกนที่เคาน์เตอร์](project_oc4530_counter_scan_reanalysis.md)
 - [OC-4363 กรอกรหัส 409/410](project_oc4363_code_redemption_state.md)
 - [OC-4529 บัตรสมาชิก QR](project_oc4529_member_card_token.md)
