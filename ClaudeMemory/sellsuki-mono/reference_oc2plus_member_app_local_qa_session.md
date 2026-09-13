@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: fa22ebb1-f715-4667-85a1-61ebbcc816ab
-  modified: 2026-09-13T02:55:11.367Z
+  modified: 2026-09-13T04:16:17.320Z
 ---
 
 ทำได้จริงเมื่อ 2026-09-12 ใช้เวลาหาพอสมควร — จดไว้ให้ไม่ต้องไล่ใหม่
@@ -52,8 +52,20 @@ metadata:
 (fail-closed ตาม OC-4340 — ตั้งใจ) · session LIFF ไม่ผ่าน gate นี้ (`useIsLineClient()`)
 
 **ผลต่อสูตร QA ข้างบน:** login ด้วย `localtest` ได้ แต่จะ**ไปไม่ถึงแท็บไหนเลย**จนกว่าจะ seed
-consent docs ให้บริษัท `11111111-…` (ตาราง `consent` + ตัว consent service ที่ 8096 ต้องมีเอกสาร)
-— ยังไม่มีสคริปต์ seed · ถ้าเห็นหน้านั้นอย่าไปไล่หา bug ใน FE
+consent docs — ถ้าเห็นหน้านั้นอย่าไปไล่หา bug ใน FE
+
+**สูตร seed (ทำแล้ว 2026-09-13, ได้ผลทันที):** consent ผูกกับ **integration** ไม่ใช่ company — session เว็บ/OTP
+มี `integration_id=''` แล้ว member-api `GetWebConsentIntegrationID` (`integration_repository/postgresql.go:267`)
+เลือก integration active ของบริษัทที่มี**ตัวเดียว** (`localtest` = `22222222-2222-4222-8222-222222222222`) ·
+ตาราง `consent` (PK `integration_id, consent_type`) มีแถวของ integration `5d0e0b94-…` ("LOCAL TEST consent only",
+บริษัท `60daa2a8-…`) ชี้เอกสารใน consent service ที่มีจริง → ยืมเลข consent_id เดียวกัน:
+```sql
+insert into consent(integration_id, consent_type, consent_id, created_at, updated_at)
+values ('22222222-2222-4222-8222-222222222222','pdpa','434401',now(),now()),
+       ('22222222-2222-4222-8222-222222222222','tos','434402',now(),now());
+```
+แล้ว reload → เกทแสดง PDPA/ข้อกำหนด (ตัวอย่าง) ให้กดยอมรับ 2 ฉบับ → เข้า HOME ได้ (`/me/point` ฯลฯ ตอบ 200 แล้วด้วย
+เพราะ `""` ไม่ถึง column uuid อีก) · ถ้าบริษัทมี integration active >1 จะได้ `ErrPointClaimIntegration` แทน
 
 ต้น 404 คือการอ่านเอกสาร `GET /v1/me/consent/pdpa` (status ตอบ 200) — และก่อน `02f729d`
 `getDocument()` เป็นเมธอดเดียวใน `services/consent` ที่ไม่ห่อ `errorHandler` ทำให้ 404 กลายเป็น

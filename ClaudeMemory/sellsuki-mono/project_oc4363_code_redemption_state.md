@@ -5,11 +5,11 @@ metadata:
   node_type: memory
   type: project
   originSessionId: fa22ebb1-f715-4667-85a1-61ebbcc816ab
-  modified: 2026-09-13T04:03:55.217Z
+  modified: 2026-09-13T04:16:20.708Z
 ---
 
 Ready to test (DEV) ตั้งแต่ 2026-09-13 · commits: 3rdparty-api `715a01d` (branch `codex/oc-4344-web-member-identity`, MR !242),
-member-api `4eafe88` (branch `codex/oc-4344-customer-app-integration` — MR !115 merge ไปแล้ว ต้องมี MR ใหม่จาก branch เดิม), member FE `0ac135f` (MR !74 Draft ของ Codex)
+member-api `4eafe88` (**merge เข้า develop แล้วผ่าน MR !116** 2026-09-13 พร้อม card-token OC-4529), member FE `0ac135f` (MR !74 Draft ของ Codex — ยังไม่ merge)
 
 **สิ่งที่การ์ดห้ามแต่ PO เคาะให้ทำ:** การ์ดเขียน "ห้ามแก้ engine" แต่ตาราง 409/410 ของการ์ดเกิดไม่ได้เลยถ้าไม่แตะ —
 engine `getCodeTemplateByCode` ค้นเฉพาะ `status='active'` จึงตอบ `invalid_code` เหมือนกันหมด · PO สั่ง "ทำ OC-4363 ก่อน"
