@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: fa22ebb1-f715-4667-85a1-61ebbcc816ab
-  modified: 2026-09-12T15:20:22.533Z
+  modified: 2026-09-13T01:02:15.571Z
 ---
 
 ทำได้จริงเมื่อ 2026-09-12 ใช้เวลาหาพอสมควร — จดไว้ให้ไม่ต้องไล่ใหม่
@@ -43,6 +43,25 @@ metadata:
 เซสชันอื่นรัน `web-member` บน 5183 อยู่ — เพิ่ม entry `web-member-qa`
 (port 5190, `--strictPort`) ไว้ใน `.claude/launch.json` **ที่ราก monorepo**
 แล้ว · `preview_start` อ่านเฉพาะไฟล์ที่ราก ไม่อ่านของ submodule
+
+## ⚠️ ตั้งแต่ 2026-09-13 (OC-4361, FE `36f0895`+`02f729d`): consent gate ครอบทุกหน้าที่ต้อง login
+
+`WebConsentGate` ถูกย้ายจาก `/address` ไปนั่งที่ `ShellPageImpl` (ระหว่าง AuthGuard กับ ShellFrame)
+→ session เว็บ/OTP ที่บริษัทยัง**ไม่มีแถวในตาราง `consent`** จะเจอหน้า
+"บริษัทนี้ยังไม่ได้ตั้งค่าเอกสารสมาชิก กรุณาติดต่อฝ่ายสนับสนุน" **ตั้งแต่ HOME** ไม่ใช่แค่สมุดที่อยู่
+(fail-closed ตาม OC-4340 — ตั้งใจ) · session LIFF ไม่ผ่าน gate นี้ (`useIsLineClient()`)
+
+**ผลต่อสูตร QA ข้างบน:** login ด้วย `localtest` ได้ แต่จะ**ไปไม่ถึงแท็บไหนเลย**จนกว่าจะ seed
+consent docs ให้บริษัท `11111111-…` (ตาราง `consent` + ตัว consent service ที่ 8096 ต้องมีเอกสาร)
+— ยังไม่มีสคริปต์ seed · ถ้าเห็นหน้านั้นอย่าไปไล่หา bug ใน FE
+
+ต้น 404 คือการอ่านเอกสาร `GET /v1/me/consent/pdpa` (status ตอบ 200) — และก่อน `02f729d`
+`getDocument()` เป็นเมธอดเดียวใน `services/consent` ที่ไม่ห่อ `errorHandler` ทำให้ 404 กลายเป็น
+`network` + ปุ่ม Retry ที่กดไม่มีวันผ่าน ทั้งที่เทส 29/29 เขียว (ไม่มี `describe('getDocument')`)
+— ตัวอย่างสดของ [[reference_test_stub_more_permissive_than_service]]
+
+รีโปนี้ยังมี consent gate **สองชุดซ้อน**: `ConsentGate/useConsentGate/ConsentModal` (ไม่ได้ wire)
+กับ `WebConsentGate` (ตัวที่ live) — ยังไม่เคาะว่าอันไหน canonical แก้ผิดตัวได้ง่าย
 
 ## สิ่งที่เห็นแล้วต้องไม่ตกใจ: 3 ใน 4 แท็บขึ้น error
 
