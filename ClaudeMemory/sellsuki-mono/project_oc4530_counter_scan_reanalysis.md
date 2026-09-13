@@ -106,7 +106,10 @@ epic ไม่ตรงกัน (OC-4363 ใต้ OC-2743, OC-4530 ใต้ O
 | backoffice-api | `feat/oc-4542-oc-4539-member-search-card-verify` | c1644cb · 7f35af2 (review fixes) |
 | frontend-backoffice | `feat/oc-4542-member-quick-search` | 6017ae2 |
 
-**ลำดับ merge บังคับ: 3rdparty → backoffice-api → FE** (proxy verify ชี้ `/internal/v1/company/{id}/member/card/verify`
+**MR เปิดแล้ว 2026-09-13 (ทั้งหมด → develop):** 3rdparty **!243** · backoffice-api **!572** · frontend-backoffice **!602**
+· ระหว่างเปิด MR มีคน merge `codex/oc-4344-web-member-identity` เข้า develop (905286c) → !243 conflict ที่ `errors.go` แก้ด้วย merge develop กลับเข้า branch (2a26dc1) — **ห้าม rebase branch ที่ push แล้ว**
+
+**ลำดับ merge บังคับ: 3rdparty !243 → backoffice-api !572 → FE !602** (proxy verify ชี้ `/internal/v1/company/{id}/member/card/verify`
 ที่มีแค่บน branch 3rdparty นี้) · **submodule ref ในโมโนรีโปยังไม่เลื่อน** — รอ PO
 · 🔴 card-verify บน 3rdparty อยู่คนละ branch กับโครง `/internal/v1` (develop) จึงต้อง merge codex branch เข้า develop-base ก่อน
 
