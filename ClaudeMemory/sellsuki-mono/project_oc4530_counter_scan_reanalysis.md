@@ -1,6 +1,6 @@
 ---
 name: project_oc4530_counter_scan_reanalysis
-description: "OC-4530 วิเคราะห์ใหม่ + PO เคาะ B-lite 2026-09-13 — QR สองทิศต่างกันที่ 'ลำดับข้อมูล'; 'แสดง QR ตามเงื่อนไขสมาชิก' นิยามไม่ได้; ของที่ขาดจริงคือ backoffice เรียก verify ไม่ได้ (คนละ auth); และ OQ1 'ทับ OC-4363 ไหม' ตอบได้จาก Out of Scope ของ OC-4363 เอง = ไม่ทับ เป็นใบต่อ"
+description: "OC-4530 วิเคราะห์ใหม่ + PO เคาะ B-lite + implement OC-4542/4539 บน 3 feature branch 2026-09-13 — QR สองทิศต่างกันที่ 'ลำดับข้อมูล'; 'แสดง QR ตามเงื่อนไขสมาชิก' นิยามไม่ได้; ของที่ขาดจริงคือ backoffice เรียก verify ไม่ได้ (คนละ auth); และ OQ1 'ทับ OC-4363 ไหม' ตอบได้จาก Out of Scope ของ OC-4363 เอง = ไม่ทับ เป็นใบต่อ"
 metadata:
   node_type: memory
   type: project
@@ -96,6 +96,32 @@ epic ไม่ตรงกัน (OC-4363 ใต้ OC-2743, OC-4530 ใต้ O
 
 **typeahead ขยายช่อง enumeration** — ยิงทุกคีย์ · กติกาที่ลงใน AC: prefix ได้เฉพาะชื่อ+รหัส ·
 **เบอร์/อีเมลต้อง match เต็ม** · ขั้นต่ำ 4 ตัว · debounce ≥300ms · rate limit · ห้าม log เบอร์เต็ม
+
+
+## 🛠 Implement แล้ว 2026-09-13 (3 branch จาก origin/develop, ทำใน .worktrees/ ไม่แตะ checkout หลัก)
+
+| Repo | Branch | SHA |
+| --- | --- | --- |
+| 3rdparty-api | `feat/oc-4539-internal-card-verify` | d9237e7 (merge codex/oc-4344-web-member-identity) · 5e3a714 |
+| backoffice-api | `feat/oc-4542-oc-4539-member-search-card-verify` | c1644cb · 7f35af2 (review fixes) |
+| frontend-backoffice | `feat/oc-4542-member-quick-search` | 6017ae2 |
+
+**ลำดับ merge บังคับ: 3rdparty → backoffice-api → FE** (proxy verify ชี้ `/internal/v1/company/{id}/member/card/verify`
+ที่มีแค่บน branch 3rdparty นี้) · **submodule ref ในโมโนรีโปยังไม่เลื่อน** — รอ PO
+· 🔴 card-verify บน 3rdparty อยู่คนละ branch กับโครง `/internal/v1` (develop) จึงต้อง merge codex branch เข้า develop-base ก่อน
+
+**สัญญา:** search `GET /v1/company/{id}/member/search?q=` → `{results:[{member_code, display_name,
+name_source: profile|line|code, tier_name|null, point_balance}], total}` · 400 QUERY_TOO_SHORT / 429 RATE_LIMITED ·
+phone/email-like → `[]` ไม่แตะ DB (เฟส 2 รอ OC-4361) · verify proxy 404 CARD_TOKEN_INVALID ทุกกรณี
+· 3rdparty internal ตอบ 404 แต่ `/v2/openapi` เดิมตอบ **400** กับ sentinel เดียวกัน (ยังไม่เกลา)
+
+**ยังไม่ทำ / follow-up:** เอกสาร partner API (OC-4539 ชิ้น 3) · SearchByPrefix ยัง select คอลัมน์ PII ที่ไม่ใช้ ·
+HTTP client member_card ซ้ำโครง point_adjust · rate limiter in-memory ต่อ pod · FE type nameSource ยังไม่มี 'code' ·
+**QA เบราว์เซอร์จริงยังไม่ได้ทำ** — SSO `accounts.dev-th` ปฏิเสธ origin นอก whitelist (localhost:5199) และ backoffice FE ไม่มี auth bypass
+(มีแค่ VITE_BOLA_MOCK / VITE_THEME_MOCK) → ต้อง QA บน dev หลัง merge หรือรันบนพอร์ตที่ whitelist
+
+⚠️ บทเรียนวันนี้: agent ตัว `developer` เผลอ spawn agent ซ้อนแล้วหยุดเอง ปล่อยให้ลูกเขียน worktree ต่อ — ต้องเช็ค `git status`+mtime ใน worktree
+ก่อนเชื่อ notification "completed" · และช่วง classifier ล่ม agent review 5/6 ตัว stall ที่ 600s → รีวิวเองเร็วกว่า
 
 ## ลำดับงาน
 

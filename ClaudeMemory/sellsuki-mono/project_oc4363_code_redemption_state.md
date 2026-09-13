@@ -5,10 +5,10 @@ metadata:
   node_type: memory
   type: project
   originSessionId: fa22ebb1-f715-4667-85a1-61ebbcc816ab
-  modified: 2026-09-13T04:16:20.708Z
+  modified: 2026-09-13T13:18:25.289Z
 ---
 
-Ready to test (DEV) ตั้งแต่ 2026-09-13 · commits: 3rdparty-api `715a01d` (branch `codex/oc-4344-web-member-identity`, MR !242),
+Ready to test (DEV) ตั้งแต่ 2026-09-13 · **ทุกชั้นอยู่บน develop แล้ว** (PO เคาะ merge !242 + !74 เอง 2026-09-13; !242 ต้อง merge develop เข้า branch ก่อน — conflict ที่ `helper/errors.go` แค่ 2 บล็อกใหม่ชนกัน เก็บทั้งคู่) · commits: 3rdparty-api `715a01d` (branch `codex/oc-4344-web-member-identity`, MR !242),
 member-api `4eafe88` (**merge เข้า develop แล้วผ่าน MR !116** 2026-09-13 พร้อม card-token OC-4529), member FE `0ac135f` (MR !74 Draft ของ Codex — ยังไม่ merge)
 
 **สิ่งที่การ์ดห้ามแต่ PO เคาะให้ทำ:** การ์ดเขียน "ห้ามแก้ engine" แต่ตาราง 409/410 ของการ์ดเกิดไม่ได้เลยถ้าไม่แตะ —
