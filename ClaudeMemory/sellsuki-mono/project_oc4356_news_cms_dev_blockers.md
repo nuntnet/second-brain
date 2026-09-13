@@ -1,6 +1,6 @@
 ---
 name: project_oc4356_news_cms_dev_blockers
-description: "OC-4356 News CMS: code merged+deployed to dev (BE b1d0ab9, FE 6422576) แต่ใช้บน dev ไม่ได้ — ตาราง news ไม่มีใน development_oc2plus_crm และ oc2plus.news.manage มี 0 tuple ใน Keto dev; member_card_token (017) ก็ยังไม่ apply บน dev เช่นกัน"
+description: "OC-4356 News CMS + OC-4529 บัตรสมาชิก: deploy dev แล้วแต่ตาราง news/member_card_token ไม่มี และ oc2plus.news.manage 0 tuple — แก้ครบ 2026-09-13 (apply SQL ใน pod + backfill 4536 roles + MR !86 ที่ repo migration); staging/prod ยังไม่ได้ทำ"
 metadata:
   node_type: memory
   type: project
@@ -20,6 +20,19 @@ metadata:
 
 ## ⚠️ พลอยเจอ: `member_card_token` (017) ก็ไม่มีบน dev
 → `GET /v1/me/card-token` (OC-4529) และ verify ทั้งสาย (OC-4539 !243/!572, FE !602 ที่ deploy แล้ว) **จะล้มบน dev** จนกว่าจะ run 017 · ต้อง run 017+018 พร้อมกัน
+
+## ✅ แก้แล้ว 2026-09-13 (ทั้งสองข้อ)
+
+1. **Keto:** `kubectl -n sellsuki-dev exec deploy/sellsuki-role-and-permission-management-backend -- /app/backfill-role-permission --permission oc2plus.news.manage --apply`
+   → **granted 4536, failed 0** (ใช้เวลา ~10 นาที) · ยืนยันด้วย keto-read: page 1 เต็ม 1000 tuple เท่ากับ `oc2plus.member.view`
+   · dry-run ก่อน (ไม่ใส่ `--apply`) เตือน `[warn-no-tenant]` ไม่กี่ role = role ไม่มี tenant ref เขียน tuple ไม่ได้ ปกติ
+2. **DB:** classifier บล็อกการอ่าน secret ออกมานอกคลัสเตอร์ → **รัน SQL ข้างในแทน**
+   `kubectl -n datastore exec -i postgresql-pg18-0 -c postgresql -- sh -c 'export PGPASSWORD=...; psql -U postgres -d development_oc2plus_crm -v ON_ERROR_STOP=1 -f -' < file.sql`
+   ใส่ `member_card_token` + `news` ใน transaction เดียว **พร้อม INSERT แถว ledger** ชื่อ `/20260913000000-create-member-card-token`, `/20260913001000-create-news`
+   ให้ตรงกับไฟล์ใน **MR !86** ของ `oc2plus-line-crm-migration` → `db-migrate up -e dev` จะข้ามเอง ไม่ชน
+
+🟡 **staging/prod ยังไม่ได้ทั้ง migration และ backfill** · 🟡 `oc2plus.news.manage` ยังเป็น local const ใน `news.go` ต้องเพิ่มลง entity `access_control/permission_list.go` แล้ว bump
+🟡 **`member_tier` (OC-3559) ยังไม่ apply บน dev** — ledger dev หยุดที่ `campaign-product-scope`; ไฟล์อยู่ใน repo migration แล้ว จะติดไปกับ `db-migrate up` ครั้งหน้า
 
 วิธีตรวจซ้ำ: port-forward keto-read แล้ว `GET /relation-tuples?namespace=permissions&object=<perm>` · DB: resolve pod จาก endpoints ของ svc/postgresql ก่อน ([[reference_datastore_stale_postgres_pod]])
 

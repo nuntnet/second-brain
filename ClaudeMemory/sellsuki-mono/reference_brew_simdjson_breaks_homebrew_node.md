@@ -1,10 +1,14 @@
 ---
 name: reference_brew_simdjson_breaks_homebrew_node
 description: "A brew upgrade of simdjson (4.6.11 ships libsimdjson.33.dylib) leaves Homebrew node 25.8.0 linked against the deleted .30 and every node/npm/npx call aborts machine-wide; fix is brew reinstall node, and /usr/local/bin/node is only v16 so it is not a fallback for these repos"
-metadata:
+metadata: 
   node_type: memory
   type: reference
+  originSessionId: d0b39379-feaa-4fd5-b115-18617c202159
+  modified: 2026-09-13T14:50:39.337Z
 ---
+
+**✅ หายแล้ว ณ 2026-09-13** — `/opt/homebrew/bin/node` = **v26.8.2** รันได้ปกติ (เช็คตอนเริ่ม implement OC-4523/BOLA-328) ⇒ **อย่าข้ามการ verify บนเครื่องเพราะไฟล์นี้** ให้ลองรันจริงก่อนเสมอ ที่เหลือด้านล่างเก็บไว้เป็น **pattern การวินิจฉัย** เพราะ brew upgrade ครั้งหน้าทำให้เกิดซ้ำได้
 
 Happened mid-session 2026-09-11 on this machine, minutes after a `brew` upgrade —
 nothing to do with any repo's code.

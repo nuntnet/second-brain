@@ -55,3 +55,28 @@ adopt workspace ที่ CCS มีอยู่แล้วแทนการ�
 รับเลี้ยง หลัง overmind session เดิมตาย) · ย้ายมารันใต้ overmind socket ใหม่ (`.overmind-oc2api.sock`,
 `overmind start -l oc2plus-api -D`) แล้วถึงอ่าน pane ได้ และเห็น 404 จาก 8085 ทันที
 
+## 🔴 แก้ความเข้าใจผิดอีกข้อ (2026-09-13): **ไม่มี sweep ทุก 5 นาที — ไม่มีใครเรียก RetryPendingBindings เลย**
+
+ที่เขียนไว้ข้างบนว่า "sweep ทุก 5 นาทีวนล้มเงียบ" **ผิด** · ตรวจจริงแล้ว:
+`cmd/generics_server/main.go` ของ backoffice-api **ไม่มี ticker/goroutine** เรียก `RetryPendingBindings`
+(grep `RetryPendingBindings|Ticker` = 0) · ทางเดียวที่เรียกได้คือ `POST /v1/system/bola-bindings/retry`
+ซึ่ง commit `b038aa6` เขียนเองว่า *"for manual cron trigger"* — และ **CronJob นั้นไม่เคยถูกสร้าง**:
+`deployment/values-*.yml` ไม่มี cron block, บน cluster `octoplus-dev` มีแค่ `cron-cleanup` กับ `cron-daily-report`
+
+**ผล:** บริษัทที่ bind รอบแรกไม่ผ่าน ค้าง `pending` ตลอดอายุบริษัท **ทุก env** → ลิงก์แอปสมาชิกตายถาวร
+policy ทั้งชุด (`ReviveStalledFailed` cooldown 1 ชม., `ReconcileStuckPending` cap 5 attempts) เขียนไว้แต่ไม่มีวันทำงาน
+
+**หลักฐานจาก dev 2026-09-13** — บริษัท `d9fca606-aea6-4ef3-b10c-4a0a8dcf0dcd`:
+`GET /v1/system/company/{id}/customer-app` (ยิงจากใน pod ด้วย `$SYSTEM_TOKEN`) ตอบ
+`{"binding_status":"pending","slug":null,"pages":[]}` ขณะที่เส้นของแอดมิน (Kratos identity) คืน slug
+`d9tefkcjauae8rpaarm0` = `company.Code` จริง → **system endpoint คืน slug null เพราะ lookup ด้วย provider
+identity ซึ่ง CCS หาไม่เจอ** (เมนู LINE ที่ BOLA สร้างจากเส้นนี้จะไม่มี slug — OC-4514)
+
+**ชั้นที่สองที่เพิ่งเจอ:** backoffice `customer_app.go:61-68` ปลด slug ออกจาก BOLA แล้ว (คอมเมนต์ยาวว่า
+"web links work in any browser") แต่ member-api `ResolveCompanyBySlug` ยัง resolve ผ่าน
+`oc2plus_bola_bindings.GetBySlug` ตัวเดียว และ `CompanyRepository` ของ member-api มีแค่ `GetCompanyDetail(id)`
+ไม่มี lookup ด้วย code → **สองบริการไม่ตรงกันว่า slug อยู่ที่ไหน** · การ์ด [[OC-4544]]
+
+**How to apply:** ถ้าเจอ member-api ตอบ 404 ที่ `/v1/company/{slug}/...` ทุก slug — อย่าไปหาที่ route
+ให้เช็ค `binding_status`/`slug` ของบริษัทนั้นก่อน · แยก "route ไม่มี" ออกจาก "resolve ไม่เจอ" ด้วย body:
+Fiber ตอบ `Cannot POST /x` เมื่อ route ไม่มี แต่ตอบ envelope `{"error_code":"not_found"}` เมื่อ handler ทำงานแล้ว
