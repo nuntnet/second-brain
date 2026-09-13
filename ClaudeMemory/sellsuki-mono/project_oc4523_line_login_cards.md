@@ -28,4 +28,8 @@ metadata:
 
 **ซี้ที่พลาดง่าย: FE เช็ค session 2 ที่ ไม่ใช่ที่เดียว** — `AuthGuard.tsx:58` เด้ง anonymous ทันที แต่ point-claims ทั้ง 3 หน้า **ข้าม guard** แล้วเช็ค 401 เอง (`publicRoutes.ts`, ตัดสินใจใน OC-4503 เพราะ E2E TS-013 ล็อกพฤติกรรมไว้) ⇒ แก้แค่ AuthGuard จะหลุด 3 หน้าที่สำคัญที่สุด การ์ดจึงมี Rule 6 + AC-5 บังคับ test ที่ระดับ shell
 
+**ลงจริงแล้ว 2026-09-13** merge เข้า develop ครบ 4 repo: bola-frontend !118, bola-backend !182, member-api !121, member FE !77 และเลื่อน submodule ref ในโมโนรีโปแล้ว (commit 6d1126c) สถานะการ์ด: BOLA-328 = Ready for QA (SER), OC-4523 = Ready to test (DEV)
+
+**บทเรียนจากรอบนี้ 3 ข้อ** (1) member-api ชน OC-4526 ที่เข้า develop ระหว่างทาง แก้โดย merge develop เข้ามา ไม่ rebase และ regenerate `spec.gen.go` จาก yaml ที่ merge แล้ว (2) CI ของ member FE แดงทั้งที่เทสผ่าน 1157/1157 เพราะ lazy chunk โหลดค้างตอน teardown แก้โดย warm chunk ใน beforeAll (3) ดู [[reference_green_count_hides_uncollected_suite]]
+
 ดู [[project_oc2plus_liff_shell_is_the_line_entry]] [[project_oc2plus_member_react_migration]] [[project_oc4511_4514_ux_cluster]]

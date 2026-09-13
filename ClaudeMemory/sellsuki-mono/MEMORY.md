@@ -36,7 +36,7 @@ Titles are short on purpose — each file's own `description:` carries the detai
 - [Pipeline retry ships skipped deploys](reference_pipeline_retry_runs_skipped_deploy_jobs.md) · [Private Go module CI](reference_gitlab_private_go_module_ci.md) · [Review-bot targets](reference_gitlab_review_bot_targets.md) · [Dead staging runner](reference_dead_staging_runner_tag.md) · [glab ci stale](reference_glab_ci_status_stale_pipeline.md) · [rules de-scope jobs](reference_gitlab_rules_silently_descope_jobs.md) · [Library skips SRE tpl](reference_shared_library_skips_sre_template.md) · [Coverage on DB-less](reference_coverage_gate_on_dbless_job.md)
 
 ## Test gotchas
-- [Sentry dual hub on skew](reference_sentry_dual_hub_on_version_skew.md)
+- [Green count hides an uncollected suite](reference_green_count_hides_uncollected_suite.md) · [Sentry dual hub on skew](reference_sentry_dual_hub_on_version_skew.md)
 - [Stub too permissive](reference_test_stub_more_permissive_than_service.md) · [testify default wins](reference_testify_permissive_default_wins.md) · [Timing concurrency](reference_timing_dependent_concurrency_tests.md) · [Turbo false green](reference_turbo_cache_crosssession_false_green.md) · [Lit/React SSR](reference_lit_react_node_condition_hollows_tests.md) · [DS testId](reference_ds_testid_is_a_property.md) · [Node 25 jsdom](reference_node25_localstorage_jsdom_conflict.md)
 
 ## Go / DB gotchas
