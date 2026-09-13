@@ -83,6 +83,7 @@ Titles are short on purpose — each file's own `description:` carries the detai
 - [OC-3559 tier state](project_oc3559_member_tier_state.md)
 - [OC-4362 claim gaps](project_oc4362_claim_cluster_gaps.md) · [OCR = VLM](project_oc4464_ocr_vendor_decision.md) · [Approve + admin edit](project_oc4362_approve_and_admin_edit.md)
 - [BFF reads direct, not proxy](project_oc2plus_customer_bff_reads_direct_not_proxy.md)
+- [consent binding ไม่มีคนเขียน](reference_oc2plus_consent_binding_has_no_writer.md) — ตาราง `consent` ไม่มี INSERT ที่ไหนเลย (OC-4089 ยัง To Do); key ด้วย OA ทำให้เส้นเว็บพัง → OC-4545
 - [OTP session = 403 consent](reference_oc2plus_otp_session_fails_3rdparty_consent.md)
 - [Customer App program](project_customer_app_program.md) · [Auth plan](project_oc2plus_customer_app_auth_plan.md) · [Web-OTP minter](project_oc4348_web_otp_session_minter.md) · [Invite→app chain](project_invite_multiapp_chain.md) · [BOLA binding via CCS](project_bola_binding_never_worked_via_ccs.md) · [OC-4511..4514 UX](project_oc4511_4514_ux_cluster.md) · [LIFF shell = entry](project_oc2plus_liff_shell_is_the_line_entry.md)
 - [OC-4523 + BOLA-328 LINE login](project_oc4523_line_login_cards.md)
