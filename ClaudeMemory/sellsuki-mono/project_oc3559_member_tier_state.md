@@ -37,6 +37,23 @@ NOT NULL DEFAULT '[]'` · รันซ้ำได้จริง (exit 0, NOTIC
 `CreatePermission` gRPC **ไม่ต้อง auth** (handler ส่ง identity เปล่า) และ **ไม่ใช่ upsert**
 — GORM `Create` ธรรมดา รันซ้ำได้ `Internal: database error` ซึ่งแปลว่ามีแถวอยู่แล้ว
 
+
+**2026-09-14 (ต่อ) — push ครบ 3 branch แล้ว และ benefits กลายเป็น migration 021**
+
+`feat/oc-3559-tier-benefits` push ขึ้น origin ครบสามที่:
+member-api `e028567` · backoffice-api `8aa6342` · FE `376d506` (ยังไม่ได้เปิด MR)
+
+⚠️ **develop ชิงเลข 020 ไประหว่างที่ branch ยังไม่ push** — `020_create_company_consent`
+(OC-4545) merge เข้า develop ก่อน เลยต้องเลื่อน benefits เป็น
+`021_add_member_tier_benefits` · DDL ไม่เปลี่ยนสักตัวอักษร เปลี่ยนแค่ชื่อไฟล์
++ คอมเมนต์ · **dev-th ที่รันไปตอนยังเป็น 020 ไม่ต้องย้อนอะไร** เพราะเป็น
+`ADD COLUMN IF NOT EXISTS` รันซ้ำเป็น 021 ได้เลยเป็น no-op
+
+บทเรียน: เลข migration ไม่ใช่ของเราจนกว่าจะ push — ก่อน push ทุกครั้งต้อง
+`git ls-tree origin/develop migrations/` เช็คว่าเลขยังว่าง ไม่ใช่เช็คแค่ตอนสร้างไฟล์
+ตอน merge จะไม่ conflict ด้วยซ้ำ (คนละชื่อไฟล์) แต่ `migrate-all.sh` apply ตาม
+ลำดับ sort ชื่อไฟล์ เลขซ้ำจึงได้ลำดับที่ไม่แน่นอนแบบเงียบ ๆ
+
 ## 2026-09-13 — PO added a new field mid-flight, on purpose, despite card already Ready to test
 
 User (PO) asked for a per-tier free-text "สิทธิประโยชน์" (benefits) list — what a
