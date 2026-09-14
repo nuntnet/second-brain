@@ -19,3 +19,10 @@ Quirks ของ Jira MCP tools (server d4aa0ce4…, พบ 2026-08-14 ตอน
 
 5. **Issue links: ทิศทางกลับด้าน + ลบไม่ได้** (2026-08-26, cluster OC-4362/4407) — `createIssueLink` ผ่าน MCP บันทึกทิศกลับด้านได้ (การ์ดที่ควรเป็น *is blocked by* กลายเป็น *blocks*) และ **ไม่มี tool สำหรับลบ link** → เจอแล้ว 2 ครั้งค้างเป็นเดือน (OC-4407 link 23380 ตั้งแต่ 2026-08-07, OC-4362 link 23390). ต้อง **verify ทิศทางด้วย getJiraIssue หลังสร้างทุกครั้ง** และถ้าผิดต้องให้คนลบใน Jira UI เอง — อย่าปล่อยไว้ เพราะ dependency graph ที่กลับด้านทำให้ prioritizer จัดลำดับผิด
 6. 2026-08-26: `fields` param **ทำงานแล้ว** ทั้ง getJiraIssue และ searchJiraIssuesUsingJql (ต่างจากข้อ 2 ที่พบ 2026-08-14) — แต่ nested `parent` ยังคืน object เต็มเสมอ ทำให้ผลลัพธ์บวมอยู่ดีเมื่อ query หลายสิบใบ
+
+7. **`createJiraIssue` ตั้ง epic parent + labels ได้ตอนสร้างเลย** (ยืนยัน 2026-09-14 สร้าง OC-4546/4547 ใน
+   โปรเจกต์ OC ที่เป็น team-managed): param `parent` ใช้กับ **Epic** ได้ ไม่ใช่แค่ subtask ตามที่ description บอก
+   และ labels ต้องส่งผ่าน `additional_fields: {"labels": [...]}` — ทั้งคู่ติดตั้งแต่ create ไม่ต้อง edit ตาม
+   แต่ response ของ create **ไม่คืน parent/labels กลับมา** (คืนแค่ default read fields) จึงดูเหมือนไม่ติด
+   ⇒ อย่าไปยิง edit ซ้ำเพราะเข้าใจผิด ให้ `getJiraIssue` ด้วย `fields: ["parent","labels","issuelinks"]` ยืนยันทีเดียว
+   ตอนท้ายพร้อมกับตรวจทิศทาง link ตามข้อ 5

@@ -73,7 +73,7 @@ Titles are short on purpose — each file's own `description:` carries the detai
 - [gender enum typo in backoffice spec](reference_oc2plus_gender_enum_typo_in_backoffice_spec.md)
 - [Local QA session for the member app](reference_oc2plus_member_app_local_qa_session.md)
 - [OC-4356 News dev blockers](project_oc4356_news_cms_dev_blockers.md) — 017+018 apply แล้ว + news.manage granted 4536 roles (2026-09-13); เหลือ 019 coupon + member_tier และ staging/prod
-- [OC-4526 กระเป๋าคูปอง](project_oc4526_coupon_wallet.md) — พนักงานสแกนถึงตัดคูปอง, expired คำนวณตอนอ่าน; dev พร้อมแล้ว แต่ยังไม่มีใครออกคูปอง
+- [OC-4526 กระเป๋าคูปอง](project_oc4526_coupon_wallet.md) — พนักงานสแกนถึงตัดคูปอง, expired คำนวณตอนอ่าน; ฝั่ง backoffice ว่างเปล่า → เปิด OC-4546/4547 แล้ว
 - [OC-4530 สแกนที่เคาน์เตอร์](project_oc4530_counter_scan_reanalysis.md)
 - [OC-4363 กรอกรหัส 409/410](project_oc4363_code_redemption_state.md)
 - [OC-4529 บัตรสมาชิก QR](project_oc4529_member_card_token.md)

@@ -36,7 +36,20 @@ engine `GET /me/coupons` → `{results:[…], total}` field `coupon_id`/`code`
   (`development_oc2plus_crm` บน `postgresql-pg18-0`) + เขียน ledger `/20260913002000-create-coupon`
   + เอาไฟล์เข้า repo migration ที่เป็น source of truth แล้ว (**MR !87**, คู่กับ !86 ของ card-token/news)
   · **staging/prod ยังไม่ได้รัน**
-- **ฝั่งพนักงานไม่มี UI** — verify ต้องมี API key เรียก · เครื่องมือสแกนคือ OC-4530 ที่ยังไม่ได้ทำ
+- **ฝั่งพนักงานไม่มี UI** — verify ต้องมี API key เรียก · OC-4530 ถูกเขียนขอบเขตใหม่เป็นกล้องฝั่งสมาชิก
+  ไม่ใช่เครื่องมือที่เคาน์เตอร์อีกแล้ว
+
+## ช่องว่างสองใบนี้มีการ์ดแล้ว (สร้าง 2026-09-14)
+
+ยืนยันด้วย `git grep -ril coupon origin/develop` ว่า **backoffice-api และ backoffice FE มีโค้ดคูปอง 0 ไฟล์**
+- **OC-4546** จัดการคูปองบน backoffice (ออก/ดู/ยกเลิก) — parent OC-2743 · เป็นใบที่ทำให้ OC-4526 demo ได้ครั้งแรก
+  เพราะ `source_type=manual` ถูกกันไว้ให้แอดมินออกเองตั้งแต่ migration
+- **OC-4547** พนักงานสแกนตัดคูปอง — parent OC-4349 · ต่อยอด `MemberCardScanner.vue` ของ OC-4539
+- OC-4546 **blocks** OC-4547 (permission constant ร่วมกัน + ต้องมีคูปองก่อนถึงเทสได้)
+- ร่างเต็ม: `docs/oc2plus/coupon-backoffice-cards-draft.md`
+- ⚠️ ยังต้องให้ PO เคาะ: permission `coupon.manage` vs แยก `coupon.redeem` (constant อยู่ใน entity repo ภายนอก
+  + ต้อง grant เข้า role เดิมด้วยมือ แบบ news.manage/OC-4356) และ **ตาราง `coupon` ไม่มี field มูลค่า/ส่วนลดเลย**
+- 🟡 OC-4543 เป็นการ์ดซ้ำของ OC-4526 (ovCoupons เหมือนกัน) ที่ถูกปิด Done ทั้งที่เนื้อการ์ดเขียนว่า backend ยังไม่มี
 
 **How to apply:** ก่อนแตะคูปอง อ่าน 4 ข้อข้างบนก่อน — โดยเฉพาะข้อ 2 ห้ามเติม `expired` เป็นค่าที่เก็บใน DB
 และข้อ 1 ห้ามเพิ่มปุ่มที่สมาชิกกดแล้วคูปองหาย
