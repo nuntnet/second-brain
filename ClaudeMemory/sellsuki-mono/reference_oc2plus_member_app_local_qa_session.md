@@ -109,3 +109,33 @@ product** (สมาชิกที่ login ด้วยเบอร์โด�
 
 เชื่อม [[reference_oc2plus_member_frontend]] [[reference_oc2plus_member_api_test_mode_login]]
 [[project_oc2plus_customer_bff_reads_direct_not_proxy]]
+
+## 2026-09-14 — ข้อมูลสำหรับ "ดู UI ตอนมีของจริง" (OC-4344)
+
+หน้าที่ว่างเปล่าซ่อนบั๊กไว้เยอะ (รูปของรางวัลไม่เคย render, ตัวเลขไม่มีคอมมา,
+เครื่องหมายลบซ้อน, การ์ดเหลื่อม) — ก่อนตรวจ UI ให้ seed ก่อนเสมอ
+
+**local** (`docker exec -i sellsuki_mono-postgres-1 psql -U postgres -d oc2plus_crm`)
+· member สมชาย `3654ba0c-…` / `0895556666` / company `11111111-…` / point `3bbcf15a-…`
+
+**dev** (`kubectl -n datastore exec -i postgresql-pg18-0 -c postgresql -- psql -U postgres -d development_oc2plus_crm`)
+· member `9267c650-…` / `0826883936` / company `a3fa1608-…` (slug `d9pesc1nm7id80npgljg`) / point `f7faeb39-…` (Main)
+· ของที่ใส่ไว้ใช้ prefix `a4…`/`a5…`/`a6…` และชื่อมีคำว่า `(fixture OC-4344)` → ลบได้ด้วย prefix
+
+**สิ่งที่ต้องมีถึงจะเห็น UI ครบ**
+| จอ | ต้องมีแถวใน |
+| --- | --- |
+| การ์ดระดับสมาชิก (แบบ gradient) | `member_tier_program` + `member_tier` + `member_tier_state` (tier_id = ระดับปัจจุบัน, accumulated_points) |
+| แถบแต้ม 3 ช่อง | `member_point` 2 แถว (แถวหนึ่งใส่ `expire_at` ใกล้ ๆ) |
+| แท็บของรางวัล | `campaign` + `campaign_condition(type='point')` + `campaign_condition_point` — **ไม่มี cost point = ไม่ขึ้นแท็บของรางวัล** (`display_flag` มาจากตรงนี้) · สถานะมาจาก `status`/`start_date`/`end_date`/`limit_usage` vs `statistic_usage_count` |
+| ประวัติแต้ม | `member_point_activity` — **`quantity` เก็บเป็นบวกเสมอ** เครื่องหมายมาจาก `activity_type` |
+| คำขอสะสมแต้ม | `point_claim` · `channel` รับแค่ `manual`/`marketplace` · `entry_path` รับแค่ `member`/`guest_first` · marketplace ต้องคู่กับ channel |
+| กระเป๋าคูปอง | `coupon` · `source_type` รับแค่ `reward_redemption`/`lucky_draw`/`manual`/`campaign` |
+
+⚠️ `psql -v ON_ERROR_STOP=1` + `BEGIN…COMMIT` ก้อนเดียว: พลาดที่ constraint ตรงกลาง =
+**rollback ทั้งก้อน** (ผมโดนมาแล้ว — insert ขึ้น 6 บรรทัดแต่ข้อมูลไม่เข้าสักแถว) แยกก้อนเล็ก ๆ ดีกว่า
+
+**member-api บนเครื่อง (branch `codex/oc-4344-…`) ไม่มี route `/v1/me/coupons`** →
+กระเป๋าคูปองทดสอบบน local ไม่ได้ ต้องดูบน dev (`https://member.dev.oc2.plus/<slug>/login`)
+
+**app dev อยู่ที่ `https://member.dev.oc2.plus`** (ไม่ใช่ `.dev-th`) · deploy อัตโนมัติเมื่อ merge เข้า develop
