@@ -40,8 +40,18 @@ NOT NULL DEFAULT '[]'` · รันซ้ำได้จริง (exit 0, NOTIC
 
 **2026-09-14 (ต่อ) — push ครบ 3 branch แล้ว และ benefits กลายเป็น migration 021**
 
-**benefits merge เข้า develop ครบสามที่แล้ว** — member-api !126 · backoffice-api !577 · FE !606
+**benefits merge เข้า develop ครบ **สี่** ที่แล้ว** — member-api !126 · backoffice-api !577 · backoffice FE !606 · **member (customer) FE !81**
 (ยืนยันบน `origin/develop` จริงทั้งสาม: migration 021, `NormalizeBenefits`, `moveBenefit`)
+
+AC21 ฝั่งแสดงผล **ทำแล้ว** — `TierCard.tsx` มีกล่อง "สิทธิประโยชน์ทุกระดับ" อยู่ก่อน
+แล้ว (ดึง `/me/tier` โชว์ทุกชั้น) ขาดแค่ไม่เรนเดอร์ array `benefits` · เติม bullet list
++ `tierBenefits()` ที่ entity (field หาย/null/ไม่ใช่ array → ลิสต์ว่างเหมือนกันหมด)
+**ไม่ใช่ "ยังไม่มีใครสร้างหน้า" อย่างที่เคยเข้าใจผิด**
+
+⚠️ !81 ชน **add/add** บน `TierCard.spec.tsx` — session คู่ขนาน (OC-4344 UI polish)
+สร้างไฟล์ชื่อเดียวกัน merge เข้า develop ก่อน · แก้โดย**รวมสองชุดเทสไว้ไฟล์เดียว**
+(4 ของเขา + 5 ของ benefits = 9) ใช้ helper ของเขาเป็นหลัก ไม่ทับใคร ·
+jsdom ไม่มี `showModal`/`close` ของ `<dialog>` ต้อง stub
 
 !126 เปิดมาแล้ว conflict ไฟล์เดียวคือ `spec.gen.go` ซึ่งเป็นไฟล์ generate ส่วน `v1.yaml`
 ต้นทางจริง auto-merge สะอาด → แก้ด้วย `make gen-http-fiber` ไม่ใช่แก้ marker มือ
