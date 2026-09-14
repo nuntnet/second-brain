@@ -40,8 +40,12 @@ NOT NULL DEFAULT '[]'` · รันซ้ำได้จริง (exit 0, NOTIC
 
 **2026-09-14 (ต่อ) — push ครบ 3 branch แล้ว และ benefits กลายเป็น migration 021**
 
-`feat/oc-3559-tier-benefits` push ขึ้น origin ครบสามที่:
-member-api `e028567` · backoffice-api `8aa6342` · FE `376d506` (ยังไม่ได้เปิด MR)
+**benefits merge เข้า develop ครบสามที่แล้ว** — member-api !126 · backoffice-api !577 · FE !606
+(ยืนยันบน `origin/develop` จริงทั้งสาม: migration 021, `NormalizeBenefits`, `moveBenefit`)
+
+!126 เปิดมาแล้ว conflict ไฟล์เดียวคือ `spec.gen.go` ซึ่งเป็นไฟล์ generate ส่วน `v1.yaml`
+ต้นทางจริง auto-merge สะอาด → แก้ด้วย `make gen-http-fiber` ไม่ใช่แก้ marker มือ
+ดู [[reference_generated_file_merge_conflict_regenerate]]
 
 ⚠️ **develop ชิงเลข 020 ไประหว่างที่ branch ยังไม่ push** — `020_create_company_consent`
 (OC-4545) merge เข้า develop ก่อน เลยต้องเลื่อน benefits เป็น
