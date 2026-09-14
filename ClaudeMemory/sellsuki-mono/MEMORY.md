@@ -25,6 +25,7 @@ Titles are short on purpose — each file's own `description:` carries the detai
 ## Jira
 - [BOLA proj](reference_bola_jira_project.md) · [OC2Plus proj](reference_oc2plus_jira_project.md) · [Patona proj](reference_pat_jira_project.md) · [Sprint ids](reference_jira_sprint_ids_not_contiguous.md) · [PAT sprints](reference_pat_board_sprints.md) · [PAT epics unwired](project_pat_epic_links_unwired.md)
 - [MCP crosses sessions](reference_jira_mcp_crosses_responses_between_sessions.md) · [MCP quirks](reference_jira_mcp_search_quirks.md) · [ADF + Thai mangling](reference_jira_editissue_adf_breakage.md) · [No local fallback](reference_no_local_jira_fallback.md)
+- [Writes 403 mid-session](reference_jira_mcp_writes_403_midsession.md) — "app is not installed" while reads still work; retrying never clears it
 
 ## Git / CI gotchas
 - [CRLF .vue reflow](reference_crlf_vue_files_reflow_on_text_rewrite.md) · [FF merge reverts](reference_fast_forward_merge_silently_reverts.md) · [Semantic break](reference_silent_semantic_merge_break.md) · [Parallel dup symbols](reference_parallel_sessions_duplicate_symbols.md) · [.bak drops comments](reference_bak_restore_drops_comments.md)
