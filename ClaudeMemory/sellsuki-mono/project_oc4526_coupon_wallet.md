@@ -46,7 +46,14 @@ engine `GET /me/coupons` → `{results:[…], total}` field `coupon_id`/`code`
   เพราะ `source_type=manual` ถูกกันไว้ให้แอดมินออกเองตั้งแต่ migration
 - **OC-4547** พนักงานสแกนตัดคูปอง — parent OC-4349 · ต่อยอด `MemberCardScanner.vue` ของ OC-4539
 - OC-4546 **blocks** OC-4547 (permission constant ร่วมกัน + ต้องมีคูปองก่อนถึงเทสได้)
-- ร่างเต็ม: `docs/oc2plus/coupon-backoffice-cards-draft.md`
+- ร่างเต็ม: `docs/oc2plus/coupon-backoffice-cards-draft.md` · contract 3 ชั้น: `docs/oc2plus/coupon-backoffice-contract.md`
+- **implement + เปิด MR แล้ว 2026-09-14** branch `feat/oc-4546-4547-coupon-backoffice` ทั้ง 3 repo
+  3rdparty-api **!246** (internal surface) → backoffice-api **!579** (admin + Keto + audit) → FE **!607**
+  · merge ตามลำดับนี้เท่านั้น ปลายน้ำเรียกต้นน้ำ · ทำใน git worktree `.worktrees/coupon` เพราะ shared checkout
+  ติด branch ของ Codex อยู่ · ยังไม่เลื่อน submodule ref (convention ของ repo นี้คือเลื่อนหลัง merge เข้า develop)
+- seed dev: `scripts/seed-coupons-dev.sh` (idempotent + `--reset`) — dev มีคูปอง 10 ใบครบ 4 สถานะ
+  ผูกกับ member `B802-F171-0000-0001` ซึ่งเป็น **member คนเดียวทั้ง CRM บน dev** · `CPN-XCOM-0001`
+  ผูก company ปลอมไว้เทสว่า company filter ไม่หลุด
 - ✅ **PO เคาะ 2026-09-14: แยกเป็นสอง permission** — `oc2plus.coupon.manage` (แอดมิน: ออก/ดู/ยกเลิก, OC-4546)
   กับ `oc2plus.coupon.redeem` (พนักงานหน้าร้าน: ตัดคูปองอย่างเดียว, OC-4547) · `.redeem` ต้องไม่ implied จาก `.manage`
   · OC-4546 เป็นคนเพิ่ม constant **ทั้งสองตัวในรอบเดียว** เพราะขั้นที่แพงคือ publish repo ภายนอก
