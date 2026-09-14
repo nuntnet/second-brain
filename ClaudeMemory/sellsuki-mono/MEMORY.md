@@ -87,6 +87,7 @@ Titles are short on purpose — each file's own `description:` carries the detai
 - [OC-2275 blocked](project_oc2275_remaining_blocked_on_decisions.md) · [API-key gap](project_oc2plus_3rdparty_apikey_gap.md) · [OC-2275 audit](project_oc2275_audit_actionplan.md) · [API-key local run](project_oc2plus_apikey_local_run.md) · [TEST_KEY prod gate](project_oc2plus_test_key_production_gate.md) · [keyring vs 2275](project_sellsuki_keyring_vs_oc2275.md) · [Prod v2 unverified](project_oc2plus_prod_v2_apikey_unverified.md)
 - [Primary invariant](project_oc2plus_primary_invariant_pattern.md) · [Consent model](project_oc2plus_consent_enforcement_model.md) · [Loyalty cluster](project_loyalty_point_cluster.md) · [Contract sheet](project_loyalty_canonical_contract.md) · [OC-4415 base rate](project_oc4415_base_rate_state.md) · [pointclaim perm missing](project_pointclaim_permission_missing_from_owner_preset.md)
 - [OC-3559 tier state](project_oc3559_member_tier_state.md)
+- [OC-4560 slug แก้ได้](project_oc4560_editable_member_app_slug.md) — เก็บบน binding ไม่ใช่ company.Code; upsert ห้ามขยับ slug
 - [OC-4362 claim gaps](project_oc4362_claim_cluster_gaps.md) · [OCR = VLM](project_oc4464_ocr_vendor_decision.md) · [Approve + admin edit](project_oc4362_approve_and_admin_edit.md)
 - [BFF reads direct, not proxy](project_oc2plus_customer_bff_reads_direct_not_proxy.md)
 - [consent binding ไม่มีคนเขียน](reference_oc2plus_consent_binding_has_no_writer.md) — ตาราง `consent` ไม่มี INSERT ที่ไหนเลย (OC-4089 ยัง To Do); key ด้วย OA ทำให้เส้นเว็บพัง → OC-4545
