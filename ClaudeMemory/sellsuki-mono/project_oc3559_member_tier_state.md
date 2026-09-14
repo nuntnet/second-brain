@@ -8,6 +8,37 @@ metadata:
   modified: 2026-09-13T15:30:23.216Z
 ---
 
+## 2026-09-14 (2) — engine เลื่อนขั้นไม่เคยถูกเรียกเลย + บั๊กนับแต้มซ้ำ
+
+**`EvaluateMemberTierOnEarn` ไม่มี caller เลยบน develop** — ไม่มี route ไม่มี hook
+ในเส้นแจกแต้ม ไม่มี cron มีแต่ `member_tier_test.go` · แปลว่าสมาชิกไม่มีทางเลื่อนขั้น
+อัตโนมัติ ทางเดียวคือแอดมิน override ด้วยมือ · เจอเพราะ PO ถามว่าทำไม progress bar
+ไม่ขยับ · **ผมเคยรายงานว่า engine เสร็จแล้วโดยไม่ได้เช็คว่ามีใครเรียกมันไหม**
+
+แก้ด้วย backoffice-api !580 + 3rdparty-api !251:
+- `POST /v1/system/member-tier/evaluate` (system token แบบเดียวกับ /v1/system/*)
+- 3rdparty-api เรียกหลัง `commitCampaignTransaction` commit — **กลืน error ทุกตัว**
+  เพราะแต้มลง ledger ไปแล้ว การประเมินที่พลาดคือป้ายค้างที่ award ถัดไป/sweep แก้เอง
+  ถ้าปล่อยให้ award ล้มเท่ากับผูกแต้มลูกค้ากับการที่ backoffice ต้องไม่ล่ม
+- **ไม่ย้าย engine มา 3rdparty-api** — สอง service เขียน DB เดียวกัน สำเนาที่สอง
+  จะเพี้ยนออกจากกัน (ดู `.claude/rules/oc2plus-service-boundary.md`)
+
+**บั๊ก 2: คนที่ยังไม่ถึงชั้นแรกไม่มีแถวใน `member_tier_state`** → ทุกเส้นอ่าน
+accumulated จากตารางนี้อย่างเดียว "ไม่มีแถว" จึงเท่ากับ "ยังไม่ได้แต้ม" bar เลยค้าง
+ที่ 0 จนกว่าจะเลื่อนขั้น · `TrackPreTierAccumulation` upsert แถว tier_id NULL
+(มองไม่เห็นโดย `ListDueForSweep` ที่กรอง `tier_id IS NOT NULL`)
+
+**บั๊ก 3 (เจอเพราะเรียก 2 ครั้งกับ DB จริง): แต้มที่ใช้เลื่อนขั้นถูกนับซ้ำ** —
+เลื่อนขั้นตั้ง accumulated=0 (L4) แต่ค่าถูก derive ใหม่จาก ledger ตั้งแต่
+period_start ซึ่งปัดเป็น**เที่ยงคืน** การประเมินครั้งถัดไปจึงเขียน 1300 ทับ 0 ·
+แก้: period_start เป็น**ช่วงเวลาจริง** ไม่ใช่เที่ยงคืน (attained_at/period_end
+ยังเป็นวันปฏิทิน) · sweep มีบั๊กเดียวกัน แก้พร้อมกัน · **fake เดิมคืนยอดเดิม
+ไม่ว่าถูกถามหน้าต่างไหน** จึงมองไม่เห็นบั๊กนี้เลย เพิ่ม `ledgerEarnedAt` ให้มัน
+
+⚠️ ยังค้าง (คำถาม product ไม่ใช่โค้ด): หน้าต่างสะสมของคนยังไม่มีชั้นเริ่มนับ ณ
+วันที่ถูกประเมินครั้งแรก แต้มก่อนหน้านั้นไม่ถูกนับ — บริษัทที่เพิ่งเปิดใช้ระดับ
+สมาชิกจะเริ่มนับจากศูนย์ให้ทุกคน
+
 ## 2026-09-14 — 016 + 020 apply บน dev-th แล้ว เหลือแค่ permission
 
 CRM DB `development_oc2plus_crm` (staging-th cluster, ns `octoplus-dev`) รัน
