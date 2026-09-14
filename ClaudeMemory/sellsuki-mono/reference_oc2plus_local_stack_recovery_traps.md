@@ -146,3 +146,30 @@ Related: [[project_overmind_restart_quirk]] [[reference_local_bola_own_overmind_
 **Two different local identities (2026-09-10).** The browser acts as `VITE_LOCAL_DEV_IDENTITY_ID` (vite.config `identityProxy` injects it on /backoffice/*), which on this machine is `28c87280-dbf5-4469-9555-2eb9acb6977c` — NOT the `317c3e2a-d977-44d8-a3a5-3cd2bcbfa542` used in curl and in older notes. `/v1/user/company` is derived from rps role assignments, so each identity sees a different company list and "Local Test Company" (`11111111-1111-4111-8111-111111111111`) was invisible in choose-company for the browser. Fix without reseeding: `grpcurl -plaintext localhost:9998 role_and_permission.RoleAndPermissionService/AssignRole` with role ids owned by that company (65 OC2Plus Company Owner, 82 Company Owner, 64 File Service Access), tenant `sellsuki.company:<company>`, user = the browser identity; re-assign is a harmless "already has this role". Read the browser's real identity from `/private/tmp/oc2plus-backoffice-api.log` request headers rather than the .env.
 
 **Logout can't work in local:** identity is a header the vite proxy injects, so "ออกจากระบบ" only clears localStorage and bounces to the AMS logout URL (accounts.sellsuki.local rejects a localhost `return_to`) — you always land back on choose-company still authenticated. Not a bug.
+
+## 2026-09-14 — รวม stack OC2Plus ที่กระจัดกระจาย (หลายพอร์ต/หลาย branch)
+
+อาการ: member FE รัน 3 พอร์ต (5183, 5190, 5192) โดย 5183 กับ 5190 ชี้ **โฟลเดอร์เดียวกัน**
+· member-api (8102) กับ engine (8103) เป็น **binary ที่ build มือไว้ใน `/tmp`** ตั้งแต่เมื่อวาน
+(`/tmp/oc4344-member-products-final`, `/tmp/oc4344-thirdparty-identity`) ไม่ได้อยู่ใต้ overmind
+→ โค้ดใหม่ที่ merge เข้า develop ไม่เคยถึงเครื่องเลย
+
+**ท่ารวมที่ใช้ (ใช้ซ้ำได้):**
+1. `Procfile.oc4344` มีอยู่แล้วในรีโป (member-api 8102, thirdparty 8103, backoffice FE 5176, member FE 5183)
+2. ฆ่า process ที่รันมือ/ซ้ำซ้อนก่อน แล้ว
+   `OVERMIND_SOCKET=.overmind-oc4344.sock overmind start -f Procfile.oc4344 -l member-api,thirdparty-api,web-member -D`
+   (`-l` เลือกเฉพาะที่ต้องการ ไม่ไปชนพอร์ตของเซสชันอื่น เช่น 5176)
+3. checkout หลักของ member-api/3rdparty ให้เป็น `develop` (ทั้งคู่ ff ได้ ไม่มี WIP)
+   · checkout ของ member FE เป็นของ Codex (`codex/oc-4344-…` + WIP) **ห้ามแตะ** — ให้ทำ worktree
+   `develop-preview` เสิร์ฟอีกพอร์ตแทน
+
+**🔴 กับดักจริงที่ทำให้ทุกอย่างพัง 500/502:** engine บน develop อ่านตาราง **`company_consent`**
+(migration `020_create_company_consent`, OC-4545) ซึ่ง **DB local ยังไม่มี** — CRM migrations
+รันมือ ไม่มี CI · อาการคือ `checkAuthenAndAuthroize` → `getConsentStatus` พัง → **ทุก `/me/*` 500**
+และ member-api ส่งต่อเป็น 502 `UPSTREAM_UNAVAILABLE` · แก้ด้วย
+`docker exec -i sellsuki_mono-postgres-1 psql -U postgres -d oc2plus_crm < backend/oc2plus-line-crm-service-member-api/migrations/020_create_company_consent.up.sql`
+
+**How to apply:** อัป branch ของ service OC2Plus บนเครื่องเมื่อไหร่ **เช็ค migrations ใหม่ทุกครั้ง**
+(`ls migrations/ | tail`) แล้วเทียบกับ `information_schema.tables` ก่อนสรุปว่าโค้ดใหม่พัง
+
+เชื่อม [[project_oc2275_crm_migrations_run_by_hand]] [[reference_oc2plus_member_app_local_qa_session]]
