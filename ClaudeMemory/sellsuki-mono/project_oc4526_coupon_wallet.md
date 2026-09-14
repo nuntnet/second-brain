@@ -47,8 +47,13 @@ engine `GET /me/coupons` → `{results:[…], total}` field `coupon_id`/`code`
 - **OC-4547** พนักงานสแกนตัดคูปอง — parent OC-4349 · ต่อยอด `MemberCardScanner.vue` ของ OC-4539
 - OC-4546 **blocks** OC-4547 (permission constant ร่วมกัน + ต้องมีคูปองก่อนถึงเทสได้)
 - ร่างเต็ม: `docs/oc2plus/coupon-backoffice-cards-draft.md`
-- ⚠️ ยังต้องให้ PO เคาะ: permission `coupon.manage` vs แยก `coupon.redeem` (constant อยู่ใน entity repo ภายนอก
-  + ต้อง grant เข้า role เดิมด้วยมือ แบบ news.manage/OC-4356) และ **ตาราง `coupon` ไม่มี field มูลค่า/ส่วนลดเลย**
+- ✅ **PO เคาะ 2026-09-14: แยกเป็นสอง permission** — `oc2plus.coupon.manage` (แอดมิน: ออก/ดู/ยกเลิก, OC-4546)
+  กับ `oc2plus.coupon.redeem` (พนักงานหน้าร้าน: ตัดคูปองอย่างเดียว, OC-4547) · `.redeem` ต้องไม่ implied จาก `.manage`
+  · OC-4546 เป็นคนเพิ่ม constant **ทั้งสองตัวในรอบเดียว** เพราะขั้นที่แพงคือ publish repo ภายนอก
+  `entity/access_control` ไม่ใช่จำนวน constant (+ ต้อง grant เข้า role เดิมด้วยมือ แบบ news.manage/OC-4356)
+  · ผลข้างเคียงที่เขียนไว้ใน OC-4547 แล้ว: scanner ตัวเดียวคุมด้วยสองสิทธิ์ → คนที่มีแค่ member.view
+  สแกนบัตรได้แต่สแกนคูปองไม่ได้ และต้องได้ข้อความ "ไม่มีสิทธิ์" ไม่ใช่ "คูปองใช้ไม่ได้"
+- ⚠️ ยังต้องให้ PO เคาะ: ออกทีละคน vs bulk · แอดมินตั้งโค้ดเองได้ไหม · และ **ตาราง `coupon` ไม่มี field มูลค่า/ส่วนลดเลย**
 - 🟡 OC-4543 เป็นการ์ดซ้ำของ OC-4526 (ovCoupons เหมือนกัน) ที่ถูกปิด Done ทั้งที่เนื้อการ์ดเขียนว่า backend ยังไม่มี
 
 **How to apply:** ก่อนแตะคูปอง อ่าน 4 ข้อข้างบนก่อน — โดยเฉพาะข้อ 2 ห้ามเติม `expired` เป็นค่าที่เก็บใน DB
