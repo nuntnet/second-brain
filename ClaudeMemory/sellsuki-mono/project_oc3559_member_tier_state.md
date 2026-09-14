@@ -8,6 +8,35 @@ metadata:
   modified: 2026-09-13T15:30:23.216Z
 ---
 
+## 2026-09-14 — 016 + 020 apply บน dev-th แล้ว เหลือแค่ permission
+
+CRM DB `development_oc2plus_crm` (staging-th cluster, ns `octoplus-dev`) รัน
+**016 + 020 ใน transaction เดียว** แล้ว → 4 ตาราง + 11 index + `benefits jsonb
+NOT NULL DEFAULT '[]'` · รันซ้ำได้จริง (exit 0, NOTICE skip 12, ERROR 0)
+
+`GET /v1/company/{id}/point/{pointId}/member-tier` บน dev-th **ตอบ 200 แล้ว**
+(เดิม 500 เพราะไม่มีตาราง) — gateway rewrite `/backoffice/v1` → `/v1` ยิงตรงที่ pod
+ต้องใช้ `/v1`
+
+**GET ไม่ได้เช็ค membertier.manage** — มันเช็ค `oc2plus.member.view` ที่ Company Owner
+มีอยู่แล้ว ส่วน **write ทุกตัวเช็ค `oc2plus.membertier.manage`** ซึ่งบน dev-th ยัง
+**0 Keto tuple และไม่มีในแคตตาล็อก rps** → อ่านได้ เขียนไม่ได้
+
+วิธีรัน DDL บน dev-th โดยรหัสผ่านไม่ออกจากคลัสเตอร์: pod `postgres:16-alpine` ที่
+`sleep 3600` + env จาก `secretKeyRef` ของ secret `oc2plus-crm-secret` + configmap
+ที่ใส่ไฟล์ .sql แล้ว `psql -v ON_ERROR_STOP=1 --single-transaction -f ... -f ...`
+
+⚠️ **classifier ของ harness บล็อก grpcurl ที่เป็น write** (CreatePermission) — อ่านได้
+เขียนไม่ได้ ต้องให้ user รันเอง ดู [[reference_harness_classifier_blocks_secrets_and_mutations]]
+
+**แคตตาล็อก rps ≠ Keto grant** — สองอย่างนี้ไม่ผูกกันเลย พิสูจน์บน dev-th:
+`oc2plus.pointclaim.review` **อยู่**ในแคตตาล็อก (สร้าง 2026-09-11) แต่ **0 tuple** ·
+`oc2plus.news.manage` **ไม่อยู่**ในแคตตาล็อก แต่มี **500+ tuple** · แถวแคตตาล็อกคือสิ่งที่
+ทำให้ permission ไป "โผล่ในหน้าแก้ role ของ CCS" ส่วน tuple คือสิ่งที่ทำให้ enforcement ผ่าน
+
+`CreatePermission` gRPC **ไม่ต้อง auth** (handler ส่ง identity เปล่า) และ **ไม่ใช่ upsert**
+— GORM `Create` ธรรมดา รันซ้ำได้ `Internal: database error` ซึ่งแปลว่ามีแถวอยู่แล้ว
+
 ## 2026-09-13 — PO added a new field mid-flight, on purpose, despite card already Ready to test
 
 User (PO) asked for a per-tier free-text "สิทธิประโยชน์" (benefits) list — what a
@@ -40,7 +69,7 @@ This means: whichever branch/dev picks this back up needs to add the `benefits`
 column + CRUD + FE list-editor + customer app rendering on top of what's already
 built — it's real incremental work, not just a description change.
 
-**Tier work lives on TWO unmerged branches in different repos. Neither is on develop.**
+**สถานะ branch (แก้ 2026-09-14):** งาน OC-3559 ชุดแรก **merge เข้า develop แล้วทั้ง 3 repo** — backoffice-api image ที่ deploy บน dev-th (`4faf5f31`) มี member_tier ครบ และ rps image (`650250da`) คือ commit แคตตาล็อก `4bcd8a2` เอง · ส่วน **benefits (scope change) ยังอยู่บน 3 branch `feat/oc-3559-tier-benefits` ที่ยังไม่ push** · ย่อหน้าด้านล่างนี้เขียนไว้ตอนยังไม่ merge อ่านเป็นประวัติ
 
 **1. member-api `feat/oc-3559-tier`** (worktree `.worktrees/oc-3559`, commit `a06cbec`)
 — pre-existing, NOT written by me. Owns `migrations/016_create_member_tier.{up,down}.sql`
