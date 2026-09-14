@@ -54,3 +54,33 @@ id **65** owner = company `11111111-1111-4111-8111-111111111111`
 วันไปถึงคนที่ setup ไปก่อนหน้า (ดู [[feedback_fix_must_reach_everyone]])
 
 ทั้งสองอย่างอยู่ใน monorepo MR !27
+
+## ชั้น 3 (2026-09-14, เย็น) — API **ค้าง** เพราะ `go run` ไม่ rebuild
+
+อาการ: ธีมระดับสมาชิก (OC-4553) ไม่ขึ้นบน member app เลย ทั้งที่ FE เป็น
+`origin/develop` เป๊ะและสะอาด · ไล่ FE อยู่นานทั้งที่ FE ไม่ผิด
+
+ตัวชี้ขาดคือ **ดูที่ payload ไม่ใช่ที่จอ**: `/v1/me/tier` ไม่มี field `theme`
+**เลยสักตัว** (ไม่ใช่ `""` แต่ไม่มี key) → แปลว่า mapper ฝั่ง server ไม่รู้จัก
+field นี้ = binary เก่า ไม่ใช่ data ว่าง
+
+`Procfile.oc4344` รัน `go run ./cmd/generics_server` เปล่า ๆ ไม่มี air —
+**คอมไพล์ครั้งเดียวตอนสตาร์ท แล้วไม่ rebuild อีกเลยตลอดชีพ** binary อายุ 6 ชม.
+เสิร์ฟอยู่ โดยไม่มีอะไรบนจอหรือใน log บอก
+
+ตรวจอายุ binary ตรง ๆ:
+```
+lsof -a -p <pid> -d txt -Fn | grep '^n' | sed 's/^n//' | xargs ls -l
+ps -o pid,lstart -p <pid>
+```
+แล้วเทียบกับเวลา commit ที่คาดว่าควรจะมีผล
+
+**แก้ถาวรแล้ว** — `Procfile.oc4344` ใช้ `scripts/svc-start.sh` + air เหมือน
+Procfile หลัก (commit `8ad6abd`) · sweep แล้ว Procfile อื่นไม่มีตัวไหนเหลือ
+`go run` เปล่า ๆ
+
+**How to apply:** ฟีเจอร์ backend หายทั้งก้อนบน local → เปิด payload ดูก่อนว่า
+field มาไหม ถ้า field หายทั้ง key ให้สงสัย binary ค้างก่อนสงสัย FE · และ
+`overmind status` บอกแค่ "running" ไม่ได้บอกว่ารันโค้ดของเมื่อไร
+
+เกี่ยวข้อง: [[project_oc3559_member_tier_state]] · [[project_overmind_restart_quirk]]
