@@ -29,3 +29,22 @@ pipeline that auto-runs the moment a runner returns; cancel zombie `pending` pip
 (`POST pipelines/<id>/cancel`) so they don't sit ahead in the queue.
 
 **Recurs for:** any dormant repo with the old include. Symptom signature = job pending with tags `['amd','docker','general','sellsuki','staging']` + zombie old pipelines stuck "running"/"waiting_for_resource" (cancel those to clear the queue).
+
+**🔁 เกิดซ้ำ 2026-09-14 (~13:31 → อย่างน้อย 17:00)** — fleet `staging-th` ทั้ง 3 ตัว
+(5153 general / 5154 arm / 5155 base) ออฟไลน์พร้อมกันอีกรอบ เหลือแต่ Production
+runner 2 ตัวที่ไม่รับ tag นี้ · กระทบทุกรีโป OC2Plus ไม่ใช่รีโปเดียว (เช็คแล้วทั้ง
+3rdparty-api, backoffice-api, backoffice FE เห็น online 2 / offline 3 เหมือนกัน)
+
+อาการ: MR pipeline ค้าง `pending` โดย **ไม่มี runner ถูก assign เลย** (`runner: -`)
+ต่างจากงานที่รันแล้วช้า · pipeline ของ MR ก่อนหน้าที่สำเร็จเมื่อ 10:58 ใช้
+`Staging-th Runner General` ตัวเดียวกับที่ตอนนี้ตาย — นั่นคือวิธียืนยันว่าเป็นเรื่อง
+runner ไม่ใช่เรื่อง tag ผิดหรือโค้ดพัง:
+
+```
+glab api "projects/:id/runners?per_page=10"        # ดูว่า online กี่ตัว
+glab api "projects/:id/pipelines/<id>/jobs"        # runner=- + status=pending = ไม่มีใครรับ
+glab api "projects/:id/pipelines/<last_success>/jobs"  # ตัวที่เคยรันใช้ runner ไหน
+```
+
+**อย่าทำ:** retry pipeline รัว ๆ (ไม่ช่วย งานยังเข้าคิวเดิม) · อย่า merge ข้ามด่าน CI ·
+อย่าไปแก้ include template (tag ถูกอยู่แล้ว) · สิ่งเดียวที่ทำได้คือแจ้ง SRE ให้ปลุก fleet
