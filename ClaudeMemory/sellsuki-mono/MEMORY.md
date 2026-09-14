@@ -19,6 +19,7 @@ Titles are short on purpose — each file's own `description:` carries the detai
 - [OC2Plus stack traps](reference_oc2plus_local_stack_recovery_traps.md) · [Stale branches per repo](reference_local_stack_stale_branches_per_repo.md) · [Stray dev server](reference_stray_claude_dev_server_squats_port.md) · [Stale postgres pod](reference_datastore_stale_postgres_pod.md)
 - [Branch เยอะ = เศษ worktree ไม่ใช่งานค้าง](reference_oc2plus_branch_sprawl_is_worktree_debris.md) — สูตรเคลียร์ 5 repo + กับดัก git cherry/dev server
 - [ย้าย branch ใต้ dev server ที่รันอยู่](reference_moving_a_branch_under_a_running_dev_server.md) — vite เสิร์ฟ .ts ดิบ / 404; เช็ค cwd ก่อนลบ
+- [ฟีเจอร์ใหม่ไม่โผล่บน local](reference_local_stack_new_feature_invisible_two_causes.md) — เมนูหายเพราะ permission (เงียบ) + list 500 เพราะ internal key
 - [Overmind restart](project_overmind_restart_quirk.md) · [bola overmind sock](reference_local_bola_own_overmind_socket.md) · [Caddy host net](reference_caddy_host_networking_gotcha.md) · [Browser surfaces](reference_browser_surfaces_this_workspace.md)
 - [brew simdjson breaks node](reference_brew_simdjson_breaks_homebrew_node.md)
 - [rtk rewrites cmds](reference_rtk_git_output_filtering.md) · [Classifier blocks](reference_harness_classifier_blocks_secrets_and_mutations.md) · [Outline VPN](reference_outline_mcp_vpn_blocker.md) · [Agent resume](reference_background_agent_resume_patterns.md) · [codegraph projectPath](reference_codegraph_context_needs_projectpath.md)
