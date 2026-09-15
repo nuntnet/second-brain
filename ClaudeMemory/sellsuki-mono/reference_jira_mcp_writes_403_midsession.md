@@ -29,5 +29,28 @@ paste the comment text or the transition you intended into the chat so the user
 can apply it, and keep going with the code work. Re-auth of the Atlassian
 connector is the user's action, not something to attempt from here.
 
+## Variant 2026-09-15: refusal scoped to ONE issue, not the session
+
+A different shape of the same class. On **OC-4258** every write was refused with
+`Bad Request … "Nuntawit Janwaowam, you do not have the permission to comment on
+this issue."` and `getTransitionsForJiraIssue` returned an **empty** transitions
+array (even with `includeUnavailableTransitions` + `skipRemoteOnlyCondition`) —
+while in the very same minutes, comments and transitions on OC-4089, OC-2261,
+OC-4407/4461/4464/4465/4509/4510/4524/4551 all succeeded, and `createJiraIssue`
++ `editJiraIssue` + `createIssueLink` worked.
+
+The refusal had no visible cause: same project (OC, id 10001), `security: null`,
+and the account is the issue's own **reporter**. Retried once after ~8 minutes
+of other successful writes — identical refusal.
+
+**How to tell this variant apart:** an empty `transitions` array on one issue
+while other issues in the same project return the full list. That pair (empty
+transitions + "you do not have the permission") means the block is per-issue,
+so there is no point re-authing or waiting — and no point testing with more
+issues once one other issue has succeeded.
+
+**What to do:** same as above — report it, hand the user the exact comment text
+and the status change you intended, and move on. Do not retry more than once.
+
 Related: [[reference_jira_mcp_crosses_responses_between_sessions]],
 [[reference_jira_mcp_search_quirks]], [[reference_no_local_jira_fallback]].
