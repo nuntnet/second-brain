@@ -1,6 +1,6 @@
 ---
 name: reference_oc2plus_consent_binding_has_no_writer
-description: ตาราง consent (integration_id → consent_id) ไม่มีโค้ดที่ไหนเขียนเลยทั้ง monorepo — OC-4089 ยัง To Do; เกทอ่านตารางที่ไม่มีใครเติม และ key ผิดสำหรับเส้นเว็บ (OC-4545)
+description: ตาราง consent (integration_id → consent_id) ไม่มีโค้ดที่ไหนเขียนเลยทั้ง monorepo — OC-4089 ยัง To Do; เกทอ่านตารางที่ไม่มีใครเติม และ key ผิดสำหรับเส้นเว็บ (OC-4545) · consent รายคนมีจริงแต่เก็บที่ consent service (Consentee keyed ด้วย reference_id) ไม่ใช่ใน CRM — และ API เป็น point lookup ไม่มี list จึงกรองเป็นชุดไม่ได้ถ้าไม่ consume Kafka
 metadata: 
   node_type: memory
   type: reference
@@ -47,3 +47,58 @@ dev มี integration ใบเดียวเป็นของบริษั
 เช็ค `integration` + `consent` ของบริษัทนั้นก่อน
 
 เชื่อม [[project_oc2plus_consent_enforcement_model]] [[reference_oc2plus_otp_session_fails_3rdparty_consent]] [[project_oc4526_coupon_wallet]] [[reference_oc2plus_member_app_local_qa_session]]
+
+## "กรองตาม consent ของสมาชิก" — ข้อมูลมีจริง แต่รูปแบบไม่เหมาะกับการกรองเป็นชุด (ตรวจ 2026-09-16)
+
+🔴 **ผมเคยเขียนหัวข้อนี้ผิด** ว่า "ไม่มี consent รายคนเลย" · PO ทักว่า *"ที่ consent service
+น่าจะมีที่เก็บ consent ราย member นะ"* — **ถูกต้อง** ผมตรวจแค่ฐาน `oc2plus_crm` แล้วสรุปเลย
+เถียงข้ามขอบเขตที่ตัวเองตรวจ ซึ่งเป็นความผิดพลาดแบบเดียวกับที่
+[[feedback_grep_the_spec_is_not_grep_the_service]] บันทึกไว้
+
+คนละคำถามกับหัวข้อข้างบน ข้างบนคือ *บริษัทนี้ผูกเอกสารใบไหน* ส่วนข้อนี้คือ
+**ใครยอมรับ/ถอนความยินยอมบ้าง** ซึ่งเป็นสิ่งที่ฟีเจอร์ประเภท export / feed / report
+ต้องใช้ และ **ไม่มีอยู่ใน `oc2plus_crm` เลย**
+
+**ของจริงอยู่ที่ `backend/sellsuki-service-consent`** — `src/entity/consentee/consentee.go`
+เก็บ `Consentee{ID, ConsentID, Version, ReferenceID, IPAddress, UserAgent, MergedFrom/To}`
+คือหนึ่งแถวต่อ (เอกสาร consent × คน) โดย `ReferenceID` เป็น key รายคน · ค่าใน option เป็น
+`"accepted"` / `"declined"`
+
+**สิ่งที่ไม่มีใน CRM (ซึ่งยังจริง):** ไม่มีตาราง `member_consent` ไม่มีคอลัมน์ consent บน
+`member` · สองตารางที่ชื่อ consent ใน `oc2plus_crm` เป็นระดับบริษัท/OA · ฝั่ง OC2Plus เรียก
+ได้จาก `member-api/src/repository/consent_repository/rest.go` (`GetConsenteeByRefID`,
+`UpdateDPAConsenteeStatus`) เท่านั้น — backoffice-api มีแค่ `company_consent_repository`
+
+### ข้อจำกัดจริงคือรูปแบบ API ไม่ใช่การมีอยู่ของข้อมูล
+
+ทั้ง service มี **7 path** เท่านั้น (`/consent`, `/consent/{id}`, `/consent/{id}/preview`,
+`/consent/{id}/render`, `/consentee`, `/consentee/merge`, `/cache`)
+
+- `GET /consentee` บังคับทั้ง `consent_id` **และ** `reference_id` → **point lookup**
+- **ไม่มี list/search consentee เลย** · repository ก็ get/set/delete ด้วย
+  (consentID, version, referenceID) เท่านั้น
+- แปลว่า export N แถว = **N ครั้งของการยิงรายคน** ไม่ใช่ join
+
+- **ไม่มีคำว่า withdraw / revoke / opt-out ในโค้ดเลยสักที่** — "ถอนความยินยอม" ไม่ใช่สถานะ
+  ของเรคอร์ด แต่เป็น option ที่ถูก PUT ให้เป็น `declined` · การ์ดที่เขียนว่า "member ที่ถอน
+  consent" จึงต้องนิยามใหม่เป็น "option = declined"
+
+### ทางที่สามที่ผมมองข้ามตอนแรก: Kafka
+
+`src/repository/consentee_event_repository/kafka.go` publish `CreateEventConsentee` และ
+`UpdateEventConsentee` ออกไปทุกครั้งที่ consentee ถูกสร้าง/แก้ → **consume แล้วทำ read model
+ของตัวเองได้** ซึ่งเป็นวิธีที่ทำให้ feed กรองเป็นชุดได้จริง โดยไม่ต้องยิงรายคน · ไม่ได้อยู่
+ในขอบเขต OC-4479 v1 แต่เป็นคำตอบของ Phase 2
+
+⚠️ แก้ข้อความข้างบนด้วย: ตาราง `consent` บน local **มี 4 แถว** และ `company_consent` มี 2
+(ตรวจ 2026-09-16) — "ไม่มีใครเขียน" ยังจริงในแง่ไม่มี INSERT ในโค้ด แต่ไม่ได้แปลว่าตารางว่าง
+
+**ผลที่เกิดขึ้นจริง:** OC-4479 (sale-transaction feed) เขียน AC ว่า "ห้ามส่ง member ที่ถอน
+consent" · PO เคาะ 2026-09-16 ว่า **v1 ตัด consent filter ออก เหลือ pseudonymization**
+⚠️ **การตัดสินใจนั้นตั้งอยู่บนคำอธิบายของผมที่ผิด** ("ไม่มีอะไรให้กรอง") เหตุผลที่ถูกคือ
+*กรองได้ แต่ต้องยิงรายคน N ครั้งต่อการ export หนึ่งรอบ และ "ถอน" ไม่ใช่สถานะที่ service
+โมเดลไว้* — ข้อสรุปเดิมยังใช้ได้สำหรับ v1 แต่ PO ควรได้รู้เหตุผลที่ถูกต้อง
+
+**How to apply:** ถ้าการ์ดไหนสั่งให้กรอง/ซ่อนข้อมูลตาม consent ของสมาชิก ให้ตอบทันทีว่า
+ต้องเลือกก่อนว่าจะ (ก) ให้ service นั้นต่อ consent service เอง (ข) ย้ายงานไป member-api
+หรือ (ค) ตัด filter ออกจาก v1 — อย่าเริ่มเขียนโดยสมมติว่ามี join ให้ทำ
