@@ -119,3 +119,5 @@ Titles are short on purpose — each file's own `description:` carries the detai
 - [preferred_language = th](project_preferred_language_is_constant_th.md) · [Fact vocab resolved](project_fact_vocabulary_collision.md) · [AI-96 catalog](project_ai96_template_catalog_reality.md) · [AI-16 field set](project_ai16_field_set_admin_configurable.md) · [AI-125 OAuth](project_ai125_oauth_long_lived_server_side.md) · [AI-33 WebSocket](project_ai33_websocket_is_required.md) · [F08 schema vs values](project_f08_fact_schema_versus_values.md)
 - [Stuck job holds group](reference_stuck_ci_job_holds_resource_group.md)
 - [FB page must be subscribed to the app](reference_fb_page_must_be_subscribed_to_app.md)
+- [Procfile.messaging ปิด chat module](reference_procfile_messaging_disables_chat_module.md) — /webhook/fb 404 เงียบ ๆ ทั้งที่ port ดูปกติ; พิสูจน์ endpoint ตัวเองก่อนโทษ Meta
+- [Fiber ctx strings ทำ label พัง](reference_fiber_ctx_strings_corrupt_prometheus_labels.md) — ต้อง strings.Clone ไม่งั้น /metrics 500 ทั้งก้อน เมตริกหายหมด

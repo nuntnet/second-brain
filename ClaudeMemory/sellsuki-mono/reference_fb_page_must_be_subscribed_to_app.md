@@ -61,3 +61,9 @@ Local webhook ingress is cloudflared: `ai-chat-local-api.bearyweb.com` →
 
 Still open: a page **unsubscribed later** on Meta's side still reports healthy —
 `RunDailyHealthCheck` verifies the token, not the subscription.
+
+**Decided by the user (2026-09-17):** the fix is NOT to fold the subscription
+into the existing token health. Token and subscription become **two separate
+statuses on screen** — a page can hold a valid token and still be unsubscribed,
+and the admin must be able to tell those apart. `RunDailyHealthCheck` gets an
+`IsPageSubscribed` probe alongside the token check.
