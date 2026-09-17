@@ -67,3 +67,25 @@ into the existing token health. Token and subscription become **two separate
 statuses on screen** — a page can hold a valid token and still be unsubscribed,
 and the admin must be able to tell those apart. `RunDailyHealthCheck` gets an
 `IsPageSubscribed` probe alongside the token check.
+
+## Proven asymmetry (2026-09-17, after every layer on our side was fixed)
+
+Two pages, **one app** (`235756003289739`), one callback, one cloudflared
+tunnel, three minutes apart:
+
+| page | subscribed | result |
+|---|---|---|
+| marketing space `268502970215081` | yes (bound by hand in early dev) | ✅ webhook delivered, all hops, DB row |
+| ร้านขนมบ้าน'เป็ดน้อย. `1475633739322428` | yes — `page_subscribed` written 21:28:14 | ❌ nothing, not even hop `receive` |
+
+Everything on our side was proven live: public tunnel answers from the
+internet, route serves, app active with verify_token + secret, token
+`healthy`, token identity verified (`ResolveTokenPageID` matched, no
+`page_token_exchange_page_mismatch` audit), zero `chat_webhook_rejected_total`.
+
+So a page can be subscribed, healthy, and still silent. The remaining
+page-level explanation not disprovable from our side is the **Handover
+Protocol**: if another app is the page's Primary Receiver, Meta sends
+`standby` events, and we subscribe only `messages,messaging_postbacks` — so we
+receive nothing rather than receiving and rejecting. Checking it needs the page
+token against the Graph API, which we do not hold.
