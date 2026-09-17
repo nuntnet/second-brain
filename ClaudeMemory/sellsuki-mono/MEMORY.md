@@ -21,6 +21,7 @@ Titles are short on purpose — each file's own `description:` carries the detai
 - [Branch เยอะ = เศษ worktree ไม่ใช่งานค้าง](reference_oc2plus_branch_sprawl_is_worktree_debris.md) — สูตรเคลียร์ 5 repo + กับดัก git cherry/dev server
 - [ย้าย branch ใต้ dev server ที่รันอยู่](reference_moving_a_branch_under_a_running_dev_server.md) — vite เสิร์ฟ .ts ดิบ / 404; เช็ค cwd ก่อนลบ
 - [ฟีเจอร์ใหม่ไม่โผล่บน local](reference_local_stack_new_feature_invisible_two_causes.md) — เมนูหายเพราะ permission (เงียบ) + list 500 เพราะ internal key
+- [overmind ตาย = session ค้าง](reference_overmind_dead_processes_are_a_wedged_session.md) — quit+rm sock+start ใหม่; และอย่ารัน service มือในโฟลเดอร์ที่ overmind ดูอยู่
 - [Overmind restart](project_overmind_restart_quirk.md) · [bola overmind sock](reference_local_bola_own_overmind_socket.md) · [Caddy host net](reference_caddy_host_networking_gotcha.md) · [Browser surfaces](reference_browser_surfaces_this_workspace.md)
 - [brew simdjson breaks node](reference_brew_simdjson_breaks_homebrew_node.md)
 - [pre-push กัน credential ติดใน 56 repo](reference_prepush_credential_hook_installed.md) — push ถูกบล็อก = rotate แล้วเอาออก ห้าม --no-verify
