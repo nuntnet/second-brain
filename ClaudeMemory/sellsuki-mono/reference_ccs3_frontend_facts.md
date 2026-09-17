@@ -65,3 +65,28 @@ so `package-lock.json` is what CI needs while `bun.lock` serves local dev only. 
 that adds a dep on `main` therefore updates package-lock and leaves bun.lock stale —
 after merging main into develop, `bun install --frozen-lockfile` fails while CI stays
 green. Regenerate bun.lock as part of any such sync (done in !505 for `jsdom`).
+
+## The invite link is the ONLY way a person gets a role (verified 2026-09-17)
+
+CCS3 has **no screen that changes an existing member's role**. `/group/edit/:roleId`
+edits a role *definition* (its name and permissions), not who holds it, and the
+`/users` page has no per-member role control at all. So role assignment happens
+exactly once, in the create-invite-link dialog.
+
+Two consequences that keep biting:
+
+- **Do not filter the invite dialog's role list by `is_system_role`.** Every role
+  seeded with a company (Company Owner, Manager, Marketer, Warehouse, Store Admin,
+  Finance Manager) is `is_system_role = true`, so filtering them out leaves a fresh
+  company with nothing to choose. `Users.svelte` passed `false` until commit
+  `ad070e6` (2026-09-10) removed it — the file now carries a comment saying why, and
+  the CCS3 e2e suite still expects the old behaviour (`Expected: 0` Company Owner
+  cards).
+- **Removing Company Owner from that list would make a second owner unreachable**
+  through the product entirely. Any change there needs an answer for how a company
+  ever gets one.
+
+**Decided 2026-09-17 (PO): Company Owner STAYS in the invite dialog.** It is not a
+bug that it appears, and the CCS3 e2e expectation of `0` Company Owner cards is the
+thing that is wrong — QA updates it to `1`. Do not "fix" this by filtering the role
+out; that question is settled.
