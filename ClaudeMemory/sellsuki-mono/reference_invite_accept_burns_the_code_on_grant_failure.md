@@ -34,6 +34,29 @@ Rules that came with it, worth keeping if this code is touched again:
   not say the invitation was burned.
 - The caller always gets the original assignment error, never the release error.
 
+**CORRECTION 2026-09-17 — the staging 500 aborts EARLIER than this.** The dev
+team's trace: `use_case.AcceptInvitation` (invite.go:310) calls
+`assertInvitationAddressedTo` (invite.go:322 -> :260) FIRST, which does an HTTP
+`GetInvitationDetail` and **fails closed**, so `AcceptInvitation` on rps
+(invite.go:327) is never reached. The usage is therefore never written on that
+path, and the compensation above does not fire for it — it guards a different,
+still-real failure (rps reached, grants fail). Do not cite the compensation as
+the fix for the staging 500.
+
+**And the URL default was wrong everywhere, not just unset on staging:**
+`envDefault:"http://localhost:8091"` — port 8091 is **address-backend**
+(`Procfile: address: … PORT=8091`), while role-permission-service, which serves
+`/internal/v1/invitations`, listens on **9999** (`role-perm: … PORT=9999
+GRPC_PORT=9998`). So it never pointed at the invitation API in any environment,
+local included. Fixed to :9999 plus a boot-time warning in CCS !334 (main) /
+!335 (develop); the variable still has to be SET per deployed environment.
+
+**Why it is REST and not gRPC** (asked every time): the gRPC contract cannot
+serve the recipient check — neither the proto's `Invitation` nor
+`model.Invitation` has an email or metadata field, and for BOLA workspace
+invitations the address exists only in metadata. Moving it to gRPC means a proto
+change in rps plus regeneration on both sides.
+
 **Why the grant half was failing on staging at all:** CCS, not rps.
 `sellsuki-central-control-backend/cmd/generics_server/main.go` declares
 `INVITATION_API_BASE_URL` with `envDefault:"http://localhost:8091"` and the var is
