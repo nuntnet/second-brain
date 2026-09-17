@@ -1,6 +1,6 @@
 ---
 name: feedback_no_develop_to_main_promotion_mrs
-description: Other devs called out opening develop→main release MRs as wrong — it pushes unvalidated work onto staging in one shot; a git sweep on 2026-09-17 found FIVE such merges (not two), across CCS3 and three OC2Plus repos, all mine, on 2026-09-10/11
+description: Other devs called out opening develop→main release MRs as wrong — it pushes unvalidated work onto staging in one shot; a git sweep on 2026-09-17 found FIVE such merges (not two), across CCS3 and three OC2Plus repos, all mine, on 2026-09-10/11; owners were told and have repaired staging — incident closed, only the rule is live
 metadata:
   type: feedback
 ---
@@ -51,6 +51,12 @@ different, legitimate release flow; they were the same mistake in repos nobody
 had checked. Note this sits alongside
 [[feedback_oc2plus_merge_to_develop]]: day-to-day OC2Plus work targets `develop`,
 which is exactly why promoting the whole of develop to main is so costly there.
+
+**Status 2026-09-17: the fallout is CLOSED — do not re-raise it.** The owners of
+the promoted work (kimzey and Pan on CCS3, Teerachai Pantip and Nithiphat
+Kitsamret on the three OC2Plus repos, wayla on PAT-2634) know what happened and
+have already gone through staging and repaired it. There is no outstanding
+"go tell them" action. What stays live is the rule below, not the incident.
 
 **Why it is wrong, in their terms:** in these repos `main` builds **staging** and
 `develop` builds **dev**. A promotion MR moves everything sitting on develop to
