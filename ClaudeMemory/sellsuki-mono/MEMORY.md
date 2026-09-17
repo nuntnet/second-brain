@@ -125,6 +125,7 @@ Titles are short on purpose — each file's own `description:` carries the detai
 - [preferred_language = th](project_preferred_language_is_constant_th.md) · [Fact vocab resolved](project_fact_vocabulary_collision.md) · [AI-96 catalog](project_ai96_template_catalog_reality.md) · [AI-16 field set](project_ai16_field_set_admin_configurable.md) · [AI-125 OAuth](project_ai125_oauth_long_lived_server_side.md) · [AI-33 WebSocket](project_ai33_websocket_is_required.md) · [F08 schema vs values](project_f08_fact_schema_versus_values.md)
 - [Stuck job holds group](reference_stuck_ci_job_holds_resource_group.md)
 - [FB page must be subscribed to the app](reference_fb_page_must_be_subscribed_to_app.md)
+- [ถาม Meta ตรง ๆ ว่าทำไมเพจเงียบ](reference_fb_page_delivery_diagnosis_endpoint.md) — delivery-diagnosis endpoint; พิสูจน์ว่า config ของเป็ดน้อยเหมือนเพจที่ใช้ได้เป๊ะ
 - [ack 200 แล้วทิ้ง = ดูเหมือนเขาไม่ส่งมา](reference_webhook_ack200_and_drop_looks_like_no_delivery.md) — อ่านแค่ messaging[0] ทิ้งทั้ง batch; instrument จุดปฏิเสธก่อนตั้งสมมติฐานเรื่องผู้ส่ง
 - [Procfile.messaging ปิด chat module](reference_procfile_messaging_disables_chat_module.md) — /webhook/fb 404 เงียบ ๆ ทั้งที่ port ดูปกติ; พิสูจน์ endpoint ตัวเองก่อนโทษ Meta
 - [4 คีย์ env ที่ไม่มีใน .env เลย ทำ AI-chat local พัง](reference_ai_chat_local_env_keys_missing.md) — ตารางคีย์+ค่า; 404/503 ที่ชี้ผิดชั้นทุกอัน
