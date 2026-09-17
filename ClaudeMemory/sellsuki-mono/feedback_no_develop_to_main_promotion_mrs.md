@@ -1,6 +1,6 @@
 ---
 name: feedback_no_develop_to_main_promotion_mrs
-description: Other devs called out opening develop→main release MRs as wrong — it pushes unvalidated work onto staging in one shot; verified I opened two of them (CCS !321, CCS3 !506) on 2026-09-10
+description: Other devs called out opening develop→main release MRs as wrong — it pushes unvalidated work onto staging in one shot; a git sweep on 2026-09-17 found FIVE such merges (not two), across CCS3 and three OC2Plus repos, all mine, on 2026-09-10/11
 metadata:
   type: feedback
 ---
@@ -10,8 +10,9 @@ metadata:
 — naming central-control-backend, sellsuki-invitation, CCS3 and
 role-and-permission.
 
-**Checked, and it is about my MRs.** Two `develop → main` MRs exist and both are
-mine, both opened and merged 2026-09-10:
+**Checked, and it is about my MRs.** The first pass found two. A later sweep of
+every submodule's git log found **five `develop → main` merge commits, all mine**
+— see "The count was wrong" below. The two originally identified:
 
 - `sellsuki-central-control-backend` **!321** — "Release: develop → main (CCS
   staging) — 56 commits, fast-forward". **56 commits, six authors, three epics.**
@@ -19,6 +20,37 @@ mine, both opened and merged 2026-09-10:
   BOLA Workspaces (BOLA-310/311/312) + MS-1345 Good Receive to staging".
 
 `sellsuki-invitation` has none; rps's only one (!38) was closed and is pan.nit's.
+
+**⚠️ The count was wrong — it is five, not two.** On 2026-09-17 a `/retro` swept
+every submodule's git log for `Merge branch 'develop' into 'main'` and found five,
+every one authored by me:
+
+| repo | when |
+|---|---|
+| `backend/oc2plus-line-crm-service-3rdparty-api` | 2026-09-10 10:23 |
+| `backend/oc2plus-line-crm-service-backoffice-api` | 2026-09-10 10:45 |
+| `frontend/sellsuki-company-management-frontend` (CCS3) | 2026-09-10 12:01 |
+| `backend/oc2plus-line-crm-service-backoffice-api` | 2026-09-11 04:23 |
+| `frontend/oc2plus-linecrm-frontend-backoffice` | 2026-09-11 04:24 |
+
+CCS **!321** does not appear in that list because it fast-forwarded (no merge
+commit), so the real total is at least six events across five repos.
+
+**Why this was missed the first time:** the first check looked only at the repos
+named in the complaint. Three OC2Plus repos were doing the same thing and nobody
+mentioned them, so they were never checked — the search was scoped to the
+accusation instead of to the behaviour. Same shape as
+[[feedback_verify_absence_claims]].
+
+**And OC2Plus is dual-mainline too** — verified 2026-09-17 from the GitLab
+deployments API, `main` → staging and `develop` → development in
+`oc2plus-line-crm-service-backoffice-api`, `-member-api`, `-3rdparty-api`,
+`oc2plus-linecrm-frontend-backoffice`, `oc2plus-linecrm-frontend-member` and
+`oc2plus-line-crm-e2e-playwright` (staging only). So these four merges were not a
+different, legitimate release flow; they were the same mistake in repos nobody
+had checked. Note this sits alongside
+[[feedback_oc2plus_merge_to_develop]]: day-to-day OC2Plus work targets `develop`,
+which is exactly why promoting the whole of develop to main is so costly there.
 
 **Why it is wrong, in their terms:** in these repos `main` builds **staging** and
 `develop` builds **dev**. A promotion MR moves everything sitting on develop to
@@ -53,7 +85,12 @@ mistaking "both lines need it" for "promote the whole branch".
 **Which repos this applies to** (verified 2026-09-17 from the deployments API,
 `main` → staging and `develop` → development in every one): CCS3,
 sellsuki-central-control-backend, role-and-permission, i18n-management-backend,
-central-configuration-system, sellsuki-invitation.
+central-configuration-system, sellsuki-invitation, **and the whole OC2Plus
+line-crm group** — `oc2plus-line-crm-service-backoffice-api`, `-member-api`,
+`-3rdparty-api`, `oc2plus-linecrm-frontend-backoffice`,
+`oc2plus-linecrm-frontend-member`. Treat this list as "every repo checked so
+far", not "every repo": OC2Plus was absent from it for a week while five of these
+merges sat in its history.
 
 **Repos with ONE mainline — no twin needed:** sellsuki-chat-core,
 sellsuki-ai-agent, ai-platform-kit-go (no `develop` branch at all).

@@ -11,7 +11,7 @@ Titles are short on purpose — each file's own `description:` carries the detai
 - [PMM voice](feedback_product_marketing_voice.md) · [Design fidelity](feedback_design_handoff_full_fidelity.md) · [Fix reaches all](feedback_fix_must_reach_everyone.md) · [Central ≠ caller](feedback_central_service_no_caller_domain.md) · [Entity pure](feedback_entity_pure_zod_dto.md) · [Report, don't edit](feedback_report_wrong_cards_dont_edit.md)
 - [Codex ทำงานคู่ขนาน](feedback_user_runs_codex_in_parallel.md)
 - [Commit+push ระหว่างทาง](feedback_commit_push_along_the_way.md)
-- [No develop→main promotion MRs](feedback_no_develop_to_main_promotion_mrs.md) — main=staging; promoting develop ships other people's unfinished work; target develop by default
+- [No develop→main promotion MRs](feedback_no_develop_to_main_promotion_mrs.md) — main=staging; **5 ครั้ง ไม่ใช่ 2** (CCS3 + OC2Plus 3 repo); OC2Plus ก็ dual mainline
 - [Parallel git safety](feedback_parallel_sessions_git_safety.md) · [List MRs first](feedback_list_open_mrs_before_opening_one.md) · [OC↔PAT boards](feedback_oc_pat_board_ownership_rule.md) · [OC → develop](feedback_oc2plus_merge_to_develop.md) · [PIS FF push](feedback_ff_only_force_push_ok.md)
 
 ## Personal / machine / infra
@@ -23,6 +23,7 @@ Titles are short on purpose — each file's own `description:` carries the detai
 - [ฟีเจอร์ใหม่ไม่โผล่บน local](reference_local_stack_new_feature_invisible_two_causes.md) — เมนูหายเพราะ permission (เงียบ) + list 500 เพราะ internal key
 - [Overmind restart](project_overmind_restart_quirk.md) · [bola overmind sock](reference_local_bola_own_overmind_socket.md) · [Caddy host net](reference_caddy_host_networking_gotcha.md) · [Browser surfaces](reference_browser_surfaces_this_workspace.md)
 - [brew simdjson breaks node](reference_brew_simdjson_breaks_homebrew_node.md)
+- [pre-push กัน credential ติดใน 56 repo](reference_prepush_credential_hook_installed.md) — push ถูกบล็อก = rotate แล้วเอาออก ห้าม --no-verify
 - [rtk rewrites cmds](reference_rtk_git_output_filtering.md) · [Classifier blocks](reference_harness_classifier_blocks_secrets_and_mutations.md) · [Outline VPN](reference_outline_mcp_vpn_blocker.md) · [Agent resume](reference_background_agent_resume_patterns.md) · [codegraph projectPath](reference_codegraph_context_needs_projectpath.md)
 - [dev-th access](reference_dev_th_cluster_access.md) · [Teleport kills dev-th](reference_teleport_session_kills_devth_access.md)
 
@@ -46,6 +47,7 @@ Titles are short on purpose — each file's own `description:` carries the detai
 
 ## Go / DB gotchas
 - [Migration files ≠ applied schema](reference_migration_files_are_not_applied_schema.md)
+- [envDefault localhost ปิดบัง config ที่หายไป](reference_envdefault_localhost_masks_missing_config.md) — กลายเป็น connection error แทน config error; ลบ default ทิ้ง อย่าแก้ค่า
 - [goqu dialect blank import](reference_goqu_dialect_blank_import.md)
 - [AutoMigrate 2nd boot](reference_gorm_pgx_libpq_automigrate.md) · [Updates drops false](reference_gorm_updates_drops_false.md) · [Lease/claim class](reference_lease_claim_ownership_bug_class.md) · [Partial-index ON CONFLICT](reference_pg_partial_index_onconflict_generic_plan.md) · [Ambiguous 404](reference_ambiguous_404_fail_open.md) · [Auth behind own guard](reference_auth_endpoint_behind_own_guard.md) · [Kafka silent publish](reference_kafka_silent_publish_failure.md)
 
@@ -57,6 +59,7 @@ Titles are short on purpose — each file's own `description:` carries the detai
 - [CCS config: userId = schema defaults, 200](reference_ccs_config_userid_silently_returns_schema_defaults.md)
 - [Keto ≠ rps catalog](reference_keto_and_rps_catalog_disagree.md) · [grant permission ให้ role](reference_rps_grant_permission_to_role.md)
 - [Invite accept burns the code on grant failure](reference_invite_accept_burns_the_code_on_grant_failure.md) — usage committed to PG before Keto grants; fixed by compensation; CCS `INVITATION_API_BASE_URL` still unset on staging
+- [proto ของ rps ถูกก็อปไว้ 9 repo](reference_rps_proto_is_vendored_per_consumer.md) — แก้ที่ rps ไม่ไหลไปไหนเอง; มีแต่ CCS ที่ใช้ invitation RPC; rps ต้อง deploy ก่อนเสมอ
 - [rps internal endpoints](reference_rps_internal_endpoints_confirmed.md) · [ListRoles paging](reference_rps_listroles_pointer_pagination.md) · [Keto staging lookup](reference_keto_staging_permission_lookup.md) · [Presets at creation only](project_ccs_role_presets_apply_only_at_creation.md) · [rps dual mainline](reference_rps_dual_mainline.md) · [is_system_role](reference_rps_is_system_role_trap.md) · [kind prefixed](reference_rps_identity_kind_must_be_prefixed.md) · [ListAssignedRoles](reference_rps_list_assigned_roles_reverse_lookup.md)
 - [Permission code underscore rejected pre-query](reference_permission_code_underscore_rejected_before_query.md)
 - [entity tenant kinds](reference_entity_lib_tenant_kinds.md) · [Perm generator churn](reference_permission_generator_nondeterministic.md) · [file-service Keto kind](reference_file_service_keto_subject_kind.md) · [Audit Action enum](reference_audit_action_is_closed_enum.md) · [Messaging backend](reference_messaging_backend.md) · [Messaging repo traps](reference_messaging_backend_shared_repo_traps.md) · [Central audit log](project_central_audit_log.md)

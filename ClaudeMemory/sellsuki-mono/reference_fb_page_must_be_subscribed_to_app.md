@@ -89,3 +89,26 @@ Protocol**: if another app is the page's Primary Receiver, Meta sends
 `standby` events, and we subscribe only `messages,messaging_postbacks` — so we
 receive nothing rather than receiving and rejecting. Checking it needs the page
 token against the Graph API, which we do not hold.
+
+### Ruled out on 2026-09-17 night, with evidence
+
+- **Page→app subscription** — Meta's OWN console lists เป็ดน้อย with
+  `messages, messaging_postbacks` (Messenger API Settings → Generate access
+  tokens). Not just our API's word for it.
+- **App Mode** — flipped the app to **Live** (Site URL moved off the invalid
+  `chat.sellsuki.local` to `ai-chat-admin.staging-th.sellsuki.com`, app domain
+  added, `chat.sellsuki.local` deliberately kept so local OAuth survives).
+  Messaged the page again: still zero. **Development mode was not the gate.**
+- **App-level config** — one callback URL for all pages
+  (`ai-chat-local-api.bearyweb.com/webhook/fb/{app}`), verified answering from
+  the public internet after every restart. App roles: the user is an app
+  Administrator; Testers 0.
+- **Our ingress** — `chat_hop_duration_seconds{hop="receive"}` never increments
+  for this page. Nothing arrives to reject.
+
+What is still unseen: เป็ดน้อย's own Page settings. The user's Business
+Managers (Ch.Erawan, Fuse Sellsuki, Genelab, MACfig, Sellsuki) **do not
+contain that page** — it is a customer page connected by OAuth only — so
+Handover Protocol / connected apps cannot be inspected without the page
+admin. That asymmetry (own page delivers, external page does not) is the only
+structural difference left.
