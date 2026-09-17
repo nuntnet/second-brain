@@ -37,9 +37,29 @@ merge it should have been the instinct to not open it.**
 it (see [[reference_fast_forward_merge_silently_reverts]] and
 [[reference_stale_narrow_fix_mr_reverts_the_broad_one]]).
 
-**How to apply:** default to targeting `develop`. Do not open a develop→main
-promotion MR — releasing to staging is a decision for whoever owns the work in
-it. When a repo genuinely needs a change on both lines (see
-[[reference_rps_dual_mainline]], where develop-only left staging without an
-internal API and caused a 503 bisect), open a feature branch onto **each** line
-rather than promoting the whole of develop.
+**The rule, confirmed by the user 2026-09-17:** *"เป็นการ merge จาก feature
+branch เข้า develop กับ main แยกกัน"* — a change that belongs on both lines gets
+**a feature branch merged into each line separately**. Never a `develop → main`
+promotion MR: releasing everything sitting on develop is a decision for whoever
+owns the work in it, not a side effect of one person wanting their own change on
+staging.
+
+Concretely, per change: branch off `origin/main` → MR to main, and branch off
+`origin/develop` (or cherry-pick) → MR to develop, opened together. That is what
+[[reference_rps_dual_mainline]] was already asking for — where develop-only left
+staging without an internal API and cost a day of bisecting — just without
+mistaking "both lines need it" for "promote the whole branch".
+
+**Which repos this applies to** (verified 2026-09-17 from the deployments API,
+`main` → staging and `develop` → development in every one): CCS3,
+sellsuki-central-control-backend, role-and-permission, i18n-management-backend,
+central-configuration-system, sellsuki-invitation.
+
+**Repos with ONE mainline — no twin needed:** sellsuki-chat-core,
+sellsuki-ai-agent, ai-platform-kit-go (no `develop` branch at all).
+
+**Two repos where `develop` is effectively dead — ask before twinning:**
+`sellsuki-invitation` (develop last touched 2026-03-10, 0 commits ahead of main,
+35 behind; dev env last deployed 2026-03-16) and
+`central-configuration-system` (develop last touched 2026-08-14, diverged 54/85).
+A twin MR there is not a cheap mirror, it is a merge into a stale branch.
