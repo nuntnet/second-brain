@@ -11,6 +11,7 @@ Titles are short on purpose — each file's own `description:` carries the detai
 - [PMM voice](feedback_product_marketing_voice.md) · [Design fidelity](feedback_design_handoff_full_fidelity.md) · [Fix reaches all](feedback_fix_must_reach_everyone.md) · [Central ≠ caller](feedback_central_service_no_caller_domain.md) · [Entity pure](feedback_entity_pure_zod_dto.md) · [Report, don't edit](feedback_report_wrong_cards_dont_edit.md)
 - [Codex ทำงานคู่ขนาน](feedback_user_runs_codex_in_parallel.md)
 - [Commit+push ระหว่างทาง](feedback_commit_push_along_the_way.md)
+- [No develop→main promotion MRs](feedback_no_develop_to_main_promotion_mrs.md) — main=staging; promoting develop ships other people's unfinished work; target develop by default
 - [Parallel git safety](feedback_parallel_sessions_git_safety.md) · [List MRs first](feedback_list_open_mrs_before_opening_one.md) · [OC↔PAT boards](feedback_oc_pat_board_ownership_rule.md) · [OC → develop](feedback_oc2plus_merge_to_develop.md) · [PIS FF push](feedback_ff_only_force_push_ok.md)
 
 ## Personal / machine / infra
