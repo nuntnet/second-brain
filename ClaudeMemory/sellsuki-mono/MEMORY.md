@@ -52,6 +52,7 @@ Titles are short on purpose — each file's own `description:` carries the detai
 ## Identity / CCS / rps
 - [Identity ≠ can sign in](reference_kratos_identity_exists_is_not_registered.md) · [Identity SPOF](reference_shared_identity_infra_singleton.md) · [Local identity loop](reference_local_identity_hardcode_loop.md) · [Local Kratos debug](reference_local_kratos_identity_debugging.md) · [Local i18n seed](reference_local_i18n_config_seeding.md)
 - [CCS config ns](reference_ccs_config_namespaces.md) · [AI config ns](reference_ccs_ai_chat_config_namespace.md) · [CCS env topology](reference_ccs_env_topology.md) · [CCS3 FE facts](reference_ccs3_frontend_facts.md) · [Global config gate](reference_ccs_global_config_permission_gate.md) · [CCS Go module broken](reference_ccs_go_module_path_broken.md)
+- [CCS deployment values are in the repo](reference_ccs_deployment_values_live_in_the_repo.md) — `deployment/values-*.yml`; ports there are each service's OWN defaults (rps HTTP=80, gRPC=50051), never the monorepo Procfile's
 - [CCS3 QA: tell them before you change these 3 things](project_ccs3_qa_change_notification_agreement.md) — table columns, Company Owner permissions, status/error shapes; plus the `user-list.*` data-testid contract
 - [CCS config: userId = schema defaults, 200](reference_ccs_config_userid_silently_returns_schema_defaults.md)
 - [Keto ≠ rps catalog](reference_keto_and_rps_catalog_disagree.md) · [grant permission ให้ role](reference_rps_grant_permission_to_role.md)
