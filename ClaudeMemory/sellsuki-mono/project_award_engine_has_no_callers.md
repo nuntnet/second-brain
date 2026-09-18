@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: 1da93659-b2fa-4cc1-9205-a04c4be3ee2c
-  modified: 2026-09-18T16:07:02.653Z
+  modified: 2026-09-18T17:41:56.604Z
 ---
 
 **ตรวจโค้ดจริง 2026-09-18: ไม่มีใครเรียก `award.Evaluate` และไม่มีใครเรียก
@@ -50,6 +50,18 @@ OC-4422 preload lot = **To Do** · ส่วน OC-4413/4420 = "Ready to test (D
   **de-dup แบบ "แคมเปญแรกชนะ" ทิ้ง campaign_id ไปเลย** ⇒ หน้ารีวิวตอบไม่ได้ว่า
   บรรทัดไหนเข้าแคมเปญไหน · และแคมเปญ `product_scope=all` ไม่มีแถวในตารางนี้เลย
   จึงมองไม่เห็นด้วยซ้ำ
+
+**การ์ดที่เปิดเพื่อปิดช่องนี้ทั้งหมด (สร้าง 2026-09-19, parent OC-2743, To Do ทุกใบ):**
+OC-4571 หน่วยเงินสตางค์ (ทำก่อนทุกใบ) → OC-4572 ยก `award` ขึ้น shared module →
+OC-4573 pick-best ต่อหน่วยแต้ม (ถือ assumption D-4) → OC-4575 approve เรียก engine
+→ OC-4576 preview API → OC-4577 หน้ารีวิว · OC-4574 campaign_id บน resolved SKU
+(blocks 4573+4578) · OC-4578 guardrail ตอนสร้างแคมเปญ · OC-4579 คอลัมน์ช่องทาง +
+แถวปักหมุดอัตราพื้นฐาน · OC-4580 readiness ดู base_rate_enabled ·
+**เข้า sprint แรกได้ทันทีโดยไม่มี dependency: 4571 / 4574 / 4579 / 4580**
+
+🔴 **อย่า merge MR !224 ของ OC-4339 (clawback) ก่อน OC-4575** — มันหา award จาก
+`award_dedup_registry` ที่ฝั่ง point-claim ยังไม่มีใครเขียน ⇒ ใบเสร็จ/marketplace
+ที่ยกเลิกจะหักคืนไม่ได้แบบไม่มี error
 
 ดู [[project_loyalty_overlap_best_single_campaign]] [[project_loyalty_point_cluster]]
 [[project_oc4362_approve_and_admin_edit]] [[project_oc4551_readiness_checklist]]
