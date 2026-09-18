@@ -128,6 +128,7 @@ Titles are short on purpose — each file's own `description:` carries the detai
 - [FB page must be subscribed to the app](reference_fb_page_must_be_subscribed_to_app.md)
 - [ถาม Meta ตรง ๆ ว่าทำไมเพจเงียบ](reference_fb_page_delivery_diagnosis_endpoint.md) — delivery-diagnosis endpoint; พิสูจน์ว่า config ของเป็ดน้อยเหมือนเพจที่ใช้ได้เป๊ะ
 - [ack 200 แล้วทิ้ง = ดูเหมือนเขาไม่ส่งมา](reference_webhook_ack200_and_drop_looks_like_no_delivery.md) — อ่านแค่ messaging[0] ทิ้งทั้ง batch; instrument จุดปฏิเสธก่อนตั้งสมมติฐานเรื่องผู้ส่ง
+- [AI Chat ไม่มีอยู่บน staging](reference_ai_chat_has_no_staging_deployment.md) — chat-core ไม่เคย deploy, chat module ปิด ⇒ e2e staging รันไม่ได้และไม่เคยรัน
 - [Procfile.messaging ปิด chat module](reference_procfile_messaging_disables_chat_module.md) — /webhook/fb 404 เงียบ ๆ ทั้งที่ port ดูปกติ; พิสูจน์ endpoint ตัวเองก่อนโทษ Meta
 - [4 คีย์ env ที่ไม่มีใน .env เลย ทำ AI-chat local พัง](reference_ai_chat_local_env_keys_missing.md) — ตารางคีย์+ค่า; 404/503 ที่ชี้ผิดชั้นทุกอัน
 - [chat-core ไม่มี ORY_KRATOS_PUBLIC_URL = คอนโซลตาย](reference_chatcore_missing_kratos_url_503.md) — /v1/me/* 503 แต่ curl ไม่มี cookie ยังตอบ 401 สวย ๆ
