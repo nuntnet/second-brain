@@ -67,6 +67,7 @@ Titles are short on purpose — each file's own `description:` carries the detai
 - [entity tenant kinds](reference_entity_lib_tenant_kinds.md) · [Perm generator churn](reference_permission_generator_nondeterministic.md) · [file-service Keto kind](reference_file_service_keto_subject_kind.md) · [Audit Action enum](reference_audit_action_is_closed_enum.md) · [Messaging backend](reference_messaging_backend.md) · [Messaging repo traps](reference_messaging_backend_shared_repo_traps.md) · [Central audit log](project_central_audit_log.md)
 
 ## BOLA
+- [bola-dev มีอยู่จริงและ deploy เอง](reference_bola_dev_env_exists_and_is_live.md) — CI_JOB_ENABLE ตั้งที่ GitLab project variable; grep ในรีโปไม่เห็น อ่านไฟล์อย่างเดียวสรุปผิดสามรอบ
 - [Manual staging gate](reference_manual_staging_gate_silent_drift.md) · [CCS→BOLA unwired](project_ccs_bola_provisioning_unwired.md) · [Deploy topology](project_bola_deploy_topology.md) · [values in repo](project_bola_deploy_values_in_repo.md) · [Kratos deploy gap](project_bola_saas_kratos_deploy_gap.md) · [migrations on boot](project_bola_migrations_jsonb.md) · [Staging Loki](reference_bola_staging_loki.md)
 - [§6a invite via CCS](project_bola309_invite_via_ccs.md) · [§6a lane 2 grant](project_bola309_lane2_add_existing_member.md) · [Access model](project_bola_saas_access_model.md) · [auth mode](project_bola_auth_mode_deployment.md) · [RBAC keto-direct](project_bola_rbac_keto_direct.md) · [ops = CCS1](project_bola_ops_visibility_ccs1.md) · [Kratos SSO staging](project_bola_kratos_sso_staging.md)
 - [Follower metadata ×2](reference_bola_follower_metadata_two_stores.md) · [Contact profile](project_bola_contact_profile_model.md) · [contacts upsert](reference_bola_contacts_upsert_api.md) · [INTEGER vs bool](project_bola_is_enabled_int_bool_mismatch.md) · [Segment export](project_segment_export_static_snapshot.md) · [Workspace scoping](project_bola_workspace_scoping_bugs.md)
@@ -108,6 +109,7 @@ Titles are short on purpose — each file's own `description:` carries the detai
 
 ## Patona / OMS / QMS / SukiPay
 - [Akita strategy](project_akita_patona_migration_strategy.md) · [OMS2 gaps](project_oms2_plan_gaps_2026q3.md) · [Decouple decision](project_oms2_decouple_decision.md) · [MS-687 reserve](project_ms687_reserve_needs_company_location.md)
+- [QMS: 21 ใบ code review มีโค้ดครบ แต่ค้าง 3 MR ตั้งแต่ ก.ค. + การ์ดระบุรีโปผิด](project_qms_cards_code_lives_elsewhere.md)
 - [QMS CCS2](project_qms_ui.md) · [Quota ≠ gate](project_quota_not_feature_gate.md) · [No allow/deny RPC](reference_quota_no_allow_deny_rpc.md) · [Plan anchor](project_plan_capability_quota_anchor.md)
 - [SukiPay audit](project_sukipay_audit_log.md) · [void rename](project_sukipay_void_rename.md) · [refund cluster](project_sukipay_refund_cluster.md) · [offline payment](project_sukipay_offline_payment.md)
 - [User pain gap](project_user_pain_evidence_gap.md) · [Product KB](project_sellsuki_product_kb.md) · [Bundle in catalog](project_bundle_in_catalog.md) · [PIS FE + embeds](project_pis_frontend_local_testing.md) · [Provider routing](project_provider_frontend_backend_routing.md)
