@@ -29,6 +29,7 @@ Titles are short on purpose — each file's own `description:` carries the detai
 - [pre-push กัน credential ติดใน 56 repo](reference_prepush_credential_hook_installed.md) — push ถูกบล็อก = rotate แล้วเอาออก ห้าม --no-verify
 - [rtk rewrites cmds](reference_rtk_git_output_filtering.md) · [Classifier blocks](reference_harness_classifier_blocks_secrets_and_mutations.md) · [Outline VPN](reference_outline_mcp_vpn_blocker.md) · [Agent resume](reference_background_agent_resume_patterns.md) · [codegraph projectPath](reference_codegraph_context_needs_projectpath.md)
 - [CI history/DNS ≠ deploy status](reference_ci_history_and_dns_are_not_deploy_status.md) — ถาม kubectl; staging-th context พร้อมใช้
+- [registry เต็ม 300 GiB = deploy ถูก skip เงียบ ๆ](reference_fountain_registry_quota_full.md) — test เขียว build แดง deploy skipped; MR เขียวไม่ได้แปลว่าของขึ้น
 - [dev-th access](reference_dev_th_cluster_access.md) · [Teleport kills dev-th](reference_teleport_session_kills_devth_access.md)
 
 ## Jira

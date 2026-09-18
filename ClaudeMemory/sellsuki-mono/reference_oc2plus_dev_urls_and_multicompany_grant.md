@@ -9,9 +9,22 @@ metadata:
 ## URL dev ไม่มี `-th`
 
 - backoffice: **`crm.dev.oc2.plus`** (ไม่ใช่ `crm.dev-th.oc2.plus`)
-- member app: `member.dev-th.oc2.plus` ตาม config ใน repo — แต่ backoffice ใช้ `.dev`
-  เฉย ๆ ⇒ **อย่าอนุมานจาก config ของอีก repo** · ยืนยันจาก user 2026-09-14 ตอนที่ผมให้
-  URL ผิดเพราะ grep เจอ `crm.dev-th.oc2.plus` ใน `origin/develop` ซึ่งเป็นค่าที่ไม่ตรงของจริง
+- member app: **`member.dev.oc2.plus`** (ไม่ใช่ `member.dev-th.oc2.plus`) — ยืนยัน
+  2026-09-18 ด้วย DNS: `member.dev-th.oc2.plus` **ไม่ resolve เลย** ส่วน
+  `member.dev.oc2.plus` → 3.166.34.69 · ค่าที่เคยจดว่า `-th` มาจาก config ใน repo
+  ซึ่งไม่ตรงของจริง ⇒ **อย่าอนุมานจาก config** เช็ค DNS หรือ ingress ก่อน
+- slug ที่ใช้ได้บน dev = **`d9pesc1nm7id80npgljg`** = `code` ของ company C
+  (`a3fa1608-…`) · เปิด `https://member.dev.oc2.plus/d9pesc1nm7id80npgljg/login`
+  ได้หน้า "เข้าสู่ระบบสมาชิก" จริง (2026-09-18) · SPA คืน 200 ทุก path ⇒ curl
+  status code **พิสูจน์ slug ไม่ได้** ต้องเปิดเบราว์เซอร์ดู
+
+## login บน dev ทำเองไม่ได้ ถ้าไม่มี TEST_KEY
+
+`TEST_KEY` มีอยู่บน dev (secretKeyRef ใน deployment) แต่เบราว์เซอร์ไม่ได้ฉีด
+เฮดเดอร์ `X-TESTING-SECRET`/`X-Test-Secret` ให้เหมือน vite proxy บนเครื่อง ⇒
+กรอกเบอร์ในหน้า login บน dev = **ขอ OTP ผ่านของจริง** เพราะ
+`MESSAGING_SERVICE_BASE_URL=http://sellsuki-messaging-backend-svc.sellsuki`
+(namespace `sellsuki` ไม่ใช่ mock) · อย่ายิง OTP ใส่เบอร์คนอื่นเพื่อเทส
 
 ## user เทสบน dev มี role ข้าม 3 บริษัท — grant บริษัทเดียว = ยังเจอ 403
 
