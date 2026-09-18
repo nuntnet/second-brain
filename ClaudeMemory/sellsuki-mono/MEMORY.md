@@ -17,6 +17,7 @@ Titles are short on purpose — each file's own `description:` carries the detai
 ## Personal / machine / infra
 - [Merchant portal](project_merchant_portal.md) · [Ch.Erawan](project_ch_erawan_next.md) · [CATS ATS](reference_cats_ats_system.md) · [NAS DS1](reference_nas_ds1.md) · [Helio](project_helio.md) · [SecondBrain](reference_secondbrain_vault.md) · [Control Tower](project_control_tower.md)
 - [OC2Plus dev URL + 3 บริษัท](reference_oc2plus_dev_urls_and_multicompany_grant.md) · [Env URLs](reference_env_urls.md) · [Monorepo remotes](reference_monorepo_no_origin.md) · [Mainline ≠ main](project_monorepo_mainline_is_not_main.md)
+- [สายจริงของแต่ละ repo + 6 ตัวที่ develop เป็นป้ายเปล่า](reference_real_mainline_per_repo.md) — default_branch=main ทั้ง 55 repo เชื่อไม่ได้
 - [OC2Plus stack traps](reference_oc2plus_local_stack_recovery_traps.md) · [Stale branches per repo](reference_local_stack_stale_branches_per_repo.md) · [Stray dev server](reference_stray_claude_dev_server_squats_port.md) · [Stale postgres pod](reference_datastore_stale_postgres_pod.md)
 - [Branch เยอะ = เศษ worktree ไม่ใช่งานค้าง](reference_oc2plus_branch_sprawl_is_worktree_debris.md) — สูตรเคลียร์ 5 repo + กับดัก git cherry/dev server
 - [สลับ branch แล้ว .env หาย](reference_branch_switch_can_lose_an_untracked_env.md) — messaging ตายด้วย "lookup port=5432"; กู้จาก commit 1482535
@@ -27,6 +28,7 @@ Titles are short on purpose — each file's own `description:` carries the detai
 - [brew simdjson breaks node](reference_brew_simdjson_breaks_homebrew_node.md)
 - [pre-push กัน credential ติดใน 56 repo](reference_prepush_credential_hook_installed.md) — push ถูกบล็อก = rotate แล้วเอาออก ห้าม --no-verify
 - [rtk rewrites cmds](reference_rtk_git_output_filtering.md) · [Classifier blocks](reference_harness_classifier_blocks_secrets_and_mutations.md) · [Outline VPN](reference_outline_mcp_vpn_blocker.md) · [Agent resume](reference_background_agent_resume_patterns.md) · [codegraph projectPath](reference_codegraph_context_needs_projectpath.md)
+- [CI history/DNS ≠ deploy status](reference_ci_history_and_dns_are_not_deploy_status.md) — ถาม kubectl; staging-th context พร้อมใช้
 - [dev-th access](reference_dev_th_cluster_access.md) · [Teleport kills dev-th](reference_teleport_session_kills_devth_access.md)
 
 ## Jira
