@@ -22,6 +22,7 @@ metadata:
 
 **🔴 SILENT CONTENT LOSS — blockquote ซ้อนใน list item (ยืนยัน 2026-08-07 บน OC-4415):** ถ้าเขียน `> ...` (blockquote) **ซ้อนอยู่ใต้ bullet/AC item** → markdown→ADF **ตัด bullet ทั้งข้อทิ้งเงียบ ๆ** ไม่มี error, tool คืน success ปกติ (AC-03 หายทั้งบรรทัด). ต่างจากเคสอื่นตรงที่ **ไม่เห็นร่องรอย** ต้อง `getJiraIssue` กลับมาอ่านถึงจะรู้. **แก้:** เขียน note เป็น plain text ในบรรทัดเดียวกับ bullet (ห้าม `>` ซ้อน) — blockquote ระดับบนสุด (ไม่ซ้อนใน list) ยังใช้ได้ปกติ.
 → **หลัง editJiraIssue ทุกครั้งที่มี list ยาว ควร re-fetch นับจำนวน AC เทียบ** ไม่ใช่เชื่อ success response
+→ **เกิดซ้ำอีกครั้ง 2026-09-18 บน AI-216** — ส่ง AC 10 ข้อ กลับมา 8 ข้อ; ที่หายคือสองข้อเดียวที่มี `> ` ซ้อนใต้ item (ข้อ log ตอน boot และข้อ OTP ไม่กระทบ) ซึ่งเป็นสองข้อที่**สำคัญที่สุด**ในใบนั้นพอดี — เพราะข้อที่ต้องขยายความคือข้อที่เขียนคนอยากใส่ blockquote · เนื้อการ์ดยังอ้าง "AC ข้อ 6" ที่เลื่อนไปชี้ผิดข้อ ⇒ **การ์ดขัดแย้งกันเอง** · การนับจำนวนข้อใน response (ไม่ต้อง re-fetch — response ของ editJiraIssue มี description กลับมาให้อยู่แล้ว) จับได้ทันที **ทำทุกครั้ง** · แก้โดยเขียน note ต่อท้ายบรรทัดเดียวกับ item คั่นด้วย `—` แล้ว bold ไว้
 
 **`searchJiraIssuesUsingJql` payload บวมมาก (2026-08-11):** แม้ส่ง `fields: ["summary","status"]` ผลลัพธ์ ~10-20 ใบ
 ก็ทะลุ token cap (169k chars) เพราะแนบ project/issuetype/avatar blob + description เต็มมาทุกใบ → tool จะ save เป็นไฟล์
