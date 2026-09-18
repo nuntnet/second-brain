@@ -19,6 +19,7 @@ Titles are short on purpose — each file's own `description:` carries the detai
 - [OC2Plus dev URL + 3 บริษัท](reference_oc2plus_dev_urls_and_multicompany_grant.md) · [Env URLs](reference_env_urls.md) · [Monorepo remotes](reference_monorepo_no_origin.md) · [Mainline ≠ main](project_monorepo_mainline_is_not_main.md)
 - [OC2Plus stack traps](reference_oc2plus_local_stack_recovery_traps.md) · [Stale branches per repo](reference_local_stack_stale_branches_per_repo.md) · [Stray dev server](reference_stray_claude_dev_server_squats_port.md) · [Stale postgres pod](reference_datastore_stale_postgres_pod.md)
 - [Branch เยอะ = เศษ worktree ไม่ใช่งานค้าง](reference_oc2plus_branch_sprawl_is_worktree_debris.md) — สูตรเคลียร์ 5 repo + กับดัก git cherry/dev server
+- [สลับ branch แล้ว .env หาย](reference_branch_switch_can_lose_an_untracked_env.md) — messaging ตายด้วย "lookup port=5432"; กู้จาก commit 1482535
 - [ย้าย branch ใต้ dev server ที่รันอยู่](reference_moving_a_branch_under_a_running_dev_server.md) — vite เสิร์ฟ .ts ดิบ / 404; เช็ค cwd ก่อนลบ
 - [ฟีเจอร์ใหม่ไม่โผล่บน local](reference_local_stack_new_feature_invisible_two_causes.md) — เมนูหายเพราะ permission (เงียบ) + list 500 เพราะ internal key
 - [overmind ตาย = session ค้าง](reference_overmind_dead_processes_are_a_wedged_session.md) — quit+rm sock+start ใหม่; และอย่ารัน service มือในโฟลเดอร์ที่ overmind ดูอยู่
