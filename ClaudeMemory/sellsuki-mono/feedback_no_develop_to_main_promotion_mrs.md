@@ -88,6 +88,28 @@ Concretely, per change: branch off `origin/main` → MR to main, and branch off
 staging without an internal API and cost a day of bisecting — just without
 mistaking "both lines need it" for "promote the whole branch".
 
+**⚠️ One branch, two MRs is NOT a shortcut for this — it fails as soon as the
+lines diverge.** On 2026-09-18 PAT-2700 opened !130 (→main) and !131 (→develop)
+from ONE branch cut off `origin/main`. !130 was fine; !131 came back
+`cannot_be_merged`, conflict in `cmd/migration/migrations/migrations.go`.
+
+Cause: the two lines already carried **twin commits** — the same change merged
+separately into each line, with different SHAs (invite-release-usage !128/!129,
+and wayla's payment.tool permissions). Both lines had independently added
+migration `0023`, and develop additionally had `0024`. So a main-based branch
+merged into develop drags main's twins along and collides on the migration
+registry — with a real risk of dropping develop's `0024` during conflict
+resolution.
+
+Fix that worked: close the develop MR, cut a NEW branch off `origin/develop`,
+`git cherry-pick` the two commits (clean, no conflict), open a fresh MR (!132).
+Verify with `git diff origin/develop..HEAD -- cmd/migration/` returning **0
+lines** and the registered migration count unchanged.
+
+So the rule's "branch off each line separately" is literal. Reusing one branch
+works only while the lines have not diverged, which is exactly the condition you
+cannot rely on and will not notice until GitLab refuses the merge.
+
 **Which repos this applies to** (verified 2026-09-17 from the deployments API,
 `main` → staging and `develop` → development in every one): CCS3,
 sellsuki-central-control-backend, role-and-permission, i18n-management-backend,
