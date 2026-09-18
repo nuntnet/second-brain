@@ -79,6 +79,7 @@ Titles are short on purpose — each file's own `description:` carries the detai
 ## OC2Plus
 - [LINE optional](project_oc4207_line_optional_design.md) · [Epic triage](project_oc_epic_backlog_triage.md) · [OC×BOLA boundary](project_oc_bola_domain_boundary.md) · [OC-4267 standalone](project_oc4267_standalone_no_qms.md) · [Company not store](reference_oc2plus_company_not_store.md) · [Tier per-company](project_oc2plus_tier_is_per_company_config.md)
 - [BO FE red on develop](reference_oc2plus_backoffice_fe_red_on_develop.md)
+- [BO FE: CI ข้ามเทสต์ทั้งหมด](reference_backoffice_fe_ci_skips_all_tests.md) — `UNIT_TEST_SCRIPT: echo "1 + 1"`; develop แดง 181 เทสต์ pipeline ยังเขียว
 - [FE worktree → branch API](reference_oc2plus_backoffice_fe_local_against_branch_api.md)
 - [OC-4086 editor ไม่มีจริง](reference_oc4086_rich_text_editor_not_in_monorepo.md) — Done แต่โค้ดไม่อยู่ใน monorepo อย่าไล่หา
 - [e2e repo (proj 808)](reference_oc2plus_e2e_playwright_repo.md) · [SRE slots no `&&`](reference_sre_test_job_slots_cannot_chain.md) · [Kit needs pnpm](reference_frontend_kit_consumption_needs_pnpm.md) · [Kit state](reference_frontend_kit_state.md) · [CI outage 2026-09](reference_oc2plus_ci_outage_2026_09.md)
