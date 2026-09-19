@@ -5,12 +5,13 @@ metadata:
   node_type: memory
   type: project
   originSessionId: a0710894-5349-411a-b947-f53b13519857
-  modified: 2026-08-09T05:33:05.531Z
+  modified: 2026-09-19T16:26:06.485Z
 ---
 
 **OC-4413 (Award Engine Core) = hub + single source of truth ของ loyalty cluster.** Contract กลางประกาศไว้ที่คอมเมนต์ "CANONICAL CONTRACT SHEET" (2026-08-07) — การ์ดอื่นห้ามนิยามเอง ให้อ้างมาที่นี่
 
-1. **dedup key = `(company_id, order_ref)`** — ชื่อ field ต้องเป็น `order_ref` ทุกใบ (เดิม 4412 ใช้ `order_id`, 4335 ใช้ `order_serial`, 4362 ใช้ `receipt_number`, 4407 ใช้ marketplace id → prefix ด้วย channel)
+1. **dedup key = `(company_id, order_ref)`** — ชื่อ field ต้องเป็น `order_ref` ทุกใบ (เดิม 4412 ใช้ `order_id`, 4335 ใช้ `order_serial`, 4362 ใช้ `receipt_number`, 4407 ใช้ marketplace id)
+   **รูปแบบสตริงเคาะแล้ว 2026-09-19 (อยู่ใน OC-4575 AC-04): `<source>:<id>`** — source เป็น `[a-z0-9_]+` · แบ่งที่ `:` ตัวแรกเท่านั้น · id คงตัวพิมพ์เดิม (case-sensitive) ตัดช่องว่างหัวท้าย · รวมไม่เกิน 128 ตัวอักษร · v1 = `receipt` `shopee` `lazada` `tiktok` สงวน `order` ให้ OC-4412/4414 · 🔴 **source เป็นคนละแกนกับ channel — ห้ามใช้ `marketplace:`** (Shopee กับ Lazada จะชนกัน) ซึ่งเป็นสาเหตุที่คำแนะนำเดิมว่า "prefix ด้วย channel" ถูกยกเลิก · ผู้อ่านสตริงนี้คือ OC-4339 clawback (คอมเมนต์แจ้งแล้ว)
 2. **`channel` enum เดียว:** `pos|online|line_oa|web|marketplace|manual|unknown` — config เพิ่ม `all` ได้ แต่ event ห้ามส่ง `all`
 3. **product scope = SKU เท่านั้น** — BO (มี PIS client) expand category → `resolved_skus[]` snapshot ตอน publish; 3rdparty-api ไม่มี PIS client จึงห้ามรู้จัก category
 4. **base rate = always-on ผ่าน implicit system campaign** `SYSTEM_BASE_EARN_{point_unit}` (เพราะ **ทุก award endpoint ผูก campaign เสมอ** — v1/v2 confirm ทุกเส้น require campaign_code) → engine ไม่ต้องมี branch "award ไม่มี campaign"; ตัวคูณ suppress base เฉพาะส่วน eligible
