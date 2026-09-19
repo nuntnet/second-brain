@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: 1da93659-b2fa-4cc1-9205-a04c4be3ee2c
-  modified: 2026-09-18T17:41:56.604Z
+  modified: 2026-09-19T17:07:52.522Z
 ---
 
 **ตรวจโค้ดจริง 2026-09-18: ไม่มีใครเรียก `award.Evaluate` และไม่มีใครเรียก
@@ -61,7 +61,13 @@ OC-4573 pick-best ต่อหน่วยแต้ม (ถือ assumption D-4
 
 🔴 **อย่า merge MR !224 ของ OC-4339 (clawback) ก่อน OC-4575** — มันหา award จาก
 `award_dedup_registry` ที่ฝั่ง point-claim ยังไม่มีใครเขียน ⇒ ใบเสร็จ/marketplace
-ที่ยกเลิกจะหักคืนไม่ได้แบบไม่มี error
+ที่ยกเลิกจะหักคืนไม่ได้แบบไม่มี error (คอมเมนต์แจ้งไว้บน OC-4339 แล้ว)
+
+**decision ที่ PO เคาะ 2026-09-19/20 (อยู่ในการ์ด แต่ยังไม่มีในโค้ด — re-derive จากโค้ดไม่ได้):**
+- **`award` ไปอยู่โมดูล `gitlab.sellsuki.com/sellsuki/oc2plus/line-crm/backend/entity`** ไม่ใช่โมดูลกลาง `sellsuki/sellsuki/backend/entity` — เพราะสองรีโปใช้โมดูล CRM ร่วมกันที่ **v1.9.7 เท่ากันอยู่แล้ว** (go.mod:28 ทั้งคู่) จึงไม่ต้อง bump ข้ามเวอร์ชัน ส่วนโมดูลกลางจะบังคับให้ 3rdparty กระโดด v0.2.2 → v0.34.0 = 32 minor · ลำดับ merge: entity → 3rdparty → backoffice
+- **flag `POINT_CLAIM_CAMPAIGN_AWARD` คุม *ข้อมูลเข้า* ไม่ใช่สลับ *เส้นทาง*** — ปิด = เรียก Evaluate/Commit เหมือนเดิมแต่ป้อนเฉพาะชั้นอัตราพื้นฐาน (ได้ตัวเลขเท่าวันนี้เป๊ะ) · เปิด = ป้อนแคมเปญด้วย ⇒ เหลือเส้นทางเดียว ลบ `computeBaseRatePoints` ได้จริง, proved-red มีความหมาย, rollback ปลอดภัย
+- **พรีวิวค้างแล้วแคมเปญหมดอายุ = 409 พร้อมตัวเลขใหม่ ให้กดยืนยันอีกครั้ง** ห้ามแจกตามตัวเลขใหม่เงียบ ๆ
+- **readiness แถว `point_unit` เขียวได้สองทาง** — อัตราพื้นฐานเปิด **หรือ** มีแคมเปญได้แต้ม active (ร้านที่แจกผ่านแคมเปญล้วนเป็นการตั้งค่าที่ถูกต้อง) · Blocking เมื่อไม่มีทั้งสองทาง · 🔴 **ไม่มี per-company toggle ของฟีเจอร์คำขอแต้มอยู่จริง** — กวาด `Enabled` ทั้ง model layer สองรีโปแบบไม่กรองแล้วเจอตัวเดียวคือ `PointBaseRate.Enabled` (`point.go:42`) อย่าไปตามหาหรือประดิษฐ์ใหม่
 
 ดู [[project_loyalty_overlap_best_single_campaign]] [[project_loyalty_point_cluster]]
 [[project_oc4362_approve_and_admin_edit]] [[project_oc4551_readiness_checklist]]
