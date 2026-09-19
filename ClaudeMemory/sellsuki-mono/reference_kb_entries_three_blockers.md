@@ -68,3 +68,18 @@ said no listing endpoint exists at all, MR !24's said the blocker was the
 missing seam. Both closed; !30 states it per hop instead.
 
 Related: [[rag-core-visibility-tiers]], [[chatcore-is-the-admin-bff]]
+
+## ⚠️ Update 2026-09-20 — blocker 1 is gone, blocker 3 changed shape
+
+1. **`/entries` CRUD IS on rag-core `main` now.** `server.py` mounts
+   `knowledge_entries` (and `knowledge`, and `sheet_connectors`) under
+   `/v1/rag/knowledge`. The AI-46 branch landed.
+2. …but **none of it is in the cluster**: the deployed image serves five routes
+   and no `/v1/rag/knowledge/*` at all — see
+   [[reference_boot_guard_pins_an_old_image_silently]]. "Merged" and "reachable"
+   were 16 days apart.
+3. The auth blocker has an answer that did not exist in August: rag-core's
+   `BFFJWTIdentityResolver` accepts an HS256 token chat-core mints itself, so
+   the console hop needs no channel-gateway key — only a shared secret in both
+   Vault paths. The RETRIEVAL hop is still blocked. See
+   [[reference_chatcore_ragcore_two_hops]].
