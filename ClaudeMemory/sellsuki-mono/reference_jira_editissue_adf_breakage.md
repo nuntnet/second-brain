@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: 80b5b310-7a4e-49dc-8932-34d4eb091c9a
-  modified: 2026-09-06T17:05:42.518Z
+  modified: 2026-09-19T16:08:56.849Z
 ---
 
 การแก้ Jira card ผ่าน `editJiraIssue` (Jira MCP) ด้วย markdown → มี **markdown↔ADF round-trip breakage** ที่รู้จากการ rename VOID→COMPENSATING (11 cards):
@@ -40,6 +40,8 @@ metadata:
 **🔴 response ตอบกลับเป็นการ์ดคนละใบ (2026-08-12):** `editJiraIssue` ของ AI-45 คืน payload ของ AI-133 · `createIssueLink` เคยคืน getJiraIssue ของ BOLA-313 ที่ไม่เกี่ยวเลย — **ของถูกเขียนถูกใบ** เป็น response mix-up ⇒ ยิ่งตอกย้ำว่าต้อง re-fetch ใบที่ตั้งใจแก้แยกเสมอ
 
 **🟢 วิธีที่ใช้ได้จริงสำหรับ full rewrite (ยืนยัน 2026-09-06 — เขียน OC-4477/78/79 เป็น full DoR):** `editJiraIssue` ด้วย **`fields: {description: "...markdown..."}` + `contentFormat: "markdown"`** → render ครบทุก table/heading/bold/enum ไม่พัง (ต่างจาก createJiraIssue markdown ที่พัง `\n`). เขียนไทยตรงๆ ใน fields.description ได้ (ไม่ต้อง \uXXXX). editJiraIssue tool signature จริง = required `fields` (object keyed by field name) ไม่ใช่ top-level `description` param — ส่ง `description` เดี่ยวๆ = "Required at fields". นี่คือวิธี set description ยาวที่เชื่อได้สุดตอนนี้.
+
+**🟡 `editJiraIssue` เขียน `issuelinks` ไม่ได้ — ต้องใช้ `createIssueLink` (ยืนยัน 2026-09-19):** ส่ง `fields: {issuelinks: [...]}` ได้ `{"errors":{"issuelinks":"Field does not support update 'issuelinks'"}}` ทั้งรูปแบบ `[{"add":{...}}]` และ `[{type,inwardIssue,...}]` · agent ที่เจอสรุปว่า "MCP เขียน link ไม่ได้เลยบน instance นี้" ซึ่ง**ผิด** — เครื่องมือ `createIssueLink` แยกต่างหากใช้ได้ปกติ (สร้าง 24+3 เส้นสำเร็จในเซสชันเดียวกัน) · ทิศทาง: `inwardIssue` = ใบที่บล็อก, `outwardIssue` = ใบที่ถูกบล็อก · **ลบ link ยังทำไม่ได้** ไม่มี `deleteIssueLink` ⇒ เปลี่ยนชนิดเส้น (เช่น Relates → Blocks) ทำได้แค่เพิ่มเส้นใหม่แล้วให้คนลบของเก่าเอง
 
 **Best practice:** (0) **re-fetch verify เสมอ** ไม่ใช่แค่ตอนมีรูป — content loss แบบเงียบมีจริง (ดูข้อบน). (1) การ์ดที่มีรูปฝัง/smartlink — เลี่ยง full rewrite ผ่าน markdown; แก้ target เฉพาะจุด หรือใช้ ADF format. (2) หลัง rewrite ทุกครั้ง **ตรวจ format** โดยเฉพาะใบที่มี media/smartlink. (3) re-edit ผ่าน markdown ซ้ำ = เสี่ยงเกิด escape ซ้ำ. (4) เนื้อหายาว/หลาย section → อย่าใช้ createJiraIssue markdown ตรงๆ ใช้ editJiraIssue set description. ใช้ประกอบ [[project_sukipay_void_rename]].
 
