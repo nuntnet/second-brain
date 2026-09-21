@@ -35,13 +35,55 @@ on-pack QR **ไม่มี order ไม่มียอดซื้อ ไม�
 ให้ชัดว่า = *render QR จาก lot ที่มีอยู่* ไม่ใช่ preload/async-bind ของ OC-4422 ไม่งั้นโดนปิดเป็นซ้ำ
 หรือถูกดูดไปรอ OC-4335 ที่ blocked อยู่ · OC-4530 เป็น**ผู้บริโภค**ของ QR แบบรหัสเปล่า ไม่ใช่ blocker ทั้งใบ
 
-## แผนแตกการ์ดที่เสนอ (4 ใบ)
+## 🚫 LIFF URL ใน QR — ตัดออกอย่างเป็นทางการ (เคาะ 2026-09-22)
+
+PO ถามว่าจะทำ QR เป็น LIFF URL ด้วยได้ไหม · คำตอบคือ **อย่า** และตันสองชั้น ไม่ใช่แค่ซับซ้อน:
+
+1. **เคยทำแล้วถอนออกโดยตั้งใจ** — OC-4511 เพิ่ม `CUSTOMER_APP_LIFF_ID` ประกอบ
+   `https://liff.line.me/{id}/{slug}/{page}` แล้ว backoffice-api **MR !551 (`238fcd7`) ลบทิ้ง**
+   มติ: ห้ามมี LIFF ตัวที่สองของ member app (ดู [[project_oc2plus_liff_shell_is_the_line_entry]])
+2. **ตันเชิงโครงสร้าง** — shell ของ BOLA หา destination จากตาราง `liff_shell_destination
+   (line_oa_id, flow)` = แถวต่อ **flow** ไม่ใช่ต่อโค้ด · และ shell **ทิ้ง query ขาเข้า**
+   (`window.location.replace(destination + ?line_user_id&line_oa_id&…)` ต่อพารามิเตอร์ของตัวเอง
+   ไม่ forward ของเดิม) → `?c=CODE` หายกลางทางเงียบ ๆ
+   · `member-api/src/usecases/liff/entry.ts` อ่านแค่ `lid`/`liff.state`/`aid`/`module`
+   จบที่ redirect/signing-in/idle — ไม่มีเส้นทางไปหน้า redeem เลย
+
+**หลักที่ได้:** เอาของที่เปลี่ยนได้ (LIFF id / shell / flow config) ไปพิมพ์ลงของที่เปลี่ยนไม่ได้
+(บรรจุภัณฑ์) = ล็อกความผิดพลาดไว้ถาวร → QR ห่อ **web URL ธรรมดา** ตัวเดียวพอ
+
+## 🔑 อยากได้ LINE uid ทั้งที่เข้าทาง URL — backend มีครบแล้ว (พบ 2026-09-22)
+
+OC-4523 (Ready to test DEV) `POST /company/{slug}/auth/line` ตรวจ id_token โดยส่งให้ LINE เอง
+ที่ `POST /oauth2/v2.1/verify` (`member-api/src/repository/line_repository/rest.go:152`)
+โดย audience = **LIFF channel id ของ OA นั้น** ดึงจาก BOLA ต่อ OA (`auth_line.go:153`, จงใจกัน
+ข้ามผู้เช่า) พร้อม replay guard 1 token = 1 session, rate limit, audit
+
+🔑 **LIFF app อยู่ใต้ LINE Login channel → LINE Login แบบเว็บ (OAuth) ใช้ channel เดียวกัน →
+id_token ได้ `aud` เดียวกัน → endpoint เดิมรับได้โดยไม่ต้องแก้ backend เลย**
+
+ที่ขาดคือ: FE ทำ OAuth dance + endpoint อ่านเล็ก ๆ บอกว่า slug นี้ใช้ OA/channel id ไหน
+(FE ต้องรู้ `client_id` ถึงจะเริ่ม OAuth และ endpoint บังคับส่ง `line_oa_id`)
+🔴 **+ ลงทะเบียน callback URL ในคอนโซล LINE Login ของแต่ละร้าน** — ร้านที่ไม่ได้ลงทะเบียน
+พังเงียบเฉพาะร้านนั้น ⇒ ต้องเข้า company readiness (`company_readiness.go`) ไม่ใช่ env var
+จึง `ship-check` มองไม่เห็น
+
+## OC-4530 ต้องอ่านได้ทั้งสองแบบ (PO สั่ง 2026-09-22)
+
+resolver ต้องแยก ≥5 รูปแบบ: บัตรสมาชิก (OC-4529) / คูปอง (OC-4526, 4547) / รหัสเปล่า /
+**URL ของเรา → ถอด `c` แล้วอยู่ในแอป ห้ามเด้งออก browser** / อย่างอื่นหรือ slug ร้านอื่น → บอกชัด
+· checksum (sum mod 36) คัดกรองในเครื่องได้ฟรีก่อนยิง network · slug เก่าต้องผ่าน (OC-4560)
+· การ์ดอยู่ To Do ยังไม่เริ่ม → แก้ AC ในใบเดิมได้ แต่ **รายงานให้ PO เคาะ ไม่แก้เอง**
+([[feedback_report_wrong_cards_dont_edit]])
+
+## แผนแตกการ์ดที่เสนอ (5 ใบ + แก้ OC-4530)
 
 | # | ใบ | รีโป | ติด |
 |---|---|---|---|
 | **A** | member FE รับ `?c=` → prefill + auto-inquiry | member FE ล้วน | **ไม่ติดอะไร — ต้องมาก่อนทุกใบ** |
+| **A2** | LINE Login บนเว็บ → session ที่มี LINE uid | member FE + member-api (endpoint อ่าน) + readiness | A |
 | **B1** | เพิ่มคอลัมน์ `claim_url` ใน XLSX เดิม | exporter นอกเวิร์กสเปซ | หา repo ก่อน |
-| **C** | QR รูปเดียวของ template ชนิด `single` | backoffice FE ล้วน | รอ A |
+| **C** | Preview QR + test sheet PDF (6/8/10/12/15 มม.) + lot ทดสอบ · รวม QR ของ template `single` เข้ามาด้วย | backoffice FE + backoffice-api | รอ A |
 | **B2** | ZIP ของ SVG+PNG + `manifest.csv` สองแบบ | exporter นอกเวิร์กสเปซ | รอ A, B1 |
 
 ถ้ายังไม่มี A → `claim_url` ไม่มีอะไรให้ใส่ และ QR ห่อลิงก์ตาย
@@ -51,6 +93,14 @@ on-pack QR **ไม่มี order ไม่มียอดซื้อ ไม�
 **โรงพิมพ์ใหญ่ไม่อยากได้รูป QR** — งานใต้ฝาคือ variable data printing เขารับ CSV/XLSX แล้ว
 generate QR เองใน RIP → **XLSX ที่มีอยู่เกือบพอแล้ว ขาดแค่คอลัมน์ `claim_url` (= ใบ B1 ราคาถูกมาก)**
 ไฟล์รูปจริงมีค่ากับงานเล็ก/พิมพ์เอง · lot ใหญ่สุด 100,000 → ZIP แสนไฟล์ไม่ควรสร้าง ต้องมี cap
+
+🔴 **กับดักของ preview: สแกนทดสอบ = เผาโค้ดจริง** (status → `redeemed`) แล้วปนอยู่ใน lot
+ที่จะส่งโรงพิมพ์ → มีฝาขวดใบหนึ่งที่ลูกค้าเจอ "ใช้แล้ว" โดยไม่มีใครรู้ว่าใบไหน ⇒ preview ต้องโชว์
+สถานะรายใบ + มี "lot ทดสอบ 5 รหัส" แยก · ปุ่ม next มีค่าเพื่อ**ไล่หาใบที่ยังไม่ถูกเผา** ไม่ใช่เพื่อดูขนาด
+เพราะรหัสยาวคงที่ทั้งเทมเพลต → **QR ทุกดวงใน lot ขนาดเท่ากันเป๊ะ**
+
+**จอตอบไม่ได้ว่าพิมพ์แล้วสแกนติดไหม** (จอเรืองแสง contrast เต็ม vs ฝาโลหะโค้งมีเงา) ⇒ ต้องมี
+**test sheet PDF** ที่มี QR ดวงเดียวกันที่ 6/8/10/12/15 มม. เอาไปพิมพ์บนวัสดุจริงแล้วไล่สแกน
 
 รายละเอียดกลไก code lot + exporter อยู่ที่
 [[reference_oc2plus_code_lot_lifecycle_and_external_exporter]] · บริบท OC-4335 เดิมที่
