@@ -15,4 +15,10 @@ metadata:
 3. **529 ติดกันหลายรอบ = อย่า retry รัว** — ตั้ง `sleep 600` แบบ run_in_background (foreground sleep ถูก block) แล้วให้ notification ปลุกมา resume
 4. Jira MCP collision ระหว่าง agent หลายตัว: ห้ามให้ main + subagent ยิง Jira พร้อมกัน (เคยได้ response ของ call อื่นสลับใบ) — ทำ Jira write ทีละผู้เล่นเสมอ ดู [[jira-mcp-search-quirks]]
 
+5. **อย่าให้ po-lead fan-out งานวิจัยที่ session หลักทำไปแล้ว** (พบ 2026-09-22 งาน on-pack QR):
+   ส่งข้อเท็จจริงที่ยืนยันพร้อม file:line ไปให้แล้ว มันยัง spawn 5 research agent ไปตรวจซ้ำ
+   → เผา **111k tokens ได้ผลกลับมา 0** แล้วจบเทิร์นด้วย "รอผลจากทีม" ก่อนชน org spend limit ตาย
+   · ตอน resume ให้สั่งชัด: **"ห้าม spawn research ซ้ำ · เขียนร่างเอง · spawn แค่ reviewer 2 ตัวตอนท้าย"**
+   · เหตุผลเชิงกลไก: จุดที่พังคือผลของลูกไม่กลับถึงพ่อ ยิ่ง spawn ลูกมาก ยิ่งเจอบ่อย
+
 **How to apply:** งาน /po-team หรือ batch Jira ใหญ่ๆ — คาดว่าต้อง babysit resume; งบ subagent ต่อ pipeline อาจถึง ~1M tokens
