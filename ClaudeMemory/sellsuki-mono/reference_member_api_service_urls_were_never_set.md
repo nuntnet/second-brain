@@ -42,11 +42,24 @@ login, profile and theme down to protect a point-balance read.
 Still missing after that MR: `FILE_SERVICE_API_KEY` (a secret, so not in the
 values file) — receipt upload stays broken until someone adds it.
 
-**Production values are inferred, not verified.** Every URL in
-`values-production.yml` uses the same service names as staging, so `.octoplus`
-was used there too; `tsh login` to the production cluster would have killed this
-session's staging access ([[reference_teleport_session_kills_devth_access]]), so
-nobody confirmed it. Whoever deploys prod must check the namespace.
+**Production namespace: confirmed `octoplus`,** from the repo's own
+`.gitlab-ci.yml` — `.variables_export_staging_arm` and
+`.variables_export_production` both set `KUBE_NAMESPACE: "octoplus"`. It was
+first written as an inference (the prod cluster needs `tsh login`, which would
+have killed this session's staging access —
+[[reference_teleport_session_kills_devth_access]]); the CI file answers it
+without touching prod at all. Check there first next time.
+
+🔴 **member-api deploys to STAGING from `main`, not `develop`.** Merging to
+develop ran `deploy_development_th_arm` only (ns `octoplus-dev`). So a fix
+merged to develop does nothing for a staging bug, and the 502 keeps happening
+after the MR is green and merged. Do NOT open a develop→main promotion MR
+([[feedback_no_develop_to_main_promotion_mrs]]) — ask how the team wants it
+released.
+
+Verified on the dev cluster 2026-09-22 after deploy: both env vars present on
+the Deployment, boot guard logged 0 `service_url_unusable` lines, and no
+`localhost:8080` dial in the pod log.
 
 **Separate trap found while committing this:** member-api's `.gitignore` had a
 bare `generics_server` line (meant for the built binary at the repo root). A bare

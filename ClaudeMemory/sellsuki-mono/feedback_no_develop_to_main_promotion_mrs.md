@@ -128,3 +128,33 @@ sellsuki-ai-agent, ai-platform-kit-go (no `develop` branch at all).
 35 behind; dev env last deployed 2026-03-16) and
 `central-configuration-system` (develop last touched 2026-08-14, diverged 54/85).
 A twin MR there is not a cheap mirror, it is a merge into a stale branch.
+
+
+## 2026-09-22 — กฎที่ผู้ใช้ย้ำ และกับดักที่ซ่อนอยู่ในนั้น
+
+ผู้ใช้พูดชัด: **"develop → main ห้ามทำ เราทำได้แค่ merge branch feature to main"**
+
+⚠️ แต่ "merge feature branch เข้า main" **ไม่ได้แปลว่าปลอดภัยโดยอัตโนมัติ** —
+feature branch ที่ตัดมาจาก `develop` จะพา commit ของ develop ทั้งหมดที่ main ยัง
+ไม่มี ติดไปด้วย วัดจริงบน member-api 2026-09-22:
+
+```bash
+git rev-list --count origin/main..origin/<feature-branch>   # 28
+# ของงานนี้ 2 · ของคนอื่นจาก develop อีก 26
+```
+
+นั่นคือการ promote develop ในชื่อใหม่ ซึ่งเป็นสิ่งเดียวกับที่ทีมอื่นท้วง
+
+**วิธีที่ถูก** — ตัด branch ใหม่จาก `origin/main` แล้ว cherry-pick เฉพาะ commit
+ของงานตัวเอง แล้วค่อยเปิด MR เข้า main:
+
+```bash
+git worktree add .worktrees/<x> -b hotfix/<งาน>-to-main origin/main
+git cherry-pick <sha1> <sha2>
+git rev-list --count origin/main..HEAD    # ต้องเท่ากับจำนวน commit ของเราเป๊ะ
+```
+
+**ตรวจตัวเลขนี้ทุกครั้งก่อนเปิด MR เข้า main** ถ้ามันมากกว่าจำนวน commit ที่เรา
+เขียนเอง แปลว่ากำลังจะ promote ของคนอื่นโดยไม่ตั้งใจ
+
+ตัวอย่างจริง: member-api !143 (2 commit) แทนที่จะ merge branch เดิม (28 commit)
