@@ -71,3 +71,18 @@ OC-4573 pick-best ต่อหน่วยแต้ม (ถือ assumption D-4
 
 ดู [[project_loyalty_overlap_best_single_campaign]] [[project_loyalty_point_cluster]]
 [[project_oc4362_approve_and_admin_edit]] [[project_oc4551_readiness_checklist]]
+
+## Update 2026-09-22 — !224 merge ไปแล้ว และมี defect ซ่อนอยู่ในไบนารี
+
+ตรวจ origin/develop + origin/main ของ 3rdparty-api: `award.Evaluate` / `CommitAward` / `ReverseAward`
+**ยังไม่มีผู้เรียกเลย** (grep ไม่กรองทั้งรีโป) แต่ !224 (clawback, OC-4339) **merge 2026-09-06 และขึ้น main
+ผ่าน !233 แล้ว** — คำเตือน "อย่า merge !224 ก่อน OC-4575" ข้างบนจึงล้าสมัย
+
+🔴 **defect ที่รออยู่:** `award_clawback.go:88` unmarshal `award_dedup_registry.result` เป็น `award.AwardResult`
+(คาด `Awarded[]`) แต่ผู้เขียนแถวนี้เพียงรายเดียวคือ backoffice-api
+`point_claim_repository/postgresql.go:944` ซึ่งเขียน `{points, point_id, channel, activity_id}` ⇒
+`Awarded=nil` เงียบ ๆ ⇒ หัก 0 แต้ม แล้ว `MarkReversedTxn` ประทับ reversed ถาวร ไม่มี error
+ต้องแก้รูป snapshot (หรือ guard `len(Awarded)==0 && found → error`) **ก่อน** ต่อผู้เรียกเข้า ReverseAward
+
+ผู้เรียกตัวแรกที่ควรทำคือ **OC-4575** (approve → engine) ไม่ใช่ OC-4412 (รอ POS ภายนอก) · สาย
+OC-4571→4575 สร้าง 2026-09-19 แต่ ณ 2026-09-22 ไม่มีใบไหนอยู่ใน sprint · OC-4571 มี MR !255 เปิดค้าง
