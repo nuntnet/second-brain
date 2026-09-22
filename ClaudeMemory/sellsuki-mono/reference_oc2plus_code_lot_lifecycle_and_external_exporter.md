@@ -56,3 +56,26 @@ route `redeem-code` = `skipsAuthGuard:false` → เด้งไปสมัค�
 
 **ที่ขาดชิ้นเดียวคือ `CodePageImpl.tsx:17` ไม่อ่าน query param** (`useState('')`) → ไม่มี URL แบบ
 `?c=<code>` ให้ QR ห่อ · OC-4363 เขียน Out of Scope ของตัวเองไว้ว่า "QR scan เพื่อ prefill = v1 กรอกมือเท่านั้น"
+
+## 🎯 repo ของ worker เจอแล้ว (2026-09-22)
+
+| topic | repo | GitLab project |
+|---|---|---|
+| `<env>.oc2plus.crm.export.cmd.export.v1` | `oc2plus-line-crm-woker-file-exporter` (สะกด **"woker"** ในชื่อจริง) | **602** |
+| `<env>.oc2plus.crm.code.cmd.generate.v1` | `oc2plus-line-crm-worker-generate-code` | **600** |
+
+`https://gitlab.sellsuki.com/sellsuki/oc2plus/line-crm/backend/oc2plus-line-crm-woker-file-exporter`
+ยืนยันจาก `KAFKA_TOPIC_CMD_EXPORT` ใน values ของ repo เอง ไม่ใช่เดาจากชื่อ
+
+**กับดักของ repo 602:** mainline = **`main`** ไม่ใช่ develop · Go 1.22 · entity pin **v1.6.8** (backoffice
+อยู่ v1.9.7 — เพิ่ม type ใน lib กลางต้องดันข้ามหลายเวอร์ชัน ยังไม่มีใครประเมิน breaking) · มี **coverage
+gate** (`make check-coverage`) แต่ **ไม่มีเทสของ code lot เลย** · นิ่งมา ~5 เดือน ไม่มีเจ้าของที่ระบุได้ ·
+**ไม่อยู่ใน `.gitmodules`** → `make ship-check` / `release-plan` มองไม่เห็น · ยัง subscribe topic ค้าง
+`…crm.code-lot.cmd.export.v1` ที่ไม่มี producer ที่ไหนเลย
+
+**XLSX ที่มันสร้างวันนี้** (`src/use_case/code_lot.go` → `exportCodeLotCreateXLSX`): หัว B1:C7
+(Code lot no. / Name / Code Qty / Create Date / Code tag / Export at / Export By) แล้วตาราง **3 คอลัมน์**
+`#` · `Code Ref.` · `Use` (Use = "1" ถ้า redeemed)
+
+⚠️ **602 ไม่มี company repository เลย** → การเพิ่มคอลัมน์ลิงก์ต้องเขียน repository ใหม่อ่าน slug จาก
+`oc2plus_bola_bindings.slug` + env ใหม่ `CUSTOMER_APP_BASE_URL` ใน values 3 ไฟล์ ⇒ **ไม่ใช่งานถูก**
