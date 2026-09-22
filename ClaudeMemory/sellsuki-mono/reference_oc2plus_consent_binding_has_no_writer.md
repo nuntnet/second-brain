@@ -102,3 +102,29 @@ consent" · PO เคาะ 2026-09-16 ว่า **v1 ตัด consent filter �
 **How to apply:** ถ้าการ์ดไหนสั่งให้กรอง/ซ่อนข้อมูลตาม consent ของสมาชิก ให้ตอบทันทีว่า
 ต้องเลือกก่อนว่าจะ (ก) ให้ service นั้นต่อ consent service เอง (ข) ย้ายงานไป member-api
 หรือ (ค) ตัด filter ออกจาก v1 — อย่าเริ่มเขียนโดยสมมติว่ามี join ให้ทำ
+
+---
+
+# ✅ ล้าสมัยแล้ว 2026-09-22 — มี writer แล้ว แต่ยังไม่ถึง staging
+
+ท่อนกลางที่เคยขาดถูกสร้างแล้ว ตรวจบน `origin/develop`:
+
+- **writer**: backoffice-api `PUT /v1/company/{id}/consent-surfaces/{surface_id}`
+  → `company_consent_repository` (`const table = "company_consent"`)
+- **reader**: 3rdparty-api `resolveConsentBinding` → member → company →
+  `companyConsentRepository.GetByCompany` แล้วค่อย fallback ไป integration เดิม
+  (OC-4545) · wire อยู่บน **main** แล้ว
+- **FE**: backoffice หน้า `/consent-surfaces` — mock ถูกลบทิ้ง ไม่ใช่แค่ปิดสวิตช์
+  (`services/consent-surface/index.ts` export ตัวจริงตัวเดียว)
+
+🔴 **แต่ OC-4089 อยู่แค่ `develop` ทั้งสองฝั่ง** — `git grep` บน `origin/main` ของ
+backoffice-api และ backoffice FE ได้ 0 ทั้งคู่ ⇒ **บน staging ตั้งค่า consent
+ไม่ได้เลย ไม่มีทั้งหน้าจอและ API** ส่วน 3rdparty-api ฝั่งอ่านขึ้น main แล้ว
+⇒ staging อ่านได้ แต่ไม่มีทางเขียน
+
+อาการที่ตามมา: สมาชิกบน staging เจอ `consent_not_configured` แล้วแอดมินแก้เองไม่ได้
+ต้องเอา OC-4089 ขึ้น main ก่อน (cherry-pick จาก main เหมือนที่ทำกับ OC-4587) หรือ
+ทดสอบบน dev แทน
+
+ดู [[reference_member_api_service_urls_were_never_set]] ·
+[[project_oc4089_consent_binding_page]]
