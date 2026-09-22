@@ -28,3 +28,14 @@ metadata:
    ⚠️ `backend/file-service-cronjob` git dir เพี้ยน โชว์ commit ของทุกรีโป — ตัดออกจากการ sweep
 
 Related: [[jira-mcp-search-quirks]], [[reference_jira_mcp_crosses_responses_between_sessions]]
+
+## เขียนกลับ (ยืนยัน 2026-09-22 กับบอร์ด OC)
+
+- **ย้ายการ์ดเข้า sprint ด้วย `editJiraIssue` fields `{"customfield_10020": <sprintId>}`** ใช้ได้ (31 ใบ) · sprint id
+  อ่านได้จาก `customfield_10020[].id` ของการ์ดที่อยู่ใน sprint นั้นอยู่แล้ว — ไม่ต้องใช้ agile API/เบราว์เซอร์
+  ตามที่ [[jira-sprint-ids-not-contiguous]] แนะนำ · OC: 129=1365, **130=1366**, 131=1991, 132=1992, 133=1993, 134=1994
+- **transition id ของ workflow OC เป็น global ทุกใบ**: 11 To Do · 21 In Progress · 31 Done · 41 Blocked ·
+  51 Ready to test (staging) · 61 code review · 71 Ready to test (DEV) — ไม่มี Rejected/Cancelled ปิด duplicate = Done + comment
+- ยิง transition/edit **ขนานกัน 8–20 คอลใน message เดียวได้** response ทุกตัวคืนเลขการ์ดตรง ไม่เจอ collision
+  (ต่างจาก search ที่ต้อง sequential) แต่ยัง verify ด้วย JQL ตอนท้ายเสมอ
+- response ของ transition/edit คืน description เต็ม (~5–30k chars ต่อใบ) — 45 ใบกิน ~250k tokens วางแผน budget
