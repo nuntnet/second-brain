@@ -49,11 +49,37 @@ never reached a role preset, not [[reference_migration_files_are_not_applied_sch
   the credential is read at step 2, after the miss. Verified: credentials were
   updated at 05:30:52Z and the 05:32 failures were byte-identical.
 
-Staging state on 2026-09-22: two companies had called `/v1/otp/request`
+Staging on 2026-09-22: two companies had called `/v1/otp/request`
 (`f2bf928c-7cd0-4059-9326-82fddeba4933`, `c01b0bdb-61e9-4443-8c86-8d8b63123811`),
-**404 on every call, zero successes** — the action table has no OC2Plus rows at
-all there. Needs a card: CCS3 provider-config create should create/link the
-action, plus split the error code.
+404 on every call, zero successes.
+
+⚠️ From that I concluded "the action table has no OC2Plus rows at all there" —
+**wrong**. The table held 19 companies with `oc2plus.crm.otp` already; the two
+failing ones were simply never seeded. Zero successes in a log window is a
+statement about who called, not about what the table holds. Count the table.
+
+Second company's failure had a different cause again: `c01b0bdb…` has no
+provider config at all, so no backfill can help it — that tenant has to
+configure a provider first.
+
+**Fixed 2026-09-22, three MRs, merge in this order** (producer → proxy →
+consumer; all use a three-state `*bool` so merging out of order degrades rather
+than breaks):
+1. messaging-backend !64 — `ensureDefaultActions` creates the route when a
+   provider config is created, `model.DefaultActionCodes` is the registry,
+   action repo gains `Create`, OTP path returns `action_not_configured`,
+   `scripts/sql/backfill-otp-actions.sql`, AGENTS.md/README table names fixed.
+2. CCS !336 — passes `is_routable` through (it decodes into a struct, so an
+   unlisted field is dropped in transit).
+3. backoffice-api !615 — readiness row reports `partially_configured` +
+   `detail.missing = otp_routing` instead of ready.
+
+Backfill already run: **staging 6 rows, development 2, production NOT touched**.
+Ledger: `docs/cards/2026-09-22-otp-action-routing.md`.
+
+Still open: `SetPrimary` does not repoint routes, so "set as primary" changes the
+badge without moving traffic — the same family of lie, deliberately left for its
+own card.
 
 See [[reference_messaging_backend]] · [[reference_oc2plus_otp_session_fails_3rdparty_consent]]
 

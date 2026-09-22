@@ -22,4 +22,7 @@ Independent of anything said in chat, Claude Code's own auto-mode classifier can
   refused with reason `[Production Reads]`. So "it is only a SELECT" does not get through;
   plan diagnoses that reach state through a service's own read API instead (e.g. port-forward
   the service and GET its config endpoint) — see
-  [[reference_messaging_otp_needs_a_message_action_row]].
+  [[reference_messaging_otp_needs_a_message_action_row]]. The user CAN lift it: after they
+  added a Bash permission rule mid-session, the same `kubectl exec … psql` went through for
+  both SELECT and INSERT. So the honest move is to say what the command is for and ask,
+  not to conclude DB access is impossible.
