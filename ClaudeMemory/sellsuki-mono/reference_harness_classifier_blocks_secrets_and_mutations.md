@@ -17,3 +17,9 @@ Independent of anything said in chat, Claude Code's own auto-mode classifier can
   database, and `glab mr merge` of develop→main release MRs (= staging deploy). `glab mr merge`
   into develop and `glab mr create` to main were allowed. Hand the exact commands to the user
   instead of retrying; both blocks were "Blocked by classifier", not transient.
+- 2026-09-22: the block now covers **read-only** DB access too — `kubectl exec -n datastore
+  postgresql-pg18-0 -- psql -U postgres -c "select …"` (a plain SELECT on pg_database) was
+  refused with reason `[Production Reads]`. So "it is only a SELECT" does not get through;
+  plan diagnoses that reach state through a service's own read API instead (e.g. port-forward
+  the service and GET its config endpoint) — see
+  [[reference_messaging_otp_needs_a_message_action_row]].
