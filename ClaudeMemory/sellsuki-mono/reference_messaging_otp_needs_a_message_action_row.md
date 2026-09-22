@@ -75,7 +75,9 @@ than breaks):
    `detail.missing = otp_routing` instead of ready.
 
 Backfill already run: **staging 6 rows, development 2, production NOT touched**.
-Ledger: `docs/cards/2026-09-22-otp-action-routing.md`.
+Card: **OC-4587** (OC2Plus board — that is where this belongs even though
+messaging-backend is a shared platform service; relates to OC-4551).
+Ledger: `docs/cards/OC-4587.md`.
 
 Still open: `SetPrimary` does not repoint routes, so "set as primary" changes the
 badge without moving traffic — the same family of lie, deliberately left for its
