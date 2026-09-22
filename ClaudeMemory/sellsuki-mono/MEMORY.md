@@ -18,6 +18,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [CI≠deploy](reference_ci_history_and_dns_are_not_deploy_status.md) · [Registry full](reference_fountain_registry_quota_full.md) · [dev-th](reference_dev_th_cluster_access.md) · [Teleport](reference_teleport_session_kills_devth_access.md)
 
 ## Jira
+- [Sweep ผ่านไฟล์](reference_jira_board_sweep_via_saved_results.md) — ผลใหญ่ถูกเซฟเป็นไฟล์ parse ด้วย python strict=False · ชื่อ sprint "OC Sprint N" · connector ค้างชั่วคราวรอแล้วยิงซ้ำ
 - [BOLA](reference_bola_jira_project.md) · [OC2Plus](reference_oc2plus_jira_project.md) · [Patona](reference_pat_jira_project.md) · [Sprint ids](reference_jira_sprint_ids_not_contiguous.md) · [PAT sprints](reference_pat_board_sprints.md) · [PAT epics](project_pat_epic_links_unwired.md) · [Crosses sessions](reference_jira_mcp_crosses_responses_between_sessions.md) · [Quirks](reference_jira_mcp_search_quirks.md) · [ADF Thai](reference_jira_editissue_adf_breakage.md) · [No fallback](reference_no_local_jira_fallback.md) · [403 writes](reference_jira_mcp_writes_403_midsession.md)
 
 ## Git / CI
