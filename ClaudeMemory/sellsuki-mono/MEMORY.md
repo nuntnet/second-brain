@@ -15,6 +15,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [overmind แคช Procfile](reference_overmind_caches_the_procfile.md) — แก้ env แล้ว restart ทีละ process ไม่มีผล ต้องรีทั้ง stack
 - [Caddy net](reference_caddy_host_networking_gotcha.md) · [Browsers](reference_browser_surfaces_this_workspace.md) · [simdjson](reference_brew_simdjson_breaks_homebrew_node.md) · [pre-push](reference_prepush_credential_hook_installed.md) · [rtk](reference_rtk_git_output_filtering.md) · [Classifier](reference_harness_classifier_blocks_secrets_and_mutations.md) · [Outline VPN](reference_outline_mcp_vpn_blocker.md) · [Agent resume](reference_background_agent_resume_patterns.md) · [codegraph path](reference_codegraph_context_needs_projectpath.md)
 - [DNS ต้นน้ำ staging-th](reference_staging_th_cluster_upstream_dns_timeouts.md) — job ตายที่ get_sources "Could not resolve host" · CoreDNS ว่างแต่ upstream 10.21.0.2 timeout · ไม่มี NodeLocal DNSCache
+- [200=CDN ไม่ใช่ cluster](reference_dev_hostname_200_is_cdn_not_cluster.md) — curl root SPA ได้ 200 ตอน 23:30 ทั้งที่ระบบปิด · เช็ค date + kubectl ก่อน · classifier บล็อก kubectl exec เขียน DB
 - [CI≠deploy](reference_ci_history_and_dns_are_not_deploy_status.md) · [Registry full](reference_fountain_registry_quota_full.md) · [dev-th](reference_dev_th_cluster_access.md) · [Teleport](reference_teleport_session_kills_devth_access.md)
 
 ## Jira
