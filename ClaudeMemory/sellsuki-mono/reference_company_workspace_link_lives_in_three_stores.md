@@ -14,8 +14,19 @@ Established 2026-09-23 while chasing "หน้า CCS → BOLA Workspaces ว�
 | `bola.workspaces` | company_id, company_name | BOLA, when the create/update carries them |
 | `crm.oc2plus_bola_bindings` | company_id, bola_workspace_id, slug | OC2Plus CRM at bind time |
 
-`slug` is duplicated across all three too. Staging counts: **3 / 7,514 / 6,857** —
-no two agree.
+Staging counts: **3 / 7,514 / 6,857** — no two agree.
+
+🔴 **`slug` appears in all three but is NOT one fact — do not reconcile it.**
+`crm.oc2plus_bola_bindings.slug` is the MEMBER-APP link
+(`member.staging.oc2.plus/<slug>/register`, renamed from the "ชื่อในลิงก์" field,
+OC-4560). `bola.workspaces.slug` is BOLA's own workspace identifier, used to build
+its invite URLs (`accept-invite?token=…&workspace=<slug>`,
+`bola-backend/src/use_case/admin.go:234` and `:1610`). They start equal only
+because CRM passes `company.Code` as both at create time. Renaming the member-app
+link correctly leaves BOLA and CCS untouched — verified on `Supermarket`
+2026-09-23: CRM `supermarket` @08:35, the other two still `dapo83bshnmbdpn3qspg`
+@08:26. **Syncing them would break every BOLA invite URL.** A real user read this
+as a bug once already; the obvious "fix" is the destructive one.
 
 **The CCS screen does not call BOLA.** `ListBolaWorkspaces` → `ListByCompanyID`
 reads CCS's own table. And BOLA could not answer anyway: its
@@ -49,3 +60,23 @@ change across three services — a product decision, per
 
 Same shape as [[reference_bola_follower_metadata_two_stores]] and the rule in
 `.claude/rules/oc2plus-service-boundary.md`.
+
+## ทางซ่อมที่พิสูจน์แล้ว (2026-09-23, staging)
+
+`POST {CCS}/v1/companies/{companyID}/bola-workspaces/bind` with
+`{bola_workspace_id, name, slug}` and the owner's `X-User-Id` / `X-User-Kind`
+registers an EXISTING BOLA workspace into CCS's registry and the CCS screen
+lights up immediately. It returns **200, not 201**, and touches nothing in BOLA —
+both deliberate, per the route's own comments ("must NOT create anything in
+BOLA"). Verified end to end on `Supermarket`.
+
+`GET /v1/bola-workspaces/registry-drift` (BOLA-318) already exists and reports
+where BOLA and the registry disagree — read-only by design, repair is a
+deliberate `bind` call. Run it before sizing any backfill; it answers in one call
+what otherwise takes three hand-written DB queries.
+
+⚠️ Reaching these from a laptop needs `kubectl port-forward`, and **a dead
+tunnel answers `404 Cannot POST`, which is indistinguishable from "the route
+does not exist"** — it nearly sent me hunting a phantom missing deploy. `curl
+000` means the tunnel died; a 404 does not. Always probe a route you know exists
+(`/v1/company/<id>`) in the same breath before concluding anything is missing.
