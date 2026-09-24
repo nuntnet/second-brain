@@ -10,7 +10,9 @@ metadata:
 
 Runner tag **`staging` has no live runner** since the staging-th migration (~April 2026). Live runners: `staging-th` (5153 general/amd, 5154 arm, 5155 base) and `production`. Any repo still including the OLD SRE template `pipelines/gitlab-ci-pipeline.generic-frontend-npm.yml` (from `sellsuki/sre/deployment/pipeline-deployment`) produces jobs tagged `staging` that stay **pending forever** — no error, just silent queueing (sellsuki-invitation's main pipeline sat "running" from 6 Apr to 11 Aug unnoticed).
 
-**Fix:** switch the include to the `-th` variant `gitlab-ci-pipeline.generic-frontend-npm-th.yml` (jobs extend `.staging_th_runner_amd_tags`; job structure otherwise identical — verified by job-name diff). Fixed for sellsuki-invitation in MR !15 (2026-08-11); sibling frontends like sellsuki-company-management-frontend already use it.
+**Fix:** switch the include to the `-th` variant `gitlab-ci-pipeline.generic-frontend-npm-th.yml` (jobs extend `.staging_th_runner_amd_tags`; job structure otherwise identical — verified by job-name diff). Sibling frontends like sellsuki-company-management-frontend already use it.
+
+🔴 **A repo is only fixed on the BRANCH you fixed.** sellsuki-invitation's MR !15 (2026-08-11) switched `main` and nobody carried it to `develop`. Found 2026-09-24: `develop`'s last SUCCESSFUL pipeline was **43815, 2026-03-16** — six months of merges that were never built, so `join.dev*` served the March bundle the whole time (proved by fetching the deployed JS: no `wrong-account`, `bind-failed`, `invitation_not_for_you`, `bola_workspace_name`, all long since merged). Fixed on develop in MR !25. **When you fix this, check every mainline the repo has** — `git show origin/<branch>:.gitlab-ci.yml | grep 'file:'` for each.
 
 **⚠️ DIFFERENT failure, same look — the LIVE `staging-th` fleet itself went down (2026-09-04 ~14:00 →).**
 Jobs correctly tagged `['amd','docker','general','sellsuki','staging-th']` also sat unpicked: every
