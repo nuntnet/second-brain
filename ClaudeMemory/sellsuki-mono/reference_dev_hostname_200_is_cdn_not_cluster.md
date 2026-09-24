@@ -19,7 +19,8 @@ metadata:
 3. ยิง **API path** ที่ต้องถึง pod จริง (เช่น `/backoffice/v1/...` ให้ 401) ไม่ใช่ root ของ SPA
 
 **classifier ของ auto mode บล็อก `kubectl exec … psql -f -` ที่เขียน DB ทุกครั้ง** ("Remote Shell Writes")
-แม้ read-only SELECT ผ่านคำสั่งเดียวกันจะผ่าน · เตรียม SQL ไฟล์ + คำสั่งเดียวให้ผู้ใช้รันเอง
+read-only SELECT ผ่านคำสั่งเดียวกัน **ผ่านบ้างไม่ผ่านบ้าง** (2026-09-23 ผ่าน · 2026-09-24 ถูกบล็อกทั้งที่เป็น SELECT ล้วน) —
+อย่าพึ่ง · ทางที่ใช้ได้จริง 2026-09-24: ให้ bash block มี Run button ผู้ใช้กดใน terminal ของแอป แล้ววาง output กลับมา · เตรียม SQL ไฟล์ + คำสั่งเดียวให้ผู้ใช้รันเอง
 (`$POSTGRES_PASSWORD` อยู่ใน single quote → shell ใน pod แทนค่า ไม่ต้องรู้รหัส) · ถ้าจะให้ผมรันต้องเพิ่ม
 permission rule `kubectl -n datastore exec*` ใน settings
 
