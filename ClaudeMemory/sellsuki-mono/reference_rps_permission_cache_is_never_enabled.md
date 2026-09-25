@@ -28,4 +28,14 @@ from a component, find where it is constructed and check what it is given.
 If anyone ever wires the cache on, the invalidation in rps !139 is what keeps revokes
 immediate — so that MR is latent insurance, not a fix.
 
+**Proven with the cache turned on (2026-09-25 ~20:00):** temporarily edited
+`helper.go` on local to call `NewKetoPermissionRepositoryWithCache` with the lock's
+Redis, then ran three scenarios, each on a fresh tenant. Without !139 all three are
+wrong — a revoked user stays allowed, a granted user stays denied, a permission added
+to a role stays denied. With !139 all three take effect at once. The script lives in
+the session scratchpad as `e2e_ai249.sh`; the pattern to reuse is "two rounds, same
+script, only the code under test differs", and one tenant per scenario so a cached
+answer from one cannot mask the other (the first attempt shared a tenant and the
+cached "denied" hid the revoke half entirely).
+
 Related: [[reference_preset_copy_vs_shared_role]] · [[feedback_verify_absence_claims]]
