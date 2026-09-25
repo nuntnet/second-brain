@@ -19,3 +19,5 @@ grep **`origin/main` and `origin/develop` explicitly** (`git grep <pat> origin/d
 not the working tree. Check `git branch -r --contains` and MR state too. A
 working-tree grep only answers "is it on the branch I happen to be on", which is
 the wrong question. Extends [[feedback_search_the_whole_stack_not_one_layer]].
+
+- 2026-09-25 again: said "no FE calls /company/:id/invite-link" (AI-274) from a grep of the LOCAL CCS2 checkout on branch feat/AI-134-llm-settings-page. origin/main + develop had the Generate Link button since 279a08f (2026-06-20). Before any "no caller" claim about a frontend: `git -C <fe> grep <term> origin/main -- src` AND origin/develop — never the working tree.
