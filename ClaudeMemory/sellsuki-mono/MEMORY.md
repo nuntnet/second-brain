@@ -50,6 +50,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 
 ## OC2Plus
 - [svc URL ไม่เคยตั้ง](reference_member_api_service_urls_were_never_set.md) — THIRDPARTY/FILE_SERVICE_URL ว่างทุก env · pod โทรหาตัวเอง · .gitignore bare บังทั้งโฟลเดอร์
+- [API key ไม่เคยตั้ง](reference_member_api_file_service_api_key_never_set.md) — อัปโหลดสลิปพังทั้ง staging+dev · FILE_SERVICE_API_KEY ว่าง → X-User-Id ว่าง → 403 โผล่เป็น 500 · grant อยู่ใต้ sellsuki.user แต่เรียกเป็น sellsuki.system
 - [consent owner_id](reference_consent_service_owner_id_is_a_bare_uuid.md) — uuid เปล่า ไม่มี prefix · GET /consent คืน 10 ใบแรกจาก 2097 และไม่มี tenancy
 - [OTP action row](reference_messaging_otp_needs_a_message_action_row.md) — OTP 503 เพราะ message_action ขาด ไม่ใช่ provider config · error code โกหก · ไม่มีอะไรสร้างแถวนี้เลย
 - [LINE optional](project_oc4207_line_optional_design.md) · [Epic triage](project_oc_epic_backlog_triage.md) · [OC×BOLA](project_oc_bola_domain_boundary.md) · [4267](project_oc4267_standalone_no_qms.md) · [Not store](reference_oc2plus_company_not_store.md) · [Tier config](project_oc2plus_tier_is_per_company_config.md) · [FE red](reference_oc2plus_backoffice_fe_red_on_develop.md) · [CI skips](reference_backoffice_fe_ci_skips_all_tests.md) · [FE→branch](reference_oc2plus_backoffice_fe_local_against_branch_api.md)
