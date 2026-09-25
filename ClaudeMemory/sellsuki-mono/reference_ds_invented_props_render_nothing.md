@@ -16,3 +16,29 @@ Casing is not the trap — the repo uses `themecolor` and `themeColor` about equ
 **Second, independent trap on the same bug:** this app's modals scroll their body (`src/utils/modal-scroll.ts`, selector `[data-modal-scroll]`). An error region appended at the END of a tall dialog body renders correctly and still reads as "nothing happened", because it is below the fold. Put it at the top of the body, and for a failed request also raise a toast — that is the app's own convention (`UserGroup`, `Pay`, `User/TabListInvite`) and it cannot land off-screen. Verify the route sits inside `<ssk-toast-provider>` in `App.svelte` before relying on a toast.
 
 Related: [[reference_ds_testid_is_a_property]] · [[reference_ds_1_0_beta_gotchas]] · [[feedback_check_the_norm_before_calling_it_broken]]
+
+---
+
+**Two more confirmed on 2026-09-24, both on `ssk-dropdown`:**
+
+- **`hideOptions` is not a property.** Four dropdowns on `CreateCompany.vue` bound
+  `:hideOptions="openPreviewDropdown.x"` and 21 lines of script maintained that state.
+  The attribute lands in the DOM and **nothing reads it** — verified live:
+  `'hideOptions' in document.querySelector('ssk-dropdown')` → **false**. Worse than
+  inert: it made the code read as if the panel was being deliberately hidden, so
+  everyone (including me) looked for a "why is it closed" bug when the real answer was
+  that the option list was empty. **A dropdown with no `<ssk-dropdown-option>` children
+  opens an empty bubble**, which users read as "there is no data".
+- **`search` IS declared on the Dropdown class but never implemented.** The whole
+  bundle mentions it twice: the line that sets `this.search = !1` and an unrelated
+  `detail.search`. Reading the `.d.ts` is not enough — grep the built bundle for a
+  READER of the property, not just its declaration.
+
+Checking a prop live costs one line:
+`'propName' in document.querySelector('ssk-thing')`.
+
+The DS also has a plain-select mode that this workspace does use — put
+`<ssk-dropdown-button slot="selected">` in the slot (see `Bola/OaSelector.vue`,
+`FilterCard.vue`) instead of `<ssk-input>`, which is what turns the control into a
+type-to-search field.
+

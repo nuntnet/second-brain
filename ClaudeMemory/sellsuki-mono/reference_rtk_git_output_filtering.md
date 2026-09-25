@@ -10,6 +10,18 @@ metadata:
 
 The global `rtk` hook (see ~/.claude/RTK.md) rewrites shell commands to a token-optimizing proxy. It does not only compress — it can **silently omit lines**, so absence in the output is not evidence of absence in the file.
 
+🔴 **Worse than omission: it can print a verdict that is the OPPOSITE of the truth.**
+2026-09-24, `npx prettier --check <file>` displayed `✓ Prettier: All files formatted
+correctly` while **`echo $?` was 1** — prettier had failed the check. That sentence is
+rtk's own summary, not prettier's output. Believing it led to running `prettier --write`
+on a repo that is not prettier-formatted, turning a ~150-line change into a 976-line
+whole-file reflow that had to be reverted and redone.
+
+**So: for any command whose answer is pass/fail, read the EXIT CODE, not the text.**
+`cmd > /tmp/out 2>&1; echo "exit=$?"` — and prefer `rtk proxy <cmd>` when the raw output
+matters (a patch file, a diff you will apply, a check you will act on). A redirect does
+not escape the filter: `git diff HEAD > x.patch` produced a summarised, unusable patch.
+
 Observed cases:
 - `cat package.json` came back missing a script line, making a CI gate (`depcheck`) look nonexistent — nearly reported as a CRITICAL "broken gate" until re-checked with `grep`.
 - `git` output has come back compressed or empty where the exact text mattered (e.g. a blank commit body).

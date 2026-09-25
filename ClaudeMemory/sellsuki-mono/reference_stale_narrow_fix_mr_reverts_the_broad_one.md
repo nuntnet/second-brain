@@ -55,3 +55,30 @@ route tables, migration registries, feature-flag sets, DI wiring. Related:
 mechanism — FF drops commits instead of set members),
 [[reference_silent_semantic_merge_break]],
 [[reference_react_route_owner_flip_needs_public_allowlist]].
+
+---
+
+**How to check, 2026-09-24 — and the trap in checking it the obvious way.**
+
+`git diff origin/<target> origin/<branch>` on a stale branch reads as if the branch
+REVERTS everything merged since it was cut: CCS `!333` appeared to restore
+`invitationAPIClient` and `GetInvitationDetail`, which `!340` had deleted hours
+earlier. Alarming, and **wrong** — a two-tree diff shows every difference, including
+what the target has and the branch does not.
+
+Only a real 3-way merge answers the question:
+
+```bash
+git checkout -B tmp-check origin/<target>
+git merge --no-commit --no-ff origin/<branch>
+grep -c '<symbol the newer MR deleted>' <file>   # 0 = safe, >0 = real revert
+go build ./... && go test ./...
+git merge --abort
+```
+
+`!333` came back clean (deleted symbols stayed deleted, its own feature arrived)
+because the two MRs touched different functions in one file. `!22` in
+`sellsuki-invitation` is the opposite case — same line, so the conflict resolution is
+where the revert would happen. **Both look identical in `git diff`; only the merge
+tells them apart.**
+
