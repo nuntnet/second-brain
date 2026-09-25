@@ -31,9 +31,9 @@ role → all workspaces get it, no migration.
 Provider has a manual band-aid: `POST /admin/provider/{code}/refresh-role` re-SetRoles
 the provider preset for ONE provider. Company has no equivalent.
 
-Also in the way while testing: rps caches **denied** results in Redis
-(`permission_repository/keto_permission.go` CheckPermission) — a freshly granted
-permission can still read as denied until the TTL expires.
+~~rps caches denied results in Redis~~ — **WRONG, corrected 2026-09-25.** See
+[[reference_rps_permission_cache_is_never_enabled]]: the cache code exists but the
+service never passes it a Redis client, so nothing is cached in any environment.
 
 Related: [[project_ccs_role_presets_apply_only_at_creation]] ·
 [[project_pointclaim_permission_missing_from_owner_preset]] ·

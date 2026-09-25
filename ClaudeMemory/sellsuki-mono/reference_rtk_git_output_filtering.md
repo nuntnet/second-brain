@@ -44,3 +44,10 @@ Observed cases:
   `./node_modules/.bin/playwright`.
 
 **Rule:** never let a verification step run through the hook. When a conclusion depends on what a command printed — a line missing, a diff empty, a file written, a test report parsed — invoke the binary by full path (`/usr/bin/diff`, `/bin/ls`, `./node_modules/.bin/<tool>`) or use the built-in Read/Write/Edit tools. Re-grep when something looks absent, and distrust a *clean* result just as much: the hook has reported "files are identical" for files that were not.
+
+**`cat` through rtk strips source comments (verified 2026-09-25).** `cat role_update.go`
+showed the `withRoleLock` block without its `// Get existing role from database…`
+line, so a Python patch anchored on what `cat` displayed matched nothing. The file
+on disk is fine — only the display is edited. Before writing any exact-match
+anchor, read the bytes with `python3 -c "print(repr(open(p).read()[i:j]))"` or
+`rtk proxy cat`, never plain `cat`.
