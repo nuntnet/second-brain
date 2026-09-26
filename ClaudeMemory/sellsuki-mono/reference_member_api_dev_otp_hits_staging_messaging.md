@@ -25,3 +25,11 @@ company's `GET /v1/messaging/config` calls.
 Lesson: when an OTP/messaging miss looks like missing tenant data, first check WHICH environment
 the caller dials — read the deployed env (`kubectl get deploy -o json`), then find the request in
 the callee's logs. See [[reference_messaging_otp_needs_a_message_action_row]] (same symptom, different cause).
+
+**Why it "worked yesterday" (found same day):** ReplicaSet history in `octoplus-dev` shows revision 64
+(2026-09-24T08:50Z, same image `6c48579d`) carried `…svc.sellsuki-dev` — someone patched the live
+Deployment by hand (a `kubectl-patch` field manager exists; nobody recorded it in a card/ledger).
+The next Helm deploy (rev 65, 2026-09-25T13:23Z, image `991bcf88`) re-applied the repo value and
+silently reverted it. Textbook shipping.md §10 landmine: a live fix that never reached
+`values-development.yml`. Check `kubectl get rs -o json` env per revision before believing
+"it worked yesterday, so the config is fine".
