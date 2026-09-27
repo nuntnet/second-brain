@@ -98,3 +98,4 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Auth UX PAT-2730..34](project_auth_ux_card_cluster_pat2730.md) — การ์ด kratos-ui ห้าใบ + PO เคาะ: หน้าจอเป็นกลาง บอกวิธีเข้าเฉพาะในอีเมล (ไม่ทำ identifier-first)
 - [OC2Plus MCP idea](project_oc2plus_mcp_assistant_idea.md) — 2026-09-27 idea stage · MCP ใน backoffice-api ไม่ใช่ ai-agent/kit · ACL = scope ∩ Keto
 - [Oathkeeper/Hydra บน cluster](reference_oathkeeper_hydra_cluster_state.md) — rule เป็น CRD ไม่อยู่ใน repo · backoffice รับแค่ cookie · rag-core-mcp ใช้ Hydra introspection แล้ว · octoplus ไม่มี NetworkPolicy
+- [rag-core MCP มีอยู่แล้ว](reference_rag_core_mcp_prior_art.md) — repo sellsuki-rag/rag-core (ไม่ใช่ poc ในเวิร์กสเปซ) · kimzey/PAT-2691 · switch_company, OAuth ผ่าน Claude/Gemini/Codex
