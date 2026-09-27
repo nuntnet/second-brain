@@ -1,6 +1,6 @@
 ---
 name: project_provider_is_whitelabel_tenant
-description: "PO decision 2026-09-27: provider = top-level white-label tenant, one deployment per provider (checked via env); sellsuki = our own; 'patona' as a provider code is a mistake (Patona is an app); poshmedica = white-label provider"
+description: "PO 2026-09-27/28: provider = top-level white-label tenant, one deployment per provider (env); sellsuki = ours; 'patona' as provider = mistake (it is an app) → migrate to sellsuki; poshmedica = REAL white-label, stays; prod OC2Plus today is Posh's deployment"
 metadata:
   node_type: memory
   type: project
@@ -14,7 +14,7 @@ User (PO/architect) stated on 2026-09-27:
 - **Deployment model: one deployment per provider, checked via env** (`PROVIDER_CODE`). Not one deployment serving many providers.
 - **`sellsuki` = our own provider.** Every app we run for our own customers (Patona, OC2Plus, BOLA, Chat, SukiPay) belongs under `sellsuki`.
 - **`patona` as a provider code is WRONG** — Patona is an app name. Today it is hardcoded as a provider in sellercenter-frontend (`App.svelte:53`, `management-rest.ts:58`, `.env.*`), company-management-frontend and space-storefront `.env.production`, CCS `cmd/auto_assign_preset_roles/main.go:268`, and as `envDefault:"patona"` in all three OC2Plus Go services.
-- **`poshmedica` = a white-label provider** ("as if we sold it to them"). OC2Plus production backoffice-api runs with `PROVIDER_CODE=poshmedica`, so prod OC2Plus is today effectively the poshmedica white-label, not our own.
+- **`poshmedica` = a REAL white-label customer — do NOT move it to `sellsuki`** (PO, 2026-09-28; reverses a 2026-09-27 statement that its companies were ours). Evidence: OC-3799 (own prod domains *.poshmedica.co.th, "provider A cannot see provider B"), OC-3362 (Setup Posh Provider), OC-4130 (Docker image for Posh), OC-4143 (DB backup delivery). OC2Plus production backoffice-api runs with `PROVIDER_CODE=poshmedica`, so **the current prod OC2Plus deployment IS Posh's white-label**; our own `sellsuki` OC2Plus in production needs a separate deployment (epic OC-3982 "CRM System Implement for Sellsuki Provider").
 
 **Why:** the code treats provider inconsistently (OC2Plus prod: backoffice=poshmedica, member-api unset→patona, 3rdparty=poshmedica but unused; dev/staging all default patona). Without this decision every "which companies does app X see" question has no principled answer.
 
