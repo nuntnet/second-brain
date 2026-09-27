@@ -8,6 +8,8 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Reproduce](feedback_reproduce_the_number_before_asking.md) · [As user](feedback_verify_as_the_user_sees_it.md) · [Norm first](feedback_check_the_norm_before_calling_it_broken.md) · [Grep service](feedback_grep_the_spec_is_not_grep_the_service.md) · [Before GAP](feedback_search_before_declaring_gap.md) · [Absence](feedback_verify_absence_claims.md) · [head=sample](feedback_head_on_grep_is_sampling_not_verification.md) · [All layers](feedback_search_the_whole_stack_not_one_layer.md)
 - [Codex](feedback_user_runs_codex_in_parallel.md) · [Push often](feedback_commit_push_along_the_way.md) · [No promo MR](feedback_no_develop_to_main_promotion_mrs.md) · [Git safety](feedback_parallel_sessions_git_safety.md) · [List MRs](feedback_list_open_mrs_before_opening_one.md) · [OC↔PAT](feedback_oc_pat_board_ownership_rule.md) · [OC→develop](feedback_oc2plus_merge_to_develop.md) · [PIS FF](feedback_ff_only_force_push_ok.md) · [No tiny cards](feedback_no_tiny_cards_bundle_as_ac.md)
 
+- [App activation](project_app_activation_per_company.md) — ทุกแอปต้องเปิดใช้ต่อบริษัท · บริษัทเกิด 3 ทางไม่มีทางไหนบันทึก · OC-4627
+- [Urgent thread](feedback_keep_urgent_thread_visible.md) — หัวข้อใหม่ใหญ่อย่ากลบงานที่ยังเสียหายอยู่ · อย่าผูกการ์ดใหม่เป็น blocker ของ fix ด่วน
 - [Provider=white-label](project_provider_is_whitelabel_tenant.md) — 1 deploy ต่อ provider · sellsuki=ของเรา · `patona`=ชื่อ app ต้องย้าย · poshmedica=white-label จริง ไม่ย้าย · prod OC2Plus วันนี้คือของ Posh
 
 ## Jira
