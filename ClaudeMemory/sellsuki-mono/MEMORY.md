@@ -96,3 +96,4 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [signup ข้าม Kratos](reference_kratos_ui_registration_bypasses_kratos_policy.md) — สมัครผ่าน admin CreateIdentity: รหัส "123" ผ่าน, ไม่เช็ค CSRF, OIDC ซ้ำไม่ link · โค้ดใหม่ทำโค้ดเก่าตาย, 5 ครั้งผิด flow ตาย
 - [OTP dev→staging](reference_member_api_dev_otp_hits_staging_messaging.md) — member-api dev ยิง messaging ของ staging (.sellsuki ไม่ใช่ .sellsuki-dev) · ร้าน dev ได้ OTP 503 action_not_configured ทั้งที่ตั้งค่าครบ
 - [Auth UX PAT-2730..34](project_auth_ux_card_cluster_pat2730.md) — การ์ด kratos-ui ห้าใบ + PO เคาะ: หน้าจอเป็นกลาง บอกวิธีเข้าเฉพาะในอีเมล (ไม่ทำ identifier-first)
+- [OC2Plus MCP idea](project_oc2plus_mcp_assistant_idea.md) — 2026-09-27 idea stage · MCP ใน backoffice-api ไม่ใช่ ai-agent/kit · ACL = scope ∩ Keto
