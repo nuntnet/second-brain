@@ -24,8 +24,8 @@ campaign_catalog · member_tier · staff_api_key · line_integration · company_
 - แถว consent ไม่มีปุ่ม "ไปตั้งค่า" เพราะหน้านั้นยังบันทึกจริงไม่ได้
   (ดู [[project_oc4089_consent_binding_page]]) — แก้เป็นบรรทัดเดียวใน `FIX_ROUTE`
   ของ `ReadinessCard.vue` เมื่อพร้อม
-- OTP ตอบ `unknown` + reason `no_readiness_endpoint` เพราะ messaging-backend
-  มีแค่ request/verify ไม่มีทางอ่านสถานะ config โดยไม่ส่ง SMS จริง
+- ~~OTP ตอบ unknown เสมอ~~ — **แก้แล้ว `394e8c7` (2026-09-22)**: ถาม CCS ได้จริง · unknown เหลือแค่ CCS ไม่ตอบ หรือผู้ถามไม่มี `sellsuki.messaging.config.view` (บริษัทเก่าอาจขาด เพราะ preset copy ตอนสร้าง)
+- 🔴 ปุ่ม "เปิดใช้งานให้สมาชิก" (`ReadinessCard.vue:215`) **ไม่มี handler** และ member-api ไม่อ่านค่าใด — PO ยืนยัน 2026-09-28 · งานต่อปุ่มอยู่ OC-4627 กลุ่ม G · ดู [[project_app_activation_per_company]]
 
 นอก scope ที่ยังค้าง: `tier_sweep` CronJob ยังไม่ deploy — checklist บอกได้แค่ว่า
 มี tier program ไม่ได้บอกว่า sweep เดินจริง

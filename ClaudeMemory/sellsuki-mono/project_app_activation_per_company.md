@@ -11,4 +11,6 @@ Company creation paths (none records "uses OC2Plus", none assigns a plan or capa
 
 Vocabulary the user wants kept separate: **company** (CCS) vs **activated in app X** (the app's own capability record, AI-285 reads it) vs **commercial plan** (management-backend + BOLA-227, not built; later it will call the same activation). OC-4204 (Done) specified "workspace only on activate" but code did the opposite.
 
+**2026-09-28 PO: two stages.** (1) "เริ่มใช้ OC2Plus" = accept the existing OC2Plus terms page (`DetailDpa.vue`, extended — no second start page) → (2) set up on the Readiness page (OC-4551) → (3) "เปิดใช้งานให้สมาชิก" opens the member app to customers. Before (3) the member app is not-found. That button had no handler until OC-4627 group G. AI Chat onboarding (`?onboarding=chat`) passes the same terms page, so "terms accepted" alone is NOT a usage signal and must not activate OC2Plus. No CCS2/CCS3 "company apps" page exists for any app — provider-admin activation dropped from OC-4627 until one does.
+
 **How to apply:** OC-4627 must land in an environment before Patona companies are moved into `sellsuki` there. See [[project_provider_is_whitelabel_tenant]], [[reference_bola_sweep_binds_without_an_owner]].
