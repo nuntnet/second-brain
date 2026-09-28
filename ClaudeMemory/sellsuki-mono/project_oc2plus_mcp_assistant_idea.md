@@ -1,17 +1,21 @@
 ---
 name: project-oc2plus-mcp-assistant-idea
-description: 2026-09-27 user exploring an OC2Plus MCP / AI assistant for backoffice staff because the app is hard to use — idea stage, direction discussed
+description: "OC2Plus backoffice MCP (OC-4625, epic OC-4624) — built and live on dev since 2026-09-28; 23 read-only tools in backoffice-api /mcp, host mcp.crm.<env>.oc2.plus; what is done, what is open"
 metadata:
+  node_type: memory
   type: project
+  originSessionId: 4341156f-9031-4920-83b6-fd7bcbf45cd4
+  modified: 2026-09-28T23:06:05.181Z
 ---
-2026-09-27: user is exploring making OC2Plus easier via an MCP server + LLM (or a skill driving browser/computer use). Still at the idea stage. Nothing has been built or decided.
 
-Direction discussed so far:
-- Audience is backoffice staff, not members.
-- Start with skill + browser, used internally by CS/onboarding. Promote only the frequently used tasks to MCP tools.
-- MCP lives on the backoffice-api side, preferably as an in-process `/mcp` route. It does not live in sellsuki-ai-agent (decision-only, no side effects) or ai-platform-kit-go (a library; its `authctx` checks `chat_workspace`, not `sellsuki.company`).
-- ACL: forward the user's identity, never a service key. Auth via OAuth/Hydra. Effective permission = OAuth scope ∩ Keto. Write tools use a server-enforced two-step preview/commit.
+**Built, no longer an idea.** OC-4625 = MCP v1 read-only, 23 tools, route `/mcp` inside `backend/oc2plus-line-crm-service-backoffice-api` (package `mcproute`, `src/interface/fiber_server/mcp/`). Merged !646 → develop `193067ef` 2026-09-28, deployed to development-th that evening (`MCP_ENABLED` "true" only in values-development; staging/prod "false").
 
-**Why:** the user may return to this in a later session. The reasoning above should not be re-derived from scratch.
+Infra that exists: Oathkeeper rules (sre/configuration/oc2plus !9), gateway host (sre/configuration/api-gateway !225), DNS `mcp.crm.dev-th.oc2.plus` / `mcp.crm.staging-th.oc2.plus`, Hydra public client `sellsuki-oc2plus-mcp` on **dev only** (staging file ready at `deployment/hydra/staging-th.json`, not applied). Plugin for Claude Code + Codex on branch `feat/oc-4625-oc2plus-backoffice-plugin` of `sellsuki-rag/sellsuki-mcp-connectors` (callback port 3119), no MR yet.
 
-**How to apply:** before building, verify two things: where the gateway sets `X-User-Id` (backoffice-api trusts that header blindly) and whether Hydra is deployed per env. Related: [[project-user-pain-evidence-gap]].
+**Why:** OC2Plus is hard to use; staff ask the AI they already use, with their own permissions. Design reasoning (in backoffice-api, not ai-agent/kit; forward the user's identity via Oathkeeper headers; per-tool Keto check reused by calling the REST routes in-process) is in the ledger `docs/cards/OC-4625.md` decisions table — do not re-derive.
+
+**How to apply:**
+- Live-dev capture 2026-09-28 found 87 confirmed defects (member_search phone/email, check_my_permission missing 5 codes, member_code contains-match, filter_point_id, request logger writing MCP bodies with PII…). Fixed on branch `fix/oc-4625-mcp-live-findings` (2026-09-29).
+- AC-C6 added 2026-09-28: backoffice FE page "เชื่อมต่อ AI" `/connect-ai` (env `VITE_MCP_URL`, dev only). User chose NOT to build "list/revoke connected AI apps" (needs Hydra admin API) — out of scope.
+- Production is blocked on the PII/DPA question (member data goes to Anthropic/OpenAI). Do not flip MCP_ENABLED in production.
+- Related: [[reference_oathkeeper_hydra_cluster_state]] [[reference_rag_core_mcp_prior_art]] [[feedback_no_tiny_cards_bundle_as_ac]]
