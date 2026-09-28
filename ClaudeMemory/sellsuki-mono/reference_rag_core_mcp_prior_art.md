@@ -32,3 +32,7 @@ Found 2026-09-27.
 **rps:** `62324ad` seeded the `rag.*` catalog.
 
 Related: [[reference-oathkeeper-hydra-cluster-state]] · [[project-oc2plus-mcp-assistant-idea]]
+
+**From Pan, 2026-09-28:**
+- The rag-core MCP knowledge base is **not yet separated by company**. Anyone who logs in and asks gets Sellsuki's own knowledge, because Sellsuki has no company_id field yet. The team data work will add a company_id filter. Until then customers must not be given the connector.
+- The connectors repo can hold several products' plugins; users install per plugin. It is not public yet (planned for GitHub later).

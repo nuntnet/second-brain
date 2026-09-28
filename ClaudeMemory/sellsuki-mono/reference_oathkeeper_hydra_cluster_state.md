@@ -17,3 +17,12 @@ Checked 2026-09-27 on the staging-th cluster, read-only via kubectl. Production 
 - Oathkeeper requires exactly one rule per URL. A new path under `/backoffice` will collide with the existing `/backoffice<.*>` regex, so use a separate host.
 
 Related: [[project-oc2plus-mcp-assistant-idea]] · [[reference_dev_th_cluster_access]]
+
+**How to add an MCP ingress** (Pan, 2026-09-28, with his examples):
+- **Rule:** open an MR in `sellsuki/sre/configuration/<product>`, file `manifest/<env>/rule.yaml`. OC2Plus rules live in `sellsuki/sre/configuration/oc2plus`, which is ArgoCD `octoplus-development-manifest`. Pattern: `sre/configuration/sellsuki` !23 — a `-wellknown` rule (anonymous) plus a `/mcp` rule (oauth2_introspection).
+- **Host:** open an MR in `sellsuki/sre/configuration/api-gateway` adding an Emissary `Host` + `Mapping` to `oathkeeper-proxy.share:4455` (pattern: !222). SRE then maps the DNS.
+- **Watch line endings:** `staging-th/rule.yaml` in the oc2plus repo is CRLF. Writing it through Python's text mode rewrites the whole file.
+- **Wildcard certs already exist:** `*.crm.dev-th.oc2.plus` and `*.crm.staging-th.oc2.plus`.
+- **Hydra clients** are registered by hand through the admin ingress `hydra-admin-ingress.share[-dev].internal.staging-th.sellsuki.com` (VPN, no auth). There is no maester. Doc: docs.sellsuki.com/doc/setup-hydra-6PZrU6jvFt.
+- **Hydra port wildcarding:** only IP-literal loopback (`127.0.0.1`, `[::1]`) gets any port; `localhost` gets none. Without `audience`, the first refresh returns 400.
+- **Codex/ChatGPT on dev:** kratos-ui-go on development-th is behind and lacks RFC 9207, so these clients cannot log in on dev.
