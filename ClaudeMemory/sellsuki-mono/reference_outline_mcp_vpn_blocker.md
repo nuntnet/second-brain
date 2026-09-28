@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: 60159299-7c45-49ce-8985-bacd71095aa0
-  modified: 2026-08-07T16:51:13.494Z
+  modified: 2026-09-28T06:50:28.598Z
 ---
 
 `outline` MCP server ชี้ไปที่ `https://mcp-outline.internal.production.sellsuki.com/mcp`
@@ -16,7 +16,11 @@ metadata:
 
 **ข้อควรรู้:** ถ้า session เริ่มตอน VPN ยังไม่ขึ้น MCP tools จะ**ไม่โผล่แม้ต่อ VPN ทีหลัง**
 (`claude mcp list` ขึ้น ✔ Connected แต่ ToolSearch หาไม่เจอ — registry ถูก build ตอนเริ่ม session)
-→ ทางออกที่ใช้ได้จริง: **ยิง MCP ตรงผ่าน HTTP** — server นี้ **ไม่ต้อง auth** (อยู่ใน internal network)
+**อัปเดต 2026-09-28 (desktop app):** ให้ user พิมพ์ `/mcp` → เลือก `outline` → Reconnect หลังต่อ VPN
+แล้ว tools `mcp__outline__*` โผล่ในเทิร์นถัดไปจริง (ทดสอบ list_collections + search_documents ผ่าน)
+Claude สั่ง reconnect เองไม่ได้ — `reconnect_session_connector` ปฏิเสธเพราะ outline เป็น kind `user` ไม่ใช่ connector
+เช็คว่า VPN ขึ้นแล้วด้วย curl ที่ endpoint: ได้ 406 เร็วๆ = เข้าถึงได้ (406 เพราะ curl ไม่ส่ง Accept แบบ MCP) · 000/timeout = VPN ยังไม่ขึ้น
+→ ทางสำรองถ้า reconnect ไม่ได้: **ยิง MCP ตรงผ่าน HTTP** — server นี้ **ไม่ต้อง auth** (อยู่ใน internal network)
 POST streamable-HTTP: `initialize` → `notifications/initialized` → `tools/call`
 เก็บ `Mcp-Session-Id` จาก response header · response เป็น SSE (`data: {...}`)
 · **ต้องใช้ certifi** ไม่งั้น SSLCertVerificationError
