@@ -5,8 +5,13 @@ metadata:
   node_type: memory
   type: project
   originSessionId: cac73755-22e9-4905-b12d-0973d98763b2
-  modified: 2026-08-29T16:57:13.850Z
+  modified: 2026-09-28T14:01:55.763Z
 ---
+
+**Update 2026-09-28:** the working branch is now `fix/AI-49-safe-worker-activation`
+(checked out 2026-09-23, carries all later ledger commits). It had no upstream; it
+was pushed to `origin` for the first time on 2026-09-28 (`98c3dfbc`) — push it
+explicitly with `git push origin fix/AI-49-safe-worker-activation`, never bare.
 
 In `/Users/nunt/sellsuki_mono`, `main` is **not** where work happens. As of
 2026-08-29 the active branch `chore/ai-mvp-local-run` is 432 commits ahead of
