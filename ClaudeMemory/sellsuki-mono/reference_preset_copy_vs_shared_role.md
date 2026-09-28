@@ -5,6 +5,8 @@ metadata:
   type: reference
 ---
 
+> **2026-09-28 — largely superseded on CCS develop:** AI-252 added a startup preset reconciler (`cmd/generics_server/main.go` → `ReconcileCompanyRolePresets`, rps does the additive update + Keto sync). `PRESET_ROLE_RECONCILE_ENABLED=true` in dev/staging/prod values. Proven on dev: adding membertier.* to `CompanyOwnerPermissions` (CCS !374) reached >=3000 tenants on the next deploy with no manual backfill. Still true for any env whose CCS predates AI-252 (staging until main gets it). Verify the env's CCS version before assuming.
+
 Verified from code 2026-09-25. The "add a permission → migrate every old company
 in every env" loop is **not a Keto limitation and not an rps one**.
 

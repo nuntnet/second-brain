@@ -6,6 +6,8 @@ metadata:
   type: project
 ---
 
+> **2026-09-28 — largely superseded on CCS develop:** AI-252 added a startup preset reconciler (`cmd/generics_server/main.go` → `ReconcileCompanyRolePresets`, rps does the additive update + Keto sync). `PRESET_ROLE_RECONCILE_ENABLED=true` in dev/staging/prod values. Proven on dev: adding membertier.* to `CompanyOwnerPermissions` (CCS !374) reached >=3000 tenants on the next deploy with no manual backfill. Still true for any env whose CCS predates AI-252 (staging until main gets it). Verify the env's CCS version before assuming.
+
 `sellsuki-central-control-backend` applies its role presets
 (`src/use_case/model/permission_group.go` → `CompanyOwnerPermissions`, role name
 `model.RoleOwner` = **"Company Owner"**) **only at company creation**
