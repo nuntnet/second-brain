@@ -62,6 +62,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 
 ## Sub-indexes — open when the topic comes up
 - [Personal / machine / infra](index_infra.md) — Machine, local stack, overmind, Caddy, rtk, DNS, CI runners, clusters, Teleport, browsers
+- [auto-merge ไม่รอ CI](reference_glab_auto_merge_merges_immediately_without_ci_gate.md) — `glab mr merge --auto-merge` บน 3rdparty-api merge ทันทีทั้งที่ pipeline ยังรัน · backoffice-api ได้ 405 · ต้องดู pipeline ก่อนเอง
 - [Git / CI](index_git_ci.md) — Git/merge traps, submodules, GitLab CI, review bot, pipeline retry, helm, glab quirks
 - [Patona / OMS / QMS / SukiPay / DS](index_patona_oms_ds.md) — Patona, OMS2, QMS/quota, plan anchor, SukiPay, design system, i18next, Svelte
 - [AI Chat Platform](index_ai_chat.md) — AI chat platform: plan, chat-core, rag-core, AI agent, SLA, FB/Messenger, AI board state
