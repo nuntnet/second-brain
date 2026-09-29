@@ -26,3 +26,4 @@ Open the topic file before relying on any line here.
 - [OC2Plus MCP](project_oc2plus_mcp_assistant_idea.md) — OC-4625 live on dev 2026-09-28 · 23 tool อ่านอย่างเดียวใน backoffice-api /mcp · Hydra client dev เท่านั้น · prod ติด DPA · หน้า "เชื่อมต่อ AI" AC-C6
 - [Oathkeeper/Hydra บน cluster](reference_oathkeeper_hydra_cluster_state.md) — rule เป็น CRD ไม่อยู่ใน repo · backoffice รับแค่ cookie · rag-core-mcp ใช้ Hydra introspection แล้ว · octoplus ไม่มี NetworkPolicy
 - [rag-core MCP มีอยู่แล้ว](reference_rag_core_mcp_prior_art.md) — repo sellsuki-rag/rag-core (ไม่ใช่ poc ในเวิร์กสเปซ) · kimzey/PAT-2691 · switch_company, OAuth ผ่าน Claude/Gemini/Codex
+- [MCP eval ผ่าน claude -p](reference_claude_code_mcp_headless_eval_traps.md) — อย่าใช้ config ชื่อ server ซ้ำระหว่างรัน (credential หาย) · รันทีละข้อ · ผู้ใช้หลายบริษัท model เรียก whoami ก่อนตามออกแบบ วัด tool หลัง whoami
