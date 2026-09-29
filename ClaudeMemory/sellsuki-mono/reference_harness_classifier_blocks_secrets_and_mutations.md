@@ -26,3 +26,7 @@ Independent of anything said in chat, Claude Code's own auto-mode classifier can
   added a Bash permission rule mid-session, the same `kubectl exec … psql` went through for
   both SELECT and INSERT. So the honest move is to say what the command is for and ask,
   not to conclude DB access is impossible.
+- 2026-09-29: `kubectl exec` into a **staging** bola pod was refused as `[Production Reads]` —
+  even a probe that only tested `command -v curl` and printed the LENGTH of `$SYSTEM_ADMIN_TOKEN`,
+  never its value. So "the value never reaches me" does not clear this gate: exec into a
+  deployed pod is blocked as a class. Hand the user the exact command instead.
