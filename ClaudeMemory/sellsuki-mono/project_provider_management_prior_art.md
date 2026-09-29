@@ -16,4 +16,6 @@ Found 2026-09-30 while the user asked for a feature design of `system.sellsuki.l
 - **RBAC traps (from code reading, not run):** AI-252 reconciler covers company presets only — `ProviderPermissions` (21 codes) never reach existing providers. `POST /v1/admin/provider/{code}/refresh-role` calls rps `CreateRole` (plain INSERT, `uk_roles_name_owner`) so an existing provider likely gets 409; `is_system` blocks `UpdateRole`. Provider create is not transactional (row before role).
 - Local `.env.dev` `VITE_CCS_URL` lacks `/v1` → provider list 404s locally.
 
+**PO decision 2026-09-30:** "จัดการ rps" = **edit permissions and role presets directly from the CCS1 UI** (not view-only — I had recommended view + controlled actions; overruled, don't re-argue it). CCS1 provider console scope also includes: quota, pricing plan, usage logs, customer support, configuration, portal app registry management, warehouse management, Shipmunk enable.
+
 **How to apply:** start from these cards rather than a parallel design; the open product work is provider lifecycle/status, provider-level preset propagation, and an rps console. Related: [[project_provider_is_whitelabel_tenant]], [[reference_preset_copy_vs_shared_role]], [[reference_dev_has_no_provider_owner_role_or_system_admin]], [[project_app_activation_per_company]].
