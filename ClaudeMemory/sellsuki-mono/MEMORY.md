@@ -34,6 +34,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Tenant kinds](reference_entity_lib_tenant_kinds.md) · [Gen churn](reference_permission_generator_nondeterministic.md) · [file-svc kind](reference_file_service_keto_subject_kind.md) · [Audit enum](reference_audit_action_is_closed_enum.md) · [Messaging](reference_messaging_backend.md) · [Msg traps](reference_messaging_backend_shared_repo_traps.md) · [Audit log](project_central_audit_log.md)
 
 ## BOLA
+- [Deeplink=ไม่ใช่ kratos build](reference_bola_deeplink_single_workspace_means_not_kratos_build.md) — "single workspace" บน ?workspace_id= = bundle dev เป็น local_jwt ไม่ใช่ binding ผิด · เช็กด้วย grep VITE_AUTH_MODE ใน bundle · แก้ = BOLA-330 หลัง 329
 - [OA ซ้ำข้าม workspace](reference_bola_line_oa_channel_is_globally_unique.md) — channel_id unique ทั้งระบบ · error บอกชื่อ workspace อยู่แล้ว · ProvisionAdmin แก้ไม่ได้ (409)
 - [backfill kratos รันไม่ได้](reference_bola_backfill_kratos_ids_cannot_run_as_documented.md) — ไม่ได้ build เข้า image + อ่าน env ผิดชื่อ; runbook ในไฟล์ไม่เคยถูกรัน
 - [dev is live](reference_bola_dev_env_exists_and_is_live.md) · [Staging gate](reference_manual_staging_gate_silent_drift.md) · [CCS unwired](project_ccs_bola_provisioning_unwired.md) · [Topology](project_bola_deploy_topology.md) · [values](project_bola_deploy_values_in_repo.md) · [Kratos gap](project_bola_saas_kratos_deploy_gap.md) · [Boot migrate](project_bola_migrations_jsonb.md) · [Loki](reference_bola_staging_loki.md)
