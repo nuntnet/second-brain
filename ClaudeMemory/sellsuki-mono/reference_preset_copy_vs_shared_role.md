@@ -33,6 +33,8 @@ role → all workspaces get it, no migration.
 Provider has a manual band-aid: `POST /admin/provider/{code}/refresh-role` re-SetRoles
 the provider preset for ONE provider. Company has no equivalent.
 
+> **2026-09-30 (code reading, not run):** that band-aid likely no longer works — since the rps port, `SetRole` = rps `CreateRole` (plain INSERT, `uk_roles_name_owner`) so an existing provider gets 409, and `is_system` blocks `UpdateRole`. AI-252's reconciler skips providers. See [[project_provider_management_prior_art]].
+
 ~~rps caches denied results in Redis~~ — **WRONG, corrected 2026-09-25.** See
 [[reference_rps_permission_cache_is_never_enabled]]: the cache code exists but the
 service never passes it a Redis client, so nothing is cached in any environment.

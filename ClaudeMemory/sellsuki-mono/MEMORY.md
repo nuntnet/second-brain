@@ -11,6 +11,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [App activation](project_app_activation_per_company.md) — ทุกแอปต้องเปิดใช้ต่อบริษัท · OC-4627 สองขั้น: ยอมรับข้อกำหนด=เริ่มใช้ → ตั้งค่า → เปิดให้สมาชิก · Chat onboarding ห้ามนับ
 - [Urgent thread](feedback_keep_urgent_thread_visible.md) — หัวข้อใหม่ใหญ่อย่ากลบงานที่ยังเสียหายอยู่ · อย่าผูกการ์ดใหม่เป็น blocker ของ fix ด่วน
 - [Provider=white-label](project_provider_is_whitelabel_tenant.md) — 1 deploy ต่อ provider · sellsuki=ของเรา · `patona`=ชื่อ app ต้องย้าย · poshmedica=white-label จริง ไม่ย้าย · prod OC2Plus วันนี้คือของ Posh
+- [Provider mgmt spec](project_provider_management_prior_art.md) — สเปกมีใน Jira แล้ว PAT-1525/1527/2739/2740/2741 (ยังไม่ทำ) · CCS1=system admin · CCS2=provider admin · preset ของ provider ไม่ถูก reconcile + refresh-role น่าจะ 409
 
 ## Jira
 - [Sweep ผ่านไฟล์](reference_jira_board_sweep_via_saved_results.md) — ผลใหญ่ถูกเซฟเป็นไฟล์ parse ด้วย python strict=False · ชื่อ sprint "OC Sprint N" · connector ค้างชั่วคราวรอแล้วยิงซ้ำ
