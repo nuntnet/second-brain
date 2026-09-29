@@ -24,5 +24,7 @@ Related: [[project-oc2plus-mcp-assistant-idea]] · [[reference_dev_th_cluster_ac
 - **Watch line endings:** `staging-th/rule.yaml` in the oc2plus repo is CRLF. Writing it through Python's text mode rewrites the whole file.
 - **Wildcard certs already exist:** `*.crm.dev-th.oc2.plus` and `*.crm.staging-th.oc2.plus`.
 - **Hydra clients** are registered by hand through the admin ingress `hydra-admin-ingress.share[-dev].internal.staging-th.sellsuki.com` (VPN, no auth). There is no maester. Doc: docs.sellsuki.com/doc/setup-hydra-6PZrU6jvFt.
-- **Hydra port wildcarding:** only IP-literal loopback (`127.0.0.1`, `[::1]`) gets any port; `localhost` gets none. Without `audience`, the first refresh returns 400.
+- **Hydra port wildcarding:** only IP-literal loopback (`127.0.0.1`, `[::1]`) gets any port; a `localhost` URI matches only exactly, port included. Without `audience`, the first refresh returns 400.
+- **Claude Code always sends `http://localhost:<callbackPort>/callback`** (2.1.270 binary, no 127.0.0.1 variant) → a client used from Claude Code needs `http://localhost:<port>/callback` registered exactly. Codex uses 127.0.0.1 and is covered by the wildcard. Found 2026-09-29: `sellsuki-oc2plus-mcp` fixed (`localhost:3119`); `sellsuki-rag-mcp` on dev lacks `localhost:3118`.
+- **Auto mode blocks Claude from PATCHing a live Hydra client** (Modify Shared Resources) even with the user's chat approval — reads work. Hand the user the port-forward + `curl -X PATCH … JSON Patch` commands to run themselves.
 - **Codex/ChatGPT on dev:** kratos-ui-go on development-th is behind and lacks RFC 9207, so these clients cannot log in on dev.
