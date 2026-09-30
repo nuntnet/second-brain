@@ -38,6 +38,9 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Tenant kinds](reference_entity_lib_tenant_kinds.md) · [Gen churn](reference_permission_generator_nondeterministic.md) · [file-svc kind](reference_file_service_keto_subject_kind.md) · [Audit enum](reference_audit_action_is_closed_enum.md) · [Audit targets](reference_audit_log_format_draft_targets.md) · [Messaging](reference_messaging_backend.md) · [Msg traps](reference_messaging_backend_shared_repo_traps.md) · [Audit log](project_central_audit_log.md)
 
 ## BOLA
+- [Oathkeeper global=staging](reference_oathkeeper_global_cookie_session_is_staging.md) — Oathkeeper ตัวเดียวใน ns share ใช้ทั้ง dev+staging · cookie_session ค่ากลาง=Kratos **staging** · rule dev ต้องระบุ config เอง (ไม่งั้น dev ถูกปฏิเสธหมด)
+- [SRE GitOps repos](reference_sre_gitops_repos_and_sync_policy.md) — Host/Mapping=api-gateway · Rule=bridge · Kratos=share/ory-helm · api-gateway/bridge dev **ปิด auto-sync ต้องกด Sync** · BOLA ไม่มี Application ของตัวเอง
+- [BOLA LLM fail-closed](reference_bola_llm_metering_is_fail_closed_dev_borrows_staging_agent.md) — ไม่มี AI_PLATFORM_KIT_* = chatbot ตอบไม่ได้ (error ไม่ใช่ปิดเงียบ) · agent มีแค่ staging · dev ยืมของ staging (!204)
 - [Deeplink=ไม่ใช่ kratos build](reference_bola_deeplink_single_workspace_means_not_kratos_build.md) — "single workspace" บน ?workspace_id= = bundle dev เป็น local_jwt ไม่ใช่ binding ผิด · เช็กด้วย grep VITE_AUTH_MODE ใน bundle · แก้ = BOLA-330 หลัง 329
 - [OA ซ้ำข้าม workspace](reference_bola_line_oa_channel_is_globally_unique.md) — channel_id unique ทั้งระบบ · error บอกชื่อ workspace อยู่แล้ว · ProvisionAdmin แก้ไม่ได้ (409)
 - [backfill kratos รันไม่ได้](reference_bola_backfill_kratos_ids_cannot_run_as_documented.md) — ไม่ได้ build เข้า image + อ่าน env ผิดชื่อ; runbook ในไฟล์ไม่เคยถูกรัน
@@ -71,6 +74,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 ## Sub-indexes — open when the topic comes up
 - [Personal / machine / infra](index_infra.md) — Machine, local stack, overmind, Caddy, rtk, DNS, CI runners, clusters, Teleport, browsers
 - [auto-merge ไม่รอ CI](reference_glab_auto_merge_merges_immediately_without_ci_gate.md) — `glab mr merge --auto-merge` บน 3rdparty-api merge ทันทีทั้งที่ pipeline ยังรัน · backoffice-api ได้ 405 · ต้องดู pipeline ก่อนเอง
+- [Outdated deploy job](reference_gitlab_outdated_deployment_job_skips_the_newer_pipeline.md) — pipeline ใหม่ล้ม failed_outdated_deployment_job → build/deploy ถูกข้าม ขณะ pipeline เก่า deploy sha เก่า · retry เฉพาะ job ตาม id · ตรวจที่ image ของ pod
 - [Git / CI](index_git_ci.md) — Git/merge traps, submodules, GitLab CI, review bot, pipeline retry, helm, glab quirks
 - [Patona / OMS / QMS / SukiPay / DS](index_patona_oms_ds.md) — Patona, OMS2, QMS/quota, plan anchor, SukiPay, design system, i18next, Svelte
 - [AI Chat Platform](index_ai_chat.md) — AI chat platform: plan, chat-core, rag-core, AI agent, SLA, FB/Messenger, AI board state
