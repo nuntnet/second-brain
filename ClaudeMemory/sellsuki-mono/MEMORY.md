@@ -75,3 +75,4 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Patona / OMS / QMS / SukiPay / DS](index_patona_oms_ds.md) — Patona, OMS2, QMS/quota, plan anchor, SukiPay, design system, i18next, Svelte
 - [AI Chat Platform](index_ai_chat.md) — AI chat platform: plan, chat-core, rag-core, AI agent, SLA, FB/Messenger, AI board state
 - [Scrapyard/มหานครโลหะ](project_mahanakhon_scrapyard_integration.md) — Scrapyard สองทาง · key ต่อสาขา · CMS แยก · membership-from-contacts = OC-4583
+- [dev member-api host](reference_oc2plus_dev_member_api_host_needs_origin.md) — api.member.dev-th.oc2.plus + ต้องมี Origin ไม่งั้น 400 · member.dev.oc2.plus/v1 = HTML

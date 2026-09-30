@@ -19,9 +19,12 @@ told apart by code** — do not string-match the message. The two list callers a
 errors. Local: seed-dev now seeds THA and backfills (`4abe44e2`). CCS MRs: !382 (develop),
 !383 (main) — `enrichProviderData` was byte-identical on both lines, cherry-pick applied clean.
 
-**Unverified:** whether any provider on dev/staging has an empty `address_country_code`
-(both are off 21:00–09:00; this was worked at 07:40). If one does, CCS2 is broken there for
-this reason. Check: `SELECT company_code FROM providers WHERE coalesce(address_country_code,'')='';`
+**Checked 2026-09-30 09:30 (read-only SELECT via `postgresql-pg18-0`, the pod the `postgresql.datastore`
+Service selects):** no provider on dev or staging has an empty country — dev: `card-1560-provider-009`,
+`patona`, `poshmedica`; staging: `patona`, `poshmedica`; all THA. `sellsuki` and `insurance` do NOT exist
+there (their public endpoint answers `failed to get provider by company_code: record not found` — a
+different error from the country one, `rpc error: code = Unknown desc = record not found`). So the
+outage was local-only and !382/!383 are robustness, not incident fixes.
 
 **Same shape, not fixed:** `enrichCompanyData` also returns the address-country error (company
 creation validates a country, so a row without one is unlikely — but it is the sibling).
