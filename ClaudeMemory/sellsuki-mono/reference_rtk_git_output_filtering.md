@@ -51,3 +51,5 @@ line, so a Python patch anchored on what `cat` displayed matched nothing. The fi
 on disk is fine — only the display is edited. Before writing any exact-match
 anchor, read the bytes with `python3 -c "print(repr(open(p).read()[i:j]))"` or
 `rtk proxy cat`, never plain `cat`.
+
+**Also for curl/JSON (2026-09-30):** the hook rewrites `curl` so a JSON body comes back as a *type schema* (`{ name: string, … }`) instead of the values — I nearly reported "the destination has a string" as data. Use `rtk proxy curl -s …` when the actual body matters. `python3 urllib` fails here with a cert-store error (`CERTIFICATE_VERIFY_FAILED`), so curl via `rtk proxy` is the working path.
