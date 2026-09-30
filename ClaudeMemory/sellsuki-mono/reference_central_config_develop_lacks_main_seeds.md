@@ -56,7 +56,12 @@ confirm by file/line presence. See [[reference-rps-dual-mainline]],
 `chat_workspace.provision` nor `chat_workspace.company_admin`; staging (80 rows) has only
 `chat_workspace.usage.read`/`billing.read`; local has both. `permission_lists` is read by
 GetPermissionByCode/list endpoints only — not by role create/assign — and enforcement is Keto
-(see [[reference-keto-and-rps-catalog-disagree]]). Keto tuples for the two codes on dev: NOT yet read.
+(see [[reference-keto-and-rps-catalog-disagree]]). **Keto on dev, read 2026-09-30 09:40:**
+`chat_workspace.provision` = 2 tuples (2 tenants), `chat_workspace.company_admin` = **0** (control
+`oc2plus.member.view` = 15,189) → no Company Owner on dev passes company_admin today. CCS !381 delivers it via
+the Owner preset + the AI-252 startup reconciler (enabled, not dry-run on dev); after deploy re-count in Keto —
+0 means the reconciler did not apply it. Keto stores `object` as a UUID: join `keto_uuid_mappings.id →
+string_representation` (database `development_ory_keto_2`, table `keto_relation_tuples`).
 How I read it: the live datastore pod is `postgresql-pg18-0` (via the Service endpoints, not by name
 — `postgresql-postgresql-0` is a stale copy); URI from the namespace's own secret kept in a shell
 variable and masked, SELECT only.
