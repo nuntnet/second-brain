@@ -2,7 +2,10 @@
 name: project_app_activation_per_company
 description: "PO 2026-09-27: every app must be explicitly activated per company (within its provider); OC2Plus has none today → OC-4627; company is created 3 ways and none records app usage or plan"
 metadata:
+  node_type: memory
   type: project
+  originSessionId: 3c3cf3b4-56bc-4d5b-8f4a-c3736c29bab0
+  modified: 2026-09-30T08:39:31.735Z
 ---
 
 PO decision 2026-09-27: **every app needs explicit per-company activation**, inside the company's own provider. Chat already works this way (CCS `ProviderProvisionChatWorkspace`/`CompanyProvisionChatWorkspace`, gated by `CHAT_CORE_ENABLED_PROVIDER_CODES`); BOLA workspaces are created explicitly in CCS3 (BOLA-310). OC2Plus had no activation — card **OC-4627** adds a per-company activation record + one idempotent endpoint that every entry path uses.
@@ -12,5 +15,7 @@ Company creation paths (none records "uses OC2Plus", none assigns a plan or capa
 Vocabulary the user wants kept separate: **company** (CCS) vs **activated in app X** (the app's own capability record, AI-285 reads it) vs **commercial plan** (management-backend + BOLA-227, not built; later it will call the same activation). OC-4204 (Done) specified "workspace only on activate" but code did the opposite.
 
 **2026-09-28 PO: two stages.** (1) "เริ่มใช้ OC2Plus" = accept the existing OC2Plus terms page (`DetailDpa.vue`, extended — no second start page) → (2) set up on the Readiness page (OC-4551) → (3) "เปิดใช้งานให้สมาชิก" opens the member app to customers. Before (3) the member app is not-found. That button had no handler until OC-4627 group G. AI Chat onboarding (`?onboarding=chat`) passes the same terms page, so "terms accepted" alone is NOT a usage signal and must not activate OC2Plus. No CCS2/CCS3 "company apps" page exists for any app — provider-admin activation dropped from OC-4627 until one does.
+
+**State 2026-09-30:** OC-4627 landed on develop in member-api / backoffice-api / both frontends and runs on dev (image `fb18d7ce`). Backfill (AC-16) ran on dev **2026-09-28 10:28:49Z** and marked existing companies "started + open to members" in one stroke — including "Dev Test Company" (`d9fca606-…`) which has consent + OTP + campaigns + tiers all missing. So a company that is open but not ready is a backfill artifact, not a hole in the button gate. AC-24 is deliberate: open apps are never auto-closed when a blocking row later fails; "OTP broken → members must not see it" holds only at the moment of pressing the button. Changing that = a new card, not an edit to OC-4627 (`shipping.md` §7).
 
 **How to apply:** OC-4627 must land in an environment before Patona companies are moved into `sellsuki` there. See [[project_provider_is_whitelabel_tenant]], [[reference_bola_sweep_binds_without_an_owner]].
