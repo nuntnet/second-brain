@@ -65,3 +65,16 @@ string_representation` (database `development_ory_keto_2`, table `keto_relation_
 How I read it: the live datastore pod is `postgresql-pg18-0` (via the Service endpoints, not by name
 — `postgresql-postgresql-0` is a stale copy); URI from the namespace's own secret kept in a shell
 variable and masked, SELECT only.
+
+**dev central-config state before !149's seeds (read-only GET via port-forward, 2026-09-30 16:00):**
+`GET /v1/configuration/portal-app-registry` (readable by any identity, no permission) → version **11**, 4 apps
+(sellsuki, akita, patona, oc2plus) — already seeded and edited on dev by hand. Migrations 0002–0005 all **skip
+what already exists** ("skip … already exists"; 0003 checks before writing), so running them on dev cannot
+overwrite v11. Schema reads are permission-gated (403 for a made-up identity).
+
+**Outcome on dev, 2026-09-30 16:09 (CCS !381 deployed, image 3f93120b):** the AI-252 startup reconciler added
+`chat_workspace.company_admin` + `chat_workspace.provision` to ALL 4,859 Company Owner roles (other presets:
+0 updated); Keto company_admin 0 → 5,278, provision 2 → 5,280; pod healthy, 0 restarts. Crash-loop check done
+beforehand: CCS `slog.Fatal`s if reconcile fails, rps reconcile validates only empty/duplicate codes (no catalog,
+no regex), manifests had no duplicates. Takeaway: a CCS preset change on develop rewrites every existing Owner
+role at next start — by design, additive, but it is a fleet-wide permission grant.
