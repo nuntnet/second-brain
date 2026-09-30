@@ -12,6 +12,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Provider=white-label](project_provider_is_whitelabel_tenant.md) — 1 deploy ต่อ provider · `patona`=ชื่อ app ต้องย้าย
 - [Provider mgmt spec](project_provider_management_prior_art.md) — สเปกอยู่ PAT-1525/1527/2739-2741 ยังไม่ทำ
 - [รวมการ์ด 3rd-party](project_oc4469_oc4428_card_merge.md) — 2026-09-30 เหลือ OC-4469 + OC-4428 · ค้างให้ PO เคาะเฟส 2
+- [เบอร์เก็บ 0XXX](project_oc2plus_phone_stored_local_format.md) — รับ E.164 ได้ แต่เก็บ/ค้นเป็น 0… เสมอ
 - [OC ไม่มี Won't Do](reference_oc_jira_no_wontdo_merged_cards_close_as_done.md) — การ์ดที่รวมแล้วปิดเป็น Done + prefix
 
 ## Jira
