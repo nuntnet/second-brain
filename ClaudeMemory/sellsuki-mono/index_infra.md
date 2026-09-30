@@ -19,4 +19,4 @@ Open the topic file before relying on any line here.
 - [DNS ต้นน้ำ staging-th](reference_staging_th_cluster_upstream_dns_timeouts.md) — job ตายที่ get_sources "Could not resolve host" · CoreDNS ว่างแต่ upstream 10.21.0.2 timeout · ไม่มี NodeLocal DNSCache
 - [200=CDN ไม่ใช่ cluster](reference_dev_hostname_200_is_cdn_not_cluster.md) — curl root SPA ได้ 200 ตอน 23:30 ทั้งที่ระบบปิด · เช็ค date + kubectl ก่อน · classifier บล็อก kubectl exec เขียน DB
 - [CI≠deploy](reference_ci_history_and_dns_are_not_deploy_status.md) · [Registry full](reference_fountain_registry_quota_full.md) · [dev-th](reference_dev_th_cluster_access.md) · [Teleport](reference_teleport_session_kills_devth_access.md)
-
+- [auto mode ไม่ให้เปิด flag](reference_auto_mode_blocks_flag_flips.md) — แก้ values-*.yml ให้ flag เป็น true ถูกปฏิเสธ "Feature Flag Writes" แม้เป็น branch ยังไม่ push · ใส่เป็นขั้นของผู้ใช้ใน runbook
