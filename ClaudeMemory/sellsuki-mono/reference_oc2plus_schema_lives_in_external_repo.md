@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: b7f8ac01-fa37-4ae8-9246-e1a4f66c3859
-  modified: 2026-09-17T23:05:00.000Z
+  modified: 2026-09-30T17:00:55.617Z
 ---
 
 **ไม่มี OC2Plus CRM service repo ไหนถือ migration ของตัวเอง** — ไม่มี goose/golang-migrate/
@@ -18,6 +18,8 @@ clone ตรงได้ด้วย glab/https · `scripts/migrate-all.sh:140-1
 
 รูปแบบ: db-migrate · `migrations/YYYYMMDDHHMMSS-<ชื่อ>.js` (wrapper อ่านไฟล์)
 \+ `migrations/sqls/<ชื่อเดียวกัน>-up.sql` และ `-down.sql` · copy ใบล่าสุดมาแก้ชื่อ
+
+🔴 **รอบที่สาม 2026-10-01 (OC-4469):** ผมสั่ง sub-agent ให้เขียน migration ที่ `member-api/migrations/` เพราะอ่านจาก `.claude/rules/oc2plus-service-boundary.md` ("the version-controlled set in this workspace sits in member-api/migrations/") — **rule file นั้นเองคือต้นเหตุ** ต้องแก้ rule · agent จับได้เองและเตรียมไฟล์รีโป 530 ไว้ · ก่อนสั่งงาน migration CRM ให้เช็ก memory นี้ก่อน ไม่ใช่เชื่อ rule
 
 🔴 **กับดักที่คนเดินซ้ำอย่างน้อยสองรอบ (ผมเป็นรอบที่สอง 2026-09-17):**
 `backend/oc2plus-line-crm-service-member-api/migrations/` **ไม่ใช่ชุดที่รัน** —
