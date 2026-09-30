@@ -86,3 +86,8 @@ OC-4573 pick-best ต่อหน่วยแต้ม (ถือ assumption D-4
 
 ผู้เรียกตัวแรกที่ควรทำคือ **OC-4575** (approve → engine) ไม่ใช่ OC-4412 (รอ POS ภายนอก) · สาย
 OC-4571→4575 สร้าง 2026-09-19 แต่ ณ 2026-09-22 ไม่มีใบไหนอยู่ใน sprint · OC-4571 มี MR !255 เปิดค้าง
+
+**อัปเดต 2026-10-01 (OC-4412 adapter เขียนเสร็จบน `feat/oc-4412-purchase-award`):** caller ตัวแรกมีแล้ว แต่เจอสองอย่างที่ไม่มีใครเป็นเจ้าของ
+- **ไม่มีตัวโหลดแคมเปญ/อัตราพื้นฐาน → `[]award.Campaign` + `CommitResolution`** บน develop ของทั้ง 3rdparty และ backoffice (grep `award.Campaign{` ไม่เจอนอกเทสต์) · adapter เว้นเป็น port `AwardConfigSource` → ทุก env ตอบ 503 `AWARD_ENGINE_NOT_CONFIGURED` · OC-4575 ต้องใช้ตัวเดียวกัน → ต้องมีเจ้าของเดียว (comment OC-4575 #45459)
+- **`CommitAward` เขียน campaign code ลงคอลัมน์ uuid `reference_2`** → ไม่เคยรันกับ DB จริงเลย แก้แล้วใน `a6af3ba` (ยังไม่ merge) · `ReverseAward` (OC-4339) มีบั๊กเดียวกัน ยังไม่แก้
+- `award_dedup_registry.order_ref` = varchar(120) แต่ OC-4575 เขียน 128
