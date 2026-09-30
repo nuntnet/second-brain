@@ -10,3 +10,5 @@ metadata:
 **Why:** reciting the rule sounded diligent and cost a wrong prediction the user acted on. Same shape as [[feedback_verify_absence_claims]].
 
 **How to apply:** before stating a pipeline's state or predicting it, query it (`glab api projects/:id/pipelines/<id>/jobs`) and read the failing job's trace tail for the real cause. Infra failures → retry the failed job **by id** once CI is healthy (never the whole pipeline).
+
+**Again 2026-09-30 — same mistake, twelve times over.** I wrote "opened after 21:00, pipeline will fail with stuck_or_timeout_failure" into MR bodies and the ledger without looking. Looked at 09:20: 7 of 12 were green; 5 were `stuck_or_timeout_failure` with `started_at = null` (never got a runner — retried by job id, runner picked them up 09:18). So the night rule *can* be right, but a mixed result proves it is per-pool, not per-hour. Write "checked at <time>: <state>" or say nothing — never a forecast in an artifact other people read.
