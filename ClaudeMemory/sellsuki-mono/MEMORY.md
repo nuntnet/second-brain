@@ -38,6 +38,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Tenant kinds](reference_entity_lib_tenant_kinds.md) · [Gen churn](reference_permission_generator_nondeterministic.md) · [file-svc kind](reference_file_service_keto_subject_kind.md) · [Audit enum](reference_audit_action_is_closed_enum.md) · [Audit targets](reference_audit_log_format_draft_targets.md) · [Messaging](reference_messaging_backend.md) · [Msg traps](reference_messaging_backend_shared_repo_traps.md) · [Audit log](project_central_audit_log.md)
 
 ## BOLA
+- [gitignore บัง cmd/bola_server](reference_bola_backend_gitignore_hides_cmd_bola_server.md) — `.gitignore:41 bola_server` ไม่ผูกตำแหน่ง → `git add` ข้ามไฟล์ใหม่ในโฟลเดอร์นั้นเงียบ ๆ · commit ไม่ build · เช็ก `git status` + build จาก checkout สดของ remote
 - [Oathkeeper global=staging](reference_oathkeeper_global_cookie_session_is_staging.md) — Oathkeeper ตัวเดียวใน ns share ใช้ทั้ง dev+staging · cookie_session ค่ากลาง=Kratos **staging** · rule dev ต้องระบุ config เอง (ไม่งั้น dev ถูกปฏิเสธหมด)
 - [SRE GitOps repos](reference_sre_gitops_repos_and_sync_policy.md) — Host/Mapping=api-gateway · Rule=bridge · Kratos=share/ory-helm · api-gateway/bridge dev **ปิด auto-sync ต้องกด Sync** · BOLA ไม่มี Application ของตัวเอง
 - [BOLA LLM fail-closed](reference_bola_llm_metering_is_fail_closed_dev_borrows_staging_agent.md) — ไม่มี AI_PLATFORM_KIT_* = chatbot ตอบไม่ได้ (error ไม่ใช่ปิดเงียบ) · agent มีแค่ staging · dev ยืมของ staging (!204)
