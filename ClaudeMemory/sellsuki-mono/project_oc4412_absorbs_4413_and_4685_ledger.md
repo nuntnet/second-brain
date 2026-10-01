@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: 53f9c3a5-efcb-4605-8af2-6e152327b40b
-  modified: 2026-10-01T15:32:31.034Z
+  modified: 2026-10-01T15:46:16.747Z
 ---
 
 วันที่ 2026-10-01 PO ตกลงสองเรื่อง
@@ -29,13 +29,14 @@ metadata:
 
 **Why:** ledger ต้องอยู่ใน txn เดียวกับ Commit และผู้เขียนมีจุดเดียว ถ้าแยกใบจะได้สอง MR บนโค้ดก้อนเดียวกัน
 
+**Cache (เคาะ 2026-10-01):** v1 ไม่มี cache · เกณฑ์ AC-P1 = p95 < 300ms ที่ 20 แคมเปญ published, 200 req, วัดบน dev · cache ได้เฉพาะเมื่อไม่ผ่าน และต้อง invalidate ตอนแก้/หยุดแคมเปญ (ไม่ใช่ TTL อย่างเดียว เพราะ backoffice-api เป็นผู้เขียน)
+
 **How to apply:**
 - งานยอดขายต่อใบเสร็จให้ไปดูที่ OC-4412 ไม่ใช่ 4685
 - ณ 2026-10-01 โค้ด ledger ยังไม่เริ่ม (branch `feat/oc-4412-purchase-award` มีแค่ adapter กับตัวโหลด config)
 - เรื่องที่ยังค้าง PO เคาะ:
   - OQ-9: อัตราพื้นฐานใช้กับหน่วยหลักหรือทุกหน่วย
   - OQ-17: ใบที่ได้ 0 แต้ม ถ้าส่งซ้ำทีหลังจะได้แต้มย้อนหลังหรือไม่
-  - OQ-19: ไม่มี cache
   - OQ-20: บิลจากการอนุมัติคำขอแต้มไม่เข้า ledger จนกว่า OC-4575 จะเรียก Commit ตัวนี้
 
 ดู [[project-award-engine-has-no-callers]] และ [[project-oc4469-oc4428-card-merge]]
