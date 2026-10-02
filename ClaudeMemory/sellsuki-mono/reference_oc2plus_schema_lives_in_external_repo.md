@@ -46,3 +46,12 @@ company_consent, member_card_token, api_key.expires_at) ใช้ timestamptz �
 
 ดู [[reference_migration_files_are_not_applied_schema]], [[project_oc2275_crm_migrations_run_by_hand]],
 [[project_oc4362_claim_cluster_gaps]]
+
+**ครั้งที่ 4 (2026-10-02): award engine ไม่เคยมี schema บน env ไหนเลย**
+- schema ที่ขาดคือ `award_member_usage` (OC-4420) กับ `award_dedup_registry.reversed_at` (OC-4339)
+- ทั้งสองอยู่แค่ใน member-api `009`/`011` บน branch `feat/oc-4420-award-dedup-migration` ซึ่งไม่เคย merge และไม่เคยถูกย้ายไปรีโป 530
+- integration test ผ่านมาตลอดเพราะ test สร้างตารางเอง ส่วน CI ของ 3rdparty-api ใช้ schema ของ test ไม่ใช่ของ env จริง
+- อาการ: `POST /v2/openapi/purchase-award` บน dev ได้ 500 ทุกครั้ง error `column "reversed_at" does not exist`
+- ย้ายแล้วเป็นรีโป 530 **!110** `20261002120000-award-member-usage-and-dedup-reversed-at`
+
+**บทเรียน:** ก่อนประกาศว่าโค้ดที่อ่าน/เขียน DB พร้อมขึ้น env ให้สแกนชื่อตารางทุกตัวใน `src/repository` เทียบกับ `information_schema` ของ env นั้นหนึ่งรอบ (สคริปต์อยู่ที่ scratchpad `tcheck.sh` ของ session 53f9c3a5) แล้วไล่เช็กคอลัมน์ใหม่ทุกตัวที่การ์ดเพิ่มด้วย
