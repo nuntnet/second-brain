@@ -40,6 +40,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Tenant kinds](reference_entity_lib_tenant_kinds.md) · [Gen churn](reference_permission_generator_nondeterministic.md) · [file-svc kind](reference_file_service_keto_subject_kind.md) · [Audit enum](reference_audit_action_is_closed_enum.md) · [Audit targets](reference_audit_log_format_draft_targets.md) · [Messaging](reference_messaging_backend.md) · [Msg traps](reference_messaging_backend_shared_repo_traps.md) · [Audit log](project_central_audit_log.md)
 
 ## BOLA
+- [BOLA dev DB อ่านไม่ได้เฉยๆ](reference_bola_dev_db_not_readable_without_creds_or_client.md) — kubectl ใช้ได้แต่ไม่มี psql/ไม่มี read endpoint บน system token · เช็คผ่านหน้า contact ใน BOLA console (resolver เดียวกับกฎเมนู)
 - [gitignore บัง cmd/bola_server](reference_bola_backend_gitignore_hides_cmd_bola_server.md) — `git add` ข้ามไฟล์ใหม่เงียบ ๆ
 - [Oathkeeper global=staging](reference_oathkeeper_global_cookie_session_is_staging.md) — rule dev ต้องระบุ config เอง
 - [SRE GitOps repos](reference_sre_gitops_repos_and_sync_policy.md) — api-gateway/bridge dev ปิด auto-sync
