@@ -36,3 +36,5 @@ lands (develop already has OCR providers 4383696; approve foundation 24921e4/f00
 and !538's branch predates the OCR providers so rebasing onto it modify/deletes vlm.go). Post-!538
 landing = `git rebase --onto origin/develop 9da44df feat/oc-4362-admin-edit-claim` then
 `glab mr create --target-branch develop`. See [[project_oc4362_approve_and_admin_edit]].
+
+⚠️ **ถูกแทนที่บางส่วน 2026-10-02:** flow ใหม่คือแตกจาก main → MR เข้า develop เพื่อเทส → ผ่านแล้วค่อย MR branch เดิมเข้า main (ห้าม develop→main) ดู [[feedback_git_flow_main_develop_main]] · ข้อ "MR ต้อง target develop" ยังเป็นจริงสำหรับขั้นเทสบน dev
