@@ -9,6 +9,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [No bug card](feedback_no_bug_card_for_in_sprint_fixes.md) · [Codex](feedback_user_runs_codex_in_parallel.md) · [Push often](feedback_commit_push_along_the_way.md) · [Git flow](feedback_git_flow_main_develop_main.md) — แตกจาก main → develop เทส → branch เดิมเข้า main · [No promo MR](feedback_no_develop_to_main_promotion_mrs.md) · [Git safety](feedback_parallel_sessions_git_safety.md) · [List MRs](feedback_list_open_mrs_before_opening_one.md) · [OC↔PAT](feedback_oc_pat_board_ownership_rule.md) · [OC→develop](feedback_oc2plus_merge_to_develop.md) (แทนที่บางส่วน) · [PIS FF](feedback_ff_only_force_push_ok.md) · [No tiny cards](feedback_no_tiny_cards_bundle_as_ac.md)
 - [เทสจากการ์ด](feedback_tests_derive_from_the_card_not_the_code.md) — การ์ด=SSOT · ครบตามธุรกิจ ไม่เน้นผ่าน · ห้ามแก้ expected ให้ตรงโค้ด
 - [Comment การ์ด](feedback_comment_jira_card_when_loop_closes.md) — ครบ loop แล้วคอมเมนต์ Jira + ย้ายสถานะตาม MR (shipping.md §15)
+- [Consent gate = config](feedback_consent_gate_follows_consent_screen_config.md) — gate ตาม config หน้าจอ consent ของบริษัท (บังคับ/ไม่บังคับ) ไม่ใช่กฎตายตัว
 - [Urgent thread](feedback_keep_urgent_thread_visible.md) — หัวข้อใหม่อย่ากลบงานด่วนที่ยังเสียหายอยู่
 - [App activation](project_app_activation_per_company.md) — ทุกแอปต้องเปิดใช้ต่อบริษัท (OC-4627)
 - [Provider=white-label](project_provider_is_whitelabel_tenant.md) — 1 deploy ต่อ provider · `patona`=ชื่อ app ต้องย้าย
