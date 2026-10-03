@@ -22,3 +22,10 @@ metadata:
 - Consent doc ids must be > 0; acceptance idempotency key must be a canonical UUID.
 - Public `GET /company/{slug}/consent-policy` needs `THIRDPARTY_INTERNAL_API_KEY` (member-api) = `INTERNAL_API_KEY` (3rdparty-api) or it is 502. OTP test mode needs `SECRET_TESTER_KEY` on 3rdparty-api + `X-Testing-Secret` header (`X-Testing-Reference-1` = ref_no, `X-Testing-Response-Mode` 2 = wrong pin). Start these via `overmind start -f Procfile.oc2plus3rd -D` with `OVERMIND_SOCKET=./.overmind-oc2plus3rd.sock` and the env prefixed (member-api: `-f Procfile.oc4344 -l member-api -s .overmind-oc2plus-member.sock -N`).
 - member-api wire codes ≠ 3rdparty's: 403 `CONSENT_REQUIRED`, 404 `consent_not_configured`.
+
+**เพิ่ม 2026-10-04 (OC-3559):**
+- 3rdparty `/v2/openapi/*` บน local ไม่มี gateway → ใส่ `X-API-KEY-ID` / `X-COMPANY-ID` / `X-API-SCOPE` เอง (purchase-award = scope `purchase.submit`) — เส้นนี้รัน award engine จริง ใช้เทส eligibility/multiplier ได้
+- tier sweep = binary `cmd/tier_sweep` (build ลง scratchpad) ตั้ง `POSTGRES_HOST/USER/PASS/CRM_DB_NAME` จาก docker-compose · sweep เป็น global → เช็คก่อนว่าไม่มีสมาชิกคนอื่นถึงรอบ
+- ผู้ใช้ "ดูได้แต่ override ไม่ได้" บน local: สร้าง role ใน rps ผ่าน grpcurl `:9998` (CreateRole permissions=[oc2plus.member.view] owner sellsuki.company) + AssignRole แล้ว Unassign/DeleteRole ตอนจบ — บน local ไม่มี identity แบบนี้มาเอง
+- แอปสมาชิกบน local: seed แถว `session` แล้วตั้ง cookie `oc2plus_crm_session` ที่ :5183 · company localtest ใช้ consent แบบ legacy (PDPA 434401 / TOS 434402) → seed consentee ใน Mongo ก่อน ไม่งั้นติดหน้า consent
+- backoffice FE :5176 dev proxy ฉีด X-User-Id ให้ ไม่ต้อง login · award dedup อยู่ `award_dedup_registry(company_id, order_ref)` — ลบตาม member_id ไม่งั้นรันซ้ำได้ 409 ALREADY_AWARDED
