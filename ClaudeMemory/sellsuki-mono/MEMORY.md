@@ -43,6 +43,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 
 - [dev cluster + DB pod](reference_dev_cluster_access_and_readonly_db_pod.md) — dev อยู่ staging-th ns octoplus-dev/bola-dev · อ่าน log/DB (read-only pod, secretKeyRef)
 - [slug เก่า×LINE login](reference_line_login_old_slug_after_rename.md) — เปลี่ยน slug แล้ว oa_not_bound · แก้ !188/!189 · destination ใน BOLA ยังฝัง slug เก่า
+- [รัน QA บน local](reference_local_qa_run_facts.md) — ชื่อ DB จริง, เซสชันเว็บ, 🔴 เรทลิมิตบล็อกถาวร+วิธีล้าง
 - [local/stack script](reference_local_stack_branch_script.md) — scripts/local-stack.sh · local-only merge branch จาก main
 
 ## BOLA
