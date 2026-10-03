@@ -15,3 +15,10 @@ metadata:
 - 3rdparty-api เชื่อ `X-User-Id/X-User-Kind` และ `X-Api-Key-Id/X-Company-Id/X-Api-Scope` ล้วน ๆ (scope แยกด้วยช่องว่าง) · route `/v2/openapi/*` ที่ไม่มี policy ตอบ 500 `unexpected_error`
 
 ที่เกี่ยวข้อง: [[feedback_tests_derive_from_the_card_not_the_code]], [[feedback_comment_jira_card_when_loop_closes]]
+
+## Added 2026-10-03 (OC-4340 / OC-2261 runs)
+- **Consent acceptance WRITE cannot run on local**: consent service `/consentee/acceptance` needs a Mongo replica set (`CheckReady` reads `hello.setName`) + `CONSENT_ACCEPTANCE_WRITE_ENABLED`; local docker Mongo is standalone. 3rdparty `CONSENT_ACCEPTANCE_ENABLED=true` also moves the READ onto that endpoint → leave it off locally; seed the `consentee` row directly (`id`, `consentId`, `version`, `options[{id,status:'accepted'}]`, `referenceId:'member_<id>'`).
+- The consent service caches consentees in Redis (`consentee-<consent>-<version>-member_<id>`): deleting the Mongo row leaves a stale "accepted" → purge those keys in fixtures.
+- Consent doc ids must be > 0; acceptance idempotency key must be a canonical UUID.
+- Public `GET /company/{slug}/consent-policy` needs `THIRDPARTY_INTERNAL_API_KEY` (member-api) = `INTERNAL_API_KEY` (3rdparty-api) or it is 502. OTP test mode needs `SECRET_TESTER_KEY` on 3rdparty-api + `X-Testing-Secret` header (`X-Testing-Reference-1` = ref_no, `X-Testing-Response-Mode` 2 = wrong pin). Start these via `overmind start -f Procfile.oc2plus3rd -D` with `OVERMIND_SOCKET=./.overmind-oc2plus3rd.sock` and the env prefixed (member-api: `-f Procfile.oc4344 -l member-api -s .overmind-oc2plus-member.sock -N`).
+- member-api wire codes ≠ 3rdparty's: 403 `CONSENT_REQUIRED`, 404 `consent_not_configured`.
