@@ -86,3 +86,4 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [AI Chat Platform](index_ai_chat.md) — plan, chat-core, rag-core, AI agent, SLA, FB/Messenger
 - [Scrapyard/มหานครโลหะ](project_mahanakhon_scrapyard_integration.md) · [dev member-api host](reference_oc2plus_dev_member_api_host_needs_origin.md)
 - [OC2Plus ไม่บังคับแพ็กเกจ](project_oc2plus_no_packaging_enforcement.md) — ไม่มี client ของระบบ quota/plan เลย; เติมราคาแล้วก็ยังบังคับใช้ไม่ได้
+- [Team workflow goal](project_team_workflow_sharing_goal.md) — 2026-10-05 อยากสอนทีม OC2Plus ให้เร็วเหมือนตน · baseline ตัวเลข + blocker: workflow อยู่ root monorepo ทีมไม่ได้ใช้
