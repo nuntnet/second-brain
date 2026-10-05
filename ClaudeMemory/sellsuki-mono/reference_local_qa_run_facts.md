@@ -29,3 +29,12 @@ metadata:
 - ผู้ใช้ "ดูได้แต่ override ไม่ได้" บน local: สร้าง role ใน rps ผ่าน grpcurl `:9998` (CreateRole permissions=[oc2plus.member.view] owner sellsuki.company) + AssignRole แล้ว Unassign/DeleteRole ตอนจบ — บน local ไม่มี identity แบบนี้มาเอง
 - แอปสมาชิกบน local: seed แถว `session` แล้วตั้ง cookie `oc2plus_crm_session` ที่ :5183 · company localtest ใช้ consent แบบ legacy (PDPA 434401 / TOS 434402) → seed consentee ใน Mongo ก่อน ไม่งั้นติดหน้า consent
 - backoffice FE :5176 dev proxy ฉีด X-User-Id ให้ ไม่ต้อง login · award dedup อยู่ `award_dedup_registry(company_id, order_ref)` — ลบตาม member_id ไม่งั้นรันซ้ำได้ 409 ALREADY_AWARDED
+
+**เพิ่ม 2026-10-05 (OC-3126):**
+- backoffice-api ตอบ **401** ให้ x-user-id ที่ Kratos ไม่รู้จัก (uuid สุ่มใช้เป็น "คนนอก" ไม่ได้) — ใช้ identity จริงจาก `Py Find Backoffice Identities`
+- บริษัท fixture ใหม่ทุกตัวโดน **403 dpa_not_accept** จนกว่าจะมี consentee DPA ที่ยอมรับครบ: copy ของบริษัท A ใน Mongo `consentee`
+  (`referenceId: company_<id>`) แล้วล้าง Redis `consentee-*-company_<id>` (keyword `Py Seed Company DPA From` ใน SeedFieldConfig.py)
+- member export ตรวจ `sellsuki.company.view` ก่อนสิทธิ์ของรายงาน; body ต้องมี `file_type` และ `config.year` เป็น string
+- Robot ชื่อตัวแปรไม่สนตัวพิมพ์: `${p}` ทับ `${P}` เงียบ ๆ
+- auto mode ปฏิเสธการเขียน DB ของ rps (catalog/role) — ให้ user รันสคริปต์เอง (`scratchpad/oc3126-local-grant.sh` เป็นแบบอย่าง)
+- member FE: `.env.development.local` มี TEST secret เก่า → OTP 502; ใช้ launch config `web-member-oc3126` ที่ส่ง `VITE_LOCAL_DEV_TEST_SECRET` เป็น process env (ชนะไฟล์ .env)
