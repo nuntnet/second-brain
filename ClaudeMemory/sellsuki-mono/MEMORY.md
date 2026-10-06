@@ -46,6 +46,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [dev cluster + DB pod](reference_dev_cluster_access_and_readonly_db_pod.md) — dev อยู่ staging-th ns octoplus-dev/bola-dev · อ่าน log/DB (read-only pod, secretKeyRef)
 - [slug เก่า×LINE login](reference_line_login_old_slug_after_rename.md) — เปลี่ยน slug แล้ว oa_not_bound · แก้ !188/!189 · destination ใน BOLA ยังฝัง slug เก่า
 - [รัน QA บน local](reference_local_qa_run_facts.md) — ชื่อ DB จริง, เซสชันเว็บ, 🔴 เรทลิมิตบล็อกถาวร+วิธีล้าง
+- [consent 503 บน local](reference_local_3rdparty_consent_acceptance_off.md) — 3rdparty-api ไม่มี CONSENT_ACCEPTANCE_ENABLED · ไม่ใช่ bug
 - [local/stack script](reference_local_stack_branch_script.md) — scripts/local-stack.sh · local-only merge branch จาก main
 - [local CRM schema ค้าง](reference_local_crm_schema_lags_repo530.md) — record หยุด 2026-09-01 · repo 530 develop ขาด 41 ไฟล์ของ main
 - [internal key 401](reference_local_internal_key_exported_env_beats_dotenv.md) — key ที่ export ใน tmux ของ overmind ชนะ .env (godotenv ไม่ override)
