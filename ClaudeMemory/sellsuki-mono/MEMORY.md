@@ -79,6 +79,10 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [LINE setup direction](project_line_setup_dual_surface_direction.md) · [SHARED_LIFF = PNP](reference_shared_liff_id_is_pnp_not_oc2plus.md) · [ชื่อบริษัท 2 กฎ](reference_company_name_rules_differ_ccs_vs_oc2plus.md) · [ผูก 3 ที่](reference_company_workspace_link_lives_in_three_stores.md) · [Sweep ไร้เจ้าของ](reference_bola_sweep_binds_without_an_owner.md) · [ป้ายอ่านฟิลด์ผี](reference_lineentry_badge_read_a_field_the_api_never_sent.md)
 - [App program](project_customer_app_program.md) · [Auth plan](project_oc2plus_customer_app_auth_plan.md) · [Web-OTP](project_oc4348_web_otp_session_minter.md) · [Invite chain](project_invite_multiapp_chain.md) · [BOLA bind](project_bola_binding_never_worked_via_ccs.md) · [4511-14 UX](project_oc4511_4514_ux_cluster.md) · [LIFF shell](project_oc2plus_liff_shell_is_the_line_entry.md) · [4523 login](project_oc4523_line_login_cards.md) · [BFF direct](project_oc2plus_customer_bff_reads_direct_not_proxy.md)
 
+- [KB100 eval 55/100 + ทิศทาง RAG](project_kb100_eval_state_and_rag_direction.md) — 2026-10-06 ตารางคือทั้งหมดที่หาย · เพดาน 8000 ไบต์ · ผู้ใช้ชั่งใจเลิก chunk RAG → อ่านทั้งเอกสาร/agentic
+- [local kb_rag_local DB](reference_local_kb_rag_db_and_milvus.md) — docker exec, canonical_knowledge_document, chunk text อยู่ใน Milvus · company_rag คือของเก่า
+- [Drive MCP เปิดด้วย ID](reference_google_drive_mcp_shared_files_by_id.md) — search ไฟล์ที่คนอื่นแชร์ได้ {} · text export ไทยสระหาย
+
 ## Sub-indexes — open when the topic comes up
 - [Personal / machine / infra](index_infra.md) — machine, local stack, overmind, Caddy, rtk, DNS, CI runners, clusters
 - [Git / CI](index_git_ci.md) — merge traps, submodules, GitLab CI, review bot, helm, glab · [auto-merge ไม่รอ CI](reference_glab_auto_merge_merges_immediately_without_ci_gate.md) · [Outdated deploy job](reference_gitlab_outdated_deployment_job_skips_the_newer_pipeline.md)
