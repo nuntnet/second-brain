@@ -33,3 +33,5 @@ metadata:
 **บทเรียนจากรอบนี้ 3 ข้อ** (1) member-api ชน OC-4526 ที่เข้า develop ระหว่างทาง แก้โดย merge develop เข้ามา ไม่ rebase และ regenerate `spec.gen.go` จาก yaml ที่ merge แล้ว (2) CI ของ member FE แดงทั้งที่เทสผ่าน 1157/1157 เพราะ lazy chunk โหลดค้างตอน teardown แก้โดย warm chunk ใน beforeAll (3) ดู [[reference_green_count_hides_uncollected_suite]]
 
 ดู [[project_oc2plus_liff_shell_is_the_line_entry]] [[project_oc2plus_member_react_migration]] [[project_oc4511_4514_ux_cluster]]
+
+**สถานะ 2026-10-06 (ledger `docs/cards/OC-4523.md` มีครบ — อ่านที่นั่นก่อน):** LINE login บน **staging/main ตอบ 403 `oa_not_bound` ทุกครั้ง** เพราะ `GetBySlug` บน main ไม่ได้ select `line_oa_id` · fix 7 ตัวของ member-api + FE 4 ตัว + `62f6d79` (env BOLA ของ OC-4588) อยู่ develop อย่างเดียว · cherry-pick ไม่ตรง (ชน OC-4408) ชุดที่แก้แล้วอยู่ใน local branch `fix/OC-4523-line-login-fixes-to-main` (ยังไม่ push) · ต้องให้เจ้าของ OC-4408 เคาะเรื่องเอา `linkBolaContact` กลับมาบน main

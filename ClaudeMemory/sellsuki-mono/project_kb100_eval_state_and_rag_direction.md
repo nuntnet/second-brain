@@ -1,6 +1,6 @@
 ---
 name: project_kb100_eval_state_and_rag_direction
-description: "AI Chat KB quality — frozen 100-question FWD insurance eval, latest 55/100 (2026-10-06), where the artefacts are, the 5 root causes, and the user's open question whether to drop chunk RAG for document-level/agentic reading"
+description: "AI Chat KB quality — frozen 100-question FWD insurance eval: chunk RAG 55/100 vs whole-document+claude-sonnet-4-5 95/100 (2026-10-06 step-1 experiment), artefacts, root causes, decision to go document-level, and the 429 QUOTA_EXHAUSTED / Docker traps"
 metadata:
   node_type: memory
   type: project
@@ -38,3 +38,17 @@ diagnosis or re-propose "more context / better prompt", both already tried and m
 **How to apply:** start from the review file and the latest grades; any improvement claim needs a full
 frozen-100 rerun (3× preferred), never a spliced smoke. Related: [[reference_chatcore_ragcore_two_hops]],
 [[project_ragcore_dual_embedding_paths]], [[reference_local_kb_rag_db_and_milvus]].
+
+**Step 1 result (2026-10-06 evening, same frozen 100):** whole-document (oracle routing by `source`) +
+claude-sonnet-4-5 = **95/100** (LLM grader 89 + 6 hand overrides, zero false abstentions, $0.037/question,
+p95 6.8 s); whole-document + gpt-4o-mini = 70 (miss→wrong, 17 wrong: do NOT ship that combo); chunk +
+gpt-4o-mini = 55. Gate "≥80 → step 3" passed. Scripts/results in `qa/kb100-2026-10-05/step1_*`,
+`grade_llm.py`, `summarize.py`, `human-overrides.json`, report `step1-report-2026-10-06.md`, plan
+`plan-kb-quality-2026-10-06.md`. Remaining sonnet failures are extraction (Precious p4 row-14 label lost)
+and prompt detail, not retrieval. Not yet run: chunk+sonnet (`chunk_model_test.go`), clean baseline run1,
+live-path measurement.
+
+**Traps hit:** AI agent returns 429 `QUOTA_EXHAUSTED` intermittently for company 60daa2a8 although QMS
+balance is 1000 with zero transactions (source unknown; redis_gate blocked key, flag_writer, LocalTally
+suspects). It poisons Playground runs as `unavailable` and judge calls as ungraded; always count
+`unavailable` before trusting a run. Docker Desktop died at 19:42 under load avg 16, taking Redis/PG/Milvus.
