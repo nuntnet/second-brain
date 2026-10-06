@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: 9043b5b7-a828-4cca-b908-2d5347a98fbf
-  modified: 2026-10-06T06:15:00.675Z
+  modified: 2026-10-06T11:14:31.303Z
 ---
 
 On 2026-10-06 the user opened research and planning for space-go (SukiSpace) as a **marketplace website**:
@@ -16,6 +16,12 @@ On 2026-10-06 the user opened research and planning for space-go (SukiSpace) as 
 - Open question the user posed: is the seller the **company** or the **provider (sellsuki)**, given Patona seller center is the OMS?
 
 Findings at that date (prior art): no card, doc or code for multi-seller, AIS or carrier billing. Roadmap Theme 6 has it as 0% with no cards. space-go is single-tenant (`PIS_REF_ID=sellsuki.company:sukispace`). QMS plan to quota works, but there is no capability layer (P3 uncarded), and no payment-to-activation wiring (PAT-2493 is design only). Jira was not searched.
+
+**Framing the user corrected (2026-10-06): subscribing to a plan is NOT an order.** Subscription (company × plan,
+lifecycle) is primary; an order is at most a per-cycle receipt; entitlement follows the subscription. For AIS, AIS is
+the billing clock — we mirror its events. Prior art agrees: space-go `CreateSubscription` assigns quota with no order,
+and `plan_assignment` + QMS renewal cron is already the subscription record. Phase 1 AIS scope = sellsuki shop only
+(user decision). Open: whether to write receipt orders into OMS at all (A: none, B: receipt per cycle).
 
 **Why:** a cross-team, multi-repo initiative that is invisible from the code.
 **How to apply:** treat it as net-new; reference the roadmap slugs `sukispace-patona-sale-channel` and `sukispace-digital-tech-product-focus` and `docs/analysis/plan-capability-quota-map.md` instead of re-describing them. Search Jira across all statuses before writing a card (shipping.md §11). See [[project-ccs-bola-provisioning-unwired]].
