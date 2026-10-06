@@ -52,3 +52,17 @@ live-path measurement.
 balance is 1000 with zero transactions (source unknown; redis_gate blocked key, flag_writer, LocalTally
 suspects). It poisons Playground runs as `unavailable` and judge calls as ungraded; always count
 `unavailable` before trusting a run. Docker Desktop died at 19:42 under load avg 16, taking Redis/PG/Milvus.
+
+**Spec-agent experiment on the customer KB sheet (2026-10-07, `qa/kb2-2026-10-06/report-6-models-2026-10-07.md`):**
+94 test cases × 6 models with tool-based premium lookup. sonnet-4.5 67/94, GLM-4.6 54 (≈66; only drops one
+Q-01 line, $0.005/case, slow via OpenRouter default provider), Qwen3 46 (stalls), DeepSeek 43, Kimi K2 41
+(**invents premiums without the tool — disqualifying**), Gemini Flash 39 (ignores template blocks). Shared
+failures are conversation-state behaviour (re-asking known data, A-01/Q-02 format, hot-lead counting), not
+knowledge. Test set itself needs a v0.3 (context column has no values; TC-013 spec conflict; CR-01 pending).
+
+**Cards written 2026-10-06:** AI-295 Unanswered Queue (epic AI-9) and AI-296 FAQ-first (epic AI-5), both DoR
+complete. Branches pushed, no MR: chat-core `feature/AI-295-unanswered-queue` (69837ca), rag-core
+`feature/AI-296-faq-first-entries` (d02910a); chat-core `feature/AI-296-faq-first-stage` and admin-FE
+`feature/AI-295-unanswered-queue-ui` were in progress. Playground/kb_conflict producers wait for AI-291 merge.
+Open PO decisions in the ledgers: tier1_unmet noise (record only when RAG also has nothing), internal entries
+answerable, Forward has no notification channel, 90-day purge unscheduled.
