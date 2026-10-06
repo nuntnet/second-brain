@@ -83,6 +83,8 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [local kb_rag_local DB](reference_local_kb_rag_db_and_milvus.md) — docker exec, canonical_knowledge_document, chunk text อยู่ใน Milvus · company_rag คือของเก่า
 - [Drive MCP เปิดด้วย ID](reference_google_drive_mcp_shared_files_by_id.md) — search ไฟล์ที่คนอื่นแชร์ได้ {} · text export ไทยสระหาย
 
+- [QUOTA_EXHAUSTED = OpenRouter 402](reference_ai_agent_quota_exhausted_is_openrouter_402.md) — key local มีเครดิต $5 หมดแล้ว · เช็ก /api/v1/credits ก่อนเชื่อผลรัน
+
 ## Sub-indexes — open when the topic comes up
 - [Personal / machine / infra](index_infra.md) — machine, local stack, overmind, Caddy, rtk, DNS, CI runners, clusters
 - [Git / CI](index_git_ci.md) — merge traps, submodules, GitLab CI, review bot, helm, glab · [auto-merge ไม่รอ CI](reference_glab_auto_merge_merges_immediately_without_ci_gate.md) · [Outdated deploy job](reference_gitlab_outdated_deployment_job_skips_the_newer_pipeline.md)
