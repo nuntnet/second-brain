@@ -85,6 +85,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [local kb_rag_local DB](reference_local_kb_rag_db_and_milvus.md) — docker exec, canonical_knowledge_document, chunk text อยู่ใน Milvus · company_rag คือของเก่า
 - [Drive MCP เปิดด้วย ID](reference_google_drive_mcp_shared_files_by_id.md) — search ไฟล์ที่คนอื่นแชร์ได้ {} · text export ไทยสระหาย
 
+- [AI chat staging = ns sellsuki](reference_ai_chat_staging_is_ns_sellsuki_and_how_to_release_there.md) — dev-th ไม่มี stack · release ด้วยมือ: migration Job + manual deploy job + port-forward เช็ก · CI runner เต็ม retry by id
 - [inbound forward local](reference_chat_core_local_inbound_forward_for_live_tests.md) — ยิงข้อความลูกค้าเข้า chat-core local ตรง ๆ ไม่ต้องมี FB/เบราว์เซอร์ · อ่านผลจาก messages/decision_traces/fallback_cases
 - [QUOTA_EXHAUSTED = OpenRouter 402](reference_ai_agent_quota_exhausted_is_openrouter_402.md) — key local มีเครดิต $5 หมดแล้ว · เช็ก /api/v1/credits ก่อนเชื่อผลรัน
 
