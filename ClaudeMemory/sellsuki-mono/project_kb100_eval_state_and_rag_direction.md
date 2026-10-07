@@ -66,3 +66,14 @@ complete. Branches pushed, no MR: chat-core `feature/AI-295-unanswered-queue` (6
 `feature/AI-295-unanswered-queue-ui` were in progress. Playground/kb_conflict producers wait for AI-291 merge.
 Open PO decisions in the ledgers: tier1_unmet noise (record only when RAG also has nothing), internal entries
 answerable, Forward has no notification channel, 90-day purge unscheduled.
+
+**State (2026-10-07):** AI-295 (unanswered queue) + AI-296 (FAQ-first) are built on 5 pushed branches, no MR yet
+(rag-core `feature/AI-296-faq-first-entries`; chat-core `feature/AI-295-unanswered-queue` @ e930dc7 with the
+tier1_unmet narrowing, `feature/AI-296-faq-first-stage`; admin-fe `feature/AI-295-unanswered-queue-ui`,
+`feature/AI-296-faq-first-ui`). Local-only integration worktrees: `/private/tmp/integ-chat-core` and
+`/private/tmp/integ-admin-fe` on `local/integration-ai295-ai296`. Follow-up card **AI-297** holds what needs
+AI-291 on main (Playground FAQ stage, playground/kb_conflict/handoff_kb_gap producers). FAQ importer:
+`qa/kb2-2026-10-06/import_faq_entries.py` (24 of 31 Confirmed rows; 7 are agent guidance/attachment, skipped).
+Next in order: user commits Codex WIP → merge the 3 repos into `local/stack` → apply migrations 0107/0108/20261006_0014
+→ browser check → import FAQ → remeasure 94 cases → open 5 MRs (rag-core first). Blocked on Milvus (see
+[[reference_local_kb_rag_db_and_milvus]]).

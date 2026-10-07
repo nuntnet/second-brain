@@ -26,3 +26,12 @@ commented out.
   (`model` column, default gpt-4o-mini).
 - PDF/XLSX extraction for Drive imports runs in `data-pipeline/rag_knowledge_base_data_pipline/src/knowledge_connector_worker/`
   (pdf_layout.py, pdf_spans.py, xlsx_layout.py), not in rag-core's `standard.py`.
+
+**Milvus will not start after an unclean Docker stop (2026-10-07).** `sellsuki-kb-rag-milvus-1` (milvusdb/milvus
+v2.6.13 standalone, `ETCD_USE_EMBED=true`, volume `sellsuki_kb_rag_milvus_26`, compose `docker-compose.kb-rag.yml`
+at the monorepo root) exits 134 within 3-6 s every time with `panic: etcdserver: leader changed`: Milvus reads
+`by-dev/meta/session/id` before the embedded etcd has elected itself, and the linearizable read fails when the
+leader appears. Retrying (4x), waiting for low load, and a faster election config (`heartbeat-interval: 20`,
+`election-timeout: 200` via a compose override) all failed identically. etcd data is small (125 MB, db 17 MB), the
+disk is 94% full. Non-destructive fixes exhausted; the remaining option is wiping the volume
+(`docker volume rm sellsuki_kb_rag_milvus_26`) and re-ingesting the workspace's 12 documents — ask first.
