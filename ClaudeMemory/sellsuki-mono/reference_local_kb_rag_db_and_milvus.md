@@ -27,11 +27,20 @@ commented out.
 - PDF/XLSX extraction for Drive imports runs in `data-pipeline/rag_knowledge_base_data_pipline/src/knowledge_connector_worker/`
   (pdf_layout.py, pdf_spans.py, xlsx_layout.py), not in rag-core's `standard.py`.
 
-**Milvus will not start after an unclean Docker stop (2026-10-07).** `sellsuki-kb-rag-milvus-1` (milvusdb/milvus
-v2.6.13 standalone, `ETCD_USE_EMBED=true`, volume `sellsuki_kb_rag_milvus_26`, compose `docker-compose.kb-rag.yml`
-at the monorepo root) exits 134 within 3-6 s every time with `panic: etcdserver: leader changed`: Milvus reads
-`by-dev/meta/session/id` before the embedded etcd has elected itself, and the linearizable read fails when the
-leader appears. Retrying (4x), waiting for low load, and a faster election config (`heartbeat-interval: 20`,
-`election-timeout: 200` via a compose override) all failed identically. etcd data is small (125 MB, db 17 MB), the
-disk is 94% full. Non-destructive fixes exhausted; the remaining option is wiping the volume
-(`docker volume rm sellsuki_kb_rag_milvus_26`) and re-ingesting the workspace's 12 documents — ask first.
+**Milvus will not start after an unclean Docker stop (2026-10-07) — fixed by wiping.** `sellsuki-kb-rag-milvus-1`
+(milvusdb/milvus v2.6.13 standalone, `ETCD_USE_EMBED=true`, volume `sellsuki_kb_rag_milvus_26`, compose
+`docker-compose.kb-rag.yml` at the monorepo root) exited 134 within 3-6 s on every start with
+`panic: etcdserver: leader changed` (Milvus reads `by-dev/meta/session/id` before its embedded etcd elects itself).
+Retries, waiting for low load and a faster election config all failed. What worked, in order:
+1. `bash qa/kb100-2026-10-05/reset-local-milvus.sh` (rm container + volume, compose up, wait healthy) — the user
+   must run it; auto mode refuses the volume delete.
+2. `overmind start -f Procfile.kb-rag -l kb-rag-prepare -c kb-rag-prepare -s .overmind-kb-rag-setup.sock -N -D`
+   recreates collection `kb_rag_oauth_1536_v1`; `overmind quit` it afterwards.
+3. Re-embed without Drive: INSERT new `pending` rows into `knowledge_ingest_job` copied from the latest
+   `completed` job per (workspace, canonical_source_document_id) — jobs carry the full markdown `content`.
+   24 docs (FWD workspace + `6437c1e2…`) took ~90 s.
+4. Start the worker with the flag, or documents at version >= 2 (those with `projection_generation` in
+   metadata) fail `versioned source requires the atomic publication writer`:
+   `INGEST_ATOMIC_REPROCESS_ENABLED=true overmind start -f Procfile.kb-rag -l kb-rag-ingest -s .overmind-kb-ingest.sock -N -D`.
+   The launcher (`scripts/kb-rag-service.mjs`) forwards that env var; default is false. Failed jobs are reset
+   with `UPDATE … SET status='pending', attempts=0, last_error=null, claim_token=null`.
