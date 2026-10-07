@@ -85,3 +85,11 @@ block checking out its candidate `local/stack-ai295-296` (358ed4a, built green).
 `.overmind-kb-rag-api.sock`; ingest worker under `.overmind-kb-ingest.sock` with `INGEST_ATOMIC_REPROCESS_ENABLED=true`.
 24 FAQ entries imported into the FWD workspace. Baseline with grade_llm.py judge = 41/100 (Codex's 55 used a different
 judge; compare only within one harness). `restore`: `git checkout local/stack` in chat-core/rag-core.
+
+**2026-10-07 14:15 — MRs open (all target `main`; none of the three repos has `develop`):** rag-core !65 (AI-296 entries,
+first), chat-core !131 (AI-295) then !132 (AI-296), admin-fe !86 (AI-295) then !87 (AI-296). PO decided FAQ default
+threshold 0.78 (rag-core ffd4e06, chat-core 0ea5d95); waived the browser check for these MRs. Pipelines were running at
+14:12 — check once, never loop. PO also stopped claude-sonnet-4-5 for experiments: whole-document runs now go through
+`step1_wholedoc.py --direct --model <openrouter id>` on glm-4.6 / qwen3-235b / deepseek-v3.2 / gemini-2.5-flash / kimi-k2 /
+gpt-4.1-mini, judged by `grade_llm.py --judge gpt-4o` (`*-grades-judge-gpt-4o.json`); sonnet/gpt-4o-mini runs are re-graded
+with the same judge for comparison.
