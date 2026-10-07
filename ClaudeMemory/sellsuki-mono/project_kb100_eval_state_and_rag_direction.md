@@ -77,3 +77,11 @@ AI-291 on main (Playground FAQ stage, playground/kb_conflict/handoff_kb_gap prod
 Next in order: user commits Codex WIP → merge the 3 repos into `local/stack` → apply migrations 0107/0108/20261006_0014
 → browser check → import FAQ → remeasure 94 cases → open 5 MRs (rag-core first). Blocked on Milvus (see
 [[reference_local_kb_rag_db_and_milvus]]).
+
+**Local stack as of 2026-10-07 10:40:** main checkouts hold local-only candidate branches — chat-core `local/stack-ai295-296`
+(a9e92aa), rag-core `local/stack-ai296` (42edb1c, FAQ migration re-parented onto Codex's `20261001_0014` for local only);
+admin-fe still on `local/kb-checkpoint-20261006` with 4 uncommitted Codex files (FirstWorkspacePage + locale jsons) that
+block checking out its candidate `local/stack-ai295-296` (358ed4a, built green). rag-core api now under
+`.overmind-kb-rag-api.sock`; ingest worker under `.overmind-kb-ingest.sock` with `INGEST_ATOMIC_REPROCESS_ENABLED=true`.
+24 FAQ entries imported into the FWD workspace. Baseline with grade_llm.py judge = 41/100 (Codex's 55 used a different
+judge; compare only within one harness). `restore`: `git checkout local/stack` in chat-core/rag-core.
