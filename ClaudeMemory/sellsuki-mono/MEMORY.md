@@ -55,6 +55,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [local CRM schema ค้าง](reference_local_crm_schema_lags_repo530.md) — record หยุด 2026-09-01 · repo 530 develop ขาด 41 ไฟล์ของ main
 - [internal key 401](reference_local_internal_key_exported_env_beats_dotenv.md) — key ที่ export ใน tmux ของ overmind ชนะ .env (godotenv ไม่ override)
 - [TMPDIR สองที่](reference_tmpdir_differs_sandboxed_vs_unsandboxed.md) — sandbox กับ unsandboxed คนละโฟลเดอร์ · worktree ใช้ scratchpad path เต็ม
+- [login local "รหัสผิด"](reference_local_kratos_wrong_password_is_unverified_email.md) — จริง ๆ คืออีเมลยังไม่ verify (hook) หรือ flow หมดอายุ · ดู log kratos ก่อน
 
 ## BOLA
 - [BOLA dev DB อ่านไม่ได้เฉยๆ](reference_bola_dev_db_not_readable_without_creds_or_client.md) — kubectl ใช้ได้แต่ไม่มี psql/ไม่มี read endpoint บน system token · เช็คผ่านหน้า contact ใน BOLA console (resolver เดียวกับกฎเมนู)
