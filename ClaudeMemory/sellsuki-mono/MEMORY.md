@@ -26,6 +26,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 
 ## Tests
 - [ssk user-detail 2 แถว](reference_ssk_widget_user_detail_height_is_a_string.md) — widgetHeight ต้องเป็น string "6" · สูงสุด 7 แถว
+- [Robot CI ไร้ target](reference_sukispace_robot_ci_has_no_target_service.md) — sukispace api-automate ยิง localhost:8080 ที่ไม่มี service → 119/119 แดงเสมอ
 - [Uncollected](reference_green_count_hides_uncollected_suite.md) · [Sentry dual](reference_sentry_dual_hub_on_version_skew.md) · [Stub loose](reference_test_stub_more_permissive_than_service.md) · [testify](reference_testify_permissive_default_wins.md) · [Timing](reference_timing_dependent_concurrency_tests.md) · [Turbo](reference_turbo_cache_crosssession_false_green.md) · [Lit SSR](reference_lit_react_node_condition_hollows_tests.md) · [DS testId](reference_ds_testid_is_a_property.md) · [jsdom 25](reference_node25_localstorage_jsdom_conflict.md)
 
 ## Go / DB
