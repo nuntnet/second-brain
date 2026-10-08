@@ -58,6 +58,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [login local "รหัสผิด"](reference_local_kratos_wrong_password_is_unverified_email.md) — จริง ๆ คืออีเมลยังไม่ verify (hook) หรือ flow หมดอายุ · ดู log kratos ก่อน
 
 ## BOLA
+- [WMMT-1634 LINE แจ้งผู้แจ้ง BPM](project_wmmt1634_bpm_line_notify_liff_direction.md) — เสนอ LIFF+ID token ผูกเรื่อง + Jira Automation→APM · ยังไม่เคาะ
 - [BOLA dev DB อ่านไม่ได้เฉยๆ](reference_bola_dev_db_not_readable_without_creds_or_client.md) — kubectl ใช้ได้แต่ไม่มี psql/ไม่มี read endpoint บน system token · เช็คผ่านหน้า contact ใน BOLA console (resolver เดียวกับกฎเมนู)
 - [gitignore บัง cmd/bola_server](reference_bola_backend_gitignore_hides_cmd_bola_server.md) — `git add` ข้ามไฟล์ใหม่เงียบ ๆ
 - [Oathkeeper global=staging](reference_oathkeeper_global_cookie_session_is_staging.md) — rule dev ต้องระบุ config เอง
@@ -101,6 +102,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [AI Chat Platform](index_ai_chat.md) — plan, chat-core, rag-core, AI agent, SLA, FB/Messenger
 - [Scrapyard/มหานครโลหะ](project_mahanakhon_scrapyard_integration.md) · [dev member-api host](reference_oc2plus_dev_member_api_host_needs_origin.md)
 - [OC2Plus ไม่บังคับแพ็กเกจ](project_oc2plus_no_packaging_enforcement.md) — ไม่มี client ของระบบ quota/plan เลย; เติมราคาแล้วก็ยังบังคับใช้ไม่ได้
+- [monorepo docs อยู่ AI-49](reference_monorepo_docs_live_on_ai49_branch.md) — origin/main ค้าง ส.ค. · ledger/environments.yaml commit ลง fix/AI-49 · อย่า push แทน session อื่น
 - [control-tower แยกทาง main↔AI-49](reference_control_tower_data_js_diverged_main_vs_ai49.md) — main ไม่มี validate.js/phase-4/snapshot · ยังไม่เคาะตัวจริง (MR !29)
 - [Team workflow goal](project_team_workflow_sharing_goal.md) — 2026-10-05 อยากสอนทีม OC2Plus ให้เร็วเหมือนตน · baseline ตัวเลข + blocker: workflow อยู่ root monorepo ทีมไม่ได้ใช้
 - [SukiSpace marketplace+AIS](project_sukispace_marketplace_ais_vision.md) — 2026-10-06 ตั้งใจทำ multi-seller บน Patona OMS · sellsuki shop · AIS carrier billing · ไม่มีการ์ด/โค้ดเดิม

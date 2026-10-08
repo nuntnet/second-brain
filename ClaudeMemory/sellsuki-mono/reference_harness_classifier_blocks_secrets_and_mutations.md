@@ -30,3 +30,4 @@ Independent of anything said in chat, Claude Code's own auto-mode classifier can
   even a probe that only tested `command -v curl` and printed the LENGTH of `$SYSTEM_ADMIN_TOKEN`,
   never its value. So "the value never reaches me" does not clear this gate: exec into a
   deployed pod is blocked as a class. Hand the user the exact command instead.
+- 2026-10-02: `glab mr merge` ของ feature MR เข้า develop ก็โดน `[Merge Without Review]` ได้ ถ้าผู้ใช้ยังไม่ได้สั่ง merge ใบนั้นเองในแชต (เคสจริงคือ !255 และ 530 !110) · พอผู้ใช้สั่งชัดแล้ว เช่น `/land เลย` ก็ merge !255/!109/!190/!277 ได้ · MR ที่เพิ่งเปิดใหม่หลังได้คำสั่งรอบนั้น ยังต้องขออนุมัติใหม่
