@@ -34,6 +34,8 @@ review-bot rubric, land.md CI classification, MR detail shape, central-manual ta
 Control Glass skill (CDP + feature map), not the Control Tower** — I misread it once.
 Decided: no raw CDP; Playwright/preview tools + feature map + doctor are the equivalent.
 
+2026-10-11 later: router rule (`.claude/rules/router.md`), test users as infra (`scripts/seed-verify.sh`), member-app login verified live, portable plugin `plugins/sellsuki-workflow` (build-plugin.py; 63 generated + 5 hand-written skills by another session; Claude/Cursor/Codex/Antigravity), first `/eval-skill` run on /triage (promoted 11/12, 10/12), branch pushed with the user's OK.
+
 Open: the first live pass of each feature map (stack was down / sandbox could not
 reach ports at seeding); the user's PO session still runs `po-team` without the
 principle layer except through po-lead's new FRAME step.
