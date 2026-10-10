@@ -56,6 +56,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [internal key 401](reference_local_internal_key_exported_env_beats_dotenv.md) — key ที่ export ใน tmux ของ overmind ชนะ .env (godotenv ไม่ override)
 - [TMPDIR สองที่](reference_tmpdir_differs_sandboxed_vs_unsandboxed.md) — sandbox กับ unsandboxed คนละโฟลเดอร์ · worktree ใช้ scratchpad path เต็ม
 - [login local "รหัสผิด"](reference_local_kratos_wrong_password_is_unverified_email.md) — จริง ๆ คืออีเมลยังไม่ verify (hook) หรือ flow หมดอายุ · ดู log kratos ก่อน
+- [Docker ครึ่งตายหลังดิสก์เต็ม](reference_docker_desktop_half_dead_after_disk_full.md) — killall -9 com.docker.backend แล้ว start · ปลุก Kafka/air/Caddy ต่อ
 
 ## BOLA
 - [WMMT-1634 LINE แจ้งผู้แจ้ง BPM](project_wmmt1634_bpm_line_notify_liff_direction.md) — เสนอ LIFF+ID token ผูกเรื่อง + Jira Automation→APM · ยังไม่เคาะ
