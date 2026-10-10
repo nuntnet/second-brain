@@ -22,16 +22,32 @@ decision changed), `/principles <card|task>` selector, `/feature` 0.8, and a
 `## Principles applied` table in `docs/cards/TEMPLATE.md`. Commit `c5c07e3b` on
 `fix/AI-49-safe-worker-activation`, not pushed.
 
-Still open: (2) a real central manual — Control Tower README §9 and
-`.claude/knowledge/commands.md` do not mention `/feature`, `shipping.md`,
-`verifier` or `/principles`.
+2026-10-11 (same day, "เก็บทั้งหมดที่เหมาะกับเรา"): the rest landed in one commit on
+the same branch — `.claude/verify/<surface>/` feature maps for oc2plus-backoffice,
+oc2plus-member, bola-console, ccs3 (seeded from source by Explore agents; every
+recipe tagged `(unverified)` until `/feature-map maintain` drives it live),
+`/triage`, `/correct` + `knowledge/rule-enforcement.md`, `/pause` + `/resume` +
+ledger `## Resume here`, `/feature-map`, `scripts/doctor.sh`, `scripts/survivors.sh`
+(member-api 14 d: 57 merged, 0 reverted, 75% unreviewed), `scripts/log-decision.sh`,
+review-bot rubric, land.md CI classification, MR detail shape, central-manual table in
+`knowledge/commands.md`. **"control glass" in the user's message meant Lauren Tan's
+Control Glass skill (CDP + feature map), not the Control Tower** — I misread it once.
+Decided: no raw CDP; Playwright/preview tools + feature map + doctor are the equivalent.
+
+Open: the first live pass of each feature map (stack was down / sandbox could not
+reach ports at seeding); the user's PO session still runs `po-team` without the
+principle layer except through po-lead's new FRAME step.
 
 **Why:** the user wants the workflow teachable and shareable to the OC2Plus team
 ([[project-team-workflow-sharing-goal]]); pstack is the external yardstick they
 reach for, so later comparisons should start from what was already adopted.
 
-**How to apply:** when the user mentions pstack or "คู่มือกลาง", do not re-port what
-is adopted; pick up from the open item above. Principle leaves earn a place only
+**How to apply:** when the user mentions pstack, Control Glass, feature map or
+"คู่มือกลาง", start from what is adopted (commit `c5c07e3b` and the follow-up on
+`fix/AI-49-safe-worker-activation`); the next useful step is driving one surface's
+map live, not more porting. The user's recurring pain is "ACs never all done, sessions
+stop before finishing" — the answer built for it is `/pause` + `/resume` + the 6.7
+blocked-AC rule; point there before proposing anything new. Principle leaves earn a place only
 when a judgment call went wrong twice and no script catches it; otherwise it is a
 `ship-check` detector or a rule. Keep the verifier
 model at opus per [[feedback-subagent-model-tiering]].
