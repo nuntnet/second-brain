@@ -15,16 +15,23 @@ playbooks) and then had two pieces ported into `/feature` (commit `759674b4` on
 and step 12.5 an independent `verifier` agent (`.claude/agents/verifier.md`) whose
 PASS/PASS+NOTES/FAIL in the card ledger is the only thing that counts as AC evidence.
 
-Still undecided (the user's follow-up "มี reference ให้เดินตาม เป็นคู่มือกลาง" was
-ambiguous): (1) pstack's rule that every principle is a leaf skill read on demand and
-*cited* in the reply, vs our auto-loaded `rules/*.md` that nobody cites; (2) making
-a real central manual — Control Tower README §9 and `.claude/knowledge/commands.md`
-do not mention `/feature`, `shipping.md` or `verifier`.
+2026-10-11 the user chose item (1): pstack's principle mechanism. Built as
+`.claude/principles/` (37 leaves: 24 adapted from pstack + 13 sellsuki-native),
+`.claude/rules/principles.md` (select per task, read before citing, cite with the
+decision changed), `/principles <card|task>` selector, `/feature` 0.8, and a
+`## Principles applied` table in `docs/cards/TEMPLATE.md`. Commit `c5c07e3b` on
+`fix/AI-49-safe-worker-activation`, not pushed.
+
+Still open: (2) a real central manual — Control Tower README §9 and
+`.claude/knowledge/commands.md` do not mention `/feature`, `shipping.md`,
+`verifier` or `/principles`.
 
 **Why:** the user wants the workflow teachable and shareable to the OC2Plus team
 ([[project-team-workflow-sharing-goal]]); pstack is the external yardstick they
 reach for, so later comparisons should start from what was already adopted.
 
-**How to apply:** when the user mentions pstack or "คู่มือกลาง", do not re-port the
-two adopted steps; pick up from the two open items above. Keep the verifier
+**How to apply:** when the user mentions pstack or "คู่มือกลาง", do not re-port what
+is adopted; pick up from the open item above. Principle leaves earn a place only
+when a judgment call went wrong twice and no script catches it; otherwise it is a
+`ship-check` detector or a rule. Keep the verifier
 model at opus per [[feedback-subagent-model-tiering]].

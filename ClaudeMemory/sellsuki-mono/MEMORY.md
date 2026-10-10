@@ -108,5 +108,5 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [monorepo docs อยู่ AI-49](reference_monorepo_docs_live_on_ai49_branch.md) — origin/main ค้าง ส.ค. · ledger/environments.yaml commit ลง fix/AI-49 · อย่า push แทน session อื่น
 - [control-tower แยกทาง main↔AI-49](reference_control_tower_data_js_diverged_main_vs_ai49.md) — main ไม่มี validate.js/phase-4/snapshot · ยังไม่เคาะตัวจริง (MR !29)
 - [Team workflow goal](project_team_workflow_sharing_goal.md) — 2026-10-05 อยากสอนทีม OC2Plus ให้เร็วเหมือนตน · baseline ตัวเลข + blocker: workflow อยู่ root monorepo ทีมไม่ได้ใช้
-- [pstack benchmark](project_pstack_as_workflow_benchmark.md) — 2026-10-10 port verifier + sequence-units เข้า /feature แล้ว · ค้าง: cite-principle layer / คู่มือกลาง
+- [pstack benchmark](project_pstack_as_workflow_benchmark.md) — port แล้ว: verifier + sequence-units (10-10), principle catalog 37 leaf + /principles (10-11) · ค้าง: คู่มือกลาง
 - [SukiSpace marketplace+AIS](project_sukispace_marketplace_ais_vision.md) — 2026-10-06 ตั้งใจทำ multi-seller บน Patona OMS · sellsuki shop · AIS carrier billing · ไม่มีการ์ด/โค้ดเดิม
