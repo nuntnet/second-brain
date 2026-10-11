@@ -29,3 +29,14 @@ chat-core (deployed since ~2026-09-19).
 test jobs. Retry **by job id** (`glab api -X POST projects/:id/jobs/<id>/retry`), sometimes twice. `dependency_scan_govulncheck`
 on chat-core is a real blocker that predates the MRs (GO-2026-6505 otlptrace 1.34 → fix MR !133 bumps to 1.45).
 Related: [[project_kb100_eval_state_and_rag_direction]], [[reference_chat_core_local_inbound_forward_for_live_tests]].
+
+**2026-10-11 verified state:** chat-core `d0def1a0` (main after AI-295 !131 + AI-296 !132; `deploy_staging_th_arm` on main pipeline
+63464 ran 2026-10-10), rag-core-python `1f6c300e` (main after !65 + AI-291 evidence-ingress), agent `6502aee6` (main; no gemini
+catalog, no context_budget), FE bundle `index-B3UO1Por.js` with the AI-295/296 UI. Migrations applied: rag-core alembic
+`20261006_0014` (read with `kubectl exec <rag-core-python pod> -- sh -lc 'cd /app && .venv/bin/alembic current'`), chat-core
+0107/0108/0110 via Job `chat-core-migration-d0def1a0` (the Job manifest in `deployment/job-migration-staging.yaml` with the image
+tag swapped). **Read the chat_core `migrations` table with a throwaway pod**: `kubectl run tmp-readonly-… --restart=Never
+--image=postgres:16-alpine --overrides=<json with env URI from secretKeyRef sellsuki-chat-core-common-secret/DATABASE_CHAT_CORE_POSTGRESQL_URI>`
+then `kubectl logs` and delete it; quote SQL in a JSON file, not inline (the `'` escaping breaks). A 401 from
+`port-forward svc/sellsuki-chat-core-svc` on any `/v1/workspaces/*` path proves nothing about routes (auth runs first); use the
+FE bundle grep or a logged-in call instead. `tsh` sessions expire after a few days — `tsh login` before kubectl.

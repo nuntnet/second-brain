@@ -93,3 +93,18 @@ threshold 0.78 (rag-core ffd4e06, chat-core 0ea5d95); waived the browser check f
 `step1_wholedoc.py --direct --model <openrouter id>` on glm-4.6 / qwen3-235b / deepseek-v3.2 / gemini-2.5-flash / kimi-k2 /
 gpt-4.1-mini, judged by `grade_llm.py --judge gpt-4o` (`*-grades-judge-gpt-4o.json`); sonnet/gpt-4o-mini runs are re-graded
 with the same judge for comparison.
+
+**2026-10-11 status sweep (Codex worked 10-07 night → 10-11):** Codex committed its agent WIP as checkpoints, integrated
+main + AI-298 + checkpoints into every repo's `local/stack` (chat-core 4682b5c, rag-core 2181e1d, agent 080f573, admin-fe
+c5ab694 — all now on Codex's `local/stack`; my `local/stack-ai*` candidates are unused). Real Playground run, gemini-2.5-flash
+document mode, gpt-4o judge: **92/100** (one run; 87 on the first), p95 18.5 s (AC-06 latency FAILS), cost ≈ $0.0047/q after
+the explicit Gemini cache boundary (was $0.037). Merged to main: agent !78 reply deadline, !79 otel GO-2026-6505, monorepo !30
+(QA handoff); rag-core `codex/AI-291-evidence-ingress` merged 10-09; chat-core !132 (AI-296) merged 10-09 and
+`deploy_staging_th_arm` SUCCEEDED on main pipeline 63464 (10-10); admin-fe !86/!87 merged 10-09 (their pipelines failed
+unit_test_staging, deploy skipped) and main 63487 (10-10) `deploy_staging` SUCCEEDED. Staging migrations 0106–0109 and the
+rag-core deploy after 1f6c300: UNVERIFIED (tsh credentials expired; needs the user to `tsh login`). Open unmerged work:
+agent `codex/AI-298-grounded-document-replies` (b19c3cb), chat-core `codex/AI-298-cache-usage-contract`, chat-core
+`feature/AI-298-document-mode` (depends on AI-291 reaching main), rag-core `feature/AI-298-document-mode` @ df0e59e.
+Holdout-50 v3/v4 drafted but unqualified. Jira AI-298 still `To Do` despite 20 Codex comments; monorepo branch has 43
+unpushed Codex docs commits (do not push for them). Codex's own list of blockers: local HTTPS 443 refused (browser),
+saved workspace model not switched through the UI, p95, cost gate, frozen100×3, holdout, live20, staging.
