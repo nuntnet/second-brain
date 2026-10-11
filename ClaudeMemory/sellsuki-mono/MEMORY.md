@@ -36,6 +36,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Drive MCP เปิดด้วย ID](reference_google_drive_mcp_shared_files_by_id.md) — search ไฟล์ที่คนอื่นแชร์ได้ {} · text export ไทยสระหาย
 - [AI chat staging = ns sellsuki](reference_ai_chat_staging_is_ns_sellsuki_and_how_to_release_there.md) — dev-th ไม่มี stack · release ด้วยมือ: migration Job + manual deploy job
 - [inbound forward local](reference_chat_core_local_inbound_forward_for_live_tests.md) — ยิงข้อความลูกค้าเข้า chat-core local ตรง ๆ · อ่านผลจาก messages/decision_traces/fallback_cases
+- [connector 403 = token chat-core ไม่ตรง](reference_connector_403_is_often_chat_core_token_mismatch.md) — CHAT_CORE_SERVICE_TOKEN ≠ chat-core SERVICE_TOKEN → 401 กลายเป็น 403 เงียบ ๆ · พิสูจน์ด้วย pod ใน cluster
 - [QUOTA_EXHAUSTED = OpenRouter 402](reference_ai_agent_quota_exhausted_is_openrouter_402.md) — เช็ก /api/v1/credits ก่อนเชื่อผลรัน
 - [monorepo docs อยู่ AI-49](reference_monorepo_docs_live_on_ai49_branch.md) — origin/main ค้าง ส.ค. · ledger commit ลง fix/AI-49 · อย่า push แทน session อื่น
 - [control-tower แยกทาง main↔AI-49](reference_control_tower_data_js_diverged_main_vs_ai49.md) — ยังไม่เคาะตัวจริง (MR !29)
