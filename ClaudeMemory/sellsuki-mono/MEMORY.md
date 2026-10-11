@@ -38,6 +38,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [monorepo docs อยู่ AI-49](reference_monorepo_docs_live_on_ai49_branch.md) — origin/main ค้าง ส.ค. · ledger commit ลง fix/AI-49 · อย่า push แทน session อื่น
 - [control-tower แยกทาง main↔AI-49](reference_control_tower_data_js_diverged_main_vs_ai49.md) — ยังไม่เคาะตัวจริง (MR !29)
 
+- [System testing direction](project_system_testing_direction_2026_10_11.md) — 2026-10-11 เคาะ 4 ข้อ: invariants suite ข้ามบริการเป็น gate local · seed-scenario.sh · permission ratchet ใน ship-check · doctor/dev-ensure + local-stack state · verifier บังคับก่อน MR
 ## Sub-indexes — open when the topic comes up
 - [Identity / CCS / rps + local-stack traps](index_identity_ccs.md) — Kratos, Keto, rps, CCS config, local QA/login/Docker/overmind traps
 - [BOLA](index_bola.md) — deploy topology, access model, LINE/LIFF, contact, APM
