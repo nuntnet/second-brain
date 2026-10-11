@@ -18,6 +18,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 
 - [OC2Plus develop↔main แยกสาย](reference_oc2plus_backoffice_develop_main_diverged_2026_10_11.md) — 10-11 ทั้ง 5 repo main merge เข้า develop ไม่ได้ (44/22/25/40/14 conflicts) · OC-4736 รวมสายครั้งเดียว · twin คือ workaround เดิม
 
+- [เช็ค env เองได้ ผู้ใช้ไม่รู้](feedback_check_read_only_env_facts_yourself_user_does_not_know.md) — 10-11 ถาม "dev มี permission ไหม" แล้วผู้ใช้ตอบไม่ได้ · teleport login อยู่ แค่ port-forward rps + grpcurl GET · อย่าถามคนที่ไม่รู้
 ## Jira
 - [Sweep ผ่านไฟล์](reference_jira_board_sweep_via_saved_results.md) — ผลใหญ่เซฟเป็นไฟล์ parse ด้วย python
 - [BOLA](reference_bola_jira_project.md) · [OC2Plus](reference_oc2plus_jira_project.md) · [Patona](reference_pat_jira_project.md) · [Sprint ids](reference_jira_sprint_ids_not_contiguous.md) · [PAT sprints](reference_pat_board_sprints.md) · [PAT epics](project_pat_epic_links_unwired.md) · [Crosses sessions](reference_jira_mcp_crosses_responses_between_sessions.md) · [Quirks](reference_jira_mcp_search_quirks.md) · [ADF Thai](reference_jira_editissue_adf_breakage.md) · [No fallback](reference_no_local_jira_fallback.md) · [403 writes](reference_jira_mcp_writes_403_midsession.md)

@@ -27,6 +27,8 @@ main after dev passes. For a spec-level test this also means a different
 baseline: the display-label ratchet is red on develop's `v1.yaml` for 6 fields
 the main spec does not have.
 
+**Update 2026-10-11 18:22: backoffice-api !722 and backoffice FE !718 (OC-4736) were merged — those two repos are reconciled (main→develop = 0 conflicts). 3rdparty-api !304, member-api !223, member FE !154 still open. Lesson: a commit pushed to an MR branch after the MR merged never reaches the target — re-read MR state before pushing and before reporting it.**
+
 **Decision 2026-10-11 (PO): reconcile once** — card OC-4736 merges main into develop via `refactor/OC-4736-sync-main-into-develop` per repo (backoffice-api + FE first; the other three await the PO's call).
 
 **How to apply:** before promising "merge to develop to test on dev" for these
