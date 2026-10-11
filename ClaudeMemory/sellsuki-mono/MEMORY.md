@@ -16,6 +16,8 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [กวาด branch Codex แล้วส่งทั้งก้อน](feedback_sweep_codex_branches_and_ship_whole.md) — 10-11 release branch ของ Codex เป็น superset ของ branch ผม · "BLOCKED รอคนยืนยัน" ใน ledger ของ Codex ไม่ใช่ blocker ของ PO
 - [auto mode บล็อกเปิด MR](reference_auto_mode_blocks_glab_mr_create.md) — เตรียม JSON + create-mrs.sh ให้ผู้ใช้กดเอง · project id chat-core 849 / agent 850 / admin-fe 851 / rag-core 787 / connector 882
 
+- [OC2Plus develop↔main แยกสาย](reference_oc2plus_backoffice_develop_main_diverged_2026_10_11.md) — 10-11 ทั้ง 5 repo main merge เข้า develop ไม่ได้ (44/22/25/40/14 conflicts) · OC-4736 รวมสายครั้งเดียว · twin คือ workaround เดิม
+
 ## Jira
 - [Sweep ผ่านไฟล์](reference_jira_board_sweep_via_saved_results.md) — ผลใหญ่เซฟเป็นไฟล์ parse ด้วย python
 - [BOLA](reference_bola_jira_project.md) · [OC2Plus](reference_oc2plus_jira_project.md) · [Patona](reference_pat_jira_project.md) · [Sprint ids](reference_jira_sprint_ids_not_contiguous.md) · [PAT sprints](reference_pat_board_sprints.md) · [PAT epics](project_pat_epic_links_unwired.md) · [Crosses sessions](reference_jira_mcp_crosses_responses_between_sessions.md) · [Quirks](reference_jira_mcp_search_quirks.md) · [ADF Thai](reference_jira_editissue_adf_breakage.md) · [No fallback](reference_no_local_jira_fallback.md) · [403 writes](reference_jira_mcp_writes_403_midsession.md)
