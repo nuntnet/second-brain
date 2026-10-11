@@ -1,26 +1,20 @@
 # Memory Index
 
-Titles are 1–3 words on purpose — each file's `description:` carries the real detail. Always open the file before relying on it.
+Titles are 1–3 words on purpose — each file's `description:` carries the real detail. Always open the file before relying on it. Domain detail lives in the sub-indexes at the bottom; open the one for the topic at hand.
 
 ## Feedback & how to work
 - [Thai](user_language_thai.md) · [Act](feedback_decisive_deep_execution.md) · [Self-explain](feedback_selfexplaining_ux.md) · [Subagents](feedback_subagent_model_tiering.md) · [PMM voice](feedback_product_marketing_voice.md) · [Design fidelity](feedback_design_handoff_full_fidelity.md) · [Entity pure](feedback_entity_pure_zod_dto.md)
 - [Card=story](feedback_card_user_story_flows.md) · [No mid-sprint](feedback_no_scope_change_in_sprint.md) · [QA guide](feedback_qa_reproduce_guide.md) · [Cite line](feedback_ground_claims_file_line.md) · [Report not edit](feedback_report_wrong_cards_dont_edit.md) · [Fix reaches all](feedback_fix_must_reach_everyone.md) · [Central≠caller](feedback_central_service_no_caller_domain.md)
 - [Reproduce](feedback_reproduce_the_number_before_asking.md) · [As user](feedback_verify_as_the_user_sees_it.md) · [Norm first](feedback_check_the_norm_before_calling_it_broken.md) · [Grep service](feedback_grep_the_spec_is_not_grep_the_service.md) · [Before GAP](feedback_search_before_declaring_gap.md) · [Absence](feedback_verify_absence_claims.md) · [head=sample](feedback_head_on_grep_is_sampling_not_verification.md) · [All layers](feedback_search_the_whole_stack_not_one_layer.md)
 - [No bug card](feedback_no_bug_card_for_in_sprint_fixes.md) · [Codex](feedback_user_runs_codex_in_parallel.md) · [Push often](feedback_commit_push_along_the_way.md) · [Git flow](feedback_git_flow_main_develop_main.md) — แตกจาก main → develop เทส → branch เดิมเข้า main · [No promo MR](feedback_no_develop_to_main_promotion_mrs.md) · [Git safety](feedback_parallel_sessions_git_safety.md) · [List MRs](feedback_list_open_mrs_before_opening_one.md) · [OC↔PAT](feedback_oc_pat_board_ownership_rule.md) · [OC→develop](feedback_oc2plus_merge_to_develop.md) (แทนที่บางส่วน) · [PIS FF](feedback_ff_only_force_push_ok.md) · [No tiny cards](feedback_no_tiny_cards_bundle_as_ac.md)
-- [overmind = หลาย instance](reference_overmind_is_many_instances_one_socket_per_proc.md) — ~20 instance socket ละตัว · restart ผ่าน socket ของมัน ห้าม kill pid (ทำพลาด 10-11) · `overmind start -f <Procfile> -l <proc> -s .overmind-<proc>.sock -N -D`
-- [generator ห้าม rmtree](feedback_generator_must_not_wipe_shared_dirs.md) — 10-11 build-plugin ลบ plugin ของ session อื่น (scripts ที่ .githooks เรียก) กู้จาก checkpoint ref · generator เขียนเฉพาะไฟล์ที่มี marker
-- [po-lead ซ้อนชั้นทำร่างหาย](feedback_nested_po_lead_loses_drafts_write_to_files.md) — spawn writer ตรงจาก main session ให้เขียนลงไฟล์ใน repo แล้วค่อย publish
-- [gemini-2.5-flash เท่านั้น](feedback_gemini_25_flash_is_the_kb_answer_model.md) — 2026-10-07 ปิด phase เลือก model · sonnet แพงเกิน · optimize ด้วย gemini จนถึง 100/100
-- [เทสจากการ์ด](feedback_tests_derive_from_the_card_not_the_code.md) — การ์ด=SSOT · ครบตามธุรกิจ ไม่เน้นผ่าน · ห้ามแก้ expected ให้ตรงโค้ด
+- [generator ห้าม rmtree](feedback_generator_must_not_wipe_shared_dirs.md) — 10-11 build-plugin ลบ plugin ของ session อื่น · เขียนเฉพาะไฟล์ที่มี marker
+- [po-lead ซ้อนชั้นทำร่างหาย](feedback_nested_po_lead_loses_drafts_write_to_files.md) — spawn writer จาก main session ให้เขียนลงไฟล์ก่อน publish
+- [gemini-2.5-flash เท่านั้น](feedback_gemini_25_flash_is_the_kb_answer_model.md) — 2026-10-07 ปิด phase เลือก model · optimize ด้วย gemini จนถึง 100/100
+- [เทสจากการ์ด](feedback_tests_derive_from_the_card_not_the_code.md) — การ์ด=SSOT · ห้ามแก้ expected ให้ตรงโค้ด
 - [Comment การ์ด](feedback_comment_jira_card_when_loop_closes.md) — ครบ loop แล้วคอมเมนต์ Jira + ย้ายสถานะตาม MR (shipping.md §15)
-- [Consent gate = config](feedback_consent_gate_follows_consent_screen_config.md) — gate ตาม config หน้าจอ consent ของบริษัท (บังคับ/ไม่บังคับ) ไม่ใช่กฎตายตัว
 - [Urgent thread](feedback_keep_urgent_thread_visible.md) — หัวข้อใหม่อย่ากลบงานด่วนที่ยังเสียหายอยู่
-- [App activation](project_app_activation_per_company.md) — ทุกแอปต้องเปิดใช้ต่อบริษัท (OC-4627)
-- [Provider=white-label](project_provider_is_whitelabel_tenant.md) — 1 deploy ต่อ provider · `patona`=ชื่อ app ต้องย้าย
-- [Provider mgmt spec](project_provider_management_prior_art.md) — สเปกอยู่ PAT-1525/1527/2739-2741 ยังไม่ทำ
-- [รวมการ์ด 3rd-party](project_oc4469_oc4428_card_merge.md) — 2026-09-30 เหลือ OC-4469 + OC-4428 · ค้างให้ PO เคาะเฟส 2
-- [เบอร์เก็บ 0XXX](project_oc2plus_phone_stored_local_format.md) — รับ E.164 ได้ แต่เก็บ/ค้นเป็น 0… เสมอ
-- [OC ไม่มี Won't Do](reference_oc_jira_no_wontdo_merged_cards_close_as_done.md) — การ์ดที่รวมแล้วปิดเป็น Done + prefix
+- [กวาด branch Codex แล้วส่งทั้งก้อน](feedback_sweep_codex_branches_and_ship_whole.md) — 10-11 release branch ของ Codex เป็น superset ของ branch ผม · "BLOCKED รอคนยืนยัน" ใน ledger ของ Codex ไม่ใช่ blocker ของ PO
+- [auto mode บล็อกเปิด MR](reference_auto_mode_blocks_glab_mr_create.md) — เตรียม JSON + create-mrs.sh ให้ผู้ใช้กดเอง · project id chat-core 849 / agent 850 / admin-fe 851 / rag-core 787 / connector 882
 
 ## Jira
 - [Sweep ผ่านไฟล์](reference_jira_board_sweep_via_saved_results.md) — ผลใหญ่เซฟเป็นไฟล์ parse ด้วย python
@@ -28,89 +22,28 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 
 ## Tests
 - [ssk user-detail 2 แถว](reference_ssk_widget_user_detail_height_is_a_string.md) — widgetHeight ต้องเป็น string "6" · สูงสุด 7 แถว
-- [Robot CI ไร้ target](reference_sukispace_robot_ci_has_no_target_service.md) — sukispace api-automate ยิง localhost:8080 ที่ไม่มี service → 119/119 แดงเสมอ
+- [Robot CI ไร้ target](reference_sukispace_robot_ci_has_no_target_service.md) — sukispace api-automate ยิง localhost:8080 ที่ไม่มี service → แดงเสมอ
 - [Uncollected](reference_green_count_hides_uncollected_suite.md) · [Sentry dual](reference_sentry_dual_hub_on_version_skew.md) · [Stub loose](reference_test_stub_more_permissive_than_service.md) · [testify](reference_testify_permissive_default_wins.md) · [Timing](reference_timing_dependent_concurrency_tests.md) · [Turbo](reference_turbo_cache_crosssession_false_green.md) · [Lit SSR](reference_lit_react_node_condition_hollows_tests.md) · [DS testId](reference_ds_testid_is_a_property.md) · [jsdom 25](reference_node25_localstorage_jsdom_conflict.md)
 
 ## Go / DB
 - [Files≠schema](reference_migration_files_are_not_applied_schema.md) · [envDefault](reference_envdefault_localhost_masks_missing_config.md) · [goqu](reference_goqu_dialect_blank_import.md) · [AutoMigrate](reference_gorm_pgx_libpq_automigrate.md) · [Drops false](reference_gorm_updates_drops_false.md) · [Lease](reference_lease_claim_ownership_bug_class.md) · [Partial idx](reference_pg_partial_index_onconflict_generic_plan.md) · [404 open](reference_ambiguous_404_fail_open.md) · [Own guard](reference_auth_endpoint_behind_own_guard.md) · [Kafka silent](reference_kafka_silent_publish_failure.md) · [Fiber ctx](reference_fiber_ctx_strings_corrupt_prometheus_labels.md)
 
-## Identity / CCS / rps
-- [rps cache ไม่เคยเปิด](reference_rps_permission_cache_is_never_enabled.md) — ถอนสิทธิ์มีผลทันทีทุก env
-- [preset ถูก copy](reference_preset_copy_vs_shared_role.md) — AI-252 (2026-09-28) CCS develop มี reconciler แล้ว
-- [dev ไร้ system admin](reference_dev_has_no_provider_owner_role_or_system_admin.md) — seed ผ่าน rps gRPC เท่านั้น
-- [return_to list](reference_kratos_return_to_allowlist_location.md) · [Not signin](reference_kratos_identity_exists_is_not_registered.md) · [SPOF](reference_shared_identity_infra_singleton.md) · [Hardcode loop](reference_local_identity_hardcode_loop.md) · [Kratos debug](reference_local_kratos_identity_debugging.md) · [i18n seed](reference_local_i18n_config_seeding.md) · [Config ns](reference_ccs_config_namespaces.md) · [AI ns](reference_ccs_ai_chat_config_namespace.md) · [Topology](reference_ccs_env_topology.md) · [CCS3 FE](reference_ccs3_frontend_facts.md)
-- [Global gate](reference_ccs_global_config_permission_gate.md) · [Module broken](reference_ccs_go_module_path_broken.md) · [values in repo](reference_ccs_deployment_values_live_in_the_repo.md) · [QA pact](project_ccs3_qa_change_notification_agreement.md) · [userId defaults](reference_ccs_config_userid_silently_returns_schema_defaults.md) · [Keto≠rps](reference_keto_and_rps_catalog_disagree.md) · [Grant perm](reference_rps_grant_permission_to_role.md) · [Invite burns](reference_invite_accept_burns_the_code_on_grant_failure.md)
-- [membertier ไม่มีบน dev](reference_dev_rps_membertier_missing_0025_present.md) — auto mode บล็อก grant สิทธิ์ rps
-- [เจ้าของบริษัท](reference_rps_company_owner_lookup.md) — /internal/v1/role-assignments · role `Company Owner`
-- [proto ×9](reference_rps_proto_is_vendored_per_consumer.md) · [internal API](reference_rps_internal_endpoints_confirmed.md) · [ListRoles](reference_rps_listroles_pointer_pagination.md) · [Keto staging](reference_keto_staging_permission_lookup.md) · [Presets](project_ccs_role_presets_apply_only_at_creation.md) · [rps mainline](reference_rps_dual_mainline.md) · [is_system](reference_rps_is_system_role_trap.md) · [kind prefix](reference_rps_identity_kind_must_be_prefixed.md) · [Assigned](reference_rps_list_assigned_roles_reverse_lookup.md) · [Underscore](reference_permission_code_underscore_rejected_before_query.md)
-- [CCS1 revert trap](reference_ccs1_main_tree_revert_trap.md) — main ถูก revert ทั้ง tree 2026-09-29 (AKI-4098)
-- [provider 500 ไร้ประเทศ](reference_ccs_provider_view_500_without_country.md) — แก้แล้ว !382/!383 dev/staging ยังไม่เช็ก
-- [space-go ไม่มี gateway route](reference_space_go_has_no_gateway_route_mb_kind_forced_user.md) — SG-44: ไม่มี rule ใน git ทุก env · MB บังคับ X-User-Kind=sellsuki.user · JWK plaintext ใน ory-helm
-- [config ขาดบน develop](reference_central_config_develop_lacks_main_seeds.md) — seed อยู่ main อย่างเดียว · ซิงก์ !149/!381
-- [Tenant kinds](reference_entity_lib_tenant_kinds.md) · [Gen churn](reference_permission_generator_nondeterministic.md) · [file-svc kind](reference_file_service_keto_subject_kind.md) · [Audit enum](reference_audit_action_is_closed_enum.md) · [Audit targets](reference_audit_log_format_draft_targets.md) · [Messaging](reference_messaging_backend.md) · [Msg traps](reference_messaging_backend_shared_repo_traps.md) · [Audit log](project_central_audit_log.md)
-
-- [dev cluster + DB pod](reference_dev_cluster_access_and_readonly_db_pod.md) — dev อยู่ staging-th ns octoplus-dev/bola-dev · อ่าน log/DB (read-only pod, secretKeyRef)
-- [slug เก่า×LINE login](reference_line_login_old_slug_after_rename.md) — เปลี่ยน slug แล้ว oa_not_bound · แก้ !188/!189 · destination ใน BOLA ยังฝัง slug เก่า
-- [รัน QA บน local](reference_local_qa_run_facts.md) — ชื่อ DB จริง, เซสชันเว็บ, 🔴 เรทลิมิตบล็อกถาวร+วิธีล้าง
-- [consent 503 บน local](reference_local_3rdparty_consent_acceptance_off.md) — 3rdparty-api ไม่มี CONSENT_ACCEPTANCE_ENABLED · ไม่ใช่ bug
-- [local/stack script](reference_local_stack_branch_script.md) — scripts/local-stack.sh · local-only merge branch จาก main
-- [local CRM schema ค้าง](reference_local_crm_schema_lags_repo530.md) — record หยุด 2026-09-01 · repo 530 develop ขาด 41 ไฟล์ของ main
-- [internal key 401](reference_local_internal_key_exported_env_beats_dotenv.md) — key ที่ export ใน tmux ของ overmind ชนะ .env (godotenv ไม่ override)
-- [TMPDIR สองที่](reference_tmpdir_differs_sandboxed_vs_unsandboxed.md) — sandbox กับ unsandboxed คนละโฟลเดอร์ · worktree ใช้ scratchpad path เต็ม
-- [login local "รหัสผิด"](reference_local_kratos_wrong_password_is_unverified_email.md) — จริง ๆ คืออีเมลยังไม่ verify (hook) หรือ flow หมดอายุ · ดู log kratos ก่อน
-- [Docker ครึ่งตายหลังดิสก์เต็ม](reference_docker_desktop_half_dead_after_disk_full.md) — killall -9 com.docker.backend แล้ว start · ปลุก Kafka/air/Caddy ต่อ
-- [k8s env `$$`→`$`](reference_k8s_env_value_dollar_dollar_becomes_dollar.md) — SQL ผ่าน env ของ pod ใช้ `$x$` · zsh `${=s}` · rtk ตัด curl · glab mr create พังใน monorepo ใช้ glab api
-
-## BOLA
-- [WMMT-1634 LINE แจ้งผู้แจ้ง BPM](project_wmmt1634_bpm_line_notify_liff_direction.md) — เสนอ LIFF+ID token ผูกเรื่อง + Jira Automation→APM · ยังไม่เคาะ
-- [BOLA dev DB อ่านไม่ได้เฉยๆ](reference_bola_dev_db_not_readable_without_creds_or_client.md) — kubectl ใช้ได้แต่ไม่มี psql/ไม่มี read endpoint บน system token · เช็คผ่านหน้า contact ใน BOLA console (resolver เดียวกับกฎเมนู)
-- [gitignore บัง cmd/bola_server](reference_bola_backend_gitignore_hides_cmd_bola_server.md) — `git add` ข้ามไฟล์ใหม่เงียบ ๆ
-- [Oathkeeper global=staging](reference_oathkeeper_global_cookie_session_is_staging.md) — rule dev ต้องระบุ config เอง
-- [SRE GitOps repos](reference_sre_gitops_repos_and_sync_policy.md) — api-gateway/bridge dev ปิด auto-sync
-- [BOLA LLM fail-closed](reference_bola_llm_metering_is_fail_closed_dev_borrows_staging_agent.md) — ไม่มี AI_PLATFORM_KIT_* = ตอบไม่ได้
-- [Deeplink=ไม่ใช่ kratos build](reference_bola_deeplink_single_workspace_means_not_kratos_build.md) — bundle dev เป็น local_jwt
-- [LIFF error ladder](reference_bola_liff_shell_error_ladder.md) — ข้อความบนจอบอกสาเหตุอยู่แล้ว
-- [member→BOLA ไม่เคยเชื่อม](reference_member_api_to_bola_link_never_worked.md) — BOLA_API_KEY ต้องคนตั้งเอง
-- [LINE login OA check](reference_line_login_oa_check_was_a_never_loaded_field.md) · [LIFF endpoint เดียว](reference_liff_single_endpoint_flow_in_link_not_endpoint.md) · [OA ซ้ำข้าม workspace](reference_bola_line_oa_channel_is_globally_unique.md) · [backfill kratos](reference_bola_backfill_kratos_ids_cannot_run_as_documented.md)
-- [dev is live](reference_bola_dev_env_exists_and_is_live.md) · [Staging gate](reference_manual_staging_gate_silent_drift.md) · [CCS unwired](project_ccs_bola_provisioning_unwired.md) · [Topology](project_bola_deploy_topology.md) · [values](project_bola_deploy_values_in_repo.md) · [Kratos gap](project_bola_saas_kratos_deploy_gap.md) · [Boot migrate](project_bola_migrations_jsonb.md) · [Loki](reference_bola_staging_loki.md)
-- [§6a invite](project_bola309_invite_via_ccs.md) · [§6a lane2](project_bola309_lane2_add_existing_member.md) · [Access](project_bola_saas_access_model.md) · [auth mode](project_bola_auth_mode_deployment.md) · [Keto direct](project_bola_rbac_keto_direct.md) · [ops=CCS1](project_bola_ops_visibility_ccs1.md) · [SSO staging](project_bola_kratos_sso_staging.md) · [Follower ×2](reference_bola_follower_metadata_two_stores.md)
-- [Contact](project_bola_contact_profile_model.md) · [Upsert](reference_bola_contacts_upsert_api.md) · [int vs bool](project_bola_is_enabled_int_bool_mismatch.md) · [Segment](project_segment_export_static_snapshot.md) · [Scoping](project_bola_workspace_scoping_bugs.md) · [293 chain](project_bola293_chain_state.md) · [FB dev-mode](project_fb_page_dev_mode_gate.md) · [Reply token](project_bola_reply_token_epic.md) · [Personalization](project_bola_ai_chatbot_personalization.md) · [APM hook](project_bola_apm_webhook_design.md) · [APM batch](project_apm_scheduled_batch_epic.md)
-
-## OC2Plus
-- [Prod DB + state 2026-10-02](reference_oc2plus_prod_db_access_and_state_2026_10_02.md) — วิธีอ่าน DB prod (RDS ต่อตรง, ชื่อ key ใน secret ไม่ตรง env, psql keg-only) · prod รัน image พ.ย. 2025 · ค้าง 55 migration · เบอร์ซ้ำ 2 กลุ่มทำให้ unique index ล้ม
-- [dev deploy ทำ flag หาย](reference_dev_3rdparty_deploy_dropped_consent_flag.md) · [svc URL ไม่เคยตั้ง](reference_member_api_service_urls_were_never_set.md) · [API key ไม่เคยตั้ง](reference_member_api_file_service_api_key_never_set.md) · [consent owner_id](reference_consent_service_owner_id_is_a_bare_uuid.md) · [OTP action row](reference_messaging_otp_needs_a_message_action_row.md)
-- [LINE optional](project_oc4207_line_optional_design.md) · [Epic triage](project_oc_epic_backlog_triage.md) · [OC×BOLA](project_oc_bola_domain_boundary.md) · [4267](project_oc4267_standalone_no_qms.md) · [Not store](reference_oc2plus_company_not_store.md) · [Tier config](project_oc2plus_tier_is_per_company_config.md) · [FE red](reference_oc2plus_backoffice_fe_red_on_develop.md) · [CI skips](reference_backoffice_fe_ci_skips_all_tests.md) · [FE→branch](reference_oc2plus_backoffice_fe_local_against_branch_api.md)
-- [4086 absent](reference_oc4086_rich_text_editor_not_in_monorepo.md) · [e2e 808](reference_oc2plus_e2e_playwright_repo.md) · [SRE slots](reference_sre_test_job_slots_cannot_chain.md) · [Kit pnpm](reference_frontend_kit_consumption_needs_pnpm.md) · [Kit state](reference_frontend_kit_state.md) · [CI outage](reference_oc2plus_ci_outage_2026_09.md) · [Kafka topic](reference_unset_kafka_topic_is_a_500.md) · [file grant](reference_file_service_grant_is_per_company.md) · [No session](reference_oc2plus_register_did_not_mint_a_session.md)
-- [ที่อยู่ = npm](reference_oc2plus_address_fields_are_a_bundled_npm_package.md) · [Naive TZ](reference_naive_timestamp_columns_shift_by_host_tz.md) · [Page registry](reference_oc2plus_member_page_registry.md) · [Allow-list](reference_react_route_owner_flip_needs_public_allowlist.md) · [gender typo](reference_oc2plus_gender_enum_typo_in_backoffice_spec.md) · [QA session](reference_oc2plus_member_app_local_qa_session.md) · [Design v2](project_oc2plus_member_app_design_v2.md) · [React migr](project_oc2plus_member_react_migration.md) · [--c-* dead](reference_oc2plus_member_c_vars_are_dead.md)
-- [Member FE](reference_oc2plus_member_frontend.md) · [Test login](reference_oc2plus_member_api_test_mode_login.md) · [codegen Go](reference_oc2plus_backoffice_codegen_is_go.md) · [UI polish](project_oc2plus_member_ui_polish_conventions.md) · [DaisyUI](reference_daisyui_progress_class_collision.md) · [Schema repo](reference_oc2plus_schema_lives_in_external_repo.md) · [Hand migrate](project_oc2275_crm_migrations_run_by_hand.md) · [2275 blocked](project_oc2275_remaining_blocked_on_decisions.md)
-- [3rdparty 2 พื้นผิว](reference_oc2plus_3rdparty_api_two_surfaces.md) — v1=member session มีเกท consent · v2=API key ไม่มี
-- [Key gap](project_oc2plus_3rdparty_apikey_gap.md) · [2275 audit](project_oc2275_audit_actionplan.md) · [Key local](project_oc2plus_apikey_local_run.md) · [TEST_KEY](project_oc2plus_test_key_production_gate.md) · [Keyring](project_sellsuki_keyring_vs_oc2275.md) · [Prod v2](project_oc2plus_prod_v2_apikey_unverified.md) · [Invariant](project_oc2plus_primary_invariant_pattern.md) · [Consent](project_oc2plus_consent_enforcement_model.md) · [No writer](reference_oc2plus_consent_binding_has_no_writer.md)
-- [member app test mode ไม่ติด 10-11](reference_member_app_local_test_mode_not_active_2026_10_11.md) — launch `web-member`=mock ใช้ `web-member-oc3126` · localtest เปิดแล้ว · OTP 502 เพราะ TEST_KEY ไม่ตรง secret ที่ proxy ส่ง
-- **On-pack QR:** [QR export](project_oc2plus_onpack_qr_export.md) · [Code lot](reference_oc2plus_code_lot_lifecycle_and_external_exporter.md)
-- **Loyalty:** [4412 รวม 4413+ledger](project_oc4412_absorbs_4413_and_4685_ledger.md) — ledger ยอดขายเขียนจาก Commit · 4685 เหลือฝั่งอ่าน · [Cluster](project_loyalty_point_cluster.md) · [Contract](project_loyalty_canonical_contract.md) · [No callers](project_award_engine_has_no_callers.md) · [Best single](project_loyalty_overlap_best_single_campaign.md) · [Base rate](project_oc4415_base_rate_state.md) · [Perm missing](project_pointclaim_permission_missing_from_owner_preset.md) · [4362 gaps](project_oc4362_claim_cluster_gaps.md) · [Approve+edit](project_oc4362_approve_and_admin_edit.md) · [OCR=VLM](project_oc4464_ocr_vendor_decision.md)
-- [4089 page](project_oc4089_consent_binding_page.md) · [4551 ready](project_oc4551_readiness_checklist.md) · [OTP 403](reference_oc2plus_otp_session_fails_3rdparty_consent.md) · [3559 tier](project_oc3559_member_tier_state.md) · [4560 slug](project_oc4560_editable_member_app_slug.md) · [4526 wallet](project_oc4526_coupon_wallet.md) · [4530 scan](project_oc4530_counter_scan_reanalysis.md) · [4363 code](project_oc4363_code_redemption_state.md) · [4529 card](project_oc4529_member_card_token.md) · [4356 news](project_oc4356_news_cms_dev_blockers.md)
-- [e2e ทิ้งแถว CRM](reference_e2e_sprint129_leaves_crm_orphans.md) — sprint-129 ลบบริษัทจาก CCS อย่างเดียว · ตัวเลข staging ปนขยะ · CCS 404 !400/!401
-- [LINE setup direction](project_line_setup_dual_surface_direction.md) · [SHARED_LIFF = PNP](reference_shared_liff_id_is_pnp_not_oc2plus.md) · [ชื่อบริษัท 2 กฎ](reference_company_name_rules_differ_ccs_vs_oc2plus.md) · [ผูก 3 ที่](reference_company_workspace_link_lives_in_three_stores.md) · [Sweep ไร้เจ้าของ](reference_bola_sweep_binds_without_an_owner.md) · [ป้ายอ่านฟิลด์ผี](reference_lineentry_badge_read_a_field_the_api_never_sent.md)
-- [App program](project_customer_app_program.md) · [Auth plan](project_oc2plus_customer_app_auth_plan.md) · [Web-OTP](project_oc4348_web_otp_session_minter.md) · [Invite chain](project_invite_multiapp_chain.md) · [BOLA bind](project_bola_binding_never_worked_via_ccs.md) · [4511-14 UX](project_oc4511_4514_ux_cluster.md) · [LIFF shell](project_oc2plus_liff_shell_is_the_line_entry.md) · [4523 login](project_oc4523_line_login_cards.md) · [BFF direct](project_oc2plus_customer_bff_reads_direct_not_proxy.md)
-
-- [KB100 eval 55/100 + ทิศทาง RAG](project_kb100_eval_state_and_rag_direction.md) — 2026-10-06 ตารางคือทั้งหมดที่หาย · เพดาน 8000 ไบต์ · ผู้ใช้ชั่งใจเลิก chunk RAG → อ่านทั้งเอกสาร/agentic
-- [local kb_rag_local DB](reference_local_kb_rag_db_and_milvus.md) — docker exec, canonical_knowledge_document, chunk text อยู่ใน Milvus · company_rag คือของเก่า
+## AI chat / KB (current thread)
+- [KB100 eval 55/100 + ทิศทาง RAG](project_kb100_eval_state_and_rag_direction.md) — 2026-10-06 ตารางคือทั้งหมดที่หาย · เพดาน 8000 ไบต์ · เลิก chunk RAG → อ่านทั้งเอกสาร
+- [local kb_rag_local DB](reference_local_kb_rag_db_and_milvus.md) — docker exec, canonical_knowledge_document, chunk text อยู่ใน Milvus
 - [Drive MCP เปิดด้วย ID](reference_google_drive_mcp_shared_files_by_id.md) — search ไฟล์ที่คนอื่นแชร์ได้ {} · text export ไทยสระหาย
-
-- [AI chat staging = ns sellsuki](reference_ai_chat_staging_is_ns_sellsuki_and_how_to_release_there.md) — dev-th ไม่มี stack · release ด้วยมือ: migration Job + manual deploy job + port-forward เช็ก · CI runner เต็ม retry by id
-- [inbound forward local](reference_chat_core_local_inbound_forward_for_live_tests.md) — ยิงข้อความลูกค้าเข้า chat-core local ตรง ๆ ไม่ต้องมี FB/เบราว์เซอร์ · อ่านผลจาก messages/decision_traces/fallback_cases
-- [QUOTA_EXHAUSTED = OpenRouter 402](reference_ai_agent_quota_exhausted_is_openrouter_402.md) — key local มีเครดิต $5 หมดแล้ว · เช็ก /api/v1/credits ก่อนเชื่อผลรัน
+- [AI chat staging = ns sellsuki](reference_ai_chat_staging_is_ns_sellsuki_and_how_to_release_there.md) — dev-th ไม่มี stack · release ด้วยมือ: migration Job + manual deploy job
+- [inbound forward local](reference_chat_core_local_inbound_forward_for_live_tests.md) — ยิงข้อความลูกค้าเข้า chat-core local ตรง ๆ · อ่านผลจาก messages/decision_traces/fallback_cases
+- [QUOTA_EXHAUSTED = OpenRouter 402](reference_ai_agent_quota_exhausted_is_openrouter_402.md) — เช็ก /api/v1/credits ก่อนเชื่อผลรัน
+- [monorepo docs อยู่ AI-49](reference_monorepo_docs_live_on_ai49_branch.md) — origin/main ค้าง ส.ค. · ledger commit ลง fix/AI-49 · อย่า push แทน session อื่น
+- [control-tower แยกทาง main↔AI-49](reference_control_tower_data_js_diverged_main_vs_ai49.md) — ยังไม่เคาะตัวจริง (MR !29)
 
 ## Sub-indexes — open when the topic comes up
+- [Identity / CCS / rps + local-stack traps](index_identity_ccs.md) — Kratos, Keto, rps, CCS config, local QA/login/Docker/overmind traps
+- [BOLA](index_bola.md) — deploy topology, access model, LINE/LIFF, contact, APM
+- [OC2Plus](index_oc2plus.md) — prod DB state, member app, 3rd-party API, loyalty, consent, LINE setup, product decisions
 - [Personal / machine / infra](index_infra.md) — machine, local stack, overmind, Caddy, rtk, DNS, CI runners, clusters
 - [Git / CI](index_git_ci.md) — merge traps, submodules, GitLab CI, review bot, helm, glab · [auto-merge ไม่รอ CI](reference_glab_auto_merge_merges_immediately_without_ci_gate.md) · [Outdated deploy job](reference_gitlab_outdated_deployment_job_skips_the_newer_pipeline.md)
 - [Patona / OMS / QMS / SukiPay / DS](index_patona_oms_ds.md) — Patona, OMS2, QMS, SukiPay, design system
 - [AI Chat Platform](index_ai_chat.md) — plan, chat-core, rag-core, AI agent, SLA, FB/Messenger
-- [Scrapyard/มหานครโลหะ](project_mahanakhon_scrapyard_integration.md) · [dev member-api host](reference_oc2plus_dev_member_api_host_needs_origin.md)
-- [OC2Plus ไม่บังคับแพ็กเกจ](project_oc2plus_no_packaging_enforcement.md) — ไม่มี client ของระบบ quota/plan เลย; เติมราคาแล้วก็ยังบังคับใช้ไม่ได้
-- [monorepo docs อยู่ AI-49](reference_monorepo_docs_live_on_ai49_branch.md) — origin/main ค้าง ส.ค. · ledger/environments.yaml commit ลง fix/AI-49 · อย่า push แทน session อื่น
-- [control-tower แยกทาง main↔AI-49](reference_control_tower_data_js_diverged_main_vs_ai49.md) — main ไม่มี validate.js/phase-4/snapshot · ยังไม่เคาะตัวจริง (MR !29)
-- [Team workflow goal](project_team_workflow_sharing_goal.md) — 2026-10-05 อยากสอนทีม OC2Plus ให้เร็วเหมือนตน · baseline ตัวเลข + blocker: workflow อยู่ root monorepo ทีมไม่ได้ใช้
-- [Test users = infra](project_test_users_as_infrastructure.md) — 2026-10-11 `scripts/seed-verify.sh` + `.claude/verify/.local/credentials.json` + sessions.md · agent ไม่ถามคนขอ login บน local อีก
-- [pstack / Control Glass](project_pstack_as_workflow_benchmark.md) — port ครบ 10-11: verifier, principles, feature map 4 surface (ยังไม่ drive จริง), /triage /correct /pause /resume, doctor, survivors · "control glass" = skill ของ Lauren ไม่ใช่ control tower
-- [SukiSpace marketplace+AIS](project_sukispace_marketplace_ais_vision.md) — 2026-10-06 ตั้งใจทำ multi-seller บน Patona OMS · sellsuki shop · AIS carrier billing · ไม่มีการ์ด/โค้ดเดิม
+- [Team workflow goal](project_team_workflow_sharing_goal.md) · [Test users = infra](project_test_users_as_infrastructure.md) · [pstack / Control Glass](project_pstack_as_workflow_benchmark.md) · [SukiSpace marketplace+AIS](project_sukispace_marketplace_ais_vision.md)
