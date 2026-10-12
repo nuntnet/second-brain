@@ -2,6 +2,7 @@
 
 Moved out of MEMORY.md on 2026-10-11. One line per memory; open the file before relying on it.
 
+- [BOLA v2 cleanup goal](project_bola_v2_cleanup_goal_2026_10_12.md) — 2026-10-12 เคลียร์การ์ดเก่าก่อน v2 · S8/S9/S10 จัดแล้ว · เหลือเฟส rewrite · [Jira workflow+bulk ผ่าน Chrome](reference_bola_jira_workflow_and_bulk_writes_via_chrome.md) — transition id, sprint id, resolution, classifier ต้องให้ user อนุมัติก่อนปิดเยอะ
 - [WMMT-1634 LINE แจ้งผู้แจ้ง BPM](project_wmmt1634_bpm_line_notify_liff_direction.md) — เสนอ LIFF+ID token ผูกเรื่อง + Jira Automation→APM · ยังไม่เคาะ
 - [BOLA dev DB อ่านไม่ได้เฉยๆ](reference_bola_dev_db_not_readable_without_creds_or_client.md) — kubectl ใช้ได้แต่ไม่มี psql/ไม่มี read endpoint บน system token · เช็คผ่านหน้า contact ใน BOLA console (resolver เดียวกับกฎเมนู)
 - [gitignore บัง cmd/bola_server](reference_bola_backend_gitignore_hides_cmd_bola_server.md) — `git add` ข้ามไฟล์ใหม่เงียบ ๆ
