@@ -40,6 +40,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [inbound forward local](reference_chat_core_local_inbound_forward_for_live_tests.md) — ยิงข้อความลูกค้าเข้า chat-core local ตรง ๆ · อ่านผลจาก messages/decision_traces/fallback_cases
 - [connector 403 = token chat-core ไม่ตรง](reference_connector_403_is_often_chat_core_token_mismatch.md) — CHAT_CORE_SERVICE_TOKEN ≠ chat-core SERVICE_TOKEN → 401 กลายเป็น 403 เงียบ ๆ · พิสูจน์ด้วย pod ใน cluster
 - [แอป FB staging = test app](reference_staging_fb_app_is_a_test_app.md) — 1722666062152698 เป็น test app ของ Sellsuki-New · เปิด Live ไม่ได้ · ตอบเฉพาะคนที่มี role · โดเมน staging ตั้งครบแล้ว 10-12
+- [Sellsuki-New ยังไม่ผ่าน review](reference_sellsuki_new_meta_app_state.md) — Live แล้วแต่ pages_messaging = Standard → ตอบได้เฉพาะคนมี role · webhook ชี้ tunnel local bearyweb · แชร์ staging+prod ต้องมี relay
 - [เปลี่ยนโมเดล = สิทธิ์ provider](project_model_change_is_provider_level.md) — 2026-10-12 PO: sellsuki.provider.llm.update เท่านั้น · company admin แก้ prompt ได้ · document mode ยังเป็น company admin
 - [poppler 25.03 ทำไทยใน PDF แตก](reference_poppler_2503_breaks_thai_pdf_text.md) — image python:3.12-slim = 25.03 · Mac = 26 · local ดูดีเพราะรุ่น poppler ไม่ใช่โค้ด · แก้ data-pipeline !22
 - [QUOTA_EXHAUSTED = OpenRouter 402](reference_ai_agent_quota_exhausted_is_openrouter_402.md) — เช็ก /api/v1/credits ก่อนเชื่อผลรัน
