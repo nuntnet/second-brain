@@ -20,6 +20,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 
 - [เทียบผลคำสั่งสองฝั่งด้วย rtk proxy](feedback_compare_command_outputs_with_rtk_proxy.md) — rtk ตัดผล go vet เหลือ "… 19 more lines" ทำให้ diff เพี้ยน · อ่านดิบทั้งสองฝั่งก่อนเทียบ
 - [เช็ค env เองได้ ผู้ใช้ไม่รู้](feedback_check_read_only_env_facts_yourself_user_does_not_know.md) — 10-11 ถาม "dev มี permission ไหม" แล้วผู้ใช้ตอบไม่ได้ · teleport login อยู่ แค่ port-forward rps + grpcurl GET · อย่าถามคนที่ไม่รู้
+- [nunt-mode profile](project_nunt_mode_agent_profile.md) — 2026-10-12 สร้างด้วย /my-mode: 2 ชั้น (tier 0-4 + สไตล์ 29 ข้อ) · eval ครั้งแรก REVISE · ยังไม่แชร์ทีมจนกว่า re-eval tier 2
 ## Jira
 - [Sweep ผ่านไฟล์](reference_jira_board_sweep_via_saved_results.md) — ผลใหญ่เซฟเป็นไฟล์ parse ด้วย python
 - [BOLA](reference_bola_jira_project.md) · [OC2Plus](reference_oc2plus_jira_project.md) · [Patona](reference_pat_jira_project.md) · [Sprint ids](reference_jira_sprint_ids_not_contiguous.md) · [PAT sprints](reference_pat_board_sprints.md) · [PAT epics](project_pat_epic_links_unwired.md) · [Crosses sessions](reference_jira_mcp_crosses_responses_between_sessions.md) · [Quirks](reference_jira_mcp_search_quirks.md) · [ADF Thai](reference_jira_editissue_adf_breakage.md) · [No fallback](reference_no_local_jira_fallback.md) · [403 writes](reference_jira_mcp_writes_403_midsession.md)
