@@ -27,11 +27,13 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [BOLA](reference_bola_jira_project.md) · [OC2Plus](reference_oc2plus_jira_project.md) · [Patona](reference_pat_jira_project.md) · [Sprint ids](reference_jira_sprint_ids_not_contiguous.md) · [PAT sprints](reference_pat_board_sprints.md) · [PAT epics](project_pat_epic_links_unwired.md) · [Crosses sessions](reference_jira_mcp_crosses_responses_between_sessions.md) · [Quirks](reference_jira_mcp_search_quirks.md) · [ADF Thai](reference_jira_editissue_adf_breakage.md) · [No fallback](reference_no_local_jira_fallback.md) · [403 writes](reference_jira_mcp_writes_403_midsession.md)
 
 ## Tests
+- [slog.Init ทับทั้ง binary](reference_slog_init_once_silences_the_test_binary.md) — sync.Once · init() ที่ปิดเสียงทำให้เทสที่อ่าน log จริง fail เหมือนโค้ดพัง
 - [ssk user-detail 2 แถว](reference_ssk_widget_user_detail_height_is_a_string.md) — widgetHeight ต้องเป็น string "6" · สูงสุด 7 แถว
 - [Robot CI ไร้ target](reference_sukispace_robot_ci_has_no_target_service.md) — sukispace api-automate ยิง localhost:8080 ที่ไม่มี service → แดงเสมอ
 - [Uncollected](reference_green_count_hides_uncollected_suite.md) · [Sentry dual](reference_sentry_dual_hub_on_version_skew.md) · [Stub loose](reference_test_stub_more_permissive_than_service.md) · [testify](reference_testify_permissive_default_wins.md) · [Timing](reference_timing_dependent_concurrency_tests.md) · [Turbo](reference_turbo_cache_crosssession_false_green.md) · [Lit SSR](reference_lit_react_node_condition_hollows_tests.md) · [DS testId](reference_ds_testid_is_a_property.md) · [jsdom 25](reference_node25_localstorage_jsdom_conflict.md)
 
 ## Go / DB
+- [ns octoplus ไม่ใช่ sellsuki](reference_oc2plus_cluster_namespace_is_octoplus.md) — internal host เทส scope ได้ · gateway จริง crmapi.staging-th.oc2.plus ทับ header ปลอม
 - [Files≠schema](reference_migration_files_are_not_applied_schema.md) · [envDefault](reference_envdefault_localhost_masks_missing_config.md) · [goqu](reference_goqu_dialect_blank_import.md) · [AutoMigrate](reference_gorm_pgx_libpq_automigrate.md) · [Drops false](reference_gorm_updates_drops_false.md) · [Lease](reference_lease_claim_ownership_bug_class.md) · [Partial idx](reference_pg_partial_index_onconflict_generic_plan.md) · [404 open](reference_ambiguous_404_fail_open.md) · [Own guard](reference_auth_endpoint_behind_own_guard.md) · [Kafka silent](reference_kafka_silent_publish_failure.md) · [Fiber ctx](reference_fiber_ctx_strings_corrupt_prometheus_labels.md)
 
 ## AI chat / KB (current thread)
@@ -56,6 +58,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [OC2Plus](index_oc2plus.md) — prod DB state, member app, 3rd-party API, loyalty, consent, LINE setup, product decisions
 - [Personal / machine / infra](index_infra.md) — machine, local stack, overmind, Caddy, rtk, DNS, CI runners, clusters
 - [Git / CI](index_git_ci.md) — merge traps, submodules, GitLab CI, review bot, helm, glab · [auto-merge ไม่รอ CI](reference_glab_auto_merge_merges_immediately_without_ci_gate.md) · [Outdated deploy job](reference_gitlab_outdated_deployment_job_skips_the_newer_pipeline.md)
+- [Go CLI verify TLS ไม่ได้ใน sandbox](reference_sandbox_blocks_go_cli_tls_and_ssh.md) — glab/tsh/kubectl ตาย OSStatus -26276 · SSH ก็บล็อก · ใช้ GitLab REST ผ่าน curl ทำ branch/commit/cherry-pick/MR ได้ครบ
 - [Patona / OMS / QMS / SukiPay / DS](index_patona_oms_ds.md) — Patona, OMS2, QMS, SukiPay, design system
 - [AI Chat Platform](index_ai_chat.md) — plan, chat-core, rag-core, AI agent, SLA, FB/Messenger
 - [Team workflow goal](project_team_workflow_sharing_goal.md) · [Test users = infra](project_test_users_as_infrastructure.md) · [pstack / Control Glass](project_pstack_as_workflow_benchmark.md) · [SukiSpace marketplace+AIS](project_sukispace_marketplace_ais_vision.md)
