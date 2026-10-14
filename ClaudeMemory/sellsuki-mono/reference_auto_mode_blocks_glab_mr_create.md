@@ -31,3 +31,10 @@ plus a `create-mrs.sh` that skips branches with an open MR, then give the user t
 `bash` block. Do not loop on the denial. Same family as [[reference_dev_rps_membertier_missing_0025_present]]
 (auto mode blocking rps grants). Project ids: chat-core 849, ai-agent 850, admin-fe 851, rag-core 787,
 knowledge-connector 882.
+
+**2026-10-13 update:** `glab api -X POST .../merge_requests -f ...` and `-X PUT .../merge_requests/N/merge`
+both went through in the OC-4739 session (cwd = monorepo root, user had said "merge ได้เลย"). What the
+classifier DID refuse that day: `kubectl set env` on a deployment the user had not named, creating a new
+Pod on staging, reading Secret key names on staging, and a DELETE-less `kubectl apply` — each worked once
+the user ran it in their own terminal (`! cmd`) or confirmed explicitly. So: try the glab call, and hand the
+user a ready file + command only when it is actually denied.
