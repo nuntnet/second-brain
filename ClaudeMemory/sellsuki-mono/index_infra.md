@@ -20,3 +20,4 @@ Open the topic file before relying on any line here.
 - [200=CDN ไม่ใช่ cluster](reference_dev_hostname_200_is_cdn_not_cluster.md) — curl root SPA ได้ 200 ตอน 23:30 ทั้งที่ระบบปิด · เช็ค date + kubectl ก่อน · classifier บล็อก kubectl exec เขียน DB
 - [CI≠deploy](reference_ci_history_and_dns_are_not_deploy_status.md) · [Registry full](reference_fountain_registry_quota_full.md) · [dev-th](reference_dev_th_cluster_access.md) · [Teleport](reference_teleport_session_kills_devth_access.md)
 - [auto mode ไม่ให้เปิด flag](reference_auto_mode_blocks_flag_flips.md) — แก้ values-*.yml ให้ flag เป็น true ถูกปฏิเสธ "Feature Flag Writes" แม้เป็น branch ยังไม่ push · ใส่เป็นขั้นของผู้ใช้ใน runbook
+- [VPN clients](reference_machine_vpn_clients_wireguard_is_company_vpn.md) — WireGuard = VPN บริษัท (prod/staging-th) split-tunnel 10.21/16 · Tailscale หยุด · sandbox บล็อก ps/route/networksetup
