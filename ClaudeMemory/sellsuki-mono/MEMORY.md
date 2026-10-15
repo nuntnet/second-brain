@@ -24,6 +24,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Robot ตัวแปรไม่แยกตัวพิมพ์](reference_robot_variables_are_case_insensitive_loop_var_overwrites_suite_var.md) — ${m} ใน FOR ทับ ${M} ของ suite เงียบ ๆ · ชนมา 3 ครั้ง · counter อยู่ใต้ auth_guard:*
 - [Tiers + Decision Inbox](project_workflow_tiers_and_inbox_2026_10_13.md) — 2026-10-13 AC ชั้น A/B/C (B ไม่บล็อก MR เข้า develop) + คิวคำถามลงไฟล์ · ยังไม่ eval/commit · ผู้ใช้ยืนยันว่าต้องรัน agent ขนานต่อ
 - [OC-4739 file-service access backfill](project_oc4739_file_service_access_backfill.md) — 10-13/14 CCS สร้าง role ให้ identity ตอนสร้างบริษัท + backfill · staging 14,749 บริษัท รันเป็น pod แยก (arm) · เหลือ AC8 + CCS crash
+- [อ่าน log Job ก่อนลบ](feedback_read_job_logs_before_deleting_the_job.md) — 10-15 _0026 ล้ม 14 แต่ลบ Job ก่อนอ่าน · gormigrate รันซ้ำเป็น no-op · เซฟ log ลงไฟล์ก่อนเสมอ
 - [Sprint sweep = deploy ไม่ใช่พิสูจน์ AC](feedback_sprint_sweep_board_column_means_deploy_not_ac_proof.md) — 10-14 RTT(staging)=โค้ดบน main ทุก repo+deploy · คอขวด OC2Plus คือ main twin ค้าง ไม่ใช่ PO · merge-wave.py · Jira ทีละคอล
 ## Jira
 - [Sweep ผ่านไฟล์](reference_jira_board_sweep_via_saved_results.md) — ผลใหญ่เซฟเป็นไฟล์ parse ด้วย python
