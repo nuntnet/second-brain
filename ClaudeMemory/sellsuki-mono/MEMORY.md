@@ -67,3 +67,5 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [AI Chat Platform](index_ai_chat.md) — plan, chat-core, rag-core, AI agent, SLA, FB/Messenger
 - [Team workflow goal](project_team_workflow_sharing_goal.md) · [Test users = infra](project_test_users_as_infrastructure.md) · [pstack / Control Glass](project_pstack_as_workflow_benchmark.md) · [SukiSpace marketplace+AIS](project_sukispace_marketplace_ais_vision.md)
 - [dev: user ใหม่ติด 2 จุด](project_dev_onboarding_dead_ends_2026_10_11.md) — admin FE สร้าง company ผ่าน route provider (403) ทั้งที่มี POST /v1/user/company · seed portal ชี้ crm.dev-th.oc2.plus (NXDOMAIN) ต้องเป็น crm.dev.oc2.plus · ยังไม่แก้
+- [BOLA Postgres tests] (reference_bola_postgres_tests_need_disposable_container_and_two_dsn_forms.md) — throwaway postgres :55432 · DSN เป็น URL ใน contact_profile_repository แต่ key=value ใน contact_metrics_repository · race test จับแบบสุ่ม ต้องวนรัน
+- [BOLA Jira ไม่มี In Review + merge ถูกบล็อก](reference_bola_jira_has_no_in_review_status_and_auto_mode_denies_merge.md) — ห้ามเดา status · ให้ผู้ใช้กด merge MR เอง
