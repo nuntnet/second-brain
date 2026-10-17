@@ -1,6 +1,6 @@
 ---
 name: reference_sandbox_blocks_go_cli_tls_and_ssh
-description: ใน sandbox นี้ glab/tsh/kubectl (Go) verify TLS ไม่ได้ (OSStatus -26276) และ git push/fetch ผ่าน SSH ถูกบล็อก — ใช้ GitLab REST API ผ่าน curl แทนได้ทุกอย่าง รวมทั้งสร้าง branch/commit/MR/cherry-pick
+description: ใน sandbox นี้ glab/tsh/kubectl (Go) verify TLS ไม่ได้ (OSStatus -26276) และ git ผ่าน SSH ถูกบล็อก — git fetch/push ทำได้ผ่าน HTTPS + glab token ถ้า override url.insteadOf ที่ rewrite เป็น SSH (2026-10-17) · ที่เหลือใช้ GitLab REST ผ่าน curl (ใช้ /usr/bin/curl เต็ม path)
 metadata:
   node_type: memory
   type: reference
@@ -35,3 +35,18 @@ cherry-pick ฝั่ง server (`POST repository/commits/:sha/cherry_pick`), �
 อย่าพึ่งมันเป็นทางหลัก
 
 เกี่ยวข้อง: [[reference_teleport_session_kills_devth_access]] (อันนั้นคือ VPN หลุดจริง — แยกให้ออก)
+
+**2026-10-17 — git fetch/push ผ่าน HTTPS ใช้ได้จริง** (ไม่ต้องยิง commit ผ่าน REST):
+- global git config มี `url.git@gitlab.sellsuki.com:.insteadOf=https://gitlab.sellsuki.com` → ทุก URL https ถูกแปลงเป็น SSH เงียบ ๆ
+  แล้วตายด้วย "Please make sure you have the correct access rights" (ดูเหมือน auth ผิด ที่จริงคือ SSH ถูกบล็อก)
+- ทางแก้: ใส่ rule ที่ prefix ยาวกว่า (longest match ชนะ) ให้แปลงเป็นตัวเอง + basic auth ด้วย token ผ่าน header:
+  ```
+  B64=$(printf 'oauth2:%s' "$TOK" | base64)
+  /usr/bin/git -c credential.helper= \
+    -c "url.https://gitlab.sellsuki.com/sellsuki/.insteadOf=https://gitlab.sellsuki.com/sellsuki/" \
+    -c "http.extraheader=Authorization: Basic $B64" fetch https://gitlab.sellsuki.com/<path>.git +refs/heads/main:refs/remotes/origin/main
+  ```
+  (`PRIVATE-TOKEN` header ใช้กับ git ไม่ได้ ต้องเป็น Basic oauth2:<token>) · push ก็แบบเดียวกัน
+- กับดักใน zsh: ห้ามตั้งตัวแปรชื่อ `path` (ผูกกับ PATH ทั้ง shell → "command not found: git") และ `set -- $spec` ไม่ split คำ ต้อง `${=spec}`
+- `curl` ใน PATH ของ sandbox อาจหาย → เรียก `/usr/bin/curl`
+- การเชื่อม localhost (Postgres เทส) จาก sandbox ถูกบล็อก (`connect: operation not permitted`) และ `httptest` bind ไม่ได้ → รัน `go test` ที่ต้อง DB แบบ dangerouslyDisableSandbox พร้อม `GOCACHE` ใน scratchpad; docker daemon เรียกได้เฉพาะนอก sandbox

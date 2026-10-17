@@ -63,7 +63,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [OC2Plus](index_oc2plus.md) — prod DB state, member app, 3rd-party API, loyalty, consent, LINE setup, product decisions
 - [Personal / machine / infra](index_infra.md) — machine, local stack, overmind, Caddy, rtk, DNS, CI runners, clusters
 - [Git / CI](index_git_ci.md) — merge traps, submodules, GitLab CI, review bot, helm, glab · [auto-merge ไม่รอ CI](reference_glab_auto_merge_merges_immediately_without_ci_gate.md) · [Outdated deploy job](reference_gitlab_outdated_deployment_job_skips_the_newer_pipeline.md)
-- [Go CLI verify TLS ไม่ได้ใน sandbox](reference_sandbox_blocks_go_cli_tls_and_ssh.md) — glab/tsh/kubectl ตาย OSStatus -26276 · SSH ก็บล็อก · ใช้ GitLab REST ผ่าน curl ทำ branch/commit/cherry-pick/MR ได้ครบ
+- [Go CLI verify TLS ไม่ได้ใน sandbox](reference_sandbox_blocks_go_cli_tls_and_ssh.md) — glab/tsh/kubectl ตาย OSStatus -26276 · SSH บล็อก · git fetch/push ผ่าน HTTPS+token ได้ถ้า override insteadOf (10-17) · REST ผ่าน /usr/bin/curl
 - [Patona / OMS / QMS / SukiPay / DS](index_patona_oms_ds.md) — Patona, OMS2, QMS, SukiPay, design system
 - [AI Chat Platform](index_ai_chat.md) — plan, chat-core, rag-core, AI agent, SLA, FB/Messenger
 - [Team workflow goal](project_team_workflow_sharing_goal.md) · [Test users = infra](project_test_users_as_infrastructure.md) · [pstack / Control Glass](project_pstack_as_workflow_benchmark.md) · [SukiSpace marketplace+AIS](project_sukispace_marketplace_ais_vision.md)
