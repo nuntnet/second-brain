@@ -17,6 +17,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [auto mode บล็อกเปิด MR](reference_auto_mode_blocks_glab_mr_create.md) — เตรียม JSON + create-mrs.sh ให้ผู้ใช้กดเอง · project id chat-core 849 / agent 850 / admin-fe 851 / rag-core 787 / connector 882
 
 - [OC2Plus develop↔main แยกสาย](reference_oc2plus_backoffice_develop_main_diverged_2026_10_11.md) — 10-11 ทั้ง 5 repo main merge เข้า develop ไม่ได้ (44/22/25/40/14 conflicts) · OC-4736 รวมสายครั้งเดียว · twin คือ workaround เดิม
+- [rps + management-backend ก็แยกสาย](reference_rps_and_management_backend_develop_main_diverged.md) — 10-20 rps เลข migration ซ้ำ (0024/0030/0031/0034 vs 0032/0033), mgmt-backend 52/61 commit ชน 25 ไฟล์ · ใช้ twin `<branch>-develop` + cherry-pick; branch สะอาดเข้า main · mgmt-backend path = sellsuki/patona/
 
 - [rtk cat ตัด comment](feedback_rtk_cat_strips_comments_never_use_cat_to_rewrite_files.md) — 10-20 `cat x > f` ลบ comment 13 บรรทัดใน main.go · เขียนไฟล์ด้วย python bytes เท่านั้น
 - [เทียบผลคำสั่งสองฝั่งด้วย rtk proxy](feedback_compare_command_outputs_with_rtk_proxy.md) — rtk ตัดผล go vet เหลือ "… 19 more lines" ทำให้ diff เพี้ยน · อ่านดิบทั้งสองฝั่งก่อนเทียบ
