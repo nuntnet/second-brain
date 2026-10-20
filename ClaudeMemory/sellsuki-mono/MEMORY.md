@@ -18,6 +18,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 
 - [OC2Plus develop↔main แยกสาย](reference_oc2plus_backoffice_develop_main_diverged_2026_10_11.md) — 10-11 ทั้ง 5 repo main merge เข้า develop ไม่ได้ (44/22/25/40/14 conflicts) · OC-4736 รวมสายครั้งเดียว · twin คือ workaround เดิม
 
+- [rtk cat ตัด comment](feedback_rtk_cat_strips_comments_never_use_cat_to_rewrite_files.md) — 10-20 `cat x > f` ลบ comment 13 บรรทัดใน main.go · เขียนไฟล์ด้วย python bytes เท่านั้น
 - [เทียบผลคำสั่งสองฝั่งด้วย rtk proxy](feedback_compare_command_outputs_with_rtk_proxy.md) — rtk ตัดผล go vet เหลือ "… 19 more lines" ทำให้ diff เพี้ยน · อ่านดิบทั้งสองฝั่งก่อนเทียบ
 - [เช็ค env เองได้ ผู้ใช้ไม่รู้](feedback_check_read_only_env_facts_yourself_user_does_not_know.md) — 10-11 ถาม "dev มี permission ไหม" แล้วผู้ใช้ตอบไม่ได้ · teleport login อยู่ แค่ port-forward rps + grpcurl GET · อย่าถามคนที่ไม่รู้
 - [nunt-mode profile](project_nunt_mode_agent_profile.md) — 2026-10-12 สร้างด้วย /my-mode: 2 ชั้น (tier 0-4 + สไตล์ 29 ข้อ) · eval ครั้งแรก REVISE · ยังไม่แชร์ทีมจนกว่า re-eval tier 2
