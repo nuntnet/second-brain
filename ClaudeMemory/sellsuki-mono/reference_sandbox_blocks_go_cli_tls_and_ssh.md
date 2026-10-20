@@ -50,3 +50,9 @@ cherry-pick ฝั่ง server (`POST repository/commits/:sha/cherry_pick`), �
 - กับดักใน zsh: ห้ามตั้งตัวแปรชื่อ `path` (ผูกกับ PATH ทั้ง shell → "command not found: git") และ `set -- $spec` ไม่ split คำ ต้อง `${=spec}`
 - `curl` ใน PATH ของ sandbox อาจหาย → เรียก `/usr/bin/curl`
 - การเชื่อม localhost (Postgres เทส) จาก sandbox ถูกบล็อก (`connect: operation not permitted`) และ `httptest` bind ไม่ได้ → รัน `go test` ที่ต้อง DB แบบ dangerouslyDisableSandbox พร้อม `GOCACHE` ใน scratchpad; docker daemon เรียกได้เฉพาะนอก sandbox
+
+**2026-10-20 — subagent pattern that works:** agents in their own sandbox could neither fetch nor push. Retrying unsandboxed was refused by the permission classifier, and the parent must not push on the agent's behalf (permission laundering).
+- **Before spawning:** the parent session `git fetch`es and creates the worktree on `origin/main` itself, then gives the agent the path.
+- **The agent** commits locally only and does no network operations.
+- **The parent** pushes and opens the MR (`glab api` from inside the worktree), with the user's go-ahead.
+- `go test` with `httptest` fails in the agent's sandbox (port bind refused), so the parent re-runs the whole suite unsandboxed before pushing.
