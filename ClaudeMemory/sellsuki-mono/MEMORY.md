@@ -17,7 +17,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [auto mode บล็อกเปิด MR](reference_auto_mode_blocks_glab_mr_create.md) — เตรียม JSON + create-mrs.sh ให้ผู้ใช้กดเอง · project id chat-core 849 / agent 850 / admin-fe 851 / rag-core 787 / connector 882
 
 - [OC2Plus develop↔main แยกสาย](reference_oc2plus_backoffice_develop_main_diverged_2026_10_11.md) — 10-11 ทั้ง 5 repo main merge เข้า develop ไม่ได้ (44/22/25/40/14 conflicts) · OC-4736 รวมสายครั้งเดียว · twin คือ workaround เดิม
-- [rps ไม่ได้แยกสาย / mgmt-backend แยกจริง](reference_rps_and_management_backend_develop_main_diverged.md) — 10-20 rps: merge MS-1420 ลบ dir 0032/0033 ของ main (คืนด้วย !178) · mgmt-backend (path sellsuki/patona/): QMS port สองรอบ 61/52 → merge main→develop ครั้งเดียว, auto-merge ซ้อน 6 ไฟล์ จับด้วย go vet · push โดน classifier บล็อก
+- [rps ไม่ได้แยกสาย / mgmt-backend แยกจริง](reference_rps_and_management_backend_develop_main_diverged.md) — 10-20 rps: merge MS-1420 ลบ dir 0032/0033 ของ main (คืนด้วย !178) · mgmt-backend (path sellsuki/patona/): QMS port สองรอบ 61/52 → merge main→develop ครั้งเดียว, auto-merge ซ้อน 6 ไฟล์ จับด้วย go vet · push โดน classifier บล็อก · 10-22 main มีเทสห้ามเลขซ้ำ → seed เป็น 0035 บน main
 
 - [rtk cat ตัด comment](feedback_rtk_cat_strips_comments_never_use_cat_to_rewrite_files.md) — 10-20 `cat x > f` ลบ comment 13 บรรทัดใน main.go · เขียนไฟล์ด้วย python bytes เท่านั้น
 - [เทียบผลคำสั่งสองฝั่งด้วย rtk proxy](feedback_compare_command_outputs_with_rtk_proxy.md) — rtk ตัดผล go vet เหลือ "… 19 more lines" ทำให้ diff เพี้ยน · อ่านดิบทั้งสองฝั่งก่อนเทียบ
@@ -28,6 +28,8 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [OC-4739 file-service access backfill](project_oc4739_file_service_access_backfill.md) — 10-13/14 CCS สร้าง role ให้ identity ตอนสร้างบริษัท + backfill · staging 14,749 บริษัท รันเป็น pod แยก (arm) · เหลือ AC8 + CCS crash
 - [อ่าน log Job ก่อนลบ](feedback_read_job_logs_before_deleting_the_job.md) — 10-15 _0026 ล้ม 14 แต่ลบ Job ก่อนอ่าน · gormigrate รันซ้ำเป็น no-op · เซฟ log ลงไฟล์ก่อนเสมอ
 - [retry ตอนเช้าเป็นระลอก](feedback_morning_retries_in_waves_runner_cluster_is_12_nodes.md) — 10-21 ยิง retry 28 job รวดเดียว → runner 12 node เต็ม "Insufficient cpu" รอบสอง + deploy ตาย · รอบละ ≤6–8 อ่านครั้งเดียวก่อนรอบถัดไป · classifier ปฏิเสธ loop รวม ให้แยกต่อ MR · govulncheck แดงทุก MR = stdlib เลื่อน bump toolchain 3 จุด
+- [กลางคืนปิดแค่ staging-th](reference_night_window_is_staging_th_only_production_runners_run.md) — Production runner (5125 มี tag amd) รับ job ตอนกลางคืน; job tag staging-th เท่านั้นที่รอเช้า · ดู runner.description ก่อนสรุป
+- [เทส console staging ใน pane](reference_staging_ai_chat_console_drive_recipe.md) — URL ai-chat-admin.staging-th, inbox = /w/<id>, PO ล็อกอินใน pane เอง, resize 1280 ก่อนถึงเห็น picker "รับเอง"
 - [Sprint sweep = deploy ไม่ใช่พิสูจน์ AC](feedback_sprint_sweep_board_column_means_deploy_not_ac_proof.md) — 10-14 RTT(staging)=โค้ดบน main ทุก repo+deploy · คอขวด OC2Plus คือ main twin ค้าง ไม่ใช่ PO · merge-wave.py · Jira ทีละคอล
 ## Jira
 - [Sweep ผ่านไฟล์](reference_jira_board_sweep_via_saved_results.md) — ผลใหญ่เซฟเป็นไฟล์ parse ด้วย python

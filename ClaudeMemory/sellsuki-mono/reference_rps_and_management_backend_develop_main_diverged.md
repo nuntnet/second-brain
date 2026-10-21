@@ -23,3 +23,6 @@ metadata:
 - release note บน dev: QMS mutation ต้องมี `sellsuki.provider.ai_quota.manage` (rps seed 0024_seed_ai_provider_admin_role)
 
 **How to apply:** ก่อนเปิด MR เข้า develop ให้ fetch ทั้งสองแล้ว `git merge --no-commit origin/develop` ดู conflict · ถ้า main ⊂ develop แต่ยังชน = มีคน resolve merge ด้วยการลบไฟล์ของ main ดู `git log -m --name-status` · ถ้าแยกสายจริง reconcile main→develop ครั้งเดียว (ห้าม develop→main) และหลัง merge ต้องรัน `go vet` + ไล่ `git diff origin/main --name-only` ทีละไฟล์ว่าเหลือแค่งาน develop-only เพราะ auto-merge ซ้อนไม่มี marker · เทสชั่วคราว probe descriptor ถ้า pb.go merge แบบ text · ตัวอย่างเดิม: [[reference_oc2plus_backoffice_develop_main_diverged_2026_10_11]]
+
+**2026-10-22 — rps main มี `TestMigrationNumbersAreUnique` แล้ว (MS-1420, merge main 10-21 10:09):** กฎ OC-4736 "union, keep both numbers" ใช้บน main ไม่ได้อีก — branch ที่ตัดจาก main ต้องได้เลขที่ยังว่างบน main (seed chat workspace กลายเป็น **0035** บน main, !180) ขณะที่ develop ยังถือ 0034_seed (dev บันทึก id นี้แล้ว) → ตอน merge main เข้า develop ให้คง 0035 ลบ dir 0034 ของ develop; แถว 0034 ใน migrations table ของ dev เป็นกำพร้าแต่ไม่เป็นไร (upsert) · ก่อนตั้งเลข migration ใหม่ให้ `git ls-tree origin/main cmd/migration/migrations/` ดูเลขล่าสุดของ main ไม่ใช่ของ branch ตัวเอง
+
