@@ -14,6 +14,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Comment การ์ด](feedback_comment_jira_card_when_loop_closes.md) — ครบ loop แล้วคอมเมนต์ Jira + ย้ายสถานะตาม MR (shipping.md §15)
 - [Urgent thread](feedback_keep_urgent_thread_visible.md) — หัวข้อใหม่อย่ากลบงานด่วนที่ยังเสียหายอยู่
 - [กวาด branch Codex แล้วส่งทั้งก้อน](feedback_sweep_codex_branches_and_ship_whole.md) — 10-11 release branch ของ Codex เป็น superset ของ branch ผม · "BLOCKED รอคนยืนยัน" ใน ledger ของ Codex ไม่ใช่ blocker ของ PO
+- [Stacked promotion wave develop→main](reference_stacked_promotion_wave_develop_to_main.md) — 10-22 chain-merge ใน scratch worktree, conflict = เอาไฟล์ develop, ปิดด้วย sync branch ให้ main == develop · classifier ไม่ให้กด merge ต้องให้ผู้ใช้รันสคริปต์
 - [auto mode บล็อกเปิด MR](reference_auto_mode_blocks_glab_mr_create.md) — เตรียม JSON + create-mrs.sh ให้ผู้ใช้กดเอง · project id chat-core 849 / agent 850 / admin-fe 851 / rag-core 787 / connector 882
 
 - [OC2Plus develop↔main แยกสาย](reference_oc2plus_backoffice_develop_main_diverged_2026_10_11.md) — 10-11 ทั้ง 5 repo main merge เข้า develop ไม่ได้ (44/22/25/40/14 conflicts) · OC-4736 รวมสายครั้งเดียว · twin คือ workaround เดิม
