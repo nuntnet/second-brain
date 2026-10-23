@@ -81,3 +81,5 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [dev: user ใหม่ติด 2 จุด](project_dev_onboarding_dead_ends_2026_10_11.md) — admin FE สร้าง company ผ่าน route provider (403) ทั้งที่มี POST /v1/user/company · seed portal ชี้ crm.dev-th.oc2.plus (NXDOMAIN) ต้องเป็น crm.dev.oc2.plus · ยังไม่แก้
 - [BOLA Postgres tests] (reference_bola_postgres_tests_need_disposable_container_and_two_dsn_forms.md) — throwaway postgres :55432 · DSN เป็น URL ใน contact_profile_repository แต่ key=value ใน contact_metrics_repository · race test จับแบบสุ่ม ต้องวนรัน
 - [BOLA Jira ไม่มี In Review + merge ถูกบล็อก](reference_bola_jira_has_no_in_review_status_and_auto_mode_denies_merge.md) — ห้ามเดา status · ให้ผู้ใช้กด merge MR เอง
+- [รีวิว mock ต้องเทียบ adapter จริง](feedback_mock_mode_ui_review_check_real_adapter_before_calling_defect.md) — 10-23 enum ดิบ/ชื่อ •••/ข้อความไทยใน EN ที่เห็นใน mock เป็นของ mock ทั้ง 3 ข้อ · grep real adapter ก่อนเรียก defect
+- [console mock :5192](reference_ai_chat_admin_mock_preview_5192_no_login.md) — preview_start web-ai-chat-admin-mock ไม่ต้อง login · ws_demo_default · ดู layout/contrast ได้ ไม่ใช่ข้อมูล
