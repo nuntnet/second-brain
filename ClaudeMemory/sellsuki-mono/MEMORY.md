@@ -11,6 +11,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [po-lead ซ้อนชั้นทำร่างหาย](feedback_nested_po_lead_loses_drafts_write_to_files.md) — spawn writer จาก main session ให้เขียนลงไฟล์ก่อน publish
 - [gemini-2.5-flash เท่านั้น](feedback_gemini_25_flash_is_the_kb_answer_model.md) — 2026-10-07 ปิด phase เลือก model · optimize ด้วย gemini จนถึง 100/100
 - [เทสจากการ์ด](feedback_tests_derive_from_the_card_not_the_code.md) — การ์ด=SSOT · ห้ามแก้ expected ให้ตรงโค้ด
+- [Standing approval merge→deploy staging](feedback_standing_approval_merge_deploy_staging_after_gates.md) — 10-23 PO: เกตครบ (verifier A, ship-check, bot ไม่มี MUST FIX, pipeline เขียว) → merge/deploy staging/migration Job ได้เองแล้วรายงาน · main→prod ยังถาม
 - [Comment การ์ด](feedback_comment_jira_card_when_loop_closes.md) — ครบ loop แล้วคอมเมนต์ Jira + ย้ายสถานะตาม MR (shipping.md §15)
 - [Urgent thread](feedback_keep_urgent_thread_visible.md) — หัวข้อใหม่อย่ากลบงานด่วนที่ยังเสียหายอยู่
 - [กวาด branch Codex แล้วส่งทั้งก้อน](feedback_sweep_codex_branches_and_ship_whole.md) — 10-11 release branch ของ Codex เป็น superset ของ branch ผม · "BLOCKED รอคนยืนยัน" ใน ledger ของ Codex ไม่ใช่ blocker ของ PO
