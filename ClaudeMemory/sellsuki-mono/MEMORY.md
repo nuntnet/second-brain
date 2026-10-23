@@ -33,6 +33,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [replay เข้า chat-core staging ใน pod](reference_staging_chat_core_replay_recipe_in_pod_wget.md) — wget ใน pod ด้วย $SERVICE_TOKEN, ยิงชุด bubble ใน exec เดียว, อ่าน inbound_ai_work/traces จาก psql ใน datastore, metric turn_superseded
 - [agent staging Vault token หมดอายุ = crash ตอน restart](reference_ai_agent_staging_vault_token_expiry_crash_on_restart.md) — 10-22 deploy ล้ม helm timeout จริง ๆ คือ Vault 403 ตอน boot · pod เก่ารอดจน restart · ดู logs --previous ก่อน retry · ต้องให้คนมีสิทธิ์ Vault ออก token ใหม่
 - [กลางคืนปิดแค่ staging-th](reference_night_window_is_staging_th_only_production_runners_run.md) — Production runner (5125 มี tag amd) รับ job ตอนกลางคืน; job tag staging-th เท่านั้นที่รอเช้า · ดู runner.description ก่อนสรุป
+- [เปิด console local บน localhost ด้วย seed identity](reference_local_ai_chat_console_open_on_localhost_with_seed_identity.md) — overmind -l …,web-ai-chat-admin · http://localhost:5191 (vite proxy) · login curl ที่ :4433 แล้ววาง cookie ผ่านไฟล์ static · route /w/<ws>/settings/<page>
 - [เทส console staging ใน pane](reference_staging_ai_chat_console_drive_recipe.md) — URL ai-chat-admin.staging-th, inbox = /w/<id>, PO ล็อกอินใน pane เอง, resize 1280 ก่อนถึงเห็น picker "รับเอง"
 - [Sprint sweep = deploy ไม่ใช่พิสูจน์ AC](feedback_sprint_sweep_board_column_means_deploy_not_ac_proof.md) — 10-14 RTT(staging)=โค้ดบน main ทุก repo+deploy · คอขวด OC2Plus คือ main twin ค้าง ไม่ใช่ PO · merge-wave.py · Jira ทีละคอล
 ## Jira
