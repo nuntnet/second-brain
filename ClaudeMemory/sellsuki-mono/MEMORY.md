@@ -38,6 +38,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [เทส console staging ใน pane](reference_staging_ai_chat_console_drive_recipe.md) — URL ai-chat-admin.staging-th, inbox = /w/<id>, PO ล็อกอินใน pane เอง, resize 1280 ก่อนถึงเห็น picker "รับเอง"
 - [messaging-backend Vault 403 → FB webhook 500](reference_messaging_backend_staging_vault_token_403_makes_fb_webhook_500.md) — 10-24 ทักเพจ staging ไม่มี AI ตอบ · 500 ใน 4ms ไม่มี log · พิสูจน์ lookup-self ในพอด · ต้องคนมีสิทธิ์ Vault ออก token
 - [ถามตัดสินใจต้องมีบริบทครบ](feedback_ask_decisions_with_full_context_not_bare_lists.md) — 10-24 PO ว่า 'ถามสั้นๆ ไม่รู้เรื่อง' · คืออะไร/ทำไม/ทางเลือกพร้อมผล/ข้อแนะนำ/ตอบแบบไหน · อ่านการ์ดต้นทางก่อนอธิบาย
+- [แผน Playbook/Goal/Lead/KB → การ์ด AI-312..327](project_playbook_goal_lead_kb_cards_2026_10_24.md) — 10-24 ค่ำ เลขการ์ดต่อรหัสร่าง · คำตัดสิน PO · ของที่ยังค้าง · เอกสารหลัก docs/ai-chat-playbook-goal-lead-kb-design-2026-10-24.md
 - [Sprint sweep = deploy ไม่ใช่พิสูจน์ AC](feedback_sprint_sweep_board_column_means_deploy_not_ac_proof.md) — 10-14 RTT(staging)=โค้ดบน main ทุก repo+deploy · คอขวด OC2Plus คือ main twin ค้าง ไม่ใช่ PO · merge-wave.py · Jira ทีละคอล
 - [CI รอบแรกของ spec ที่ไม่เคยรัน](reference_first_ci_run_of_never_run_playwright_specs_finds_real_bugs_and_axe_baseline_drift.md) — 10-24 ai-chat-admin FE: testId DS ไม่ใช่ attribute, ssk-button ชน 2 node, route swap ทำ header หลุด, ฟอนต์ไทย CI ต่าง, axe baseline ต่าง · ห้าม rebase branch ที่ push แล้ว (merge main) · main CI ต้อง staging-th ไม่รัน 21-09
 ## Jira
