@@ -36,6 +36,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [scenario harness พิสูจน์ lead/goal/step บน local](reference_real_conversation_scenario_harness_lead_goal_step_2026_10_24.md) — scenario.py ลูกค้าคุยทีละเทิร์น · ผล 10-24: โค้ดมีแต่วงไม่ปิด (ไม่มีอะไรสร้าง lead, slot ตัวเลขเติมไม่ได้, converted 9/10 มั่ว, placeholder หลุดถึงลูกค้า) · local ไม่มี KB ต้องซ้ำบน staging
 - [เปิด console local บน localhost ด้วย seed identity](reference_local_ai_chat_console_open_on_localhost_with_seed_identity.md) — overmind -l …,web-ai-chat-admin · http://localhost:5191 (vite proxy) · login curl ที่ :4433 แล้ววาง cookie ผ่านไฟล์ static · route /w/<ws>/settings/<page>
 - [เทส console staging ใน pane](reference_staging_ai_chat_console_drive_recipe.md) — URL ai-chat-admin.staging-th, inbox = /w/<id>, PO ล็อกอินใน pane เอง, resize 1280 ก่อนถึงเห็น picker "รับเอง"
+- [messaging-backend Vault 403 → FB webhook 500](reference_messaging_backend_staging_vault_token_403_makes_fb_webhook_500.md) — 10-24 ทักเพจ staging ไม่มี AI ตอบ · 500 ใน 4ms ไม่มี log · พิสูจน์ lookup-self ในพอด · ต้องคนมีสิทธิ์ Vault ออก token
 - [Sprint sweep = deploy ไม่ใช่พิสูจน์ AC](feedback_sprint_sweep_board_column_means_deploy_not_ac_proof.md) — 10-14 RTT(staging)=โค้ดบน main ทุก repo+deploy · คอขวด OC2Plus คือ main twin ค้าง ไม่ใช่ PO · merge-wave.py · Jira ทีละคอล
 ## Jira
 - [Sweep ผ่านไฟล์](reference_jira_board_sweep_via_saved_results.md) — ผลใหญ่เซฟเป็นไฟล์ parse ด้วย python
