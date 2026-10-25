@@ -94,3 +94,4 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [รีวิว mock ต้องเทียบ adapter จริง](feedback_mock_mode_ui_review_check_real_adapter_before_calling_defect.md) — 10-23 enum ดิบ/ชื่อ •••/ข้อความไทยใน EN ที่เห็นใน mock เป็นของ mock ทั้ง 3 ข้อ · grep real adapter ก่อนเรียก defect
 - [console mock :5192](reference_ai_chat_admin_mock_preview_5192_no_login.md) — preview_start web-ai-chat-admin-mock ไม่ต้อง login · ws_demo_default · ดู layout/contrast ได้ ไม่ใช่ข้อมูล
 - [Staging verifier preflight](reference_staging_verifier_preflight_tsh_and_pane_login.md) — 10-24 tsh staging login + pane login must be checked first; night/expired = zero verdicts; BOLA-311 join/CCS not on main
+- [AI chat MR + Jira landing recipe](reference_ai_chat_mr_and_jira_landing_recipe_2026_10_25.md) — 10-25 token ต้องเอาจาก block gitlab.sellsuki.com · project id ทั้ง 6 repo · มีแค่ messaging มี develop (ที่เหลือเข้า main) · Jira In Review = transition 31
