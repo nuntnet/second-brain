@@ -43,3 +43,5 @@ await fetch(`/rest/agile/1.0/sprint/${sprintId}/issue`,
 check the foreign sprints too — a wrong write leaves no error to notice.
 
 Related: [[jira-mcp-search-quirks]], [[jira-editissue-adf-breakage]], [[pat-board-sprints]]
+
+**Update 2026-10-25:** the PO opened AI Sprint 21–24 = **3301/3302/3303/3304** (board 254, all `future`). Read them from the built-in browser pane (it was already signed in to sellsuki.atlassian.net, no Chrome extension needed): navigate to `/rest/agile/1.0/board/254/sprint?state=future,active`, then run the fetch calls from `javascript_tool`. The same page context can edit a card's ADF description without retyping Thai: `GET /rest/api/3/issue/KEY?fields=description` → change text nodes / push a `tableRow` → `PUT` with header `X-Atlassian-Token: no-check` (204). Read the text nodes back afterwards (a replacement ran two words together once: "AIแสดง").
