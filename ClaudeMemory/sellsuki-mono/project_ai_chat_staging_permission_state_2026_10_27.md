@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: 2b0f396b-5941-4a79-8e15-d9e0597e4520
-  modified: 2026-10-27T09:43:31.900Z
+  modified: 2026-10-27T11:02:39.872Z
 ---
 
 Audit on 2026-10-27 (the PO's question: "I invited someone with Company Owner and every AI chat admin role, and many menus are still blocked"). Facts are from staging rps + Keto + chat-core DB and from `origin/main` code.
@@ -27,6 +27,14 @@ Usage page: `chat_workspace.usage.read`, and `chat_workspace.billing.read` for t
 - Staging Keto in ns `share` went down from about 16:20 to 16:40 (draining nodes, insufficient cpu). rps readiness 500. chat-core logged `keto tuple operation failed` for both test users. Loki returned `empty ring` at the same time.
 - No rps invitation since 2026-10-16. No AI chat role granted in the 7 days before.
 - chat-core staging config gaps that look like permission problems but are not: `DASHBOARD_API_BASE_URL` (dashboard 503), `CONSENT_SERVICE_*`, `GOOGLE_SHEETS_SERVICE_ACCOUNT_JSON`, `BOLA_BASE_URL`.
+
+**Backfill dry-run, 2026-10-27 18:01 (rps image 61fdc892):**
+- Company Owner: found 3,990.
+  - manage/read: grant 3,202 · already 742 · no-tenant 46
+  - usage/billing: grant 3,297 · already 0 · no-tenant 693
+- Of the 3,202, about 2,228 are real Patona/poshmedica companies, about 974 are automation companies, and only 4 have a chat workspace.
+- AI Chat Company Admin: the command finds **0**, because it selects only `is_system_role=true`. The role is non-system (745 roles, all without tenants), so it has to go through UpdateRole or the CCS preset. Assigning it later writes tuples from the Postgres array (`AssignToRole`).
+- The command **fails intermittently** with `failed to list roles: keto tuple operation failed`. rps `ListRoles` calls `CountRoleMembers` → `GetRoleByID` for every role, and the e2e suite hard-deletes test companies all day (CCS `companies` n_tup_del 7k+), so one deleted role aborts the whole listing. Retry, and cross-check with SQL over `permissions` + `tenant_refs`. `Plan()` reads only those two columns, so the numbers match.
 
 **How to check (read-only):**
 - `kubectl -n sellsuki port-forward pod/<rps pod> 25051:50051` (works even when the pod is not ready), then grpcurl `ListAssignedRoles` / `GetRole{role_id}` / `CheckPermission`. ListRoles needs Keto.
