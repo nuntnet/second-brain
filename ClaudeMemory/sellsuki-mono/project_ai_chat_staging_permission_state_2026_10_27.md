@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: 2b0f396b-5941-4a79-8e15-d9e0597e4520
-  modified: 2026-10-27T11:02:39.872Z
+  modified: 2026-10-27T11:30:06.546Z
 ---
 
 Audit on 2026-10-27 (the PO's question: "I invited someone with Company Owner and every AI chat admin role, and many menus are still blocked"). Facts are from staging rps + Keto + chat-core DB and from `origin/main` code.
@@ -35,6 +35,10 @@ Usage page: `chat_workspace.usage.read`, and `chat_workspace.billing.read` for t
 - Of the 3,202, about 2,228 are real Patona/poshmedica companies, about 974 are automation companies, and only 4 have a chat workspace.
 - AI Chat Company Admin: the command finds **0**, because it selects only `is_system_role=true`. The role is non-system (745 roles, all without tenants), so it has to go through UpdateRole or the CCS preset. Assigning it later writes tuples from the Postgres array (`AssignToRole`).
 - The command **fails intermittently** with `failed to list roles: keto tuple operation failed`. rps `ListRoles` calls `CountRoleMembers` → `GetRoleByID` for every role, and the e2e suite hard-deletes test companies all day (CCS `companies` n_tup_del 7k+), so one deleted role aborts the whole listing. Retry, and cross-check with SQL over `permissions` + `tenant_refs`. `Plan()` reads only those two columns, so the numbers match.
+
+**Fix plan:** `docs/ai-chat-permission-fix-plan-2026-10-27.md` (5 waves, everything attached to AI-289/AI-252/AI-216/AI-290). Decisions D-046..D-048 are in the Inbox. The plan was uncommitted when written.
+
+**AI-252 trap:** Jira says Done, but the reconciler lives only on `develop`: rps `ff8a21c` (`ReconcileRolePresets` RPC) and CCS `a28c674`. Branch `codex/ai-252-preset-reconciler` was cut from develop and is 90 commits ahead of main, so it cannot be promoted. To get it onto main, cut a new branch from main and cherry-pick both commits. rps must deploy before CCS.
 
 **How to check (read-only):**
 - `kubectl -n sellsuki port-forward pod/<rps pod> 25051:50051` (works even when the pod is not ready), then grpcurl `ListAssignedRoles` / `GetRole{role_id}` / `CheckPermission`. ListRoles needs Keto.
