@@ -43,7 +43,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Playbook/Goal/Lead/KB cards](project_playbook_goal_lead_kb_cards_2026_10_24.md) — AI-312..327 + PO verdicts
 - [Wave 1 state 10-25](project_wave1_playbook_goal_lead_kb_state_2026_10_25.md) — 8 cards pushed, no MR/verifier
 - [AI-318 depends on model](project_ai318_interest_gate_depends_on_the_model_2026_10_25.md) — gemini fails, gpt-4o-mini passes · D-038
-- [AI chat dev order 10-27](reference_ai_chat_dev_order_reconcile_2026_10_27.md) — 5 waves · staging chat module off
+- [AI chat dev order 10-27](reference_ai_chat_dev_order_reconcile_2026_10_27.md) — 5 waves · both sprint cleanups applied (21=45/22=41/23=34/24=11) · staging chat module off
 - [AI chat permission staging 10-27](project_ai_chat_staging_permission_state_2026_10_27.md) — Owner 3 generations · no usage/billing preset · switcher bug · dry-run numbers · fix plan · AI-252 develop-only
 
 ## Jira
