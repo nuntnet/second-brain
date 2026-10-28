@@ -30,6 +30,8 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Auto mode blocks MR create](reference_auto_mode_blocks_glab_mr_create.md) — prepare JSON + create-mrs.sh · project ids inside
 - [OC2Plus develop↔main diverged](reference_oc2plus_backoffice_develop_main_diverged_2026_10_11.md) — OC-4736 one-time reunion
 - [rps/mgmt-backend lines](reference_rps_and_management_backend_develop_main_diverged.md) — rps not diverged, mgmt-backend is
+- [Messaging develop↔main diverged](reference_messaging_backend_develop_main_diverged_oc4583.md) — main-cut MR into develop conflicts (OC-4583) · never resolve in UI
+- [Worktree from main lacks AI repos](reference_monorepo_worktree_from_main_lacks_ai_submodules_and_tooling.md) — detach-worktree each submodule; land ledgers on AI-49 with plumbing; D-ids collide
 - [Night = staging-th only](reference_night_window_is_staging_th_only_production_runners_run.md) — prod runners still run
 - [First CI run of old specs](reference_first_ci_run_of_never_run_playwright_specs_finds_real_bugs_and_axe_baseline_drift.md) — real bugs + axe drift · never rebase pushed
 
@@ -45,6 +47,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [AI-318 depends on model](project_ai318_interest_gate_depends_on_the_model_2026_10_25.md) — gemini fails, gpt-4o-mini passes · D-038
 - [AI chat dev order 10-27](reference_ai_chat_dev_order_reconcile_2026_10_27.md) — 5 waves · both sprint cleanups applied (21=39/22=47/23=34/24=11) · Sprint 1-20 closed, 21 active via pane REST · staging chat module off
 - [AI chat permission staging 10-27](project_ai_chat_staging_permission_state_2026_10_27.md) — Owner 3 generations · no usage/billing preset · switcher bug · dry-run numbers · fix plan · AI-252 develop-only
+- [chat-core not on prod](project_chat_core_not_deployed_to_production.md) — chat-core cards have no real prod step yet
 - [Unscheduled sweeps AI-351](project_chat_core_unscheduled_sweeps_ai351.md) — 9 chat-core sweeps had no CronJob · rolling-summary added, rest wait D-051
 - [Messaging chat flip 10-27](reference_messaging_chat_module_staging_flip_2026_10_27.md) — off by !80 09:59, back on by !82 16:46 (deploy 275941) · develop untouched · VAULT_TOKEN ~11-23 · M1–M8 in docs/cards/AI-216.md
 
@@ -61,6 +64,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [ns octoplus](reference_oc2plus_cluster_namespace_is_octoplus.md) · [Files≠schema](reference_migration_files_are_not_applied_schema.md) · [envDefault](reference_envdefault_localhost_masks_missing_config.md) · [goqu](reference_goqu_dialect_blank_import.md) · [AutoMigrate](reference_gorm_pgx_libpq_automigrate.md) · [Drops false](reference_gorm_updates_drops_false.md) · [Lease](reference_lease_claim_ownership_bug_class.md) · [Partial idx](reference_pg_partial_index_onconflict_generic_plan.md) · [404 open](reference_ambiguous_404_fail_open.md) · [Own guard](reference_auth_endpoint_behind_own_guard.md) · [Kafka silent](reference_kafka_silent_publish_failure.md) · [Fiber ctx](reference_fiber_ctx_strings_corrupt_prometheus_labels.md)
 - [pgx cached plan](reference_pgx_cached_plan_breaks_old_pods_after_add_column_migration.md) — old pods error after ADD COLUMN
 - [Sandbox: DB tests skip](reference_sandbox_blocks_localhost_so_db_tests_skip_silently.md) · [Sandbox: Go CLI TLS](reference_sandbox_blocks_go_cli_tls_and_ssh.md) · [TMPDIR differs](reference_tmpdir_differs_sandboxed_vs_unsandboxed_bash.md) — use scratchpad absolute path
+- [fd exhaustion = codegraph](reference_codegraph_watchers_exhaust_system_fds.md) — "too many open files in system" machine-wide; user kills the watchers
 - [Disk full → Docker dies](reference_disk_full_kills_docker_desktop_go_cache_is_the_first_thing_to_delete.md) — delete go cache first
 - [codegraph ENFILE](reference_codegraph_mcp_watchers_exhaust_macos_file_table.md) — watchers eat the system file table; lsof -c node, ask before kill
 

@@ -1,0 +1,24 @@
+---
+name: reference_messaging_backend_develop_main_diverged_oc4583
+description: "sellsuki-messaging-backend develop and main have diverged: any branch cut from main conflicts when merged into develop (5 OC-4583 email files). Develop last moved 2026-10-08, and AI-216/AI-326/AI-298 messaging work went straight to main. Never resolve these conflicts in the GitLab UI."
+metadata:
+  node_type: memory
+  type: reference
+  originSessionId: 3aac068a-3349-436b-b707-7d3b887a3e29
+  modified: 2026-10-28T15:10:00.512Z
+---
+
+Found 2026-10-28 when opening messaging-backend MR !84 (AI-216 webhook fix) into `develop`. GitLab showed `detailed_merge_status=conflict`.
+
+- **Divergence:** 24 commits on each side, counted from merge-base `8026926e`. That is 14 non-merge commits only on `main` and 7 only on `develop`. `develop`'s tip `55269bd` is from 2026-10-08.
+- **Cause:** OC-4583 (member invite email/SMS) landed one way on `main` (`0ef610d`, `f7a207e`, `cb04768`) and another way on `develop` (`c64045e`, `55269bd`). `develop` also holds messaging routing work (`0fd07be`, `0741428`, `8b33b97`) that `main` lacks.
+- **Conflicting files:** `docs/provisioning/oc4583-member-invite-actions.md`, `src/interface/fiber_server/route/email/{route.go,spec.gen.go}`, `src/use_case/email.go` and `src/use_case/email_test.go`. Any branch cut from `main` hits them, whatever it touches.
+- **What actually happens:** the AI chat messaging MRs (AI-216's !80 and !82, plus AI-326 and AI-298) went straight to `main`, and `develop` was left untouched. See [[reference_messaging_chat_module_staging_flip_2026_10_27]].
+
+**How to apply:**
+- Before opening a messaging MR into `develop`, run `git merge-tree --write-tree --name-only origin/develop origin/<branch>`.
+- If it conflicts, tell the user before opening, and let them choose between targeting `main` directly and reconciling `develop` first (that needs the OC-4583 owner).
+- **Never press "Resolve conflicts" in the GitLab UI.** It merges `develop` into the feature branch, and the same branch later carries `develop`'s unreleased work into `main` (Git flow rule 4).
+- Against `develop`, the Changes tab shows every one of `main`'s 24 extra commits, so name the single commit to review.
+
+Same family as [[reference_oc2plus_backoffice_develop_main_diverged_2026_10_11]] and [[reference_rps_and_management_backend_develop_main_diverged]].
