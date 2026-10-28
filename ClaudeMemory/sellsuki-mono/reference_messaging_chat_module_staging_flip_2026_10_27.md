@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: 4683d2cf-08fe-4531-bc03-8b12af31b5cb
-  modified: 2026-10-27T16:39:13.405Z
+  modified: 2026-10-28T06:24:30.143Z
 ---
 
 What happened (all from GitLab API project 568, not recalled):
@@ -15,5 +15,7 @@ What happened (all from GitLab API project 568, not recalled):
 - nunt's other session opened Draft !83 at 16:07 for the same revert; closed as duplicate.
 
 Boot facts worth keeping: `chatUC.HealthCheck` (helper.go:540-549) pings Postgres, Vault `/sys/health` (no token), Kafka `WriteMessages(ctx)`, Redis `PING`, chat-core `/system/liveness`, and `slog.Fatal`s before Fiber starts — so a passing atomic deploy proves every secretKeyRef resolved and those five answered. It does NOT prove `VAULT_TOKEN` is valid (403 surfaces per-webhook as 503 `fb_app_secret_unresolvable` after AI-326) nor that the two service-token pairs still match chat-core.
+
+Verified 2026-10-28 13:20 ICT on staging (read-only kubectl): image dddcdbb9, six keys non-empty, clean log, in-pod lookup-self 200 with `expire_time 2026-11-23T13:11:22Z` read from Vault (policies default + messaging-chat-staging, renewable), chat-core liveness 200, four route probes equal to the 09-21 baseline. Still open then: the real FB round-trip (M7, nunt on Messenger) and D-049 (why !80 happened — needs `vault kv metadata get`).
 
 **How to apply:** before touching messaging values for the chat module, `glab api projects/568/merge_requests?search=AI-216&state=all` first — the flip has now been done three times by different people. For the morning check and the Vault verify/renew block see `docs/cards/AI-216.md` (2026-10-27 section). Related: [[reference_messaging_backend_staging_vault_token_403_makes_fb_webhook_500]], [[reference_ai_agent_staging_vault_token_expiry_crash_on_restart]], [[reference_night_window_is_staging_th_only_production_runners_run]].

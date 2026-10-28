@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: 2b0f396b-5941-4a79-8e15-d9e0597e4520
-  modified: 2026-10-27T14:56:38.568Z
+  modified: 2026-10-28T06:19:11.709Z
 ---
 
 Audit on 2026-10-27 (the PO's question: "I invited someone with Company Owner and every AI chat admin role, and many menus are still blocked"). Facts are from staging rps + Keto + chat-core DB and from `origin/main` code.
@@ -36,7 +36,7 @@ Usage page: `chat_workspace.usage.read`, and `chat_workspace.billing.read` for t
 - AI Chat Company Admin: the command finds **0**, because it selects only `is_system_role=true`. The role is non-system (745 roles, all without tenants), so it has to go through UpdateRole or the CCS preset. Assigning it later writes tuples from the Postgres array (`AssignToRole`).
 - The command **fails intermittently** with `failed to list roles: keto tuple operation failed`. rps `ListRoles` calls `CountRoleMembers` → `GetRoleByID` for every role, and the e2e suite hard-deletes test companies all day (CCS `companies` n_tup_del 7k+), so one deleted role aborts the whole listing. Retry, and cross-check with SQL over `permissions` + `tenant_refs`. `Plan()` reads only those two columns, so the numbers match.
 
-**Wave 0 as run, 2026-10-27 (UTC):** `manage` was applied to Company Owner at 11:34–11:37 (`granted 3199, failed 0`; log `/tmp/w0_manage.log` in the rps pod). Keto tuples were written, and CheckPermission for 5a8905b8 manage at test1/test2 returns `allowed:true`. The `read` apply and the CCS step 0.2 apply (dry-run OK: 4 companies, 18 permissions each) were **not run**, because auto mode refuses writes via `kubectl exec` into staging pods. The user approved both at about 21:55 ICT, but staging-th was already off for the night (API EOF), so nothing was written. They are to run after 09:00 on 10-28, then re-run both dry-runs and expect to-grant 0 and no `create`. Results table: plan doc, under wave 0.
+**Wave 0 as run, 2026-10-27 (UTC):** `manage` was applied to Company Owner at 11:34–11:37 (`granted 3199, failed 0`; log `/tmp/w0_manage.log` in the rps pod). Keto tuples were written, and CheckPermission for 5a8905b8 manage at test1/test2 returns `allowed:true`. **Wave 0 finished 2026-10-28 06:15–06:20 UTC.** `read` was applied to Company Owner (`granted 3199, failed 0`). CCS 0.2 created AI Chat Company Admin roles 1849027–1849030 for 1752273e/6197208c/6e0238af/b0e24cb1 (18 permissions each, non-system, `tenant_refs {}`, so no Keto tuples until someone is assigned; nobody assigned yet). Re-run dry-runs: rps read and manage both show to-grant 0 (3,470 set, 46 no-tenant), and CCS shows all `unchanged`. CheckPermission for 5a8905b8 read+manage at test1/test2 = allowed. Still open: 0.3 (open the console as 5a8905b8), and usage/billing waits for wave 2. Process traps on the way: auto mode refused the `kubectl exec` write until the user approved in chat; staging-th was off after 21:00; the tsh staging-th login lasts about 12h, so a morning cron job after an evening login fails preflight; and one `TLS handshake timeout` meant the command never reached the API, so it was retried. Results table: plan doc, under wave 0.
 
 **Fix plan:** `docs/ai-chat-permission-fix-plan-2026-10-27.md` (5 waves, everything attached to AI-289/AI-252/AI-216/AI-290). Decisions D-046..D-048 are in the Inbox. The plan was uncommitted when written.
 
