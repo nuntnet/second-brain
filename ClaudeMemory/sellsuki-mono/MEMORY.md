@@ -45,6 +45,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [AI-318 depends on model](project_ai318_interest_gate_depends_on_the_model_2026_10_25.md) — gemini fails, gpt-4o-mini passes · D-038
 - [AI chat dev order 10-27](reference_ai_chat_dev_order_reconcile_2026_10_27.md) — 5 waves · both sprint cleanups applied (21=39/22=47/23=34/24=11) · Sprint 1-20 closed, 21 active via pane REST · staging chat module off
 - [AI chat permission staging 10-27](project_ai_chat_staging_permission_state_2026_10_27.md) — Owner 3 generations · no usage/billing preset · switcher bug · dry-run numbers · fix plan · AI-252 develop-only
+- [Unscheduled sweeps AI-351](project_chat_core_unscheduled_sweeps_ai351.md) — 9 chat-core sweeps had no CronJob · rolling-summary added, rest wait D-051
 - [Messaging chat flip 10-27](reference_messaging_chat_module_staging_flip_2026_10_27.md) — off by !80 09:59, back on by !82 16:46 (deploy 275941) · develop untouched · VAULT_TOKEN ~11-23 · M1–M8 in docs/cards/AI-216.md
 
 ## Jira
@@ -53,6 +54,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 ## Tests
 - [slog.Init once](reference_slog_init_once_silences_the_test_binary.md) · [ssk user-detail](reference_ssk_widget_user_detail_height_is_a_string.md) · [Robot CI no target](reference_sukispace_robot_ci_has_no_target_service.md) · [Robot var case](reference_robot_variables_are_case_insensitive_loop_var_overwrites_suite_var.md) · [BOLA PG tests](reference_bola_postgres_tests_need_disposable_container_and_two_dsn_forms.md)
 - [Uncollected](reference_green_count_hides_uncollected_suite.md) · [Sentry dual](reference_sentry_dual_hub_on_version_skew.md) · [Stub loose](reference_test_stub_more_permissive_than_service.md) · [testify](reference_testify_permissive_default_wins.md) · [Timing](reference_timing_dependent_concurrency_tests.md) · [Turbo](reference_turbo_cache_crosssession_false_green.md) · [Lit SSR](reference_lit_react_node_condition_hollows_tests.md) · [DS testId](reference_ds_testid_is_a_property.md) · [jsdom 25](reference_node25_localstorage_jsdom_conflict.md)
+- [chat-core DB tests -p 1](reference_chat_core_db_tests_need_p1.md) — parallel run → "File exists" on TRUNCATE
 - [Scenario harness](reference_real_conversation_scenario_harness_lead_goal_step_2026_10_24.md) — turn-by-turn customer chat on local
 
 ## Go / DB / sandbox
