@@ -17,7 +17,10 @@ Moved out of MEMORY.md on 2026-10-11 to keep the root index small. One line per 
 - [config ขาดบน develop](reference_central_config_develop_lacks_main_seeds.md) — seed อยู่ main อย่างเดียว · ซิงก์ !149/!381
 - [Tenant kinds](reference_entity_lib_tenant_kinds.md) · [Gen churn](reference_permission_generator_nondeterministic.md) · [file-svc kind](reference_file_service_keto_subject_kind.md) · [Audit enum](reference_audit_action_is_closed_enum.md) · [Audit targets](reference_audit_log_format_draft_targets.md) · [Messaging](reference_messaging_backend.md) · [Msg traps](reference_messaging_backend_shared_repo_traps.md) · [Audit log](project_central_audit_log.md)
 
+- [Chat presets = CCS](reference_chat_permission_presets_live_in_ccs_not_rps.md) — preset list is CCS permission_group.go · what chat-core checks · backfill flags for non-system roles
+
 ## Local stack / environment traps
+- [worktree add ล้มใน sandbox](reference_submodule_worktree_add_fails_in_sandbox_and_local_rps_db_via_docker.md) — .claude/.idea เขียนไม่ได้ · prune แล้ว add นอก sandbox · rps DB local = postgres:postgres
 - [dev cluster + DB pod](reference_dev_cluster_access_and_readonly_db_pod.md) — dev อยู่ staging-th ns octoplus-dev/bola-dev · อ่าน log/DB (read-only pod, secretKeyRef)
 - [slug เก่า×LINE login](reference_line_login_old_slug_after_rename.md) — เปลี่ยน slug แล้ว oa_not_bound · แก้ !188/!189 · destination ใน BOLA ยังฝัง slug เก่า
 - [รัน QA บน local](reference_local_qa_run_facts.md) — ชื่อ DB จริง, เซสชันเว็บ, 🔴 เรทลิมิตบล็อกถาวร+วิธีล้าง
