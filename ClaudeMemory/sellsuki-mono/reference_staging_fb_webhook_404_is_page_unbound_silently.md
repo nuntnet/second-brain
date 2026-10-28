@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: 2b0f396b-5941-4a79-8e15-d9e0597e4520
-  modified: 2026-10-28T09:44:09.064Z
+  modified: 2026-10-28T14:53:41.526Z
 ---
 
 2026-10-28 triage of "Udomdej messaged the page, nothing arrived" (staging, app `1722666062152698`):
@@ -20,5 +20,7 @@ metadata:
 1. Group the webhook `request_log` lines by status.
 2. A 404 means look at `fb_app_audit_log` for `page_unbound`.
 3. Zero requests means Meta did not deliver. Check whether the sender holds an app role (test app, [[reference_staging_fb_app_is_a_test_app]]).
+
+🔴 **The signature changes once the fix deploys.** Branch `fix/AI-216-fb-webhook-silent-message-loss` (`6a5156c`; MR into develop requested 10-28, not confirmed open at time of writing) makes an unbound page answer **200**, with a warn log and `chat_webhook_rejected_total{reason="page_not_bound"}`. A refused attachment host becomes "unavailable" and no longer causes a 500. Before applying step 2 above, check which image is running (`version` in `request_log`). After the fix, an unbound page shows up as a metric, not as a 404.
 
 Messaging tables live in schema `chat` (`channel_conversation`, `fb_app`, `fb_app_audit_log`, `fb_page_binding`, `send_receipt`). Related: [[reference_fb_page_must_be_subscribed_to_app]], [[reference_webhook_ack200_and_drop_looks_like_no_delivery]].
