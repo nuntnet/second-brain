@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: 3aac068a-3349-436b-b707-7d3b887a3e29
-  modified: 2026-10-28T15:10:00.512Z
+  modified: 2026-10-28T18:31:32.620Z
 ---
 
 Found 2026-10-28 when opening messaging-backend MR !84 (AI-216 webhook fix) into `develop`. GitLab showed `detailed_merge_status=conflict`.
@@ -20,5 +20,7 @@ Found 2026-10-28 when opening messaging-backend MR !84 (AI-216 webhook fix) into
 - If it conflicts, tell the user before opening, and let them choose between targeting `main` directly and reconciling `develop` first (that needs the OC-4583 owner).
 - **Never press "Resolve conflicts" in the GitLab UI.** It merges `develop` into the feature branch, and the same branch later carries `develop`'s unreleased work into `main` (Git flow rule 4).
 - Against `develop`, the Changes tab shows every one of `main`'s 24 extra commits, so name the single commit to review.
+
+**2026-10-29 (AI-333): nunt chose "Fix develop first" over targeting `main` directly.** When asked whether a messaging MR should skip `develop`, the answer was to reconcile `develop` first and keep the git flow. Don't default to `main`; ask, and expect this answer. The owner of the conflicting side is **nithiphat** (OC-4583). The same feature exists twice: `fa814b6` on main and `c64045e` on develop. After that, main got `35bb85f` `0ef610d` `f7a207e` `cb04768` (10-09) and develop got `55269bd` (10-06). The fix is to merge `main` into `develop`, with nithiphat resolving the 5 email files. That one step unblocks !84 (AI-216) and AI-333 together. Ledger: `docs/cards/AI-333.md`.
 
 Same family as [[reference_oc2plus_backoffice_develop_main_diverged_2026_10_11]] and [[reference_rps_and_management_backend_develop_main_diverged]].

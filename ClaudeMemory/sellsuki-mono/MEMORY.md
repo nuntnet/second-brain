@@ -30,7 +30,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Auto mode blocks MR create](reference_auto_mode_blocks_glab_mr_create.md) — prepare JSON + create-mrs.sh · project ids inside
 - [OC2Plus develop↔main diverged](reference_oc2plus_backoffice_develop_main_diverged_2026_10_11.md) — OC-4736 one-time reunion
 - [rps/mgmt-backend lines](reference_rps_and_management_backend_develop_main_diverged.md) — rps not diverged, mgmt-backend is
-- [Messaging develop↔main diverged](reference_messaging_backend_develop_main_diverged_oc4583.md) — main-cut MR into develop conflicts (OC-4583) · never resolve in UI
+- [Messaging develop↔main diverged](reference_messaging_backend_develop_main_diverged_oc4583.md) — main-cut MR into develop conflicts (OC-4583) · never resolve in UI · nunt: reconcile develop first (nithiphat), don't skip to main
 - [Worktree from main lacks AI repos](reference_monorepo_worktree_from_main_lacks_ai_submodules_and_tooling.md) — detach-worktree each submodule; land ledgers on AI-49 with plumbing; D-ids collide
 - [Night = staging-th only](reference_night_window_is_staging_th_only_production_runners_run.md) — prod runners still run
 - [First CI run of old specs](reference_first_ci_run_of_never_run_playwright_specs_finds_real_bugs_and_axe_baseline_drift.md) — real bugs + axe drift · never rebase pushed
@@ -65,6 +65,8 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 ## Go / DB / sandbox
 - [ns octoplus](reference_oc2plus_cluster_namespace_is_octoplus.md) · [Files≠schema](reference_migration_files_are_not_applied_schema.md) · [envDefault](reference_envdefault_localhost_masks_missing_config.md) · [goqu](reference_goqu_dialect_blank_import.md) · [AutoMigrate](reference_gorm_pgx_libpq_automigrate.md) · [Drops false](reference_gorm_updates_drops_false.md) · [Lease](reference_lease_claim_ownership_bug_class.md) · [Partial idx](reference_pg_partial_index_onconflict_generic_plan.md) · [404 open](reference_ambiguous_404_fail_open.md) · [Own guard](reference_auth_endpoint_behind_own_guard.md) · [Kafka silent](reference_kafka_silent_publish_failure.md) · [Fiber ctx](reference_fiber_ctx_strings_corrupt_prometheus_labels.md)
 - [pgx cached plan](reference_pgx_cached_plan_breaks_old_pods_after_add_column_migration.md) — old pods error after ADD COLUMN
+- [Sandbox: .claude/commands+skills, worktree add](reference_sandbox_blocks_submodule_claude_commands_skills_and_worktree_add.md) — write-protected; worktree add needs unsandboxed
+- [ai-agent company + charge_class](reference_ai_agent_needs_registered_company_charge_class_from_tier_path.md) — no empty company; mark spend via tier_path
 - [Sandbox: DB tests skip](reference_sandbox_blocks_localhost_so_db_tests_skip_silently.md) · [Sandbox: Go CLI TLS](reference_sandbox_blocks_go_cli_tls_and_ssh.md) · [TMPDIR differs](reference_tmpdir_differs_sandboxed_vs_unsandboxed_bash.md) — use scratchpad absolute path
 - [fd exhaustion = codegraph](reference_codegraph_watchers_exhaust_system_fds.md) — "too many open files in system" machine-wide; user kills the watchers
 - [Disk full → Docker dies](reference_disk_full_kills_docker_desktop_go_cache_is_the_first_thing_to_delete.md) — delete go cache first
