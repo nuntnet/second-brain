@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: 2103a08c-674d-4fb5-a849-24b47ce4bbe2
-  modified: 2026-10-12T04:55:47.712Z
+  modified: 2026-10-28T09:58:25.745Z
 ---
 
 Checked in the Meta App Dashboard on 2026-10-12. The PO's Chrome is "Browser 1" in the Claude extension and is logged in to Meta. "Browser 2" is not.
@@ -15,7 +15,8 @@ Checked in the Meta App Dashboard on 2026-10-12. The PO's Chrome is "Browser 1" 
   - App domains include `ai-chat-admin.staging.sellsuki.com`, `ai-chat-admin.staging-th.sellsuki.com` and `chat.sellsuki.local`.
   - Login with the JavaScript SDK is Yes, and Allowed JS SDK domains list the same three.
   - The Valid OAuth Redirect URI is `https://ai-chat-admin.staging.sellsuki.com/`.
-- App roles: the only Administrators are Nati Namvong and "Nunt- Janwaowam" (the PO). There are no testers.
+- App roles (10-12): the only Administrators were Nati Namvong and "Nunt- Janwaowam" (the PO), with no testers. **As of 2026-10-28:** Admins are Nati, Best Narawit and Nunt; Testers are Nattarida Panyo and Udomdej Chuenjit (Udomdej added 10-28 ~16:55 ICT).
+- 🔴 **The test app's roles are separate from the parent Sellsuki-New `235756003289739`.** On 10-28 Udomdej was a Tester on the parent, not on the test app, so every message he sent to Sellsuki Chatbot stayed in the page inbox and no webhook arrived. Within a minute of being added on `1722666062152698` his messages flowed: 5× webhook 200, a new PSID row, and AI replies. Always open `/apps/1722666062152698/roles/roles/`, not the parent's page.
 - The page shows "Facebook Login for Business requires advanced access (public_profile)". That matters only beyond role users.
 
 **How to apply:**
