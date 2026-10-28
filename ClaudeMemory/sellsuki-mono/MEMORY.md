@@ -60,6 +60,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [ai-agent persona budget](reference_ai_agent_platform_prompt_fills_persona_budget.md) — platform prompt fills gpt-4o-mini persona layer; new rule → ~50 tests red
 - [chat-core DB tests -p 1](reference_chat_core_db_tests_need_p1.md) — parallel run → "File exists" on TRUNCATE
 - [Scenario harness](reference_real_conversation_scenario_harness_lead_goal_step_2026_10_24.md) — turn-by-turn customer chat on local
+- [Prompt A/B via /llm](reference_ai_agent_prompt_ab_via_fake_llm_dump_and_llm_route.md) — fakeLLM dump + replay; history must end with current bubble
 
 ## Go / DB / sandbox
 - [ns octoplus](reference_oc2plus_cluster_namespace_is_octoplus.md) · [Files≠schema](reference_migration_files_are_not_applied_schema.md) · [envDefault](reference_envdefault_localhost_masks_missing_config.md) · [goqu](reference_goqu_dialect_blank_import.md) · [AutoMigrate](reference_gorm_pgx_libpq_automigrate.md) · [Drops false](reference_gorm_updates_drops_false.md) · [Lease](reference_lease_claim_ownership_bug_class.md) · [Partial idx](reference_pg_partial_index_onconflict_generic_plan.md) · [404 open](reference_ambiguous_404_fail_open.md) · [Own guard](reference_auth_endpoint_behind_own_guard.md) · [Kafka silent](reference_kafka_silent_publish_failure.md) · [Fiber ctx](reference_fiber_ctx_strings_corrupt_prometheus_labels.md)
