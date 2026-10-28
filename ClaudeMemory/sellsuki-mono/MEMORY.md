@@ -69,6 +69,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Console local](reference_local_ai_chat_console_open_on_localhost_with_seed_identity.md) · [Console staging pane](reference_staging_ai_chat_console_drive_recipe.md) · [Console mock :5192](reference_ai_chat_admin_mock_preview_5192_no_login.md) · [Verifier preflight](reference_staging_verifier_preflight_tsh_and_pane_login.md) · [MR+Jira recipe](reference_ai_chat_mr_and_jira_landing_recipe_2026_10_25.md)
 - [Agent Vault expiry](reference_ai_agent_staging_vault_token_expiry_crash_on_restart.md) · [Messaging Vault 403](reference_messaging_backend_staging_vault_token_403_makes_fb_webhook_500.md) · [503 = pg18 disk](reference_staging_chat_core_503_is_often_shared_postgres_pg18_disk_full.md)
 - [Morning restarts = Keto](reference_staging_morning_boot_restarts_on_keto_are_expected.md) — 09:00 boot order, not a bug · [Probe in pod with nc](reference_probe_staging_routes_from_inside_the_pod_with_nc.md) — no port-forward in sandbox; lookup-self body holds the token
+- [Webhook 404 = page unbound](reference_staging_fb_webhook_404_is_page_unbound_silently.md) — no log line; read fb_app_audit_log
 - [FB staging test app](reference_staging_fb_app_is_a_test_app.md) · [Sellsuki-New review](reference_sellsuki_new_meta_app_state.md) · [Model = provider perm](project_model_change_is_provider_level.md)
 - [Docs on AI-49](reference_monorepo_docs_live_on_ai49_branch.md) · [control-tower diverged](reference_control_tower_data_js_diverged_main_vs_ai49.md)
 
