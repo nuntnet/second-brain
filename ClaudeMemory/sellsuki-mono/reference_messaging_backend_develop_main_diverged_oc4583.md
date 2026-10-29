@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: 3aac068a-3349-436b-b707-7d3b887a3e29
-  modified: 2026-10-29T00:12:28.737Z
+  modified: 2026-10-29T16:25:18.418Z
 ---
 
 Found 2026-10-28 when opening messaging-backend MR !84 (AI-216 webhook fix) into `develop`. GitLab showed `detailed_merge_status=conflict`.
@@ -24,5 +24,7 @@ Found 2026-10-28 when opening messaging-backend MR !84 (AI-216 webhook fix) into
 **2026-10-29 (AI-333): nunt chose "Fix develop first" over targeting `main` directly.** When asked whether a messaging MR should skip `develop`, the answer was to reconcile `develop` first and keep the git flow. Don't default to `main`; ask, and expect this answer. The owner of the conflicting side is **nithiphat** (OC-4583). The same feature exists twice: `fa814b6` on main and `c64045e` on develop. After that, main got `35bb85f` `0ef610d` `f7a207e` `cb04768` (10-09) and develop got `55269bd` (10-06). The fix is to merge `main` into `develop`, with nithiphat resolving the 5 email files. That one step unblocks !84 (AI-216) and AI-333 together. Ledger: `docs/cards/AI-333.md`.
 
 **The reconcile step is MR !85** (`fix/AI-333-redact-chat-5xx-into-develop` `c32b9f6`, cut from `develop` `ad80a56`, opened 10-29 01:36). It takes main's side for all 5 files and brings all 27 of main's commits into `develop`. nithiphat still needs to confirm that `X-Wait-For-Provider` may reach `develop`. On 10-29 nunt also chose to keep !84 on `develop`, not retarget it. A trial merge of !84's `6a5156c` on top of `c32b9f6` is clean, so once !85 merges, !84 merges with no further work. Recheck with `git merge-tree` against the new `develop` tip before merging.
+
+**2026-10-29 23:00 — reconciled.** `develop` tip `f041109` (AI-26 merge, 09:01). Two fresh main-cut branches (`fix/AI-333-request-log-redaction`, `fix/AI-216-oversize-attachment-keeps-text`) merge-tree clean into both develop and main. Still run `git merge-tree` first, but the 5-file conflict is no longer the default expectation.
 
 Same family as [[reference_oc2plus_backoffice_develop_main_diverged_2026_10_11]] and [[reference_rps_and_management_backend_develop_main_diverged]].
