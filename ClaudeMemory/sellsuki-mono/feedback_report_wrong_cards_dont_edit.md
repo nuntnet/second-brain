@@ -47,3 +47,4 @@ permission for that cluster and rewrite the cards fully — do not re-ask per
 card. Keep the "what changed and why" in a comment on each card so the edit is
 auditable, and keep flagging cards you did NOT touch.
 
+**Update 2026-10-29 (relayed from the AI-337 parent session):** "ถ้าการ์ดผิด แก้ไขการ์ดด้วย". Once the user has decided, the card does get fixed. On a card with an embedded image, write a comment marked "AC of record" (AI-337 comment 47141), because editing the description as markdown breaks the image. Ruling 1 still holds for deciding *whether*: surface it first.

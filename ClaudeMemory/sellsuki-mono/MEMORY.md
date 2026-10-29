@@ -14,6 +14,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Tests from card](feedback_tests_derive_from_the_card_not_the_code.md) — card = SSOT, never fit expected to code
 - [Standing approval staging](feedback_standing_approval_merge_deploy_staging_after_gates.md) — gates green → merge/deploy staging myself · prod still ask
 - [Comment card](feedback_comment_jira_card_when_loop_closes.md) — Jira comment + status follows MR
+- [Never cut AI reply](feedback_never_cut_ai_reply_gates_observe_only.md) — business-rule gates log, prompt enforces (D-060)
 - [Urgent thread](feedback_keep_urgent_thread_visible.md) — don't bury live damage under a new topic
 - [Sweep Codex branches](feedback_sweep_codex_branches_and_ship_whole.md) — Codex release branch is a superset; its BLOCKED ≠ PO blocker
 - [Ask with full context](feedback_ask_decisions_with_full_context_not_bare_lists.md) — what/why/options+cost/recommendation
@@ -88,6 +89,8 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Who sent / who did](reference_staging_ai_chat_who_sent_who_did_lookup.md) — PSID→name in db `chat_core`.chat_sessions · actor→name in staging_ory_kratos
 - [FB staging test app](reference_staging_fb_app_is_a_test_app.md) · [Sellsuki-New review](reference_sellsuki_new_meta_app_state.md) · [Model = provider perm](project_model_change_is_provider_level.md)
 - [Docs on AI-49](reference_monorepo_docs_live_on_ai49_branch.md) · [control-tower diverged](reference_control_tower_data_js_diverged_main_vs_ai49.md)
+
+- [Fact not stored: diagnose](reference_staging_fact_not_stored_diagnosis_chat_core.md) — no value recorded anywhere; psql recipe; enum exact; missing-slot keys only
 
 ## Sub-indexes — open when the topic comes up
 - [Identity / CCS / rps](index_identity_ccs.md) — Kratos, Keto, rps, CCS config, local traps
