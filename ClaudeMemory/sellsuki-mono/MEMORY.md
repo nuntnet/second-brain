@@ -86,6 +86,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Agent Vault expiry](reference_ai_agent_staging_vault_token_expiry_crash_on_restart.md) · [Messaging Vault 403](reference_messaging_backend_staging_vault_token_403_makes_fb_webhook_500.md) · [503 = pg18 disk](reference_staging_chat_core_503_is_often_shared_postgres_pg18_disk_full.md)
 - [Morning restarts = Keto](reference_staging_morning_boot_restarts_on_keto_are_expected.md) — 09:00 boot order, not a bug · [Probe in pod with nc](reference_probe_staging_routes_from_inside_the_pod_with_nc.md) — no port-forward in sandbox; lookup-self body holds the token
 - [Webhook 404 = page unbound](reference_staging_fb_webhook_404_is_page_unbound_silently.md) — no log line; read fb_app_audit_log · becomes 200+metric after AI-216 fix deploys
+- [Local API probe recipe](reference_local_ai_chat_api_probe_recipe_headers_provision_vault_denied.md) — Kratos login, provision w/ local-dev-token, ai-agent headers, Vault read denied
 - [Playground fetch staging](reference_staging_kb_playground_fetch_from_console_pane.md) — raw score/retrieval_mode via pane fetch; playground score ≠ FAQ score (AI-344)
 - [Admin-fe testId → axe baseline](reference_admin_fe_testid_shifts_axe_baseline_and_turbo_loose_env.md) — new testId on ssk-* reds e2e a11y; turbo --env-mode=loose; glab trace unsandboxed
 - [Admin-fe worktree core skew](reference_admin_fe_worktree_borrowed_node_modules_test_main_core.md) — borrowed node_modules test main's core; use --root packages/core
@@ -95,6 +96,8 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 
 - [Local chat-core API drive](reference_local_chat_core_api_drive_recipe_and_consent_gap.md) — Kratos cookie via :5191, X-Service-Token, VL3 cleanup, local blockers (consent/Google/BOLA/file-service)
 
+- [Local usage routes: deny only](reference_local_usage_routes_cannot_show_allow_cells.md) — no usage.read/billing.read in local rps; ai-agent /usage/cost panics pre-AI-232 fix; X-Service-Token
+- [Restart one dead AI-stack process](reference_overmind_restart_dead_process_ai_mvp_socket.md) — `overmind restart -s .overmind-ai-mvp.sock <name>` only when dead
 - [Fact not stored: diagnose](reference_staging_fact_not_stored_diagnosis_chat_core.md) — no value recorded anywhere; psql recipe; enum exact; missing-slot keys only
 
 ## Sub-indexes — open when the topic comes up
