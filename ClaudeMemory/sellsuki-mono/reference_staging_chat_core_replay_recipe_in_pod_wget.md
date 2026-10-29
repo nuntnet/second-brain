@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: 2103a08c-674d-4fb5-a849-24b47ce4bbe2
-  modified: 2026-10-22T06:37:01.416Z
+  modified: 2026-10-29T06:00:44.907Z
 ---
 
 ใช้จริง 2026-10-22 (AI-298 tier B ข้อ B/C):
@@ -23,4 +23,5 @@ kubectl -n datastore exec postgresql-pg18-0 -c postgresql -- psql -U postgres -d
 - กับดัก: ถ้า bubble แรกมาเดี่ยว ๆ แล้ว agent ตอบ confidence < 0.6 → `fallback_cases low_confidence` + human_mode → bubble ถัดไปถูก suppressed ด้วย "คนดูแล" ไม่ใช่ supersede (attempts 0) — แยกให้ออกจากผล supersede (attempts 1)
 - ห้องสังเคราะห์โผล่ใน inbox ของ workspace pilot จริง (บางห้องเป็น "ต้องการคน") ต้องปิด/บอก PO
 - agent ไม่ log error ของ provider; span ไป OTel collector ซึ่งอาจปฏิเสธ (`high memory usage`) → หาเหตุด้วย probe `/internal/v1/workspaces/{ws}/reply` (ต้องส่ง config.model) และ `/internal/v1/llm` (nc ใน pod เพื่อเห็น body ของ 4xx; busybox wget โชว์ body ตอน error ไม่ได้) · ดู breaker ที่ `ai_agent_circuit_breaker_state`
+- ⚠️ 2026-10-29 (AI-344): auto mode **denied** this exact `kubectl exec … wget --post-data` replay ("Remote Shell Writes"). Without explicit user approval in that session, expect the denial: read-only psql in the pod still works, so give the human the message to send, or ask once.
 - เกี่ยวข้อง: [[reference_chat_core_local_inbound_forward_for_live_tests]], [[reference_ai_agent_staging_vault_token_expiry_crash_on_restart]], [[reference_staging_ai_chat_console_drive_recipe]]
