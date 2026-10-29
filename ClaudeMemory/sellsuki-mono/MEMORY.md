@@ -71,6 +71,8 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [pgx cached plan](reference_pgx_cached_plan_breaks_old_pods_after_add_column_migration.md) — old pods error after ADD COLUMN
 - [Sandbox: .claude/commands+skills, worktree add](reference_sandbox_blocks_submodule_claude_commands_skills_and_worktree_add.md) — write-protected; worktree add needs unsandboxed
 - [ai-agent company + charge_class](reference_ai_agent_needs_registered_company_charge_class_from_tier_path.md) — no empty company; mark spend via tier_path
+- [Session worktree Write hook](reference_session_worktree_hook_blocks_writes_outside_it.md) — submodule worktrees go INSIDE the session worktree
+- [pre-push false FAILED](reference_pre_push_hook_false_ship_check_failed.md) — hook crashes (args[@] unbound) and prints ship-check FAILED; run it yourself
 - [Sandbox: DB tests skip](reference_sandbox_blocks_localhost_so_db_tests_skip_silently.md) · [Sandbox: Go CLI TLS](reference_sandbox_blocks_go_cli_tls_and_ssh.md) · [TMPDIR differs](reference_tmpdir_differs_sandboxed_vs_unsandboxed_bash.md) — use scratchpad absolute path
 - [fd exhaustion = codegraph](reference_codegraph_watchers_exhaust_system_fds.md) — "too many open files in system" machine-wide; user kills the watchers
 - [Disk full → Docker dies](reference_disk_full_kills_docker_desktop_go_cache_is_the_first_thing_to_delete.md) — delete go cache first
