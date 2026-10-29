@@ -10,6 +10,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Generator no rmtree](feedback_generator_must_not_wipe_shared_dirs.md) — write only marker files
 - [Nested po-lead](feedback_nested_po_lead_loses_drafts_write_to_files.md) — spawn writers from main session, write to files
 - [gemini-2.5-flash only](feedback_gemini_25_flash_is_the_kb_answer_model.md) — KB answer model fixed 10-07
+- [Prove-red no head](feedback_prove_red_script_never_pipe_into_head.md) — head kills the restore; commit first
 - [Tests from card](feedback_tests_derive_from_the_card_not_the_code.md) — card = SSOT, never fit expected to code
 - [Standing approval staging](feedback_standing_approval_merge_deploy_staging_after_gates.md) — gates green → merge/deploy staging myself · prod still ask
 - [Comment card](feedback_comment_jira_card_when_loop_closes.md) — Jira comment + status follows MR
@@ -61,6 +62,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [ai-agent persona budget](reference_ai_agent_platform_prompt_fills_persona_budget.md) — platform prompt fills gpt-4o-mini persona layer; new rule → ~50 tests red
 - [chat-core DB tests -p 1](reference_chat_core_db_tests_need_p1.md) — parallel run → "File exists" on TRUNCATE
 - [Scenario harness](reference_real_conversation_scenario_harness_lead_goal_step_2026_10_24.md) — turn-by-turn customer chat on local
+- [KB table sample](reference_rag_core_structured_table_sample_staging_empty_generate_from_rag_core_code.md) — staging 0 tables 10-29; generate pages with rag-core's own code
 - [Prompt A/B via /llm](reference_ai_agent_prompt_ab_via_fake_llm_dump_and_llm_route.md) — fakeLLM dump + replay; history must end with current bubble
 
 ## Go / DB / sandbox
