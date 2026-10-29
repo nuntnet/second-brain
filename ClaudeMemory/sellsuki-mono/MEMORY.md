@@ -94,6 +94,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [FB staging test app](reference_staging_fb_app_is_a_test_app.md) · [Sellsuki-New review](reference_sellsuki_new_meta_app_state.md) · [Model = provider perm](project_model_change_is_provider_level.md)
 - [Docs on AI-49](reference_monorepo_docs_live_on_ai49_branch.md) · [control-tower diverged](reference_control_tower_data_js_diverged_main_vs_ai49.md)
 
+- [Local 2nd identity](reference_local_second_identity_operator_manager_recipe.md) — Operator via chat-core /operators (works), Manager via rps; UnassignRole leaves tenant_refs+perm tuples
 - [Local chat-core API drive](reference_local_chat_core_api_drive_recipe_and_consent_gap.md) — Kratos cookie via :5191, X-Service-Token, VL3 cleanup, local blockers (consent/Google/BOLA/file-service)
 
 - [Local usage routes: deny only](reference_local_usage_routes_cannot_show_allow_cells.md) — no usage.read/billing.read in local rps; ai-agent /usage/cost panics pre-AI-232 fix; X-Service-Token
