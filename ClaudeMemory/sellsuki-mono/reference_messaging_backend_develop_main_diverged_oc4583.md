@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: 3aac068a-3349-436b-b707-7d3b887a3e29
-  modified: 2026-10-28T18:31:32.620Z
+  modified: 2026-10-29T00:12:28.737Z
 ---
 
 Found 2026-10-28 when opening messaging-backend MR !84 (AI-216 webhook fix) into `develop`. GitLab showed `detailed_merge_status=conflict`.
@@ -22,5 +22,7 @@ Found 2026-10-28 when opening messaging-backend MR !84 (AI-216 webhook fix) into
 - Against `develop`, the Changes tab shows every one of `main`'s 24 extra commits, so name the single commit to review.
 
 **2026-10-29 (AI-333): nunt chose "Fix develop first" over targeting `main` directly.** When asked whether a messaging MR should skip `develop`, the answer was to reconcile `develop` first and keep the git flow. Don't default to `main`; ask, and expect this answer. The owner of the conflicting side is **nithiphat** (OC-4583). The same feature exists twice: `fa814b6` on main and `c64045e` on develop. After that, main got `35bb85f` `0ef610d` `f7a207e` `cb04768` (10-09) and develop got `55269bd` (10-06). The fix is to merge `main` into `develop`, with nithiphat resolving the 5 email files. That one step unblocks !84 (AI-216) and AI-333 together. Ledger: `docs/cards/AI-333.md`.
+
+**The reconcile step is MR !85** (`fix/AI-333-redact-chat-5xx-into-develop` `c32b9f6`, cut from `develop` `ad80a56`, opened 10-29 01:36). It takes main's side for all 5 files and brings all 27 of main's commits into `develop`. nithiphat still needs to confirm that `X-Wait-For-Provider` may reach `develop`. On 10-29 nunt also chose to keep !84 on `develop`, not retarget it. A trial merge of !84's `6a5156c` on top of `c32b9f6` is clean, so once !85 merges, !84 merges with no further work. Recheck with `git merge-tree` against the new `develop` tip before merging.
 
 Same family as [[reference_oc2plus_backoffice_develop_main_diverged_2026_10_11]] and [[reference_rps_and_management_backend_develop_main_diverged]].
