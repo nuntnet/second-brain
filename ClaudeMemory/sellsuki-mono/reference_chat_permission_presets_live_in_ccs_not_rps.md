@@ -20,4 +20,7 @@ Codes chat-core actually checks (read 2026-10-28, kit v0.8.0, AI-289):
 
 backfill-role-permission selects system roles with tenant refs only; AI Chat Company Admin is non-system and mostly
 unassigned, so it needs `--include-non-system --grant-unassigned` (AI-289, rps !185 — check it merged before relying on it).
+Staging usage.read backfill done 2026-10-29 (Owner 3359, Admin 117). Lesson: `granted N, failed 0` is not proof —
+first Owner apply left 85 roles without the code (cause unknown, likely concurrent stale rewrite); always re-run the
+dry-run after --apply and re-apply until to-grant 0. Admin role exists on only ~117 companies (preset = creation only).
 Related: [[project_ai_chat_staging_permission_state_2026_10_27]], [[project_ccs_role_presets_apply_only_at_creation]].
