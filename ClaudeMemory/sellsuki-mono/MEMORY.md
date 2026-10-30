@@ -90,6 +90,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Local API probe recipe](reference_local_ai_chat_api_probe_recipe_headers_provision_vault_denied.md) — Kratos login, provision w/ local-dev-token, ai-agent headers, Vault read denied
 - [Playground fetch staging](reference_staging_kb_playground_fetch_from_console_pane.md) — raw score/retrieval_mode via pane fetch; playground score ≠ FAQ score (AI-344)
 - [Admin-fe testId → axe baseline](reference_admin_fe_testid_shifts_axe_baseline_and_turbo_loose_env.md) — new testId on ssk-* reds e2e a11y; turbo --env-mode=loose; glab trace unsandboxed
+- [ssk-text color prop / e2e port / TTTT shard](reference_admin_fe_ssk_text_color_prop_unreachable_and_e2e_port.md) — shadow p owns colour; :5196 collides; starved shard → retry job
 - [Admin-fe worktree core skew](reference_admin_fe_worktree_borrowed_node_modules_test_main_core.md) — borrowed node_modules test main's core; use --root packages/core
 - [Who sent / who did](reference_staging_ai_chat_who_sent_who_did_lookup.md) — PSID→name in db `chat_core`.chat_sessions · actor→name in staging_ory_kratos
 - [FB staging test app](reference_staging_fb_app_is_a_test_app.md) · [Sellsuki-New review](reference_sellsuki_new_meta_app_state.md) · [Model = provider perm](project_model_change_is_provider_level.md)
@@ -116,3 +117,4 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Usage spool stuck](project_staging_ai_agent_usage_spool_stuck_poison_event_2026_10_29.md) — staging ai-agent replay fails, QMS no plan for company 018a163e
 - [RAG probes: user mints token](reference_rag_staging_probes_user_mints_bff_token_port_forward_ok.md) — exec denied, port-forward OK, never read BFF secret; playground needs real typing
 - [Pane file upload](reference_browser_pane_file_upload_via_datatransfer.md) — DataTransfer on input[type=file]; conversation URL is /w/<ws>?session=
+- [Sandbox go cache + BSD sed](reference_sandbox_blocks_go_build_cache_and_bsd_sed_noop_mutation.md) — go vet needs unsandboxed; sed -i no-op fakes a failed mutation
