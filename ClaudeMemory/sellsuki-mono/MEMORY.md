@@ -122,3 +122,5 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Parallel Bash cd / zsh split](reference_parallel_bash_cd_moves_git_checkout_into_shared_root_use_git_dash_C.md) — use `git -C <abs>` + `bash -c` loops; a parallel `cd` once moved a checkout in the shared root
 - [Company-mgmt FE tests](reference_company_mgmt_frontend_vitest_recipe_and_shared_node_modules.md) — vitest 1.6 pool flags, rtk breaks npx vitest, symlink node_modules
 - [Sandbox go cache + BSD sed](reference_sandbox_blocks_go_build_cache_and_bsd_sed_noop_mutation.md) — go vet needs unsandboxed; sed -i no-op fakes a failed mutation
+- [Admin-fe worktree install + key-count tripwire](reference_admin_fe_worktree_install_and_i18n_key_count_tripwire.md) — own pnpm install; LabelPack test counts i18n keys
+- [BOLA internal API header](reference_bola_internal_api_uses_x_system_token_not_x_service_token.md) — X-System-Token, not X-Service-Token
