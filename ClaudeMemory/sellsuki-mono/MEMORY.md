@@ -101,6 +101,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Local chat-core API drive](reference_local_chat_core_api_drive_recipe_and_consent_gap.md) — Kratos cookie via :5191, X-Service-Token, VL3 cleanup, local blockers (consent/Google/BOLA/file-service)
 
 - [Local usage routes: deny only](reference_local_usage_routes_cannot_show_allow_cells.md) — no usage.read/billing.read in local rps; ai-agent /usage/cost panics pre-AI-232 fix; X-Service-Token
+- [BOLA local run](reference_bola_local_run_own_overmind_socket_and_internal_api_auth.md) — own overmind socket :8097, X-System-Token, local DB seed recipe
 - [Restart one dead AI-stack process](reference_overmind_restart_dead_process_ai_mvp_socket.md) — `overmind restart -s .overmind-ai-mvp.sock <name>` only when dead
 - [Fact not stored: diagnose](reference_staging_fact_not_stored_diagnosis_chat_core.md) — no value recorded anywhere; psql recipe; enum exact; missing-slot keys only
 
@@ -118,4 +119,6 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Usage spool stuck](project_staging_ai_agent_usage_spool_stuck_poison_event_2026_10_29.md) — staging ai-agent replay fails, QMS no plan for company 018a163e
 - [RAG probes: user mints token](reference_rag_staging_probes_user_mints_bff_token_port_forward_ok.md) — exec denied, port-forward OK, never read BFF secret; playground needs real typing
 - [Pane file upload](reference_browser_pane_file_upload_via_datatransfer.md) — DataTransfer on input[type=file]; conversation URL is /w/<ws>?session=
+- [Parallel Bash cd / zsh split](reference_parallel_bash_cd_moves_git_checkout_into_shared_root_use_git_dash_C.md) — use `git -C <abs>` + `bash -c` loops; a parallel `cd` once moved a checkout in the shared root
+- [Company-mgmt FE tests](reference_company_mgmt_frontend_vitest_recipe_and_shared_node_modules.md) — vitest 1.6 pool flags, rtk breaks npx vitest, symlink node_modules
 - [Sandbox go cache + BSD sed](reference_sandbox_blocks_go_build_cache_and_bsd_sed_noop_mutation.md) — go vet needs unsandboxed; sed -i no-op fakes a failed mutation
