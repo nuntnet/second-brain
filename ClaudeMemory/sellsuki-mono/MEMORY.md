@@ -103,6 +103,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Local usage routes: deny only](reference_local_usage_routes_cannot_show_allow_cells.md) — no usage.read/billing.read in local rps; ai-agent /usage/cost panics pre-AI-232 fix; X-Service-Token
 - [BOLA local run](reference_bola_local_run_own_overmind_socket_and_internal_api_auth.md) — own overmind socket :8097, X-System-Token, local DB seed recipe
 - [Restart one dead AI-stack process](reference_overmind_restart_dead_process_ai_mvp_socket.md) — `overmind restart -s .overmind-ai-mvp.sock <name>` only when dead
+- [Messenger 24h window](reference_messenger_24h_window_blocks_reminders_and_followups.md) — messaging-backend blocks sends >24h; reminders/follow-ups can't reach Messenger
 - [Fact not stored: diagnose](reference_staging_fact_not_stored_diagnosis_chat_core.md) — no value recorded anywhere; psql recipe; enum exact; missing-slot keys only
 
 ## Sub-indexes — open when the topic comes up
