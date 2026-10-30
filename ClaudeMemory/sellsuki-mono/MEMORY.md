@@ -88,6 +88,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Morning restarts = Keto](reference_staging_morning_boot_restarts_on_keto_are_expected.md) — 09:00 boot order, not a bug · [Probe in pod with nc](reference_probe_staging_routes_from_inside_the_pod_with_nc.md) — no port-forward in sandbox; lookup-self body holds the token
 - [Webhook 404 = page unbound](reference_staging_fb_webhook_404_is_page_unbound_silently.md) — no log line; read fb_app_audit_log · becomes 200+metric after AI-216 fix deploys
 - [Local API probe recipe](reference_local_ai_chat_api_probe_recipe_headers_provision_vault_denied.md) — Kratos login, provision w/ local-dev-token, ai-agent headers, Vault read denied
+- [KB100 on staging](reference_kb100_on_staging_playground_and_grader_token.md) — in-page loop, retry 'unavailable', grader needs local-dev-token copy; customer KB = 3-small so D-057 is internal-only
 - [Playground fetch staging](reference_staging_kb_playground_fetch_from_console_pane.md) — raw score/retrieval_mode via pane fetch; playground score ≠ FAQ score (AI-344)
 - [Admin-fe testId → axe baseline](reference_admin_fe_testid_shifts_axe_baseline_and_turbo_loose_env.md) — new testId on ssk-* reds e2e a11y; turbo --env-mode=loose; glab trace unsandboxed
 - [ssk-text color prop / e2e port / TTTT shard](reference_admin_fe_ssk_text_color_prop_unreachable_and_e2e_port.md) — shadow p owns colour; :5196 collides; starved shard → retry job
