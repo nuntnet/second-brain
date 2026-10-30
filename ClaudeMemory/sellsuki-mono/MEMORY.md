@@ -75,6 +75,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [pre-push false FAILED](reference_pre_push_hook_false_ship_check_failed.md) — hook crashes (args[@] unbound) and prints ship-check FAILED; run it yourself
 - [Sandbox: DB tests skip](reference_sandbox_blocks_localhost_so_db_tests_skip_silently.md) · [Sandbox: Go CLI TLS](reference_sandbox_blocks_go_cli_tls_and_ssh.md) · [TMPDIR differs](reference_tmpdir_differs_sandboxed_vs_unsandboxed_bash.md) — use scratchpad absolute path
 - [fd exhaustion = codegraph](reference_codegraph_watchers_exhaust_system_fds.md) — "too many open files in system" machine-wide; user kills the watchers
+- [Local Mongo no replset → consent 503](reference_local_mongo_standalone_blocks_consent_acceptance_otp_members.md) — OTP members blocked by consent gate on local; absolute overmind socket paths
 - [Disk full → Docker dies](reference_disk_full_kills_docker_desktop_go_cache_is_the_first_thing_to_delete.md) — delete go cache first
 - [codegraph ENFILE](reference_codegraph_mcp_watchers_exhaust_macos_file_table.md) — watchers eat the system file table; lsof -c node, ask before kill
 
