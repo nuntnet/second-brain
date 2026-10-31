@@ -49,6 +49,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [AI-318 depends on model](project_ai318_interest_gate_depends_on_the_model_2026_10_25.md) — gemini fails, gpt-4o-mini passes · D-038
 - [AI chat dev order 10-27](reference_ai_chat_dev_order_reconcile_2026_10_27.md) — 5 waves · both sprint cleanups applied (21=39/22=47/23=34/24=11) · Sprint 1-20 closed, 21 active via pane REST · staging chat module off
 - [AI chat permission staging 10-27](project_ai_chat_staging_permission_state_2026_10_27.md) — Owner 3 generations · no usage/billing preset · switcher bug · dry-run numbers · fix plan · AI-252 develop-only
+- [Settings redesign v9](project_ai_chat_settings_redesign_v9_approved_2026_10_31.md) — v9 approved 10-31 · AI-357..360 cut · D-095 open · resume at card drafts
 - [chat-core not on prod](project_chat_core_not_deployed_to_production.md) — chat-core cards have no real prod step yet
 - [Unscheduled sweeps AI-351](project_chat_core_unscheduled_sweeps_ai351.md) — 9 chat-core sweeps had no CronJob · rolling-summary added, rest wait D-051
 - [Messaging chat flip 10-27](reference_messaging_chat_module_staging_flip_2026_10_27.md) — off by !80 09:59, back on by !82 16:46 (deploy 275941) · develop untouched · VAULT_TOKEN ~11-23 · M1–M8 in docs/cards/AI-216.md
