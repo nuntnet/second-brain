@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: 8b69c115-30aa-4ff4-b9c5-86fafae17c77
-  modified: 2026-10-31T14:33:17.914Z
+  modified: 2026-11-01T02:16:40.177Z
 ---
 
 nunt approved prototype v9 and the case-type → pipeline domain model on 2026-10-31. Entry point for anyone resuming: `docs/design/HANDOFF-ai-chat-settings-redesign-2026-10-31.md` (on root branch `fix/AI-49-safe-worker-activation`).
@@ -18,6 +18,8 @@ State after that session:
 - Not yet cut: M5 (split by prototype area; v9 is a behaviour prototype with 0 `ssk-*` uses, so a real visual design pass is needed first), M6, Later. Old cards reworded 2026-10-31: AI-312, AI-313 edited in place; AI-317 title prefixed "[ถูกแทนที่ ...]" (status/sprint left for nunt); AI-55, 314, 318, 16, 355 comment-only because Sprint 21 is active.
 
 - DS version, settled 2026-10-31: UX/UI's "0.27.1-beta.1" = npm `beta` tag = `0.27.0-beta.1` (nunt confirmed), already on the console. Public `0.27.1` is an OLDER line (trial: 14 tsc errors on `<ssk-modal>`, 2/1824 tests fail, no ssk-tab/ssk-search/ssk-clear/ssk-dropdown-listbox, no DS 1.0 font tokens) → kit preset `^0.27.1` would move the console backwards. Open: which published version has DS 1.0 AND fits `^0.27.1`. Analysis doc: `docs/design/ai-chat-console-frontend-kit-adoption-2026-10-31.md` (PROPOSAL); D-102 = mobile route (default A).
+
+- AI-369 design mocks, 2026-11-01: G1–G5 built on real `ssk-*` in `docs/design/ai-chat-console-design/` (index.html; setup.sh builds `_ds/`; launch config `design-mocks` :4481). Ledger `docs/cards/AI-369.md`. Lesson: nunt rejected v1 G1 as hard to read — it had never been put beside v9; v2 follows v9's card-flow layout. Awaiting nunt review (AC9); AC2/AC8/AC10 and gap comments not done.
 
 **Why:** the handoff was written because the coordinator account's tokens were running out; the next session has to know what is decided vs still open.
 **How to apply:** resume with the card drafts index, not the handoff's roadmap table alone. v9 is a prototype (structure + behaviour), not a visual design: M5 needs a design pass against `ssk-*` (Claude Design is reasonable) before building; backend M0–M4 does not wait for it.
