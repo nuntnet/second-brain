@@ -91,6 +91,8 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Fiber Group = Use on prefix](reference_fiber_group_middleware_gates_every_later_route_under_prefix.md) — shared-prefix group gate leaks; 403 helper returns nil
 - [worktree -b tracks origin/main](reference_worktree_add_b_tracks_origin_main_push_explicit_refspec.md) — push with explicit refspec
 - [go test skips _dirs](reference_go_test_skips_underscore_dirs_ccs_migration_tests.md) — CCS _00NN migration tests by explicit path
+- [Reverted merge = ancestor](reference_reverted_merge_branch_is_ancestor_reapply_by_reverting_the_revert.md) — merging a reverted card branch again is a no-op; revert the revert on a -v2 branch
+- [Checkpoint snapshot = turn start](reference_chat_core_checkpoint_snapshot_is_turn_start_recompute_after_facts.md) — read after reply lags a turn; recompute with TriggerFactWrite
 
 ## Sub-indexes — open when the topic comes up
 - [AI chat / KB](index_ai_chat.md) — KB eval, staging recipes, console, rag-core, Vault (incl. everything formerly listed here)
