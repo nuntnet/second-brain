@@ -11,3 +11,8 @@ Seen 2026-10-29 on AI-334 (chat-core). A helper `pr.sh` changed one value, ran `
 
 **Why:** a leftover mutation silently poisons every concurrent run (verifier, full suite) on the same worktree, and its verdict.
 **How to apply:** commit before each mutation round; never pipe the prove-red script into `head`/`grep -m` (filter inside the script instead); after the round run `git status --short` and `git diff` before anything else. Also: Go in this sandbox fails with "package errors is not in std" — that is the toolchain being unreadable, run `go` unsandboxed. Related: [[reference_chat_core_db_tests_need_p1]].
+
+
+**zsh does not word-split `$var` (2026-11-02, AI-215).** A prove-red helper passed `"./a/ ./b/"` as `$5` to
+`go test`, which took it as ONE package path → `[setup failed]`, i.e. four "red" mutations that ran no test. Use
+`${=var}` (or an array / `"$@"`) for package lists in zsh, and grep each run for `--- FAIL: <Name>`.

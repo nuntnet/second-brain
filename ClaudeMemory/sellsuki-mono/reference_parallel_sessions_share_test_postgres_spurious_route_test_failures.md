@@ -16,3 +16,11 @@ two checkouts of the same repo truncate each other's tables.
 just the failing packages; if still red, run them on `origin/main` to separate pre-existing from yours. Record the
 re-run in the ledger's environment log instead of silently ignoring the red. Related:
 [[reference_chat_core_db_tests_need_p1]].
+
+**Fix that worked (2026-11-02, AI-211/215): give your runs their own DATABASE.** `testdb` honours
+`CHAT_CORE_TEST_POSTGRESQL_URI`, so `postgres://postgres:postgres@localhost:5432/chat_core_test_<you>?sslmode=disable`
+isolates every fixed schema name at once. Runs went ~10x faster and the unexplained concurrency flake vanished. There is
+no `psql` on this machine: create/drop the DB with a 20-line `go run` file kept in the scratchpad and run FROM the
+chat-core module dir, importing `gorm.io/driver/postgres` (the repo's `internal/pgdialect` is not importable from outside).
+`CREATE DATABASE` then `DROP DATABASE … WITH (FORCE)` when done — the disk filled the same day ("No space left on device"
+from Postgres) and every extra DB counts. Give each verifier subagent its own DB too.

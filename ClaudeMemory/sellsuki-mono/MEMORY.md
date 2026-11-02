@@ -10,7 +10,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Generator no rmtree](feedback_generator_must_not_wipe_shared_dirs.md) — write only marker files
 - [Nested po-lead](feedback_nested_po_lead_loses_drafts_write_to_files.md) — spawn writers from main session, write to files
 - [gemini-2.5-flash only](feedback_gemini_25_flash_is_the_kb_answer_model.md) — KB answer model fixed 10-07
-- [Prove-red no head](feedback_prove_red_script_never_pipe_into_head.md) — head kills the restore; commit first
+- [Prove-red no head](feedback_prove_red_script_never_pipe_into_head.md) — head kills the restore; commit first; zsh needs ${=pkgs}
 - [Tests from card](feedback_tests_derive_from_the_card_not_the_code.md) — card = SSOT, never fit expected to code
 - [Standing approval staging](feedback_standing_approval_merge_deploy_staging_after_gates.md) — gates green → merge/deploy staging myself · prod still ask
 - [Bot before merge](feedback_read_review_bot_before_merging.md) — read the bot Result line; green+mergeable ≠ bot passed
@@ -26,7 +26,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Sprint sweep = deploy](feedback_sprint_sweep_board_column_means_deploy_not_ac_proof.md) — column means deployed, not AC proven
 - [Mock review](feedback_mock_mode_ui_review_check_real_adapter_before_calling_defect.md) — check real adapter before calling a defect
 - [rtk cat strips comments](feedback_rtk_cat_strips_comments_never_use_cat_to_rewrite_files.md) — write files with python bytes
-- [rtk proxy to compare](feedback_compare_command_outputs_with_rtk_proxy.md) — rtk truncates output; read raw
+- [rtk proxy to compare](feedback_compare_command_outputs_with_rtk_proxy.md) — rtk truncates output, hides merge commits in git log; read raw
 - [Vault/prod: hand over commands](user_has_vault_and_prod_access_agent_hands_over_commands.md) — nunt has Vault+prod access
 
 ## Git / branches
@@ -44,6 +44,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [eval-skill pitfalls](reference_eval_skill_design_pitfalls_2026_10_12.md) — real tier-2 task, strip evidence from baselines, 429 kills agents
 - [nunt-mode profile](project_nunt_mode_agent_profile.md) — /my-mode, eval REVISE · round 3 (tier 2) incomplete, rerun after spend limit
 - [Tiers + Decision Inbox](project_workflow_tiers_and_inbox_2026_10_13.md) — AC tiers A/B/C + question queue
+- [Inbox ids collide](reference_inbox_py_ids_collide_across_branches.md) — inbox.py is max+1 per branch; pin the coordinator's id via load/save
 - [OC-4739 file-service backfill](project_oc4739_file_service_access_backfill.md) — staging 14,749 companies · AC8 left
 - [Oc2plus SaaS OC-4763](project_oc2plus_saas_plan_epic_oc4763_decisions_2026_10_16.md) — PO quota/billing decisions 10-16
 - [System testing direction](project_system_testing_direction_2026_10_11.md) — invariants suite, seed-scenario, ratchet
@@ -72,7 +73,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [fd exhaustion = codegraph](reference_codegraph_watchers_exhaust_system_fds.md) — "too many open files in system" machine-wide; user kills…
 - [Local Mongo no replset → consent 503](reference_local_mongo_standalone_blocks_consent_acceptance_otp_members.md) — 4 causes: replset, write flags, 7 indexes, consentee…
 - [Go toolchain cache damaged after crash](reference_go_toolchain_cache_damaged_after_fd_crash_use_gotoolchain_local.md) — "os/exec is not in std" → GOTOOLCHAIN=local; user deletes…
-- [Parallel sessions share test Postgres](reference_parallel_sessions_share_test_postgres_spurious_route_test_failures.md) — spurious reds in untouched packages; re-run alone + on…
+- [Parallel sessions share test Postgres](reference_parallel_sessions_share_test_postgres_spurious_route_test_failures.md) — use your own DB via CHAT_CORE_TEST_POSTGRESQL_URI (go run to create); drop after
 - [go-build cache corrupt](reference_corrupt_go_build_cache_package_not_in_std.md) — "io/fs is not in std" → GOCACHE=scratchpad, don't wipe…
 - [Kit pseudo-version pin](reference_chat_core_pins_unmerged_kit_by_pseudo_version.md) — go get kit@sha so chat-core CI builds before the tag
 - [Disk full → Docker dies](reference_disk_full_kills_docker_desktop_go_cache_is_the_first_thing_to_delete.md) — delete go cache first

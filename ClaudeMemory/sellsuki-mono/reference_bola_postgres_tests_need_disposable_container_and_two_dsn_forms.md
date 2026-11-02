@@ -1,8 +1,11 @@
 ---
 name: reference_bola_postgres_tests_need_disposable_container_and_two_dsn_forms
-description: bola-backend Postgres-gated tests: throwaway postgres on :55432 (bola-test-pg273 usually already running), TWO DSN forms, and the sandbox/worktree/uuid traps that fake a red or a green (2026-10-24)
+description: "bola-backend Postgres-gated tests: throwaway postgres on :55432 (bola-test-pg273 usually already running), TWO DSN forms, and the sandbox/worktree/uuid traps that fake a red or a green (2026-10-24)"
 metadata:
+  node_type: memory
   type: reference
+  originSessionId: 8ed73ff7-86b0-452e-b6b7-bd58e788b8bb
+  modified: 2026-11-02T08:55:44.626Z
 ---
 
 `BOLA_TEST_POSTGRES_DSN` gates the real-Postgres sub-tests (they create a schema per test, so any empty DB works). Do not point them at the dev DBs:
@@ -17,4 +20,8 @@ Race tests (e.g. BOLA-273 AC5 concurrent merge) are detectors, not deterministic
 - The sandbox blocks both the docker socket and loopback dials (`operation not permitted`), so a Postgres subtest "fails" without running. Run those `go test` / `docker` commands with the sandbox off, and set `GOCACHE=$TMPDIR/gocache` or the build cache write fails.
 - `admins.id` / `workspace_id` are `uuid` columns: fixtures with ids like "a1" fail on Postgres with SQLSTATE 22P02 but pass on SQLite. Before calling a Postgres red proof, read the message for the real symptom, not just FAIL.
 - A submodule worktree cannot be added under the main checkout path (sandbox write limit); add it in the session scratchpad. The monorepo worktree's `backend/bola-backend` is an empty dir holding a harness `.claude/.cc-writes` — leave it.
+**Found on BOLA-381 (2026-11-02):**
+- When the Docker CLI socket is gone (`~/.docker/run/` empty, "Cannot connect to the Docker daemon") the stack's Postgres can still answer on 127.0.0.1:5432. Point the URL-form DSN at its `postgres` maintenance DB (not `bola`); each test makes and drops its own `t_…` schema, so no dev data is touched. Read the password from the `postgres:` service in the root docker-compose.yml inside the command, URL-encode it, never print it.
+- A real-schema e2e is possible: `test/api/internal_company_e2e_test.go` runs all `cmd/migration/migrations.Migrations` through gormigrate on the scratch schema. Prefer that to hand-written DDL (the fixture and the code then do not share one author).
+- `go test ./test/...` panics on two stale mocks unrelated to any card (`TestAPI_ListBroadcasts_success` wants `CountBroadcasts`, `TestAPI_ListLineOAs_success` wants `CountLineOAs`); `-skip` them to get the rest (172 pass). CI's integration job is `echo`, so only `./src/...` is gated.
 - Pre-push secret scanner blocks a commit containing a `postgres://user:pass@…` URL even in a test comment; describe the DSN form without the password.

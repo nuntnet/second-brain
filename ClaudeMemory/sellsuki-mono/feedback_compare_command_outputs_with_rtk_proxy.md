@@ -13,3 +13,7 @@ On 2026-10-11 I compared `go vet ./...` on a develop baseline and on a merge bra
 **Why:** rtk saves tokens by summarising output when it is printed, and the summary is not marked as lossy in a way a diff notices. A comparison needs both sides raw.
 
 **How to apply:** before diffing outputs of the same command across two trees (vet, test lists, ship-check, grep results), run both through `rtk proxy` (as a command prefix, not inside a shell function) or redirect to files and compare the files. If one side shows "… N more lines" it was filtered. **Also (2026-10-29, AI-339):** `git diff > p.diff` is rewritten to `rtk git diff` even when redirected, so the file holds a stat summary, not a patch — `git apply` then says "No valid patches", and a `git checkout -- src` done after it threw away the edits. To set work aside, use `rtk proxy git diff` or a WIP commit, never a plain redirected `git diff`. Related: [[feedback-head-on-grep-is-sampling-not-verification]], [[reference-tmpdir-differs-sandboxed-vs-unsandboxed]].
+ **Also (2026-11-02, AI-211):** `rtk git log` (even `--graph`) DROPS merge commits — a merged branch looked
+linear and a correct merge looked like a wrong base; `rtk proxy git log --graph` showed the truth. Plain `go test`
+(no `-v`) and `npx vitest run` output can also come back empty or as "PASS (0) FAIL (0)", which once looked like a
+prove-red mutation that failed nothing; re-run with `rtk proxy` before concluding.
