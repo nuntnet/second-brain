@@ -1,6 +1,6 @@
 ---
 name: reference_frontend_kit_state
-description: "frontend-kit (sellsuki/share/library/frontend-kit, PAT-2587): all code on spike/walking-skeleton under Draft MR !1, main = README only, 0 packages on registry 856 — tarball-only; auth/Identity model is staff-app shaped; RN adapter is a type stub; scaffold verified to build 2026-09-08"
+description: "frontend-kit (GitLab 856, PAT-2587): released v0.7.0 on 2026-11-02 with packages on the 856 npm registry (needs a per-project token line); preset-sellsuki peers DS ^0.27.1 (console pins 0.27.0-beta.1); console 851 not on 856 CI allowlist. Older 2026-09 spike state kept below"
 metadata: 
   node_type: memory
   type: reference
@@ -8,7 +8,16 @@ metadata:
   modified: 2026-09-08T16:49:40.840Z
 ---
 
-**State verified 2026-09-08** (`git@gitlab.sellsuki.com:sellsuki/share/library/frontend-kit.git`, GitLab project id 856):
+**Update 2026-11-02 (AI-118):** tags `v0.4.0` … `v0.7.0` exist (`v0.7.0` = `f11839b0`, 2026-11-02); `docs/CONSUMING.md`
+lists `@sellsuki-org/{foundation,api,core,adapter-react|vue|svelte,create,eslint-config,preset-sellsuki}` at `^0.7.0`.
+- Install needs `//gitlab.sellsuki.com/api/v4/projects/856/packages/npm/:_authToken=<PAT>` in `~/.npmrc`; the
+  instance-wide `/api/v4/packages/npm/` line on nunt's Mac does NOT match → `npm view` gives 401. Only nunt can add it.
+- CI: 856's `job_token_scope/allowlist` held only 514 (sellercenter), 856, 895 (ccs3-fe-kit); console 851 absent.
+- `adapter-react` = React 19 + TanStack `^5.90.2`; `eslint-config`/preset peer `eslint ^9.39.0` (console is on 8).
+- `preset-sellsuki` peers `@sellsuki-org/sellsuki-components ^0.27.1`; console's exact `0.27.0-beta.1` is below it (D-192).
+- `docs/MIGRATING.md` is not at that path on v0.7.0 (404).
+
+**State verified 2026-09-08 (superseded above)** (`git@gitlab.sellsuki.com:sellsuki/share/library/frontend-kit.git`, GitLab project id 856):
 - `main` = single "Initial commit" (README only, 2026-08-05). All 39 commits live on `spike/walking-skeleton` under **MR !1 which is still Draft** (opened to get CI running, not to merge). Pipelines on the MR are green.
 - **Nothing published.** `projects/856/packages` = `[]`; `publish_npm` needs a protected `vX.Y.Z` tag and none is configured. Only way to consume = `pnpm create:local <dir> --shell app|vue|svelte` (packs `file:./.kit-tarballs/*`) or `pnpm pack` per package. Version string `0.0.1-spike.0`.
 - Toolchain: Node ≥22.18 (`.nvmrc` 22.23.2), pnpm 10.30.3. On this Mac `corepack enable` fails EACCES on /usr/local/bin; `corepack prepare pnpm@10.30.3 --activate` still works.
