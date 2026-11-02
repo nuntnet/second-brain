@@ -124,3 +124,6 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [ssk-drawer named slots + closed h1](reference_ssk_drawer_named_slots_and_closed_header_h1.md) — body needs slot="body" (jsdom hides it); closed drawer = 2nd h1
 - [Admin-fe e2e port collides](reference_admin_fe_e2e_fixed_port_parallel_sessions_collide.md) — 5196 hard-coded; temp config per session/verifier; -g is a regex
 - [BOLA internal API header](reference_bola_internal_api_uses_x_system_token_not_x_service_token.md) — X-System-Token, not X-Service-Token
+- [SskPageTitle children](reference_ssk_page_title_takes_children_not_title_prop.md) — `title=` renders an empty h1; tests stay green
+- [Keep-both merge drops braces](reference_merge_conflict_keep_both_drops_shared_closing_lines.md) — rebuild base+ours+theirs; postcss parse; zsh `$REF:path`
+- [Console e2e port 5196 shared](reference_console_e2e_port_5196_shared_use_temp_config.md) — temp config on 5197, app-local playwright
