@@ -17,3 +17,7 @@ On 2026-10-11 I compared `go vet ./...` on a develop baseline and on a merge bra
 linear and a correct merge looked like a wrong base; `rtk proxy git log --graph` showed the truth. Plain `go test`
 (no `-v`) and `npx vitest run` output can also come back empty or as "PASS (0) FAIL (0)", which once looked like a
 prove-red mutation that failed nothing; re-run with `rtk proxy` before concluding.
+**2026-11-02 (AI-360):** a background `go test … > file; echo "EXIT $?"` through the rtk hook printed `SRC EXIT 0`
+while the summary said `📦 use_case [build failed]` — rtk's go-test wrapper does not pass the failure through as
+the exit code. For any ladder you report, run `rtk proxy go test …` and read both the exit code and `^FAIL` /
+`build failed`. And never let two background runs write the same output file: the slower, older run wins.
