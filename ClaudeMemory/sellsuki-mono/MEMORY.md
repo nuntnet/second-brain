@@ -85,6 +85,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 
 - [ENFILE corrupts go cache](reference_enfile_outage_corrupts_go_build_cache_and_kills_air_watchers.md) — air rebuilds fail silently, old binaries served; go clean -cache + overmind restart -s
 - [Lead-vocab guard trap](reference_chat_core_lead_vocabulary_guard_substring_trap.md) — chat-core guard bans warm/hot/cold and substring "stage" (TestAgent!)
+- [ai-agent confidence = 3 bands](reference_ai_agent_confidence_score_is_three_band.md) — Score is 0.1/0.35/0.95; thresholds in (0.35,0.95] all behave alike (D-193)
 - [Pre-push blocks fake creds](reference_gstack_prepush_blocks_fake_credentials_in_tests.md) — assemble test secrets at run time, no --no-verify
 
 ## Sub-indexes — open when the topic comes up
