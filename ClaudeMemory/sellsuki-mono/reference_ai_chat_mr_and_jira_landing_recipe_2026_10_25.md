@@ -11,7 +11,7 @@ metadata:
 Opened 14 MRs + 7 Jira comments this way, no classifier denial (extends [[reference_auto_mode_blocks_glab_mr_create]] and [[reference_sandbox_blocks_go_cli_tls_and_ssh]]).
 
 - **Token pitfall:** `~/Library/Application Support/glab-cli/config.yml` has TWO hosts; the first `token:` line is gitlab.com's and gives 401 / "404 Project Not Found" on sellsuki. Read the token under the `gitlab.sellsuki.com:` block (awk from that line) and never print it. `/usr/bin/curl -H "PRIVATE-TOKEN: …" https://gitlab.sellsuki.com/api/v4/projects/<id>/merge_requests --data-binary @body.json -H 'Content-Type: application/json'` works.
-- **Project ids:** kit 848 (ai-platform-kit-go, path sellsuki/share/library/), rag-core 787, ai-agent 850, chat-core 849, messaging-backend 568, ai-chat-admin-frontend 851.
+- **Project ids:** kit 848 (ai-platform-kit-go, path sellsuki/share/library/), rag-core 787, ai-agent 850, chat-core 849, messaging-backend 568, ai-chat-admin-frontend 851. data-pipeline (`sellsuki/data-pipeline/ai_chat_data_pipeline`, not a submodule) 868 — no `develop` either (checked 2026-11-02).
 - **Only messaging-backend has `develop`.** kit, rag-core, ai-agent, chat-core and the console have none, so "MR into develop" means MR into `main` there (Git flow rule 6). Say so in the report; merging those goes straight to the main track.
 - **Jira AI project:** cloudId `sellsuki.atlassian.net`; transition "In Review" id `31` (To Do 11, In Progress 21, Done 41). Thai markdown comments round-trip intact via `addCommentToJiraIssue` contentFormat markdown. One card at a time with `sleep 10` between writes.
 - Shell gotcha: `for x in "a b"; do set -- $x` does not word-split under zsh; wrap in `bash -c`.

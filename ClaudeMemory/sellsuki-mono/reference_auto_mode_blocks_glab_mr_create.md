@@ -38,3 +38,8 @@ classifier DID refuse that day: `kubectl set env` on a deployment the user had n
 Pod on staging, reading Secret key names on staging, and a DELETE-less `kubectl apply` — each worked once
 the user ran it in their own terminal (`! cmd`) or confirmed explicitly. So: try the glab call, and hand the
 user a ready file + command only when it is actually denied.
+
+**2026-11-02 update (AI-393):** `glab api --method POST … --input body.json` returns **HTTP 415** unless you also pass
+`-H "Content-Type: application/json"`. With the header, three MRs (kit 848, chat-core 849, data-pipeline 868) opened
+first time from cwd = a submodule; a second pass `--method PUT …/merge_requests/<iid>` rewrote each description so all
+three carry all three URLs. Not denied by the classifier.

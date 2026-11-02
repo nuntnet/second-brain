@@ -14,6 +14,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Tests from card](feedback_tests_derive_from_the_card_not_the_code.md) — card = SSOT, never fit expected to code
 - [Standing approval staging](feedback_standing_approval_merge_deploy_staging_after_gates.md) — gates green → merge/deploy staging myself · prod still ask
 - [Comment card](feedback_comment_jira_card_when_loop_closes.md) — Jira comment + status follows MR
+- [MR after full ladder](feedback_open_mr_only_after_full_test_ladder_green.md) — unit + real-DB -p 1 + AC table proved red, then MR; kit…
 - [Never cut AI reply](feedback_never_cut_ai_reply_gates_observe_only.md) — business-rule gates log, prompt enforces (D-060)
 - [Urgent thread](feedback_keep_urgent_thread_visible.md) — don't bury live damage under a new topic
 - [Sweep Codex branches](feedback_sweep_codex_branches_and_ship_whole.md) — Codex release branch is a superset; its BLOCKED ≠ PO blocker
@@ -32,8 +33,8 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Auto mode blocks MR create](reference_auto_mode_blocks_glab_mr_create.md) — prepare JSON + create-mrs.sh · project ids inside
 - [OC2Plus develop↔main diverged](reference_oc2plus_backoffice_develop_main_diverged_2026_10_11.md) — OC-4736 one-time reunion
 - [rps/mgmt-backend lines](reference_rps_and_management_backend_develop_main_diverged.md) — rps not diverged, mgmt-backend is
-- [Messaging develop↔main diverged](reference_messaging_backend_develop_main_diverged_oc4583.md) — main-cut MR into develop conflicts (OC-4583) · never resolve in UI · nunt: reconcile develop first (nithiphat), don't skip to main
-- [Worktree from main lacks AI repos](reference_monorepo_worktree_from_main_lacks_ai_submodules_and_tooling.md) — detach-worktree each submodule; land ledgers on AI-49 with plumbing; D-ids collide
+- [Messaging develop↔main diverged](reference_messaging_backend_develop_main_diverged_oc4583.md) — main-cut MR into develop conflicts (OC-4583) · never…
+- [Worktree from main lacks AI repos](reference_monorepo_worktree_from_main_lacks_ai_submodules_and_tooling.md) — detach-worktree each submodule; land ledgers on AI-49 with…
 - [Night = staging-th only](reference_night_window_is_staging_th_only_production_runners_run.md) — prod runners still run
 - [First CI run of old specs](reference_first_ci_run_of_never_run_playwright_specs_finds_real_bugs_and_axe_baseline_drift.md) — real bugs + axe drift · never rebase pushed
 
@@ -47,25 +48,15 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Playbook/Goal/Lead/KB cards](project_playbook_goal_lead_kb_cards_2026_10_24.md) — AI-312..327 + PO verdicts
 - [Wave 1 state 10-25](project_wave1_playbook_goal_lead_kb_state_2026_10_25.md) — 8 cards pushed, no MR/verifier
 - [AI-318 depends on model](project_ai318_interest_gate_depends_on_the_model_2026_10_25.md) — gemini fails, gpt-4o-mini passes · D-038
-- [AI chat dev order 10-27](reference_ai_chat_dev_order_reconcile_2026_10_27.md) — 5 waves · both sprint cleanups applied (21=39/22=47/23=34/24=11) · Sprint 1-20 closed, 21 active via pane REST · staging chat module off
-- [AI chat permission staging 10-27](project_ai_chat_staging_permission_state_2026_10_27.md) — Owner 3 generations · no usage/billing preset · switcher bug · dry-run numbers · fix plan · AI-252 develop-only
-- [Settings redesign v9](project_ai_chat_settings_redesign_v9_approved_2026_10_31.md) — v9 approved 10-31 · AI-357..360 cut · D-095 open · resume at card drafts
+- [AI chat dev order 10-27](reference_ai_chat_dev_order_reconcile_2026_10_27.md) — 5 waves · both sprint cleanups applied…
+- [AI chat permission staging 10-27](project_ai_chat_staging_permission_state_2026_10_27.md) — Owner 3 generations · no usage/billing preset · switcher…
+- [Settings redesign v9](project_ai_chat_settings_redesign_v9_approved_2026_10_31.md) — v9 approved 10-31 · AI-357..360 cut · D-095 open · resume…
 - [chat-core not on prod](project_chat_core_not_deployed_to_production.md) — chat-core cards have no real prod step yet
-- [Unscheduled sweeps AI-351](project_chat_core_unscheduled_sweeps_ai351.md) — 9 chat-core sweeps had no CronJob · rolling-summary added, rest wait D-051
-- [Messaging chat flip 10-27](reference_messaging_chat_module_staging_flip_2026_10_27.md) — off by !80 09:59, back on by !82 16:46 (deploy 275941) · develop untouched · VAULT_TOKEN ~11-23 · M1–M8 in docs/cards/AI-216.md
+- [Unscheduled sweeps AI-351](project_chat_core_unscheduled_sweeps_ai351.md) — 9 chat-core sweeps had no CronJob · rolling-summary added…
+- [Messaging chat flip 10-27](reference_messaging_chat_module_staging_flip_2026_10_27.md) — off by !80 09:59, back on by !82 16:46 (deploy 275941)…
 
 ## Jira
 - [Sweep via files](reference_jira_board_sweep_via_saved_results.md) · [BOLA](reference_bola_jira_project.md) · [OC2Plus](reference_oc2plus_jira_project.md) · [Patona](reference_pat_jira_project.md) · [Sprint ids](reference_jira_sprint_ids_not_contiguous.md) · [PAT sprints](reference_pat_board_sprints.md) · [PAT epics](project_pat_epic_links_unwired.md) · [Crosses sessions](reference_jira_mcp_crosses_responses_between_sessions.md) · [Quirks](reference_jira_mcp_search_quirks.md) · [ADF Thai](reference_jira_editissue_adf_breakage.md) · [No fallback](reference_no_local_jira_fallback.md) · [403 writes](reference_jira_mcp_writes_403_midsession.md) · [BOLA no In Review](reference_bola_jira_has_no_in_review_status_and_auto_mode_denies_merge.md)
-
-## Tests
-- [slog.Init once](reference_slog_init_once_silences_the_test_binary.md) · [ssk user-detail](reference_ssk_widget_user_detail_height_is_a_string.md) · [Robot CI no target](reference_sukispace_robot_ci_has_no_target_service.md) · [Robot var case](reference_robot_variables_are_case_insensitive_loop_var_overwrites_suite_var.md) · [BOLA PG tests](reference_bola_postgres_tests_need_disposable_container_and_two_dsn_forms.md)
-- [Uncollected](reference_green_count_hides_uncollected_suite.md) · [Sentry dual](reference_sentry_dual_hub_on_version_skew.md) · [Stub loose](reference_test_stub_more_permissive_than_service.md) · [testify](reference_testify_permissive_default_wins.md) · [Timing](reference_timing_dependent_concurrency_tests.md) · [Turbo](reference_turbo_cache_crosssession_false_green.md) · [Lit SSR](reference_lit_react_node_condition_hollows_tests.md) · [DS testId](reference_ds_testid_is_a_property.md) · [jsdom 25](reference_node25_localstorage_jsdom_conflict.md)
-- [Mock panic kills binary](reference_testify_mock_panic_in_fiber_handler_kills_test_binary.md) — unmatched mock call in fiber handler → no FAIL/ok; rerun the target test alone
-- [ai-agent persona budget](reference_ai_agent_platform_prompt_fills_persona_budget.md) — platform prompt fills gpt-4o-mini persona layer; new rule → ~50 tests red
-- [chat-core DB tests -p 1](reference_chat_core_db_tests_need_p1.md) — parallel run → "File exists" on TRUNCATE
-- [Scenario harness](reference_real_conversation_scenario_harness_lead_goal_step_2026_10_24.md) — turn-by-turn customer chat on local
-- [KB table sample](reference_rag_core_structured_table_sample_staging_empty_generate_from_rag_core_code.md) — staging 0 tables 10-29; generate pages with rag-core's own code
-- [Prompt A/B via /llm](reference_ai_agent_prompt_ab_via_fake_llm_dump_and_llm_route.md) — fakeLLM dump + replay; history must end with current bubble
 
 ## Go / DB / sandbox
 - [ns octoplus](reference_oc2plus_cluster_namespace_is_octoplus.md) · [Files≠schema](reference_migration_files_are_not_applied_schema.md) · [envDefault](reference_envdefault_localhost_masks_missing_config.md) · [goqu](reference_goqu_dialect_blank_import.md) · [AutoMigrate](reference_gorm_pgx_libpq_automigrate.md) · [Drops false](reference_gorm_updates_drops_false.md) · [Lease](reference_lease_claim_ownership_bug_class.md) · [Partial idx](reference_pg_partial_index_onconflict_generic_plan.md) · [404 open](reference_ambiguous_404_fail_open.md) · [Own guard](reference_auth_endpoint_behind_own_guard.md) · [Kafka silent](reference_kafka_silent_publish_failure.md) · [Fiber ctx](reference_fiber_ctx_strings_corrupt_prometheus_labels.md)
@@ -73,41 +64,21 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Sandbox: .claude/commands+skills, worktree add](reference_sandbox_blocks_submodule_claude_commands_skills_and_worktree_add.md) — write-protected; worktree add needs unsandboxed
 - [ai-agent company + charge_class](reference_ai_agent_needs_registered_company_charge_class_from_tier_path.md) — no empty company; mark spend via tier_path
 - [Session worktree Write hook](reference_session_worktree_hook_blocks_writes_outside_it.md) — submodule worktrees go INSIDE the session worktree
-- [pre-push false FAILED](reference_pre_push_hook_false_ship_check_failed.md) — hook crashes (args[@] unbound) and prints ship-check FAILED; run it yourself
+- [pre-push false FAILED](reference_pre_push_hook_false_ship_check_failed.md) — hook crashes (args[@] unbound) and prints ship-check…
 - [Sandbox: DB tests skip](reference_sandbox_blocks_localhost_so_db_tests_skip_silently.md) · [Sandbox: Go CLI TLS](reference_sandbox_blocks_go_cli_tls_and_ssh.md) · [TMPDIR differs](reference_tmpdir_differs_sandboxed_vs_unsandboxed_bash.md) — use scratchpad absolute path
-- [fd exhaustion = codegraph](reference_codegraph_watchers_exhaust_system_fds.md) — "too many open files in system" machine-wide; user kills the watchers
-- [Local Mongo no replset → consent 503](reference_local_mongo_standalone_blocks_consent_acceptance_otp_members.md) — 4 causes: replset, write flags, 7 indexes, consentee sequence floor · tmux pane log recipe
+- [fd exhaustion = codegraph](reference_codegraph_watchers_exhaust_system_fds.md) — "too many open files in system" machine-wide; user kills…
+- [Local Mongo no replset → consent 503](reference_local_mongo_standalone_blocks_consent_acceptance_otp_members.md) — 4 causes: replset, write flags, 7 indexes, consentee…
+- [Go toolchain cache damaged after crash](reference_go_toolchain_cache_damaged_after_fd_crash_use_gotoolchain_local.md) — "os/exec is not in std" → GOTOOLCHAIN=local; user deletes…
+- [Parallel sessions share test Postgres](reference_parallel_sessions_share_test_postgres_spurious_route_test_failures.md) — spurious reds in untouched packages; re-run alone + on…
+- [go-build cache corrupt](reference_corrupt_go_build_cache_package_not_in_std.md) — "io/fs is not in std" → GOCACHE=scratchpad, don't wipe…
+- [Kit pseudo-version pin](reference_chat_core_pins_unmerged_kit_by_pseudo_version.md) — go get kit@sha so chat-core CI builds before the tag
 - [Disk full → Docker dies](reference_disk_full_kills_docker_desktop_go_cache_is_the_first_thing_to_delete.md) — delete go cache first
-- [codegraph ENFILE](reference_codegraph_mcp_watchers_exhaust_macos_file_table.md) — watchers eat the system file table; lsof -c node, ask before kill
-
-## AI chat / KB
-- [KB100 eval + RAG direction](project_kb100_eval_state_and_rag_direction.md) · [local kb_rag DB](reference_local_kb_rag_db_and_milvus.md) · [Drive MCP by ID](reference_google_drive_mcp_shared_files_by_id.md) · [poppler 25.03 Thai](reference_poppler_2503_breaks_thai_pdf_text.md) · [402 quota](reference_ai_agent_quota_exhausted_is_openrouter_402.md)
-- [Staging = ns sellsuki](reference_ai_chat_staging_is_ns_sellsuki_and_how_to_release_there.md) · [Replay in pod](reference_staging_chat_core_replay_recipe_in_pod_wget.md) · [Inbound forward local](reference_chat_core_local_inbound_forward_for_live_tests.md) · [Connector 403](reference_connector_403_is_often_chat_core_token_mismatch.md)
-- [Pane shadow DOM inputs](reference_ai_chat_console_pane_shadow_dom_inputs_need_js_setter.md) — set value via native setter, click inner button; pane records no fetch/console
-- [Console local](reference_local_ai_chat_console_open_on_localhost_with_seed_identity.md) · [Console staging pane](reference_staging_ai_chat_console_drive_recipe.md) · [Console mock :5192](reference_ai_chat_admin_mock_preview_5192_no_login.md) · [Verifier preflight](reference_staging_verifier_preflight_tsh_and_pane_login.md) · [MR+Jira recipe](reference_ai_chat_mr_and_jira_landing_recipe_2026_10_25.md)
-- [Agent Vault expiry](reference_ai_agent_staging_vault_token_expiry_crash_on_restart.md) · [Messaging Vault 403](reference_messaging_backend_staging_vault_token_403_makes_fb_webhook_500.md) · [503 = pg18 disk](reference_staging_chat_core_503_is_often_shared_postgres_pg18_disk_full.md)
-- [Morning restarts = Keto](reference_staging_morning_boot_restarts_on_keto_are_expected.md) — 09:00 boot order, not a bug · [Probe in pod with nc](reference_probe_staging_routes_from_inside_the_pod_with_nc.md) — no port-forward in sandbox; lookup-self body holds the token
-- [Webhook 404 = page unbound](reference_staging_fb_webhook_404_is_page_unbound_silently.md) — no log line; read fb_app_audit_log · becomes 200+metric after AI-216 fix deploys
-- [Local API probe recipe](reference_local_ai_chat_api_probe_recipe_headers_provision_vault_denied.md) — Kratos login, provision w/ local-dev-token, ai-agent headers, Vault read denied
-- [KB100 on staging](reference_kb100_on_staging_playground_and_grader_token.md) — in-page loop, retry 'unavailable', grader needs local-dev-token copy; customer KB = 3-small so D-057 is internal-only
-- [Playground fetch staging](reference_staging_kb_playground_fetch_from_console_pane.md) — raw score/retrieval_mode via pane fetch; playground score ≠ FAQ score (AI-344)
-- [Admin-fe testId → axe baseline](reference_admin_fe_testid_shifts_axe_baseline_and_turbo_loose_env.md) — new testId on ssk-* reds e2e a11y; turbo --env-mode=loose; glab trace unsandboxed
-- [ssk-text color prop / e2e port / TTTT shard](reference_admin_fe_ssk_text_color_prop_unreachable_and_e2e_port.md) — shadow p owns colour; :5196 collides; starved shard → retry job
-- [Admin-fe worktree core skew](reference_admin_fe_worktree_borrowed_node_modules_test_main_core.md) — borrowed node_modules test main's core; use --root packages/core
-- [Who sent / who did](reference_staging_ai_chat_who_sent_who_did_lookup.md) — PSID→name in db `chat_core`.chat_sessions · actor→name in staging_ory_kratos
-- [FB staging test app](reference_staging_fb_app_is_a_test_app.md) · [Sellsuki-New review](reference_sellsuki_new_meta_app_state.md) · [Model = provider perm](project_model_change_is_provider_level.md)
-- [Docs on AI-49](reference_monorepo_docs_live_on_ai49_branch.md) · [control-tower diverged](reference_control_tower_data_js_diverged_main_vs_ai49.md)
-
-- [Local 2nd identity](reference_local_second_identity_operator_manager_recipe.md) — Operator via chat-core /operators (works), Manager via rps; UnassignRole leaves tenant_refs+perm tuples
-- [Local chat-core API drive](reference_local_chat_core_api_drive_recipe_and_consent_gap.md) — Kratos cookie via :5191, X-Service-Token, VL3 cleanup, local blockers (consent/Google/BOLA/file-service)
-
-- [Local usage routes: deny only](reference_local_usage_routes_cannot_show_allow_cells.md) — no usage.read/billing.read in local rps; ai-agent /usage/cost panics pre-AI-232 fix; X-Service-Token
-- [BOLA local run](reference_bola_local_run_own_overmind_socket_and_internal_api_auth.md) — own overmind socket :8097, X-System-Token, local DB seed recipe
-- [Restart one dead AI-stack process](reference_overmind_restart_dead_process_ai_mvp_socket.md) — `overmind restart -s .overmind-ai-mvp.sock <name>` only when dead
-- [Messenger 24h window](reference_messenger_24h_window_blocks_reminders_and_followups.md) — messaging-backend blocks sends >24h; reminders/follow-ups can't reach Messenger
-- [Fact not stored: diagnose](reference_staging_fact_not_stored_diagnosis_chat_core.md) — no value recorded anywhere; psql recipe; enum exact; missing-slot keys only
+- [codegraph ENFILE](reference_codegraph_mcp_watchers_exhaust_macos_file_table.md) — watchers eat the system file table; lsof -c node, ask…
+- [go cache after ENFILE](reference_go_build_cache_corrupt_after_enfile_io_fs_not_in_std.md) — "io/fs is not in std" = corrupt shared cache; private…
 
 ## Sub-indexes — open when the topic comes up
+- [AI chat / KB](index_ai_chat.md) — KB eval, staging recipes, console, rag-core, Vault (incl. everything formerly listed here)
+- [Tests](index_tests.md) — slog, testify, Robot, axe, jsdom, DB-test -p 1, scenario harness, prompt A/B
 - [Identity / CCS / rps](index_identity_ccs.md) — Kratos, Keto, rps, CCS config, local traps
 - [BOLA](index_bola.md) — deploy, access model, LINE/LIFF, contact, APM
 - [OC2Plus](index_oc2plus.md) — prod DB, member app, 3rd-party API, loyalty, consent
@@ -117,12 +88,12 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Resume dead subagent](reference_resume_dead_subagent_by_sendmessage_not_respawn.md) — SendMessage the same agentId
 - [Team workflow goal](project_team_workflow_sharing_goal.md) · [Test users = infra](project_test_users_as_infrastructure.md) · [pstack](project_pstack_as_workflow_benchmark.md) · [SukiSpace vision](project_sukispace_marketplace_ais_vision.md)
 - [dev onboarding dead ends](project_dev_onboarding_dead_ends_2026_10_11.md) — 2 unfixed blockers for new dev users
-- [Verifier exec denied](reference_verifier_session_exec_and_port_forward_denied_even_with_relayed_approval.md) — exec + port-forward denied even with relayed approval; logs/get ok
-- [Usage spool stuck](project_staging_ai_agent_usage_spool_stuck_poison_event_2026_10_29.md) — staging ai-agent replay fails, QMS no plan for company 018a163e
-- [RAG probes: user mints token](reference_rag_staging_probes_user_mints_bff_token_port_forward_ok.md) — exec denied, port-forward OK, never read BFF secret; playground needs real typing
-- [Pane file upload](reference_browser_pane_file_upload_via_datatransfer.md) — DataTransfer on input[type=file]; conversation URL is /w/<ws>?session=
-- [Parallel Bash cd / zsh split](reference_parallel_bash_cd_moves_git_checkout_into_shared_root_use_git_dash_C.md) — use `git -C <abs>` + `bash -c` loops; a parallel `cd` once moved a checkout in the shared root
-- [Company-mgmt FE tests](reference_company_mgmt_frontend_vitest_recipe_and_shared_node_modules.md) — vitest 1.6 pool flags, rtk breaks npx vitest, symlink node_modules
-- [Sandbox go cache + BSD sed](reference_sandbox_blocks_go_build_cache_and_bsd_sed_noop_mutation.md) — go vet needs unsandboxed; sed -i no-op fakes a failed mutation
+- [Verifier exec denied](reference_verifier_session_exec_and_port_forward_denied_even_with_relayed_approval.md) — exec + port-forward denied even with relayed approval…
+- [Usage spool stuck](project_staging_ai_agent_usage_spool_stuck_poison_event_2026_10_29.md) — staging ai-agent replay fails, QMS no plan for company…
+- [RAG probes: user mints token](reference_rag_staging_probes_user_mints_bff_token_port_forward_ok.md) — exec denied, port-forward OK, never read BFF secret…
+- [Pane file upload](reference_browser_pane_file_upload_via_datatransfer.md) — DataTransfer on input[type=file]; conversation URL is…
+- [Parallel Bash cd / zsh split](reference_parallel_bash_cd_moves_git_checkout_into_shared_root_use_git_dash_C.md) — use `git -C <abs>` + `bash -c` loops; a parallel `cd` once…
+- [Company-mgmt FE tests](reference_company_mgmt_frontend_vitest_recipe_and_shared_node_modules.md) — vitest 1.6 pool flags, rtk breaks npx vitest, symlink…
+- [Sandbox go cache + BSD sed](reference_sandbox_blocks_go_build_cache_and_bsd_sed_noop_mutation.md) — go vet needs unsandboxed; sed -i no-op fakes a failed…
 - [Admin-fe worktree install + key-count tripwire](reference_admin_fe_worktree_install_and_i18n_key_count_tripwire.md) — own pnpm install; LabelPack test counts i18n keys
 - [BOLA internal API header](reference_bola_internal_api_uses_x_system_token_not_x_service_token.md) — X-System-Token, not X-Service-Token
