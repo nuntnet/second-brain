@@ -121,4 +121,6 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Worktree tracks main → push goes nowhere](reference_worktree_add_from_origin_main_tracks_main_push_goes_nowhere.md) — `--no-track`, push HEAD:refs/heads/<b>, check ls-remote
 - [React 19 boolean ARIA on ssk-* = ""](reference_react19_boolean_aria_on_custom_elements_renders_empty.md) — use ariaBool() strings
 - [ssk-drawer closes on Escape itself](reference_ds_ssk_drawer_closes_on_escape_itself.md) — no app Escape listener; tooltip has only private _isOpen
+- [ssk-drawer named slots + closed h1](reference_ssk_drawer_named_slots_and_closed_header_h1.md) — body needs slot="body" (jsdom hides it); closed drawer = 2nd h1
+- [Admin-fe e2e port collides](reference_admin_fe_e2e_fixed_port_parallel_sessions_collide.md) — 5196 hard-coded; temp config per session/verifier; -g is a regex
 - [BOLA internal API header](reference_bola_internal_api_uses_x_system_token_not_x_service_token.md) — X-System-Token, not X-Service-Token

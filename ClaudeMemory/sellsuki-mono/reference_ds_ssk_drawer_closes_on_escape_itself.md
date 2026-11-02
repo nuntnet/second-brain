@@ -14,4 +14,4 @@ drawer wrapper should add only what the DS lacks (swipe-to-close), not Escape.
 on an outside tap / Escape / opening on keyboard focus goes through the private `_isOpen` + `requestUpdate()`
 (as the AI-369 kit mock does). Treat it as a DS gap and keep it in one helper.
 
-Related: [[reference-ds-testid-is-a-property]]
+Related: [[reference-ds-testid-is-a-property]] · [[reference_ssk_drawer_named_slots_and_closed_header_h1]]
