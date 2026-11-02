@@ -87,6 +87,10 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Lead-vocab guard trap](reference_chat_core_lead_vocabulary_guard_substring_trap.md) — chat-core guard bans warm/hot/cold and substring "stage" (TestAgent!)
 - [ai-agent confidence = 3 bands](reference_ai_agent_confidence_score_is_three_band.md) — Score is 0.1/0.35/0.95; thresholds in (0.35,0.95] all behave alike (D-193)
 - [Pre-push blocks fake creds](reference_gstack_prepush_blocks_fake_credentials_in_tests.md) — assemble test secrets at run time, no --no-verify
+- [Kit Member.Role = rps name](reference_kit_membership_role_is_rps_role_name.md) — company role is the rps NAME, direct grant in DirectWorkspaceRole; fixtures via MemberFromRoleTenants
+- [Fiber Group = Use on prefix](reference_fiber_group_middleware_gates_every_later_route_under_prefix.md) — shared-prefix group gate leaks; 403 helper returns nil
+- [worktree -b tracks origin/main](reference_worktree_add_b_tracks_origin_main_push_explicit_refspec.md) — push with explicit refspec
+- [go test skips _dirs](reference_go_test_skips_underscore_dirs_ccs_migration_tests.md) — CCS _00NN migration tests by explicit path
 
 ## Sub-indexes — open when the topic comes up
 - [AI chat / KB](index_ai_chat.md) — KB eval, staging recipes, console, rag-core, Vault (incl. everything formerly listed here)
