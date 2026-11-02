@@ -94,6 +94,10 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Reverted merge = ancestor](reference_reverted_merge_branch_is_ancestor_reapply_by_reverting_the_revert.md) — merging a reverted card branch again is a no-op; revert the revert on a -v2 branch
 - [Checkpoint snapshot = turn start](reference_chat_core_checkpoint_snapshot_is_turn_start_recompute_after_facts.md) — read after reply lags a turn; recompute with TriggerFactWrite
 
+- [Pane can't boot mock console](reference_browser_pane_cannot_boot_console_mock_mode_msw.md) — MSW worker fails in pane; use Playwright on own port
+- [Local chat-core = browser cookie](reference_local_chat_core_needs_kratos_browser_cookie.md) — Kratos browser flow → sellsuki_session; X-User-Id/token 401
+- [zsh $VAR:refs breaks](reference_zsh_colon_modifier_eats_git_refspec.md) — write ${VAR}:refs/… and ${B}:path
+
 ## Sub-indexes — open when the topic comes up
 - [AI chat / KB](index_ai_chat.md) — KB eval, staging recipes, console, rag-core, Vault (incl. everything formerly listed here)
 - [Tests](index_tests.md) — slog, testify, Robot, axe, jsdom, DB-test -p 1, scenario harness, prompt A/B
