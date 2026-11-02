@@ -39,7 +39,9 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [First CI run of old specs](reference_first_ci_run_of_never_run_playwright_specs_finds_real_bugs_and_axe_baseline_drift.md) — real bugs + axe drift · never rebase pushed
 
 ## Projects / state
-- [nunt-mode profile](project_nunt_mode_agent_profile.md) — /my-mode, eval REVISE, not shared yet
+- [PO pack not on main](project_po_workflow_pack_not_on_main_2026_11_02.md) — /po-team only on AI-49 · PO pack = monorepo MR !52 (open, not merged) · engineering half has no MR
+- [eval-skill pitfalls](reference_eval_skill_design_pitfalls_2026_10_12.md) — real tier-2 task, strip evidence from baselines, 429 kills agents
+- [nunt-mode profile](project_nunt_mode_agent_profile.md) — /my-mode, eval REVISE · round 3 (tier 2) incomplete, rerun after spend limit
 - [Tiers + Decision Inbox](project_workflow_tiers_and_inbox_2026_10_13.md) — AC tiers A/B/C + question queue
 - [OC-4739 file-service backfill](project_oc4739_file_service_access_backfill.md) — staging 14,749 companies · AC8 left
 - [Oc2plus SaaS OC-4763](project_oc2plus_saas_plan_epic_oc4763_decisions_2026_10_16.md) — PO quota/billing decisions 10-16
