@@ -108,5 +108,6 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Sandbox go cache + BSD sed](reference_sandbox_blocks_go_build_cache_and_bsd_sed_noop_mutation.md) — go vet needs unsandboxed; sed -i no-op fakes a failed…
 - [Admin-fe worktree install + key-count tripwire](reference_admin_fe_worktree_install_and_i18n_key_count_tripwire.md) — own pnpm install; LabelPack test counts i18n keys
 - [Worktree tracks main → push goes nowhere](reference_worktree_add_from_origin_main_tracks_main_push_goes_nowhere.md) — `--no-track`, push HEAD:refs/heads/<b>, check ls-remote
+- [React 19 boolean ARIA on ssk-* = ""](reference_react19_boolean_aria_on_custom_elements_renders_empty.md) — use ariaBool() strings
 - [ssk-drawer closes on Escape itself](reference_ds_ssk_drawer_closes_on_escape_itself.md) — no app Escape listener; tooltip has only private _isOpen
 - [BOLA internal API header](reference_bola_internal_api_uses_x_system_token_not_x_service_token.md) — X-System-Token, not X-Service-Token
