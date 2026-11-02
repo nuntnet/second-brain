@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: c1216de2-2ddd-4868-a6b4-c29dbd97cd79
-  modified: 2026-11-02T04:31:39.143Z
+  modified: 2026-11-02T05:04:19.938Z
 ---
 
 Seen 2026-11-02 (AI-379 side session, chat-core): after kern.num_files hit the limit and was cleared, the shared
@@ -16,5 +16,7 @@ io/fs is not in std` for every build, while `src/io/fs` existed on disk and desc
 normal), or prefix go commands with `GODEBUG=goindex=0` (AI-377 session, same day): the bad entry is Go's
 module index of GOROOT inside GOCACHE, and that flag skips the index with no rebuild —
 `GODEBUG=goindex=0 go list std 2>&1 | grep -c "not in std"` → 0 confirms it. Do not `go clean -cache` on your own while other sessions build in parallel — tell the user the shared cache is
-corrupt and let them clean it. Related: [[reference_codegraph_mcp_watchers_exhaust_macos_file_table]],
+corrupt and let them clean it. The 2026-11-02 occurrence was resolved by one `go clean -cache` (AI-385 session, 11:33);
+the default cache built clean afterwards. Running air services may still hold binaries from before — check
+`stat <repo>/tmp/main` before trusting a live check. Related: [[reference_codegraph_mcp_watchers_exhaust_macos_file_table]],
 [[reference_sandbox_blocks_go_build_cache_and_bsd_sed_noop_mutation]].
