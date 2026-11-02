@@ -76,6 +76,10 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [codegraph ENFILE](reference_codegraph_mcp_watchers_exhaust_macos_file_table.md) — watchers eat the system file table; lsof -c node, ask…
 - [go cache after ENFILE](reference_go_build_cache_corrupt_after_enfile_io_fs_not_in_std.md) — "io/fs is not in std" = corrupt shared cache; private…
 
+- [ENFILE corrupts go cache](reference_enfile_outage_corrupts_go_build_cache_and_kills_air_watchers.md) — air rebuilds fail silently, old binaries served; go clean -cache + overmind restart -s
+- [Lead-vocab guard trap](reference_chat_core_lead_vocabulary_guard_substring_trap.md) — chat-core guard bans warm/hot/cold and substring "stage" (TestAgent!)
+- [Pre-push blocks fake creds](reference_gstack_prepush_blocks_fake_credentials_in_tests.md) — assemble test secrets at run time, no --no-verify
+
 ## Sub-indexes — open when the topic comes up
 - [AI chat / KB](index_ai_chat.md) — KB eval, staging recipes, console, rag-core, Vault (incl. everything formerly listed here)
 - [Tests](index_tests.md) — slog, testify, Robot, axe, jsdom, DB-test -p 1, scenario harness, prompt A/B
