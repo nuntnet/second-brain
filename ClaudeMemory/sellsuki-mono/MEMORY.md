@@ -29,6 +29,8 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [rtk cat strips comments](feedback_rtk_cat_strips_comments_never_use_cat_to_rewrite_files.md) — write files with python bytes
 - [rtk proxy to compare](feedback_compare_command_outputs_with_rtk_proxy.md) — rtk truncates output, hides merge commits in git log; read raw
 - [Vault/prod: hand over commands](user_has_vault_and_prod_access_agent_hands_over_commands.md) — nunt has Vault+prod access
+- [Backticks in "..." execute](reference_backticks_in_double_quoted_python_c_execute.md) — markdown in python -c "…" ran a migration; text goes in a file
+- [Inbox ids collide](reference_decision_inbox_ids_collide_across_branches.md) — inbox.py = max+1 of THIS branch; sweep all branches first
 
 ## Git / branches
 - [Stacked promotion wave](reference_stacked_promotion_wave_develop_to_main.md) — chain-merge in scratch worktree, user runs merge script
