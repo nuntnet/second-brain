@@ -11,6 +11,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Nested po-lead](feedback_nested_po_lead_loses_drafts_write_to_files.md) — spawn writers from main session, write to files
 - [gemini-2.5-flash only](feedback_gemini_25_flash_is_the_kb_answer_model.md) — KB answer model fixed 10-07
 - [Prove-red no head](feedback_prove_red_script_never_pipe_into_head.md) — head kills the restore; commit first; zsh needs ${=pkgs}
+- [Wave = tsc + full e2e](feedback_wave_integration_full_suite_and_tsc_on_merged_tree.md) — unit green hid a TS2308; cards' e2e green hid 14 fails; attribute by card-head worktree
 - [Tests from card](feedback_tests_derive_from_the_card_not_the_code.md) — card = SSOT, never fit expected to code
 - [Standing approval staging](feedback_standing_approval_merge_deploy_staging_after_gates.md) — gates green → merge/deploy staging myself · prod still ask
 - [Wave/ledger first](feedback_check_wave_lists_and_ledger_before_starting_a_card.md) — grep waves/*.md + docs/cards/<CARD>.md before briefing; wave card = no MR
