@@ -100,6 +100,8 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Migration no. race at MR time](reference_migration_number_collides_with_main_at_wave_mr_time.md) — merge-tree vs origin/main first; CCS MIGRATE_ONLY = first prefix hit
 - [Sandbox bind EPERM + slog panic](reference_sandbox_bind_eperm_fails_go_tests_and_slog_panics_in_tests.md) — listener tests FAIL in sandbox; slog.Warn panics in unit tests
 
+- [Initial stage ≠ Cold](reference_lead_initial_stage_is_not_cold.md) — is_initial is "cold" only in the default template; mock uses "new"; hid every new lead (console !147)
+
 ## Sub-indexes — open when the topic comes up
 - [AI chat / KB](index_ai_chat.md) — KB eval, staging recipes, console, rag-core, Vault (incl. everything formerly listed here)
 - [Tests](index_tests.md) — slog, testify, Robot, axe, jsdom, DB-test -p 1, scenario harness, prompt A/B
