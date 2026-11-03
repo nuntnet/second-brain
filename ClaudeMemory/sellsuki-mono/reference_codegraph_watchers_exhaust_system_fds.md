@@ -23,3 +23,5 @@ Fix: kill those pids — auto mode denies it ("Interfere With Workloads"), so ha
 🔴 Never `pkill -f codegraph`: the Hermes cron `claude` processes carry "codegraph" in their `--system-prompt` argv, so `-f` matches and kills them too (seen 2026-11-03 — `ps | grep codegraph` listed only Hermes claude procs). Kill by pid from `lsof -n -c node` after checking `ps -o args -p <pid>` says `codegraph serve`. By then (11-03) the table had already recovered to 52k/184k on its own — re-check `kern.num_files` first.
 
 Related: `rtk go test` printed "✓ 48 passed" while the raw run had FAIL + panic — read go test through `rtk proxy` ([[feedback_compare_command_outputs_with_rtk_proxy]]).
+
+**Fixed at the source 2026-11-03 (`bec34d1a`, nunt chose it):** `.mcp.json` now runs `codegraph serve --mcp --no-watch`. Each Claude Code session spawned its own watcher (~92k files); killing one only lasted until the next session started. Refresh with `scripts/codegraph-sync.sh`. If ENFILE recurs, trace the parent chain of the big `node` PID (`ps -o ppid=`) — a watcher running without `--no-watch` is from a session started before the change.

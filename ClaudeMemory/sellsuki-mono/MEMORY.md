@@ -136,3 +136,4 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Prod port-forward denied](reference_prod_port_forward_denied_kubectl_get_logs_ok.md) — prod get/logs OK, port-forward refused; hand grpcurl to user
 - [BOLA→QMS never exercised](project_bola_qms_quota_path_never_exercised.md) — enforcement off dev+staging, no bola quotas anywhere; runbook docs/release/qms
 - [Console paging needs canvas scroll](reference_console_paging_footer_needs_canvas_scroll.md) — sentinel inside main.main-landmark; e2e scrolls the canvas; seeds need distinct times
+- [Workflow doc + plugin regen](reference_workflow_doc_outline_and_plugin_regen.md) — Outline id, no H1 in update text, build-plugin.py --check not hand diff
