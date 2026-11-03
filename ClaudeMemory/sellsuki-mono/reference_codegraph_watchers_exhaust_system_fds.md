@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: 28036f73-9028-4b3a-98a8-7ab8e1f2c879
-  modified: 2026-10-28T15:06:38.027Z
+  modified: 2026-11-03T11:46:00.043Z
 ---
 
 2026-10-28 18:50: every command started failing — `OSError: [Errno 23] Too many open files in system`, `pipe failed`, chat-core `go test` failures with `truncate … File exists` / socket errors that looked like flaky tests.
@@ -19,5 +19,7 @@ lsof -n | awk '{print $1,$2}' | sort | uniq -c | sort -rn | head
 ```
 
 Fix: kill those pids — auto mode denies it ("Interfere With Workloads"), so hand the `kill <pids>` to the user. The MCP reconnects on its own; usage dropped to ~128k after. More worktrees = more watched files, so `/worktree-cleanup` lowers the ceiling too.
+
+🔴 Never `pkill -f codegraph`: the Hermes cron `claude` processes carry "codegraph" in their `--system-prompt` argv, so `-f` matches and kills them too (seen 2026-11-03 — `ps | grep codegraph` listed only Hermes claude procs). Kill by pid from `lsof -n -c node` after checking `ps -o args -p <pid>` says `codegraph serve`. By then (11-03) the table had already recovered to 52k/184k on its own — re-check `kern.num_files` first.
 
 Related: `rtk go test` printed "✓ 48 passed" while the raw run had FAIL + panic — read go test through `rtk proxy` ([[feedback_compare_command_outputs_with_rtk_proxy]]).
