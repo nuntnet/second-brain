@@ -13,3 +13,7 @@ metadata:
 6. A `head -20` on a grep produced a false "nothing calls it" in my own verification. Judge claims against the unfiltered search.
 
 Related: [[project-nunt-mode-agent-profile]], [[feedback-head-on-grep-is-sampling-not-verification]], [[feedback-compare-command-outputs-with-rtk-proxy]].
+
+7. **Worktrees of one repo are not isolated candidates (2026-11-04, sellsuki-fluid-ui eval).** They share refs, so a run sees the others' branch names and can read their commits: one opus run said "the obvious branch names were already taken by sibling worktrees" and reused another run's identifiers (`trail` x39, `showMoved`). Excluded it, losing that cell. Use separate `git clone --local` copies, or detached worktrees with no shared branches and an instruction-free check afterwards (`git for-each-ref` per copy).
+8. A user-level skill is visible to every subagent, so "without the skill" cannot be enforced; the honest variant is explicit invocation vs a plain request, and you report whether the plain runs used it (look for the skill's vocabulary in their reports).
+
