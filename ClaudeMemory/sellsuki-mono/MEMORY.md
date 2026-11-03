@@ -131,3 +131,4 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Console e2e port 5196 shared](reference_console_e2e_port_5196_shared_use_temp_config.md) — temp config on 5197, app-local playwright
 - [Prod port-forward denied](reference_prod_port_forward_denied_kubectl_get_logs_ok.md) — prod get/logs OK, port-forward refused; hand grpcurl to user
 - [BOLA→QMS never exercised](project_bola_qms_quota_path_never_exercised.md) — enforcement off dev+staging, no bola quotas anywhere; runbook docs/release/qms
+- [Console paging needs canvas scroll](reference_console_paging_footer_needs_canvas_scroll.md) — sentinel inside main.main-landmark; e2e scrolls the canvas; seeds need distinct times
