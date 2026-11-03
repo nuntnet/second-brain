@@ -127,3 +127,5 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [SskPageTitle children](reference_ssk_page_title_takes_children_not_title_prop.md) — `title=` renders an empty h1; tests stay green
 - [Keep-both merge drops braces](reference_merge_conflict_keep_both_drops_shared_closing_lines.md) — rebuild base+ours+theirs; postcss parse; zsh `$REF:path`
 - [Console e2e port 5196 shared](reference_console_e2e_port_5196_shared_use_temp_config.md) — temp config on 5197, app-local playwright
+- [Prod port-forward denied](reference_prod_port_forward_denied_kubectl_get_logs_ok.md) — prod get/logs OK, port-forward refused; hand grpcurl to user
+- [BOLA→QMS never exercised](project_bola_qms_quota_path_never_exercised.md) — enforcement off dev+staging, no bola quotas anywhere; runbook docs/release/qms
