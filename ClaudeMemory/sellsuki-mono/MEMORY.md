@@ -97,6 +97,8 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Pane can't boot mock console](reference_browser_pane_cannot_boot_console_mock_mode_msw.md) — MSW worker fails in pane; use Playwright on own port
 - [Local chat-core = browser cookie](reference_local_chat_core_needs_kratos_browser_cookie.md) — Kratos browser flow → sellsuki_session; X-User-Id/token 401
 - [zsh $VAR:refs breaks](reference_zsh_colon_modifier_eats_git_refspec.md) — write ${VAR}:refs/… and ${B}:path
+- [Migration no. race at MR time](reference_migration_number_collides_with_main_at_wave_mr_time.md) — merge-tree vs origin/main first; CCS MIGRATE_ONLY = first prefix hit
+- [Sandbox bind EPERM + slog panic](reference_sandbox_bind_eperm_fails_go_tests_and_slog_panics_in_tests.md) — listener tests FAIL in sandbox; slog.Warn panics in unit tests
 
 ## Sub-indexes — open when the topic comes up
 - [AI chat / KB](index_ai_chat.md) — KB eval, staging recipes, console, rag-core, Vault (incl. everything formerly listed here)
