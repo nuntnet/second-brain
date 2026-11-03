@@ -102,6 +102,8 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 
 - [Initial stage ≠ Cold](reference_lead_initial_stage_is_not_cold.md) — is_initial is "cold" only in the default template; mock uses "new"; hid every new lead (console !147)
 
+- [Overmind start trap](project_overmind_restart_quirk.md) — `start <name> -D` on a running overmind leaves it dead; `restart -s <sock> <name>`; stack may be on .overmind-ai-mvp.sock
+
 ## Sub-indexes — open when the topic comes up
 - [AI chat / KB](index_ai_chat.md) — KB eval, staging recipes, console, rag-core, Vault (incl. everything formerly listed here)
 - [Tests](index_tests.md) — slog, testify, Robot, axe, jsdom, DB-test -p 1, scenario harness, prompt A/B
