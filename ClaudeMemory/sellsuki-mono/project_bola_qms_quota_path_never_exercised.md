@@ -16,6 +16,8 @@ Found 2026-11-03 while unblocking the OC2Plus × มหานครโลหะ 
   `docs/release/qms/` (report-only, 1 workspace / 20 admins = default of D-292).
 - rps v1.2.0 is on prod (deployed 2026-10-27) but whether migrations 0013–0035 ran there is unknown.
 
+- Seat quotas: QMS renew/re-assign RESET to the starting balance (not +1) — never set active_until, never re-assign. Report mode drifted up (over-limit not debited, release credits) → payload rev 2 debits below zero; CreateQuota always writes rev 1 so the fixed revision differs per env (staging 2, fresh 1).
+
 **Why:** the earlier analysis said "QMS code may not exist" and "fails at admin add"; both were wrong.
 **How to apply:** order = QMS main → staging → create quotas + assign on staging → turn BOLA enforcement on
 in staging and test bind/admin/release → same on prod (user runs) → Vault BOLA_SYSTEM_TOKEN → un-draft CCS !418.
