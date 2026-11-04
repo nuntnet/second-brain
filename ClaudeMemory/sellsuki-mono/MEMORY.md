@@ -143,3 +143,6 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [BOLA→QMS never exercised](project_bola_qms_quota_path_never_exercised.md) — enforcement off dev+staging, no bola quotas anywhere; runbook docs/release/qms
 - [Console paging needs canvas scroll](reference_console_paging_footer_needs_canvas_scroll.md) — sentinel inside main.main-landmark; e2e scrolls the canvas; seeds need distinct times
 - [Workflow doc + plugin regen](reference_workflow_doc_outline_and_plugin_regen.md) — Outline id, no H1 in update text, build-plugin.py --check not hand diff
+- [Scheduled run can't merge](reference_scheduled_task_cannot_merge_classifier_refuses.md) — classifier refuses merge unattended; merge in a live turn
+- [Develop merge deletes branch](reference_develop_merge_deletes_source_branch_repush_for_main.md) — main MR 'source_branch does not exist' → re-push merged SHA
+- [CCS2 cache + dev 401](reference_ccs2_staging_index_html_cached_dev_mgmt_401.md) — staging index.html cached (use ?v=), dev mgmt API 401, test QMS pages on staging
