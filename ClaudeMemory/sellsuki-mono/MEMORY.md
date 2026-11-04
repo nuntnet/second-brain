@@ -153,3 +153,5 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [CCS2 cache + dev 401](reference_ccs2_staging_index_html_cached_dev_mgmt_401.md) — staging index.html cached (use ?v=), dev mgmt API 401, test QMS pages on staging
 - [Permission matrix row](reference_chat_core_permission_matrix_needs_every_new_route.md) — every new workspace route needs a route(...) line in permission_matrix_test.go
 - [Ladder dies with the turn](reference_background_ladder_dies_with_the_turn_use_nohup.md) — long ladders as nohup script + done file
+- [Ladder survives drop](reference_ladder_survives_network_drop_check_before_restart.md) — check done-file/pgrep before restarting; two runs on one test DB = bogus FAILs
+- [BOLA test/api red on main](reference_bola_test_api_broadcast_mock_panic_on_main.md) — CountBroadcasts mock panic is baseline (b2d0f47)
