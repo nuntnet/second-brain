@@ -110,6 +110,8 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 
 - [fluid-ui skill: user-level, REVISE](project_sellsuki_fluid_ui_skill_user_level_eval_revise.md) — installed 11-04, eval REVISE; don't move into repo yet
 
+- [Viewer = "operator" role](reference_me_workspaces_role_is_operator_for_viewer_gate_on_bundles.md) — /me/workspaces calls a viewer operator; gate console actions on AI-360 bundles
+
 ## Sub-indexes — open when the topic comes up
 - [AI chat / KB](index_ai_chat.md) — KB eval, staging recipes, console, rag-core, Vault (incl. everything formerly listed here)
 - [Tests](index_tests.md) — slog, testify, Robot, axe, jsdom, DB-test -p 1, scenario harness, prompt A/B
