@@ -17,3 +17,6 @@ On 2026-10-30 a `git checkout -b scratch/...` meant for a worktree ran in the sh
 - zsh does not word-split an unquoted `$LIST`: `for c in $OWN` iterates once over the whole string, and `git log $OWN` fails with "ambiguous argument". Run loops under `bash -c '...'`.
 - Do not use `"$p"` pairs like `set -- $p` in zsh either; call the commands plainly.
 - Related: [[reference_tmpdir_differs_sandboxed_vs_unsandboxed_bash]] (logs written by an unsandboxed job are invisible to a sandboxed wait loop), [[reference_session_worktree_hook_blocks_writes_outside_it]].
+
+**2026-11-04, it happened with a push:** `cd $WORKTREE && …; git push -q origin HEAD:refs/heads/feature/redesign-v9-wave1` after another session (the user's fork) had removed that worktree. `cd` failed, the `&&` chain was skipped, and the bare `git push` after `;` ran in the Bash cwd, chat-core's main checkout on `local/stack`, pushing the never-to-be-pushed `local/stack` onto the wave branch (8603e6e → 0d5a4ed). Same tree, only 4 extra "into local/stack" merge commits, and no force push allowed to undo it. **Rule: every git write uses `git -C <abs path>`; never `cd X && …; git push`. Check a scratch worktree still exists (`git worktree list`) before reusing it when a fork or another session is active.**
+
