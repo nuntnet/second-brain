@@ -105,6 +105,10 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 
 - [Overmind start trap](project_overmind_restart_quirk.md) — `start <name> -D` on a running overmind leaves it dead; `restart -s <sock> <name>`; stack may be on .overmind-ai-mvp.sock
 
+- [zsh `path` var = PATH](reference_zsh_variable_named_path_clobbers_PATH.md) — naming a variable `path` wipes PATH; "command not found" results are fake
+
+- [fluid-ui skill: user-level, REVISE](project_sellsuki_fluid_ui_skill_user_level_eval_revise.md) — installed 11-04, eval REVISE; don't move into repo yet
+
 ## Sub-indexes — open when the topic comes up
 - [AI chat / KB](index_ai_chat.md) — KB eval, staging recipes, console, rag-core, Vault (incl. everything formerly listed here)
 - [Tests](index_tests.md) — slog, testify, Robot, axe, jsdom, DB-test -p 1, scenario harness, prompt A/B
