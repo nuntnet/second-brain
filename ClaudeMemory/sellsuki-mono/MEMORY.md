@@ -151,3 +151,5 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Scheduled run can't merge](reference_scheduled_task_cannot_merge_classifier_refuses.md) — classifier refuses merge unattended; merge in a live turn
 - [Develop merge deletes branch](reference_develop_merge_deletes_source_branch_repush_for_main.md) — main MR 'source_branch does not exist' → re-push merged SHA
 - [CCS2 cache + dev 401](reference_ccs2_staging_index_html_cached_dev_mgmt_401.md) — staging index.html cached (use ?v=), dev mgmt API 401, test QMS pages on staging
+- [Permission matrix row](reference_chat_core_permission_matrix_needs_every_new_route.md) — every new workspace route needs a route(...) line in permission_matrix_test.go
+- [Ladder dies with the turn](reference_background_ladder_dies_with_the_turn_use_nohup.md) — long ladders as nohup script + done file
