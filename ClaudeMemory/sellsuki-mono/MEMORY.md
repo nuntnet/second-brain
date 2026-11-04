@@ -77,6 +77,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [fd exhaustion = codegraph](reference_codegraph_watchers_exhaust_system_fds.md) — "too many open files in system" machine-wide; user kills…
 - [Local Mongo no replset → consent 503](reference_local_mongo_standalone_blocks_consent_acceptance_otp_members.md) — 4 causes: replset, write flags, 7 indexes, consentee…
 - [Go toolchain cache damaged after crash](reference_go_toolchain_cache_damaged_after_fd_crash_use_gotoolchain_local.md) — "os/exec is not in std" → GOTOOLCHAIN=local; user deletes…
+- [chat-core tests: one migrated DB](reference_chat_core_integration_tests_share_one_migrated_db.md) — migratedDB per test ~90-200s; subtests + fresh workspaces; assignee "" not NULL
 - [Parallel sessions share test Postgres](reference_parallel_sessions_share_test_postgres_spurious_route_test_failures.md) — use your own DB via CHAT_CORE_TEST_POSTGRESQL_URI (go run to create); drop after
 - [go-build cache corrupt](reference_corrupt_go_build_cache_package_not_in_std.md) — "io/fs is not in std" → GOCACHE=scratchpad, don't wipe…
 - [Kit pseudo-version pin](reference_chat_core_pins_unmerged_kit_by_pseudo_version.md) — go get kit@sha so chat-core CI builds before the tag
@@ -110,6 +111,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 
 - [fluid-ui skill: user-level, REVISE](project_sellsuki_fluid_ui_skill_user_level_eval_revise.md) — installed 11-04, eval REVISE; don't move into repo yet
 
+- [gorm Raw scan + embedded model = empty](reference_gorm_raw_scan_embedded_model_fields_empty.md) — c.* into embedded model leaves fields blank; two reads · share one migrated schema in test/
 - [Viewer = "operator" role](reference_me_workspaces_role_is_operator_for_viewer_gate_on_bundles.md) — /me/workspaces calls a viewer operator; gate console actions on AI-360 bundles
 
 ## Sub-indexes — open when the topic comes up
