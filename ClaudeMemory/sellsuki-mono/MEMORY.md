@@ -103,6 +103,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 
 - [Initial stage ≠ Cold](reference_lead_initial_stage_is_not_cold.md) — is_initial is "cold" only in the default template; mock uses "new"; hid every new lead (console !147)
 
+- [Docker stop = AI MVP stack down](reference_docker_stop_takes_down_ai_mvp_stack_recovery.md) — Kafka exits 143, overmind ai-mvp gone; docker start kafka, nunt runs ai-mvp-restart.sh
 - [Overmind start trap](project_overmind_restart_quirk.md) — `start <name> -D` on a running overmind leaves it dead; `restart -s <sock> <name>`; stack may be on .overmind-ai-mvp.sock
 
 - [zsh `path` var = PATH](reference_zsh_variable_named_path_clobbers_PATH.md) — naming a variable `path` wipes PATH; "command not found" results are fake
