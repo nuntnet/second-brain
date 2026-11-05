@@ -123,3 +123,4 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Pin SQL before change](reference_pin_unchanged_sql_by_capturing_it_before_the_change.md) — SQLCapture on untouched code → exact-equality PIN test; guard rm globs with ${VAR:?}
 - [Prove-red layered guard](reference_prove_red_layered_guard_mutate_the_property.md) — dropping one layer stays green; mutate the lease; stub latency for real overlap
 - [chat-core "stage" guard](reference_chat_core_guard_bans_stage_word_outside_lead_packages.md) — word banned in team pkgs; strings live in entity/alert_recipient
+- [Console local login](reference_console_local_login_and_headless_verify.md) — only chat.sellsuki.local signs in; headless Playwright + localhost Kratos cookie; ai-mvp overmind socket; demo seed
