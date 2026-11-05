@@ -114,3 +114,5 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Ladder survives drop](reference_ladder_survives_network_drop_check_before_restart.md) — check done-file/pgrep before restarting; two runs on one test DB = bogus FAILs
 - [BOLA test/api red on main](reference_bola_test_api_broadcast_mock_panic_on_main.md) — CountBroadcasts mock panic is baseline (b2d0f47)
 - [chat-core coverage = in-package only](reference_chat_core_storage_coverage_counts_in_package_tests_only.md) — storage_coverage has no -coverpkg; ./test/ adds 0; external _test pkg in same dir counts
+- [Scratchpad shared with subagents](reference_subagents_share_scratchpad_helper_scripts_get_overwritten.md) — agent overwrote mutate.py; check the mutation applied before trusting green
+- [Tenancy seed masked](reference_tenancy_seed_masked_by_tenants_own_row.md) — A must have no own row, seed B first, drop each predicate separately
