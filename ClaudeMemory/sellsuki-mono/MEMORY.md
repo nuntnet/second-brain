@@ -120,3 +120,5 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Sandbox TMPDIR ≠ unsandboxed; rtk cat multi-file breaks](reference_sandbox_tmpdir_differs_from_unsandboxed_and_cat_multi_file_breaks.md) — use scratchpad abs path; Read not cat
 - [Jira AI transition ids](reference_jira_ai_project_transition_ids_and_heavy_responses.md) — 21/31 ids; responses echo full card → bulk sync via subagents
 - [Pin SQL before change](reference_pin_unchanged_sql_by_capturing_it_before_the_change.md) — SQLCapture on untouched code → exact-equality PIN test; guard rm globs with ${VAR:?}
+- [Prove-red layered guard](reference_prove_red_layered_guard_mutate_the_property.md) — dropping one layer stays green; mutate the lease; stub latency for real overlap
+- [chat-core "stage" guard](reference_chat_core_guard_bans_stage_word_outside_lead_packages.md) — word banned in team pkgs; strings live in entity/alert_recipient
