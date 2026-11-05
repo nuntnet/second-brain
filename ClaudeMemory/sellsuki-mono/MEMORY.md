@@ -118,3 +118,4 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Tenancy seed masked](reference_tenancy_seed_masked_by_tenants_own_row.md) — A must have no own row, seed B first, drop each predicate separately
 - [Sandbox TMPDIR ≠ unsandboxed; rtk cat multi-file breaks](reference_sandbox_tmpdir_differs_from_unsandboxed_and_cat_multi_file_breaks.md) — use scratchpad abs path; Read not cat
 - [Jira AI transition ids](reference_jira_ai_project_transition_ids_and_heavy_responses.md) — 21/31 ids; responses echo full card → bulk sync via subagents
+- [Pin SQL before change](reference_pin_unchanged_sql_by_capturing_it_before_the_change.md) — SQLCapture on untouched code → exact-equality PIN test; guard rm globs with ${VAR:?}
