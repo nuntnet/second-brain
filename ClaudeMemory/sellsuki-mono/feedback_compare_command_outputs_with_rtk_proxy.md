@@ -21,3 +21,4 @@ prove-red mutation that failed nothing; re-run with `rtk proxy` before concludin
 while the summary said `📦 use_case [build failed]` — rtk's go-test wrapper does not pass the failure through as
 the exit code. For any ladder you report, run `rtk proxy go test …` and read both the exit code and `^FAIL` /
 `build failed`. And never let two background runs write the same output file: the slower, older run wins.
+**2026-11-05 (wave 3):** `npx playwright test … > log` is rewritten too — the file held only "PASS (1) FAIL (1)" plus a one-line error, no Expected/Received. Use `rtk proxy npx playwright …` and strip ANSI (`sed 's/\x1b\[[0-9;]*m//g'`) to read a failure.

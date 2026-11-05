@@ -12,3 +12,5 @@ Seen 2026-11-03 (AI-371, while AI-373 ran e2e): `playwright test` → "http://lo
 
 **How to apply:** in `apps/admin`, an untracked `playwright.<card>.config.ts`:
 `import base from "./playwright.config"; export default {...base, use:{...base.use, baseURL:"http://localhost:5197"}, webServer:{...base.webServer, url:"http://localhost:5197", env:{...base.webServer.env, PORT:"5197"}}}` (vite reads `PORT`). Run `./node_modules/.bin/playwright` from `apps/admin` (the root `node_modules/.bin` has none), unsandboxed. Delete the config after. Unsandboxed `$TMPDIR` differs ([[reference_tmpdir_differs_sandboxed_vs_unsandboxed_bash]]) — write logs to the scratchpad path.
+
+**Simpler (2026-11-05, wave 3):** no temp config needed — `apps/admin/e2e/mockServer.mjs` reads `E2E_PORT` (default 5196) for both the vite server and baseURL. `E2E_PORT=5198 npx playwright test …` from `apps/admin`, unsandboxed. Check the port is free with `nc -z localhost <port>` first.
