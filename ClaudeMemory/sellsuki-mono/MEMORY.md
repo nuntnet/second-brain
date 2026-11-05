@@ -116,3 +116,4 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [chat-core coverage = in-package only](reference_chat_core_storage_coverage_counts_in_package_tests_only.md) — storage_coverage has no -coverpkg; ./test/ adds 0; external _test pkg in same dir counts
 - [Scratchpad shared with subagents](reference_subagents_share_scratchpad_helper_scripts_get_overwritten.md) — agent overwrote mutate.py; check the mutation applied before trusting green
 - [Tenancy seed masked](reference_tenancy_seed_masked_by_tenants_own_row.md) — A must have no own row, seed B first, drop each predicate separately
+- [Sandbox TMPDIR ≠ unsandboxed; rtk cat multi-file breaks](reference_sandbox_tmpdir_differs_from_unsandboxed_and_cat_multi_file_breaks.md) — use scratchpad abs path; Read not cat
