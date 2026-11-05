@@ -23,6 +23,8 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Sweep Codex branches](feedback_sweep_codex_branches_and_ship_whole.md) — Codex release branch is a superset; its BLOCKED ≠ PO blocker
 - [Cap agents when waves parallel](feedback_parallel_wave_sessions_cap_agents_and_ladders.md) — ≤2 card agents, one ladder, e2e --workers=2; load hit ~150
 - [Ask with full context](feedback_ask_decisions_with_full_context_not_bare_lists.md) — what/why/options+cost/recommendation
+- [Console UX rules](feedback_console_ux_story_presets_icons_generic.md) — story/wizard for newcomers, presets not free text, icon+hover not labels, never one industry
+- [Handoff ≠ state](feedback_handoff_claims_check_ledger_and_mr.md) — check ledger + open MRs before trusting "no code yet"
 - [Check env yourself](feedback_check_read_only_env_facts_yourself_user_does_not_know.md) — port-forward rps + grpcurl, don't ask
 - [Read Job logs first](feedback_read_job_logs_before_deleting_the_job.md) — save logs before deleting a Job
 - [Morning retries in waves](feedback_morning_retries_in_waves_runner_cluster_is_12_nodes.md) — ≤6–8 jobs per wave, 12-node runner
