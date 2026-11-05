@@ -1,13 +1,18 @@
 ---
 name: reference_tmpdir_differs_sandboxed_vs_unsandboxed_bash
-description: "$TMPDIR in a sandboxed Bash command and in a dangerouslyDisableSandbox command (kubectl/tsh) point to different directories, so a file written by one cannot be found by the other. Use the session scratchpad's absolute path instead"
+description: "$TMPDIR is /tmp/claude-501 in sandboxed Bash but /var/folders/.../T in unsandboxed Bash — files a nohup ladder writes under $TMPDIR unsandboxed look 'missing' from a sandboxed check; use the absolute path"
 metadata:
   node_type: memory
   type: reference
-  originSessionId: 2b0f396b-5941-4a79-8e15-d9e0597e4520
-  modified: 2026-10-27T11:30:06.675Z
+  originSessionId: 98a4f6f3-8b50-4cf4-a16b-f79af63aa589
+  modified: 2026-11-05T10:59:15.207Z
 ---
 
-Seen on 2026-10-27. A kubectl command (which must run unsandboxed because of TLS/tsh) wrote `$TMPDIR/rps10m.log`. The next command ran sandboxed with python and failed with `FileNotFoundError`. In the sandbox `TMPDIR=/tmp/claude-501`, while the unsandboxed run used a different directory.
+Seen 2026-11-05 (wave 3, AI-382/393): a chat-core ladder started with `dangerouslyDisableSandbox` wrote its logs and done-file to
+`$TMPDIR/w3db/` = `/var/folders/hz/0472_d597nv11489_lnnj_8m0000gn/T/w3db`. A later sandboxed `ls $TMPDIR/w3db` resolved to
+`/tmp/claude-501/w3db` and said "No such file or directory", which reads like the ladder died.
 
-**How to apply:** when work alternates between unsandboxed commands (kubectl, tsh, grpcurl into the cluster) and sandboxed ones (python/grep that read the result), write files to the scratchpad's absolute path (`/private/tmp/claude-501/<project>/<session>/scratchpad`). Never use `$TMPDIR`. Related: [[reference_sandbox_blocks_go_cli_tls_and_ssh]].
+**How to apply:** when a background job runs unsandboxed (go test, glab, anything needing TLS or the go cache), write its
+log/done-file to an absolute path, and check it with that same absolute path (or also unsandboxed). Before concluding a
+ladder died, `pgrep -fl` it. Related: [[reference_background_ladder_dies_with_the_turn_use_nohup]],
+[[reference_sandbox_blocks_go_build_cache_and_bsd_sed_noop_mutation]].
