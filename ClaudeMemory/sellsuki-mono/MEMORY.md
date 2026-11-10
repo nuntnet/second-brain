@@ -16,6 +16,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Probe every control](feedback_probe_every_control_against_real_service_before_ui.md) — control × entity table from the real service before UI; one 200 ≠ verified
 - [Tests from card](feedback_tests_derive_from_the_card_not_the_code.md) — card = SSOT, never fit expected to code
 - [Standing approval staging](feedback_standing_approval_merge_deploy_staging_after_gates.md) — gates green → merge/deploy staging myself · prod still ask
+- [MR per wave, not per card](feedback_open_mr_per_wave_or_batch_not_per_card.md) — nunt 11-10 on the PAT5 BOLA set; scope beyond it not confirmed
 - [Wave/ledger first](feedback_check_wave_lists_and_ledger_before_starting_a_card.md) — grep waves/*.md + docs/cards/<CARD>.md before briefing; wave card = no MR
 - [Bot before merge](feedback_read_review_bot_before_merging.md) — read the bot Result line; green+mergeable ≠ bot passed
 - [Comment card](feedback_comment_jira_card_when_loop_closes.md) — Jira comment + status follows MR
