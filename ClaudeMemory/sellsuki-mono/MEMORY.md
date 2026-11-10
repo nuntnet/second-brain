@@ -42,6 +42,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 ## Git / branches
 - [Sparse docs worktree + reuse sibling merge](reference_sparse_docs_worktree_and_reuse_sibling_merge.md) — ledgers via --no-checkout + sparse docs/cards; reuse a pure wave+main merge
 - [Stacked promotion wave](reference_stacked_promotion_wave_develop_to_main.md) — chain-merge in scratch worktree, user runs merge script
+- [Commit only my lines of a shared dirty file](reference_commit_only_my_lines_of_a_shared_dirty_file_via_update_index.md) — INBOX.md carries other sessions' rows; hash-object + update-index --cacheinfo, commit with no pathspec
 - [Auto mode blocks MR create](reference_auto_mode_blocks_glab_mr_create.md) — prepare JSON + create-mrs.sh · project ids inside
 - [OC2Plus develop↔main diverged](reference_oc2plus_backoffice_develop_main_diverged_2026_10_11.md) — OC-4736 one-time reunion
 - [rps/mgmt-backend lines](reference_rps_and_management_backend_develop_main_diverged.md) — rps not diverged, mgmt-backend is
