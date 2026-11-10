@@ -89,5 +89,5 @@ activities, notifications (Realtime enabled), portfolio_items
 - [Proposals belong to Deals](./product_proposal_on_deal.md) — Proposals are Deal-centric (pre-sale), not Project-centric. Project created after acceptance.
 
 ## Deploy & Tooling
-- [Staging deploy target](./project_staging_deploy_target.md) — Sellsuki k8s behind Teleport; CI/Docker/manifest set up, cluster auth still open
+- [Staging deploy target](./project_staging_deploy_target.md) — SRE shared frontend pipeline (S3 + CloudFront) + manual Supabase jobs; k8s/Teleport dropped; MR !55
 - [Sandbox tooling gotchas](./sandbox-tooling-gotchas.md) — npm cache, tsx test, turbo --force, docker workarounds
