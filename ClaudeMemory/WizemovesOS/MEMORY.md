@@ -87,3 +87,7 @@ activities, notifications (Realtime enabled), portfolio_items
 ## Product Decisions
 - [Field Configuration (Admin-Only)](./product_field_configuration.md) — custom fields configured via migrations, not Settings UI
 - [Proposals belong to Deals](./product_proposal_on_deal.md) — Proposals are Deal-centric (pre-sale), not Project-centric. Project created after acceptance.
+
+## Deploy & Tooling
+- [Staging deploy target](./project_staging_deploy_target.md) — Sellsuki k8s behind Teleport; CI/Docker/manifest set up, cluster auth still open
+- [Sandbox tooling gotchas](./sandbox-tooling-gotchas.md) — npm cache, tsx test, turbo --force, docker workarounds
