@@ -30,6 +30,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Console UX rules](feedback_console_ux_story_presets_icons_generic.md) — story/wizard for newcomers, presets not free text, icon+hover not labels, never one industry
 - [Handoff ≠ state](feedback_handoff_claims_check_ledger_and_mr.md) — check ledger + open MRs before trusting "no code yet"
 - [Check env yourself](feedback_check_read_only_env_facts_yourself_user_does_not_know.md) — port-forward rps + grpcurl, don't ask
+- [Kill by PID, never pkill](feedback_never_pkill_pattern_kill_by_pid_on_macos.md) — BSD pkill reads a trailing -n as a pattern; a verifier killed Docker Desktop + apps
 - [Read Job logs first](feedback_read_job_logs_before_deleting_the_job.md) — save logs before deleting a Job
 - [Morning retries in waves](feedback_morning_retries_in_waves_runner_cluster_is_12_nodes.md) — ≤6–8 jobs per wave, 12-node runner
 - [Sprint sweep = deploy](feedback_sprint_sweep_board_column_means_deploy_not_ac_proof.md) — column means deployed, not AC proven
