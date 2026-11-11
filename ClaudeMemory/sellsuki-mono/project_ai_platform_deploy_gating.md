@@ -1,6 +1,6 @@
 ---
 name: project-ai-platform-deploy-gating
-description: "AI platform (chat-core) deploy is gated by SRE-side switches: CI_JOB_ENABLE project var, missing K8s secret, branch model develop→dev / main→staging; shared helm chart has no initContainers — migration wiring needs the SRE chart-ownership decision"
+description: "AI platform (chat-core) deploy is gated by SRE-side switches: CI_JOB_ENABLE project var, missing K8s secret, branch model develop→dev / main→staging; shared helm chart has no initContainers — migration wiring needs the SRE chart-ownership decision; production = vX.Y.Z tag + CI_JOB_ENABLE true, manual deploy; glab api needs --hostname gitlab.sellsuki.com"
 metadata: 
   node_type: memory
   type: project
@@ -71,3 +71,15 @@ not ours to invent. E5 cannot be verified on staging until this is owned.
 `.env.example` on main documented **none** of the 21 vars the code reads until
 ai-agent MR !18. Audit with:
 `git grep -hoE '(os\.Getenv|envOr|envBool|envInt|envFloat|envDuration)\("[A-Z_]+"'`
+
+**Production rules (read from the template 2026-11-12, AI-298 prod config):**
+- Production jobs exist only on a git tag matching `^v\d{1,2}\.\d{1,2}\.\d{1,2}$` **and** `CI_JOB_ENABLE == "true"`
+  (`.rules_check_production`). Deploy is `when: manual` (`.rules_approve_production`). Production image tag = the git tag.
+- Production is amd64-only. `build_image_production_amd` / `deploy_production_amd` / `deploy_cron_production_amd` extend
+  `.variables_export_production` (no suffix); ARM uses `_arm`. A repo-local `.variables_export_production` deep-merges with
+  the template's, so `CI_JOB_ENABLE: "false"` + `KUBE_NAMESPACE` is a safe "wired, gate off" block.
+- rag-core (python) already has production `CI_JOB_ENABLE: "true"`: its first `vX.Y.Z` tag is the only gate.
+- Reading the template: `glab api --hostname gitlab.sellsuki.com "projects/sellsuki%2Fsre%2Fdeployment%2Fpipeline-deployment/repository/files/pipelines%2F<file>/raw?ref=main"`
+  (unsandboxed). Without `--hostname`, outside a repo dir, glab targets gitlab.com and says "Unauthenticated", which
+  looks like a permissions problem. `generic-th.yml` just includes `generic-{amd64,arm64}-th.yml`; rules/variables live
+  under `templates/`.
