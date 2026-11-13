@@ -103,7 +103,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Admin-fe worktree install + key-count tripwire](reference_admin_fe_worktree_install_and_i18n_key_count_tripwire.md) — own pnpm install; LabelPack test counts i18n keys
 - [Worktree tracks main → push goes nowhere](reference_worktree_add_from_origin_main_tracks_main_push_goes_nowhere.md) — `--no-track`, push HEAD:refs/heads/<b>, check ls-remote
 - [React 19 boolean ARIA on ssk-* = ""](reference_react19_boolean_aria_on_custom_elements_renders_empty.md) — use ariaBool() strings
-- [ssk-drawer closes on Escape itself](reference_ds_ssk_drawer_closes_on_escape_itself.md) — no app Escape listener; tooltip has only private _isOpen
+- [ssk-drawer closes on Escape itself](reference_ds_ssk_drawer_closes_on_escape_itself.md) — no app Escape listener; a modal over it must take Escape in window capture; raw Event("input") hangs jsdom
 - [ssk-drawer named slots + closed h1](reference_ssk_drawer_named_slots_and_closed_header_h1.md) — body needs slot="body" (jsdom hides it); closed drawer = 2nd h1
 - [Admin-fe e2e port collides](reference_admin_fe_e2e_fixed_port_parallel_sessions_collide.md) — 5196 hard-coded; temp config per session/verifier; -g is a regex
 - [BOLA internal API header](reference_bola_internal_api_uses_x_system_token_not_x_service_token.md) — X-System-Token, not X-Service-Token
@@ -131,4 +131,5 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Prove-red layered guard](reference_prove_red_layered_guard_mutate_the_property.md) — dropping one layer stays green; mutate the lease; stub latency for real overlap
 - [chat-core "stage" guard](reference_chat_core_guard_bans_stage_word_outside_lead_packages.md) — word banned in team pkgs; strings live in entity/alert_recipient
 - [ai-mvp restart: messaging dies before file-service](reference_ai_mvp_restart_messaging_dies_if_file_service_not_up.md) — FATAL on :8087 at boot; restart messaging once 8087 is up; 50057 never up
+- [Stack add conflicts = stale stack](reference_local_stack_add_conflict_means_stale_stack_simulate_rebuild.md) — simulate rebuild in scratch worktree, backup ref, then rebuild; check binary time
 - [Console local login](reference_console_local_login_and_headless_verify.md) — only chat.sellsuki.local signs in; headless Playwright + localhost Kratos cookie; ai-mvp overmind socket; demo seed
