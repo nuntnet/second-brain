@@ -12,7 +12,9 @@ metadata:
 ซึ่ง resolve เป็น **internal ELB 10.111.9.75** → connection timeout ถ้าไม่ได้อยู่บน VPN บริษัท
 (Tailscale ไม่ช่วย — คนละ network; Tailscale ใช้กับ NAS ds1 เท่านั้น ดู [[reference-nas-ds1]])
 
-`docs.sellsuki.com` เอง (Outline UI) เข้าได้ปกติ (HTTP 200) — บล็อกเฉพาะ MCP endpoint ภายใน
+**แก้ 2026-11-13 (nunt):** `docs.sellsuki.com` (Outline UI) ก็ต้องต่อ VPN บริษัท (WireGuard) เหมือนกัน — บรรทัดเดิมที่ว่า "เข้าได้ปกติ HTTP 200" ผิด เพราะ SPA ตอบ 200 ทุก route; browser pane ที่ไม่ได้ต่อ VPN/ไม่ได้ login จะเด้งไป `?logout=true`
+**อาการที่ต้องจำ:** outline MCP ขึ้น `CONNECT_TIMEOUT` ตอนเริ่ม session = VPN ยังไม่ขึ้น → บอก user "ต่อ WireGuard (sellsuki-production) แล้ว Reconnect outline" ทันที ไม่ต้องไล่หาสาเหตุ
+**collection ที่ bot ไม่เห็นใน list_collections แต่ใช้ได้:** ดูตาราง `backend/address-backend/.claude/rules/outline-collections.md` เช่น `Martech Solution Team - MST` (95efdc4c-20ce-4ce4-ba9c-f6b751972ffb) — หน้า "AI Chatbot" (eee71757-feb8-42e8-9125-6846822e16ae) อยู่ใต้ Product ในนั้น
 
 **ข้อควรรู้:** ถ้า session เริ่มตอน VPN ยังไม่ขึ้น MCP tools จะ**ไม่โผล่แม้ต่อ VPN ทีหลัง**
 (`claude mcp list` ขึ้น ✔ Connected แต่ ToolSearch หาไม่เจอ — registry ถูก build ตอนเริ่ม session)
