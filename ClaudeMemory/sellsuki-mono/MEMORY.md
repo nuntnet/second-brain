@@ -80,6 +80,8 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [editJiraIssue fields rejected](reference_jira_mcp_editissue_fields_rejected_as_string.md) — schema-less tool, any `fields` → "received string"; comment instead, say description is stale
 - [Meta app prod state 11-14](project_meta_app_sellsuki_a_prod_state_2026_11_14.md) — feed unsubscribed, webhook v27 vs Graph v25, login config 3 perms, all Standard access
 
+- [overmind start -D ≠ one process](reference_overmind_start_d_does_not_start_one_process_use_restart.md) — after stop, only `overmind restart <name> -s <sock>` brings it back; rule file is wrong here
+
 ## Go / DB / sandbox
 - [Go / DB / sandbox / test traps](index_go_db_sandbox.md) — sandbox, go cache, pgx/gorm, chat-core test DBs, console e2e ports, ssk-* components, merge traps
 
