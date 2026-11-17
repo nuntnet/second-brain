@@ -3,6 +3,8 @@
 Titles are 1–3 words on purpose — each file's `description:` carries the real detail. Always open the file before relying on it. Domain detail lives in the sub-indexes at the bottom; open the one for the topic at hand.
 
 ## Feedback & how to work
+- [Prior art: all Jira projects](feedback_prior_art_sweep_every_jira_project_not_just_target.md) — search PAT+AI+OC, read adjacent cards' content not titles
+- [RBAC preset cards](project_rbac_preset_backfill_cards_pat2872_2873.md) — PAT-2872/2873 opened 11-17; extend AI-252 reconciler, check AI-248/PAT-1527 before work
 - [Internal hosts need VPN](reference_outline_mcp_vpn_blocker.md) — docs.sellsuki.com + outline MCP = WireGuard VPN only; `CONNECT_TIMEOUT` at start = VPN off → ask user to connect + Reconnect outline · MST collection hidden from list_collections · [VPN clients](reference_machine_vpn_clients_wireguard_is_company_vpn.md)
 - [Thai](user_language_thai.md) · [Act](feedback_decisive_deep_execution.md) · [Self-explain](feedback_selfexplaining_ux.md) · [Subagents](feedback_subagent_model_tiering.md) · [PMM voice](feedback_product_marketing_voice.md) · [Design fidelity](feedback_design_handoff_full_fidelity.md) · [Entity pure](feedback_entity_pure_zod_dto.md)
 - [Card=story](feedback_card_user_story_flows.md) · [No mid-sprint](feedback_no_scope_change_in_sprint.md) · [QA guide](feedback_qa_reproduce_guide.md) · [Cite line](feedback_ground_claims_file_line.md) · [Report not edit](feedback_report_wrong_cards_dont_edit.md) · [Fix reaches all](feedback_fix_must_reach_everyone.md) · [Central≠caller](feedback_central_service_no_caller_domain.md)
@@ -98,44 +100,4 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Resume dead subagent](reference_resume_dead_subagent_by_sendmessage_not_respawn.md) — SendMessage the same agentId
 - [Team workflow goal](project_team_workflow_sharing_goal.md) · [Test users = infra](project_test_users_as_infrastructure.md) · [pstack](project_pstack_as_workflow_benchmark.md) · [SukiSpace vision](project_sukispace_marketplace_ais_vision.md)
 - [dev onboarding dead ends](project_dev_onboarding_dead_ends_2026_10_11.md) — 2 unfixed blockers for new dev users
-- [Verifier exec denied](reference_verifier_session_exec_and_port_forward_denied_even_with_relayed_approval.md) — exec + port-forward denied even with relayed approval…
-- [Usage spool stuck](project_staging_ai_agent_usage_spool_stuck_poison_event_2026_10_29.md) — staging ai-agent replay fails, QMS no plan for company…
-- [RAG probes: user mints token](reference_rag_staging_probes_user_mints_bff_token_port_forward_ok.md) — exec denied, port-forward OK, never read BFF secret…
-- [Pane file upload](reference_browser_pane_file_upload_via_datatransfer.md) — DataTransfer on input[type=file]; conversation URL is…
-- [Parallel Bash cd / zsh split](reference_parallel_bash_cd_moves_git_checkout_into_shared_root_use_git_dash_C.md) — use `git -C <abs>` + `bash -c` loops; a parallel `cd` once…
-- [Company-mgmt FE tests](reference_company_mgmt_frontend_vitest_recipe_and_shared_node_modules.md) — vitest 1.6 pool flags, rtk breaks npx vitest, symlink…
-- [Sandbox glab/uv/oasdiff](reference_sandbox_glab_uv_oasdiff_recipes.md) — glab needs unsandboxed (TLS), UV_CACHE_DIR, build oasdiff v1.35.0 from mod cache, install.sh `version=` env
-- [Sandbox go cache + BSD sed](reference_sandbox_blocks_go_build_cache_and_bsd_sed_noop_mutation.md) — go vet needs unsandboxed; sed -i no-op fakes a failed…
-- [Admin-fe worktree install + key-count tripwire](reference_admin_fe_worktree_install_and_i18n_key_count_tripwire.md) — own pnpm install; LabelPack test counts i18n keys
-- [Worktree tracks main → push goes nowhere](reference_worktree_add_from_origin_main_tracks_main_push_goes_nowhere.md) — `--no-track`, push HEAD:refs/heads/<b>, check ls-remote
-- [React 19 boolean ARIA on ssk-* = ""](reference_react19_boolean_aria_on_custom_elements_renders_empty.md) — use ariaBool() strings
-- [ssk-drawer closes on Escape itself](reference_ds_ssk_drawer_closes_on_escape_itself.md) — no app Escape listener; a modal over it must take Escape in window capture; raw Event("input") hangs jsdom
-- [ssk-drawer named slots + closed h1](reference_ssk_drawer_named_slots_and_closed_header_h1.md) — body needs slot="body" (jsdom hides it); closed drawer = 2nd h1
-- [Admin-fe e2e port collides](reference_admin_fe_e2e_fixed_port_parallel_sessions_collide.md) — 5196 hard-coded; temp config per session/verifier; -g is a regex
-- [BOLA internal API header](reference_bola_internal_api_uses_x_system_token_not_x_service_token.md) — X-System-Token, not X-Service-Token
-- [SskPageTitle children](reference_ssk_page_title_takes_children_not_title_prop.md) — `title=` renders an empty h1; tests stay green
-- [Keep-both merge drops braces](reference_merge_conflict_keep_both_drops_shared_closing_lines.md) — rebuild base+ours+theirs; postcss parse; zsh `$REF:path`
-- [Console e2e port 5196 shared](reference_console_e2e_port_5196_shared_use_temp_config.md) — E2E_PORT=<free port> env (no temp config needed), app-local playwright
-- [Prod port-forward denied](reference_prod_port_forward_denied_kubectl_get_logs_ok.md) — prod get/logs OK, port-forward refused; hand grpcurl to user
-- [BOLA→QMS never exercised](project_bola_qms_quota_path_never_exercised.md) — enforcement off dev+staging, no bola quotas anywhere; runbook docs/release/qms
-- [Console paging needs canvas scroll](reference_console_paging_footer_needs_canvas_scroll.md) — sentinel inside main.main-landmark; e2e scrolls the canvas; seeds need distinct times
-- [Workflow doc + plugin regen](reference_workflow_doc_outline_and_plugin_regen.md) — Outline id, no H1 in update text, build-plugin.py --check not hand diff
-- [Scheduled run can't merge](reference_scheduled_task_cannot_merge_classifier_refuses.md) — classifier refuses merge unattended; merge in a live turn
-- [Develop merge deletes branch](reference_develop_merge_deletes_source_branch_repush_for_main.md) — main MR 'source_branch does not exist' → re-push merged SHA
-- [CCS2 cache + dev 401](reference_ccs2_staging_index_html_cached_dev_mgmt_401.md) — staging index.html cached (use ?v=), dev mgmt API 401, test QMS pages on staging
-- [Permission matrix row](reference_chat_core_permission_matrix_needs_every_new_route.md) — every new workspace route needs a route(...) line in permission_matrix_test.go
-- [Ladder dies with the turn](reference_background_ladder_dies_with_the_turn_use_nohup.md) — long ladders as nohup script + done file
-- [TMPDIR differs sandboxed vs not](reference_tmpdir_differs_sandboxed_vs_unsandboxed_bash.md) — unsandboxed ladder logs live under /var/folders/.../T; check by absolute path
-- [Ladder survives drop](reference_ladder_survives_network_drop_check_before_restart.md) — check done-file/pgrep before restarting; two runs on one test DB = bogus FAILs
-- [BOLA test/api red on main](reference_bola_test_api_broadcast_mock_panic_on_main.md) — CountBroadcasts mock panic is baseline (b2d0f47)
-- [chat-core coverage = in-package only](reference_chat_core_storage_coverage_counts_in_package_tests_only.md) — storage_coverage has no -coverpkg; ./test/ adds 0; external _test pkg in same dir counts
-- [Scratchpad shared with subagents](reference_subagents_share_scratchpad_helper_scripts_get_overwritten.md) — agent overwrote mutate.py; check the mutation applied before trusting green
-- [Tenancy seed masked](reference_tenancy_seed_masked_by_tenants_own_row.md) — A must have no own row, seed B first, drop each predicate separately
-- [Sandbox TMPDIR ≠ unsandboxed; rtk cat multi-file breaks](reference_sandbox_tmpdir_differs_from_unsandboxed_and_cat_multi_file_breaks.md) — use scratchpad abs path; Read not cat
-- [Jira AI transition ids](reference_jira_ai_project_transition_ids_and_heavy_responses.md) — 21/31 ids; responses echo full card → bulk sync via subagents
-- [Pin SQL before change](reference_pin_unchanged_sql_by_capturing_it_before_the_change.md) — SQLCapture on untouched code → exact-equality PIN test; guard rm globs with ${VAR:?}
-- [Prove-red layered guard](reference_prove_red_layered_guard_mutate_the_property.md) — dropping one layer stays green; mutate the lease; stub latency for real overlap
-- [chat-core "stage" guard](reference_chat_core_guard_bans_stage_word_outside_lead_packages.md) — word banned in team pkgs; strings live in entity/alert_recipient
-- [ai-mvp restart: messaging dies before file-service](reference_ai_mvp_restart_messaging_dies_if_file_service_not_up.md) — FATAL on :8087 at boot; restart messaging once 8087 is up; 50057 never up
-- [Stack add conflicts = stale stack](reference_local_stack_add_conflict_means_stale_stack_simulate_rebuild.md) — simulate rebuild in scratch worktree, backup ref, then rebuild; check binary time
-- [Console local login](reference_console_local_login_and_headless_verify.md) — only chat.sellsuki.local signs in; headless Playwright + localhost Kratos cookie; ai-mvp overmind socket; demo seed
+- [Env / sandbox / test / worktree traps](index_traps_tail.md) — verifier exec denied, sandbox glab/go/TMPDIR, ssk-* DS quirks, e2e ports, ladders, worktree/merge traps, console login
