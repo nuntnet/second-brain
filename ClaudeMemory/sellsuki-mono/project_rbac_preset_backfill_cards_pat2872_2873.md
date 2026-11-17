@@ -1,20 +1,23 @@
 ---
 name: rbac-preset-backfill-cards-pat2872-2873
-description: PAT-2872/2873 were opened 2026-11-17 then rescoped the same day after reading AI-248/AI-252; AI-252 reconciler is on CCS develop NOT main; phase B (AI-254..258) already covers shared preset
+description: "RBAC no-more-backfill plan lives in PAT epic PAT-2874 (11 child cards, moved from AI board 2026-11-17); reconciler is on rps main but CCS develop only"
 metadata:
   node_type: memory
   type: project
   originSessionId: a0c4bf2e-bdf1-481b-bcff-5c37129e1d40
-  modified: 2026-11-17T13:33:53.079Z
+  modified: 2026-11-17T14:53:15.581Z
 ---
 
-2026-11-17 nunt asked how to stop planning migrate/backfill whenever a role or permission is added. I opened PAT-2872 (auto-reconcile) and PAT-2873 (check permission from preset), then read epic **AI-248** and found both were largely duplicates. Both cards were rewritten the same day.
+2026-11-17 nunt wanted the whole "new permission/role without migrate/backfill" effort on the **PAT board** so the PAT team deploys it (cards left on the AI board get no deploy). Jira MCP cannot move issues across projects, so every AI card was recreated in PAT and the AI originals got a pointer comment (status not changed, cannot delete).
 
-**Facts found (verify before relying):**
-- **AI-252 (RBAC-A4, Done)** already built the startup reconciler (additive, idempotent, dry-run). Code is on CCS `origin/develop` (`cmd/reconcile_role_presets`) but NOT on `origin/main` (checked 2026-11-17), which matches PAT-2742 (staging lacks it). It covers only company presets (`CompanyRolePresets()`), not Provider Owner (PAT-1527 open) and does not create missing roles.
-- **AI-248 phase B** = shared preset: AI-254 (B1 decision, gates B2), AI-255 (CCS stops copying), AI-256 (batch Keto sync), AI-257 (merge thousands of copies per env), AI-258 (retire TUI `migrate_preset_roles`). AI-248 states the migrate-per-env pain is NOT a Keto limit: rps UpdateRole already syncs Keto; the cause is CCS copying presets into per-company system roles that rps refuses to edit.
-- PAT-2850 (Done) still wrote CCS migration `_0032` + `make run-migrate-roles-permissions`, so the old path is still in use.
+**Map (epic PAT-2874):** PAT-2875 read CheckPermission/Keto direct callers (new, Phase 0) · PAT-2880 survey silent 403s (was AI-253) · PAT-2876 cache clear (AI-249) · PAT-2877 assign at new tenant rewrites old tenants (AI-250, rps MR !140 → develop, no main twin) · PAT-2878 change member role atomically (AI-251) · PAT-2879 reconciler to main + deploy (AI-252) · PAT-2881 decision preset vs custom role (AI-254) · PAT-2882 batch Keto sync (AI-256) · PAT-2883 CCS stops copying (AI-255) · PAT-2884 merge copies (AI-257) · PAT-2885 retire TUI (AI-258) · PAT-2872 guardrails + runbook (Phase 2, mine). Epic AI-248 → PAT-2874. PAT-2873 Rejected.
 
-**Current card scope:** PAT-2872 = only what AI-252 lacks (get reconciler onto main/staging/prod, cover Provider Owner + `AdminRefreshProviderRole` additive instead of 409, CI check against per-permission migrations, audience in manifest from PAT-2747). PAT-2873 = a comparison spike feeding AI-254 (resolve-at-check from Postgres role vs shared role vs Keto OPL), no code until AI-254 decides.
+**Existing PAT cards kept as owners (do not duplicate):** PAT-2742 (align develop/main 7 repos; AC-09/AC-10 reconciler), PAT-1527 (Provider Owner perms, not started in code), PAT-2747 (audience guard).
 
-**Not done:** no issue links created (MCP reverses direction, no delete); CheckPermission/AssignToRole/UpdateRole not read; no other service-to-Keto grep. See [[feedback_prior_art_sweep_every_jira_project_not_just_target]].
+**Facts checked 2026-11-17 (re-verify before relying):** rps `ReconcileRolePresets` (use case + RPC + tests) IS on origin/main; CCS `cmd/reconcile_role_presets` is on develop only. Divergence CCS main-only 53 / develop-only 162, rps 23 / 66. rps develop has two migrations numbered 0024. Reconciler covers 11 company roles by name (not Provider Owner). Not checked: rps pods on staging/prod, rps reconcile filter code, CheckPermission code, other direct Keto callers.
+
+**Artifact** (private, nunt shares): https://claude.ai/artifact/LVjcCLiDbib6GEBDD54jgd — rule from nunt: no change-log text in it (what was cancelled/replaced is between nunt and me), only what the team needs.
+
+**Jira MCP tips learned:** createJiraIssue `parent` accepts epic key at create; editJiraIssue `parent` must be `{"key": ...}`; PAT "Rejected" status sits in the In Progress category; writes need 10 s gaps.
+
+See [[feedback_prior_art_sweep_every_jira_project_not_just_target]].
