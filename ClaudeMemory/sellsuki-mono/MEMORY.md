@@ -4,7 +4,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 
 ## Feedback & how to work
 - [Prior art: all Jira projects](feedback_prior_art_sweep_every_jira_project_not_just_target.md) — search PAT+AI+OC, read adjacent cards' content not titles
-- [RBAC preset cards](project_rbac_preset_backfill_cards_pat2872_2873.md) — PAT-2872/2873 opened 11-17; extend AI-252 reconciler, check AI-248/PAT-1527 before work
+- [RBAC preset cards](project_rbac_preset_backfill_cards_pat2872_2873.md) — PAT-2872/2873 rescoped 11-17: AI-252 reconciler is on CCS develop not main; phase B = AI-254..258
 - [Internal hosts need VPN](reference_outline_mcp_vpn_blocker.md) — docs.sellsuki.com + outline MCP = WireGuard VPN only; `CONNECT_TIMEOUT` at start = VPN off → ask user to connect + Reconnect outline · MST collection hidden from list_collections · [VPN clients](reference_machine_vpn_clients_wireguard_is_company_vpn.md)
 - [Thai](user_language_thai.md) · [Act](feedback_decisive_deep_execution.md) · [Self-explain](feedback_selfexplaining_ux.md) · [Subagents](feedback_subagent_model_tiering.md) · [PMM voice](feedback_product_marketing_voice.md) · [Design fidelity](feedback_design_handoff_full_fidelity.md) · [Entity pure](feedback_entity_pure_zod_dto.md)
 - [Card=story](feedback_card_user_story_flows.md) · [No mid-sprint](feedback_no_scope_change_in_sprint.md) · [QA guide](feedback_qa_reproduce_guide.md) · [Cite line](feedback_ground_claims_file_line.md) · [Report not edit](feedback_report_wrong_cards_dont_edit.md) · [Fix reaches all](feedback_fix_must_reach_everyone.md) · [Central≠caller](feedback_central_service_no_caller_domain.md)

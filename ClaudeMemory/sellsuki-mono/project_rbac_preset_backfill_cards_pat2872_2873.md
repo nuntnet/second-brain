@@ -1,22 +1,20 @@
 ---
 name: rbac-preset-backfill-cards-pat2872-2873
-description: "PAT-2872 (Phase 1 auto-reconcile) + PAT-2873 (Phase 2 check from preset) opened 2026-11-17 to end per-permission backfill/migrate; scope must be corrected against AI-252, AI-248, PAT-1527"
+description: PAT-2872/2873 were opened 2026-11-17 then rescoped the same day after reading AI-248/AI-252; AI-252 reconciler is on CCS develop NOT main; phase B (AI-254..258) already covers shared preset
 metadata:
   node_type: memory
   type: project
   originSessionId: a0c4bf2e-bdf1-481b-bcff-5c37129e1d40
-  modified: 2026-11-17T10:31:57.996Z
+  modified: 2026-11-17T13:33:53.079Z
 ---
 
-2026-11-17 nunt asked how to stop planning migrate/backfill every time a role or permission is added. Two PAT Task cards opened: **PAT-2872** Phase 1 (reconcile system role presets automatically at deploy, one manifest) and **PAT-2873** Phase 2 (CheckPermission reads role preset from Postgres instead of per-permission-per-user Keto tuples).
+2026-11-17 nunt asked how to stop planning migrate/backfill whenever a role or permission is added. I opened PAT-2872 (auto-reconcile) and PAT-2873 (check permission from preset), then read epic **AI-248** and found both were largely duplicates. Both cards were rewritten the same day.
 
-**Why:** CCS copies `CompanyOwnerPermissions` into each company's role at creation only; Keto tuples are written per permission per user at assign; system roles are immutable via API, so every new permission needed `rps cmd/backfill_role_permission` or a numbered CCS migration (`_0024`, `_0032` + `make run-migrate-roles-permissions`, see PAT-2850).
+**Facts found (verify before relying):**
+- **AI-252 (RBAC-A4, Done)** already built the startup reconciler (additive, idempotent, dry-run). Code is on CCS `origin/develop` (`cmd/reconcile_role_presets`) but NOT on `origin/main` (checked 2026-11-17), which matches PAT-2742 (staging lacks it). It covers only company presets (`CompanyRolePresets()`), not Provider Owner (PAT-1527 open) and does not create missing roles.
+- **AI-248 phase B** = shared preset: AI-254 (B1 decision, gates B2), AI-255 (CCS stops copying), AI-256 (batch Keto sync), AI-257 (merge thousands of copies per env), AI-258 (retire TUI `migrate_preset_roles`). AI-248 states the migrate-per-env pain is NOT a Keto limit: rps UpdateRole already syncs Keto; the cause is CCS copying presets into per-company system roles that rps refuses to edit.
+- PAT-2850 (Done) still wrote CCS migration `_0032` + `make run-migrate-roles-permissions`, so the old path is still in use.
 
-**Known gaps in the cards as written (found after opening):**
-- A startup reconciler already exists (AI-252, CCS main) but covers only `CompanyRolePresets()` (owner_kind sellsuki.company), not Provider Owner. Phase 1 should EXTEND it, not build a new one. PAT-1527 (open) overlaps: Provider Owner preset + non-idempotent `AdminRefreshProviderRole` (409 instead of additive).
-- AI-248 (AI-254/255/257, "shared preset long term") probably overlaps Phase 2; not read yet. Searched only the PAT project, never AI.
-- PAT-2747 (audience: company vs provider vs system) should feed the manifest; don't classify by `sellsuki.provider.*` prefix.
-- No issue links created between the cards (MCP reverses link direction, cannot delete).
-- CheckPermission and CCS role creation code were not read; Keto tuple shape came from docs.
+**Current card scope:** PAT-2872 = only what AI-252 lacks (get reconciler onto main/staging/prod, cover Provider Owner + `AdminRefreshProviderRole` additive instead of 409, CI check against per-permission migrations, audience in manifest from PAT-2747). PAT-2873 = a comparison spike feeding AI-254 (resolve-at-check from Postgres role vs shared role vs Keto OPL), no code until AI-254 decides.
 
-**How to apply:** before touching these cards read AI-248/AI-252 and fix descriptions; Phase 1 must cover CCS migrations too. See [[reference_jira_mcp_search_quirks]].
+**Not done:** no issue links created (MCP reverses direction, no delete); CheckPermission/AssignToRole/UpdateRole not read; no other service-to-Keto grep. See [[feedback_prior_art_sweep_every_jira_project_not_just_target]].
