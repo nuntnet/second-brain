@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: 270e02aa-6ae1-461a-ada0-6fb19a8e9e87
-  modified: 2026-08-25T11:19:50.712Z
+  modified: 2026-11-18T13:37:17.103Z
 ---
 
 Sprint ids in `customfield_10020` are allocated **globally across every board**, not
@@ -45,3 +45,5 @@ check the foreign sprints too — a wrong write leaves no error to notice.
 Related: [[jira-mcp-search-quirks]], [[jira-editissue-adf-breakage]], [[pat-board-sprints]]
 
 **Update 2026-10-25:** the PO opened AI Sprint 21–24 = **3301/3302/3303/3304** (board 254, all `future`). Read them from the built-in browser pane (it was already signed in to sellsuki.atlassian.net, no Chrome extension needed): navigate to `/rest/agile/1.0/board/254/sprint?state=future,active`, then run the fetch calls from `javascript_tool`. The same page context can edit a card's ADF description without retyping Thai: `GET /rest/api/3/issue/KEY?fields=description` → change text nodes / push a `tableRow` → `PUT` with header `X-Atlassian-Token: no-check` (204). Read the text nodes back afterwards (a replacement ran two words together once: "AIแสดง").
+
+**Update 2026-11-18 — no browser needed any more.** The newer Atlassian connector (`mcp__f9f106ba…`) has agile ops via `discover`: `executeRead listJiraBoardSprints {boardId:254,state}` lists sprints with ids, and `executeDestructive manageJiraSprint {action: create|addIssues|start|update|close, sprintId, issueIdsOrKeys}` writes (addIssues returns `movedIssues`; `update` clears any of name/goal/dates you omit). The built-in pane was NOT signed in that day (401) and Chrome was disconnected — use the connector first. **AI Sprint 25/26/27 = 3307/3308/3309** (future); always list before creating — 25 already existed, empty, and a `futureSprints()` JQL cannot reveal an empty sprint. Sprint 21 (3301) was still `active` past its 11-10 end.
