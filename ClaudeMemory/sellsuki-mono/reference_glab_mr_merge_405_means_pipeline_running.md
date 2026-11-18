@@ -28,7 +28,11 @@ for i in $(seq 1 25); do st=$(rtk proxy glab ci get -R $R -p "$pid" | grep -E '^
   case "$st" in running|pending|created) sleep 20;; *) break;; esac; done
 ```
 
-ถ้า pipeline success แล้วยังขึ้น 405 ค่อยไปดูเหตุอื่น (Draft, conflict, approval rule) ·
+**อีกสาเหตุ (2026-11-18, BOLA !295):** pipeline success แล้วก็ยัง 405 ได้ ถ้าเพิ่ง merge MR อื่นเข้า target branch เดียวกันไป
+(merge !293/!294 แล้วสั่ง !295 ต่อทันที) → `detailed_merge_status = unchecked` เพราะ GitLab กำลังตรวจใหม่กับ target ที่ขยับ
+ให้รอจนขึ้น `mergeable` (ราว 10 วิ) แล้วสั่งใหม่ — ผ่าน ไม่ต้อง rebase หรือรัน pipeline ใหม่
+
+ถ้า pipeline success แล้วยังขึ้น 405 (และ status ไม่ใช่ unchecked) ค่อยไปดูเหตุอื่น (Draft, conflict, approval rule) ·
 เมื่อ pipeline เสร็จพอดีตอนสั่ง glab จะพิมพ์ `✓ Pipeline succeeded.` ก่อน `✓ Merged!` เอง
 
 เชื่อม [[reference_rtk_git_output_filtering]] [[reference_glab_ci_status_stale_pipeline]]
