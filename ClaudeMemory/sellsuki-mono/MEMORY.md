@@ -59,6 +59,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [First CI run of old specs](reference_first_ci_run_of_never_run_playwright_specs_finds_real_bugs_and_axe_baseline_drift.md) — real bugs + axe drift · never rebase pushed
 
 ## Projects / state
+- [BOLA email + wave 11-19](project_bola_invite_email_via_messaging_and_wave_2026_11_19.md) — email via messaging-backend as sellsuki.system:bola-service (BOLA-424); bugs 405-423 + 404/424/311 = one wave, one release
 - [PO pack not on main](project_po_workflow_pack_not_on_main_2026_11_02.md) — /po-team only on AI-49 · PO pack = monorepo MR !52 (open, not merged) · engineering half has no MR
 - [eval-skill pitfalls](reference_eval_skill_design_pitfalls_2026_10_12.md) — real tier-2 task, strip evidence from baselines, 429 kills agents
 - [nunt-mode profile](project_nunt_mode_agent_profile.md) — /my-mode, eval REVISE · round 3 (tier 2) incomplete, rerun after spend limit
