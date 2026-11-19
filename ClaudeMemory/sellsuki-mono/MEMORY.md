@@ -33,6 +33,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Console UX rules](feedback_console_ux_story_presets_icons_generic.md) — story/wizard for newcomers, presets not free text, icon+hover not labels, never one industry
 - [Handoff ≠ state](feedback_handoff_claims_check_ledger_and_mr.md) — check ledger + open MRs before trusting "no code yet"
 - [Check env yourself](feedback_check_read_only_env_facts_yourself_user_does_not_know.md) — port-forward rps + grpcurl, don't ask
+- [Agents never reset --hard](feedback_agents_never_reset_hard_cd_guard.md) — a subagent reset the monorepo ROOT 9× (failed cd) 11-19; briefs forbid destructive git, `cd X || exit`, merge-tree for trials
 - [Kill by PID, never pkill](feedback_never_pkill_pattern_kill_by_pid_on_macos.md) — BSD pkill reads a trailing -n as a pattern; a verifier killed Docker Desktop + apps
 - [Read Job logs first](feedback_read_job_logs_before_deleting_the_job.md) — save logs before deleting a Job
 - [Morning retries in waves](feedback_morning_retries_in_waves_runner_cluster_is_12_nodes.md) — ≤6–8 jobs per wave, 12-node runner
