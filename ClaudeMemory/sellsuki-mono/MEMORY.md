@@ -48,6 +48,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Inbox ids collide](reference_decision_inbox_ids_collide_across_branches.md) — inbox.py = max+1 of THIS branch; sweep all branches first
 
 ## Git / branches
+- [Submodule worktree inside session wt](reference_session_worktree_hook_put_submodule_worktree_inside.md) — Write hook blocks other worktrees; nest it under the session worktree
 - [Sparse docs worktree + reuse sibling merge](reference_sparse_docs_worktree_and_reuse_sibling_merge.md) — ledgers via --no-checkout + sparse docs/cards; reuse a pure wave+main merge
 - [Stacked promotion wave](reference_stacked_promotion_wave_develop_to_main.md) — chain-merge in scratch worktree, user runs merge script
 - [Commit only my lines of a shared dirty file](reference_commit_only_my_lines_of_a_shared_dirty_file_via_update_index.md) — INBOX.md carries other sessions' rows; hash-object + update-index --cacheinfo, commit with no pathspec
@@ -96,6 +97,8 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [overmind start -D ≠ one process](reference_overmind_start_d_does_not_start_one_process_use_restart.md) — after stop, only `overmind restart <name> -s <sock>` brings it back; rule file is wrong here
 
 ## Go / DB / sandbox
+- [chat-core suite under load](reference_chat_core_local_suite_under_load_and_testdb_leftover.md) — timeouts at load ~30 → re-run failed pkgs -p 1; drop the leftover <db>_tp_<hash>
+- [rag-core branch fixtures](reference_capture_rag_core_branch_fixtures_via_git_archive.md) — git archive + rag-core .venv, drive real ASGI routes; Write hook = stay inside session worktree
 - [Go / DB / sandbox / test traps](index_go_db_sandbox.md) — sandbox, go cache, pgx/gorm, chat-core test DBs, console e2e ports, ssk-* components, merge traps
 
 ## Sub-indexes — open when the topic comes up
