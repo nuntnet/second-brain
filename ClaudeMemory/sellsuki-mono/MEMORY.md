@@ -79,6 +79,9 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Unscheduled sweeps AI-351](project_chat_core_unscheduled_sweeps_ai351.md) — 9 chat-core sweeps had no CronJob · rolling-summary added…
 - [Messaging chat flip 10-27](reference_messaging_chat_module_staging_flip_2026_10_27.md) — off by !80 09:59, back on by !82 16:46 (deploy 275941)…
 
+- [SukiSpace subscribe branch-only](project_sukispace_subscribe_only_on_integration_branch_2026_11_20.md) — SG "Done" but code only on feature/sukispace-integration; no BOLA/AI plans
+- [AI cost page no margin](project_provider_ai_cost_page_usd_only_no_margin_2026_11_20.md) — CCS2 /ai/usage USD only; revenue/FX missing (AI-461, AI-202)
+
 ## Jira
 - [Sprint ids + agile ops](reference_jira_sprint_ids_not_contiguous.md) — ids global across boards; f9f106ba connector `manageJiraSprint`/`listJiraBoardSprints` replaces the browser; AI S25–27 = 3307–3309
 - [Sweep via files](reference_jira_board_sweep_via_saved_results.md) · [BOLA](reference_bola_jira_project.md) · [OC2Plus](reference_oc2plus_jira_project.md) · [Patona](reference_pat_jira_project.md) · [Sprint ids](reference_jira_sprint_ids_not_contiguous.md) · [PAT sprints](reference_pat_board_sprints.md) · [PAT epics](project_pat_epic_links_unwired.md) · [Crosses sessions](reference_jira_mcp_crosses_responses_between_sessions.md) · [Quirks](reference_jira_mcp_search_quirks.md) · [ADF Thai](reference_jira_editissue_adf_breakage.md) · [No fallback](reference_no_local_jira_fallback.md) · [403 writes](reference_jira_mcp_writes_403_midsession.md) · [BOLA no In Review](reference_bola_jira_has_no_in_review_status_and_auto_mode_denies_merge.md)
