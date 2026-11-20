@@ -98,7 +98,11 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Duplicate local chat-core + Procfile reload](reference_local_duplicate_overmind_chat_core_and_procfile_reload.md) — stray .overmind-chat-core.sock eats the queue; restart never rereads Procfile → ai-mvp-restart.sh
 - [overmind start -D ≠ one process](reference_overmind_start_d_does_not_start_one_process_use_restart.md) — after stop, only `overmind restart <name> -s <sock>` brings it back; rule file is wrong here
 
+- [Console CSS: lint vs ratchet](reference_console_new_css_lint_vs_reset_ratchet.md) — new CSS can use neither --ssk-spacing-N nor --spacing-*; Tailwind layout; no info alert, strings ≤120
+- [KB review POW via rehearsal](reference_console_kb_review_unavailable_in_mock_use_rehearsal.md) — review port UNAVAILABLE in mock; ?kb-range-review-rehearsal on e2e dev server
+
 ## Go / DB / sandbox
+- [Unsandboxed TMPDIR shared](reference_unsandboxed_tmpdir_shared_log_names_collide.md) — sandbox-off $TMPDIR is /var/folders shared by all sessions; unit.log collided 11-20; log to scratchpad with a unique name
 - [Go rag-core needs go1.25](reference_go_rag_core_needs_go125_toolchain_sonic.md) — sonic v1.14.1 breaks on go1.26 as [build failed]; GOTOOLCHAIN=go1.25.0
 - [chat-core suite under load](reference_chat_core_local_suite_under_load_and_testdb_leftover.md) — timeouts at load ~30 → re-run failed pkgs -p 1; drop the leftover <db>_tp_<hash>
 - [rag-core branch fixtures](reference_capture_rag_core_branch_fixtures_via_git_archive.md) — git archive + rag-core .venv, drive real ASGI routes; Write hook = stay inside session worktree
