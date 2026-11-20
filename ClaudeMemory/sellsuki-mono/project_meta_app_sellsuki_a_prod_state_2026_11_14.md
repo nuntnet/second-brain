@@ -11,7 +11,7 @@ metadata:
 Read-only check in Meta for Developers (nunt signed in in the in-app browser), 2026-11-14, for AI-442 (FB comment → private reply):
 - App mode Development; App Review not submitted; every `pages_*` permission at Standard access.
 - Webhooks → Page: `messages`, `messaging_postbacks` Subscribed; `feed`, `message_echoes`, `messaging_referrals` Unsubscribed. Field webhook version **v27.0**, while messaging's `CHAT_FB_GRAPH_API_VERSION` is v25.0.
-- Login for Business config "AI Chat production" `1459004999493010` (user access token): `pages_messaging`, `pages_show_list`, `pages_manage_metadata`. No `pages_read_user_content`.
+- Login for Business config "AI Chat production" `1459004999493010` (user access token): `pages_messaging`, `pages_show_list`, `pages_manage_metadata`, and since 2026-11-20 ~21:30 `pages_read_engagement` (added for AI-496 / console !187, verified by reopening the wizard). No `pages_read_user_content`. Still Development mode + Standard access, so only app-role users can grant it until App Review.
 - Reading the permissions means opening the config's Edit wizard → Permissions step → typing in the selector's search box; leave with Cancel.
 
 **Why:** the next person preparing App Review or a webhook change needs the baseline without re-clicking. **How to apply:** re-check before acting, because this state changes as soon as P1–P4 in docs/cards/AI-442.md §8 are done.
