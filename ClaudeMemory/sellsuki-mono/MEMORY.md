@@ -84,6 +84,8 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [SukiSpace subscribe branch-only](project_sukispace_subscribe_only_on_integration_branch_2026_11_20.md) — SG "Done" but code only on feature/sukispace-integration; no BOLA/AI plans
 - [AI cost page no margin](project_provider_ai_cost_page_usd_only_no_margin_2026_11_20.md) — CCS2 /ai/usage USD only; revenue/FX missing (AI-461, AI-202)
 
+- [Dashboard+usage need pipeline prod](project_ai_chat_dashboard_and_usage_need_data_pipeline_prod.md) — dashboard-api not on prod + deny-all; URL alone = 403 (AI-498)
+
 ## Jira
 - [Sprint ids + agile ops](reference_jira_sprint_ids_not_contiguous.md) — ids global across boards; f9f106ba connector `manageJiraSprint`/`listJiraBoardSprints` replaces the browser; AI S25–27 = 3307–3309
 - [Sweep via files](reference_jira_board_sweep_via_saved_results.md) · [BOLA](reference_bola_jira_project.md) · [OC2Plus](reference_oc2plus_jira_project.md) · [Patona](reference_pat_jira_project.md) · [Sprint ids](reference_jira_sprint_ids_not_contiguous.md) · [PAT sprints](reference_pat_board_sprints.md) · [PAT epics](project_pat_epic_links_unwired.md) · [Crosses sessions](reference_jira_mcp_crosses_responses_between_sessions.md) · [Quirks](reference_jira_mcp_search_quirks.md) · [ADF Thai](reference_jira_editissue_adf_breakage.md) · [No fallback](reference_no_local_jira_fallback.md) · [403 writes](reference_jira_mcp_writes_403_midsession.md) · [BOLA no In Review](reference_bola_jira_has_no_in_review_status_and_auto_mode_denies_merge.md)
@@ -97,6 +99,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [overmind start -D ≠ one process](reference_overmind_start_d_does_not_start_one_process_use_restart.md) — after stop, only `overmind restart <name> -s <sock>` brings it back; rule file is wrong here
 
 ## Go / DB / sandbox
+- [Go rag-core needs go1.25](reference_go_rag_core_needs_go125_toolchain_sonic.md) — sonic v1.14.1 breaks on go1.26 as [build failed]; GOTOOLCHAIN=go1.25.0
 - [chat-core suite under load](reference_chat_core_local_suite_under_load_and_testdb_leftover.md) — timeouts at load ~30 → re-run failed pkgs -p 1; drop the leftover <db>_tp_<hash>
 - [rag-core branch fixtures](reference_capture_rag_core_branch_fixtures_via_git_archive.md) — git archive + rag-core .venv, drive real ASGI routes; Write hook = stay inside session worktree
 - [Go / DB / sandbox / test traps](index_go_db_sandbox.md) — sandbox, go cache, pgx/gorm, chat-core test DBs, console e2e ports, ssk-* components, merge traps
