@@ -15,3 +15,5 @@ Cause: the running Vite process (started 12:15) still used the pre-80dac1c proxy
 How to tell: the CCS log shows `Host: localhost:8092` + `X-Forwarded-Host: provider.sellsuki.local` and no `X-User-Kind`. A request through ccs.sellsuki.local with no session never reaches CCS (Kratos 401).
 
 Fix: `overmind restart web-provider -s .overmind-web-provider.sock` (see [[reference-overmind-start-d-does-not-start-one-process-use-restart]]). In CCS2, 403 = AccessDeniedPage; any other failure = "Something went wrong".
+
+CCS1 follow-up (same day): CCS1 called ccs./accounts./localhost:8085/8088 cross-host with a fixed X-User-Id → the desktop built-in browser blocks it (ERR_BLOCKED_BY_CLIENT, "Could not load provider"). Branch `fix/PAT-2735-ccs1-same-host-proxy` (abb9fbe) moves CCS1 to /ccs-api, /config-api, /i18n-api, /ams-api. Dropping the fixed id exposed that i18n.sellsuki.local had no forward_auth → "unauthenticated" 500 → auth-redirect login loop (screen flicker); fixed in monorepo 52e9caf08. Signed-in user needs seed-dev run with their own DEV_USER_ID for system roles.
