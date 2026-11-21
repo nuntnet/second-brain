@@ -101,6 +101,8 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Console CSS: lint vs ratchet](reference_console_new_css_lint_vs_reset_ratchet.md) — new CSS can use neither --ssk-spacing-N nor --spacing-*; Tailwind layout; no info alert, strings ≤120
 - [KB review POW via rehearsal](reference_console_kb_review_unavailable_in_mock_use_rehearsal.md) — review port UNAVAILABLE in mock; ?kb-range-review-rehearsal on e2e dev server
 
+- [Vite stale proxy after checkout](reference_vite_stale_proxy_after_checkout_switch.md) — CCS2 "Something went wrong" = Vite kept old /ccs-api→:8092 proxy, no X-User-Id → 401; overmind restart web-provider
+
 ## Go / DB / sandbox
 - [Unsandboxed TMPDIR shared](reference_unsandboxed_tmpdir_shared_log_names_collide.md) — sandbox-off $TMPDIR is /var/folders shared by all sessions; unit.log collided 11-20; log to scratchpad with a unique name
 - [Go rag-core needs go1.25](reference_go_rag_core_needs_go125_toolchain_sonic.md) — sonic v1.14.1 breaks on go1.26 as [build failed]; GOTOOLCHAIN=go1.25.0
