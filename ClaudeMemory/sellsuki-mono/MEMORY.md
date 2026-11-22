@@ -84,6 +84,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [SukiSpace subscribe branch-only](project_sukispace_subscribe_only_on_integration_branch_2026_11_20.md) — SG "Done" but code only on feature/sukispace-integration; no BOLA/AI plans
 - [AI cost page no margin](project_provider_ai_cost_page_usd_only_no_margin_2026_11_20.md) — CCS2 /ai/usage USD only; revenue/FX missing (AI-461, AI-202)
 
+- [Workspace = store+BOLA+chat](project_workspace_is_multi_product_ccs2_support.md) — CCS2 needs CCS3's unified workspace view for provider-admin support; OC-4263 BOLA-only is outdated
 - [Dashboard+usage need pipeline prod](project_ai_chat_dashboard_and_usage_need_data_pipeline_prod.md) — dashboard-api not on prod + deny-all; URL alone = 403 (AI-498)
 
 ## Jira
