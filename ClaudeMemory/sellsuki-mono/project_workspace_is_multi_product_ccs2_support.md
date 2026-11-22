@@ -11,7 +11,7 @@ OC-4263 / OC-4291 were written 2026-06 as BOLA-only and are wrong on that point.
 
 State 2026-11-22: CCS unified read model + member routes (`GET /companies/{id}/workspaces`, `.../{type}/{id}/members|roles|invitations`)
 are on CCS main AND develop. CCS3 unified page (AI-286) is on CCS3 **develop only**. CCS2 still has separate `stores` and
-`bola-workspaces` tabs on the old endpoints. Draft of the corrected card: `docs/cards/drafts/oc4263-workspaces-2026-11-22/CARD.md`.
+`bola-workspaces` tabs on the old endpoints. OC-4263 rewritten in Jira 2026-11-22 (30 AC) from `docs/cards/drafts/oc4263-workspaces-2026-11-22/DESCRIPTION.md`; evidence `ccs3-flow-matrix.md`. Key fact: a provider-owner-only user gets 403 on every workspace route (no provider fallback in CCS) — CCS2's BOLA tab works only for system owners.
 
 **Why:** a card that says "BOLA workspace" gets built BOLA-only and chat support is missing for provider admins.
 **How to apply:** any CCS2/CCS3 workspace card covers every `ManagedWorkspaceType`, reads the unified API, and drives actions
