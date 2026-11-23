@@ -94,7 +94,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 
 - [Thai Jira edits drift](reference_jira_bulk_thai_edits_drift_use_ascii_escaped_json.md) — re-typed text changes words; paste ASCII-escaped JSON, diff Jira vs file after
 - [editJiraIssue fields rejected](reference_jira_mcp_editissue_fields_rejected_as_string.md) — schema-less tool rejects `fields`; the d4aa0ce4 connector's editJiraIssue works for descriptions
-- [Meta app prod state 11-14](project_meta_app_sellsuki_a_prod_state_2026_11_14.md) — feed unsubscribed, webhook v27 vs Graph v25, login config 3 perms, all Standard access
+- [Meta app prod state 11-14](project_meta_app_sellsuki_a_prod_state_2026_11_14.md) — feed now Subscribed (seen 11-23, Page object), webhook v27 vs Graph v25, login config 3 perms, all Standard access
 
 - [Docker reset → rebuild infra](reference_docker_reset_rebuild_local_infra.md) — images+named volumes gone, data/ survives; postgis apt archive, minio withdrawn→chainguard, rag-core volume, file-service ff
 - [Duplicate local chat-core + Procfile reload](reference_local_duplicate_overmind_chat_core_and_procfile_reload.md) — stray .overmind-chat-core.sock eats the queue; restart never rereads Procfile → ai-mvp-restart.sh
