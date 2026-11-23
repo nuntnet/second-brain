@@ -32,6 +32,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Console v9 = mess, reset first](feedback_console_v9_frontend_is_a_mess_reset_before_more_screens.md) — no more screens until audit + IA + visual direction agreed with nunt
 - [Console UX rules](feedback_console_ux_story_presets_icons_generic.md) — story/wizard for newcomers, presets not free text, icon+hover not labels, never one industry
 - [Data-page prototype review](feedback_prototype_review_controls_feasibility_date_ranges.md) — every control live (scripted), feasibility per number on the page, per-customer cycles/date range, one summary + one tab row
+- [Other agents' runbooks](feedback_review_other_agents_runbooks_against_git_rules.md) — Grokbot runbook said rebase+force-push and stale "known red"; GET GitLab + translate to merge-main first
 - [Handoff ≠ state](feedback_handoff_claims_check_ledger_and_mr.md) — check ledger + open MRs before trusting "no code yet"
 - [Check env yourself](feedback_check_read_only_env_facts_yourself_user_does_not_know.md) — port-forward rps + grpcurl, don't ask
 - [Agents never reset --hard](feedback_agents_never_reset_hard_cd_guard.md) — a subagent reset the monorepo ROOT 9× (failed cd) 11-19; briefs forbid destructive git, `cd X || exit`, merge-tree for trials
