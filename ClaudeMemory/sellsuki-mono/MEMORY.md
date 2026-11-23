@@ -127,5 +127,6 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Env / sandbox / test / worktree traps](index_traps_tail.md) — verifier exec denied, sandbox glab/go/TMPDIR, ssk-* DS quirks, e2e ports, ladders, worktree/merge traps, console login
 - [Providers patona/poshmedica](reference_providers_patona_poshmedica_company_pickers.md) — prod has no "sellsuki" provider yet (PAT-1529 renames patona); each app's company picker filters its own provider
 - [Prod onboarding state 11-17](project_ai_chat_prod_onboarding_state_2026_11_17.md) — CCS prod v1.7.0, Owner chat perms granted by hand, re-grant CronJob suspended, AI-466 replaces OC2Plus route, trial-only plan defaults
+- [Console header → chat-core CORS](reference_console_new_request_header_needs_chat_core_cors.md) — AllowHeaders hard-coded; kit traceparent broke staging console 11-23; ship CORS first
 - [Local console logout](reference_local_console_logout_needs_kratos_ui_main.md) — local kratos-ui-go old branch breaks it; use accounts.sellsuki.local/logout; replay with a session before claiming fixed
 - [Console prod unit job flaky](reference_console_prod_unit_job_flaky_on_prod_runner.md) — v1.0.4 needed 4 runs on the prod runner; two flaky tests named
