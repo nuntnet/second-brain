@@ -15,4 +15,8 @@ Decided with nunt on 2026-11-19 after BOLA-403 shipped (backend v1.0.34, fronten
 - **One wave, one release** for BOLA-405..423 real bugs + BOLA-404 + BOLA-424 + BOLA-311 join page to main: card branches from main, pushed, no per-card MR; coordinator builds `feature/BOLA-bugs-wave1` per repo, one MR per repo. nunt's product calls: 409 implement raw_json/imagemap for real; 410 block send at 0 recipients; 414 All = everyone; 420 stamp last_login on Kratos session entry; 415 email import now (default: file fills only empty emails); 419 FE health card now, note on BOLA-358.
 - BOLA-417 (OA vanished): code has no provider/company/workspace path that moves or deletes OAs; most likely soft-delete with a swallowed fire-and-forget audit. Needs a staging DB read nobody has done.
 
+- **2026-11-20 change: provider = Mandrill, not SES** (nunt: "ใช้ mandrill จะไวกว่า"; SES verification SRE-1698 off the
+  critical path). Rows live on dev/staging/production messaging DBs; production real send reached a Gmail inbox
+  ("via mandrillapp.com" = no sellsuki.com DKIM in Mandrill yet). Mandrill reads only `aux_client_secret`.
+
 **How to apply:** don't propose SMTP for BOLA again; don't open per-card MRs for this batch. Related: [[feedback_open_mr_per_wave_or_batch_not_per_card]].

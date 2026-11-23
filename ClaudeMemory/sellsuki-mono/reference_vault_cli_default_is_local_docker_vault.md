@@ -22,5 +22,12 @@ Staging Vault:
 - Secrets in ns sellsuki are ExternalSecrets (ClusterSecretStore `vault-backend`, refresh 300s); a sync 2 s after a
   write can miss it → `kubectl annotate externalsecret <name> force-sync=$(date +%s) --overwrite`, then count keys.
 
-**How to apply:** before giving a Vault command, write `export VAULT_ADDR=…` into it explicitly. Never let the
+2026-11-20/23 (CCS BOLA_SYSTEM_TOKEN, production): nunt ran the steps through `!` bash-input — each `!` line is a fresh
+shell, so `export VAULT_ADDR` from one line is gone in the next and the patch silently went nowhere (hash on cluster
+unchanged after force-sync). Production Vault = `kubectl --context teleport.internal.production.sellsuki.com-production-cluster
+-n system-security port-forward svc/vault-server-active 18200:8200`; needs a live `tsh login` (expired → "Having problems with relogin").
+Verify a copy by comparing sha256 prefixes of both k8s secrets, never by printing values.
+
+**How to apply:** Vault steps go in ONE real Terminal tab (not `!`), port-forward in a second tab; after the write,
+re-check the cluster secret hash before deploying anything that reads it.  before giving a Vault command, write `export VAULT_ADDR=…` into it explicitly. Never let the
 user paste `vault token lookup` output into chat — the `id` line is the token. Related: [[reference-outline-mcp-vpn-blocker]].
