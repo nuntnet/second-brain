@@ -16,3 +16,12 @@ The AI chat console upgrade button (AI-468) goes to a static "coming soon" `/upg
 **How to apply:** before planning self-subscribe work, check main vs that branch; treat SG "Done" as branch-done. Related: [[project_oc2plus_saas_plan_epic_oc4763_decisions_2026_10_16]]
 
 **Update 2026-11-26 (overlap check for the CTO):** the branch is now space-go 573 / QMS 377 / CCS2 FE 133 / CCS 23 commits ahead of main, still no MR, mostly bot-authored ("SukiSpace Plan 2": seller plans, postpaid, buyer party, data-move tool; CCS2 QMS pages moved from management-backend to space-go provider routes). Trial-merge into main conflicts in QMS assign_plan (proto/server/repo/use case), 14 CCS2 QMS pages, CCS role migrations + main.go; clean in space-go. Duplicated intent: space-go `/v1/admins` identity guard (CTO 300d6bf vs our SG-22 MR !2), QMS usage plan lock (CTO d293102/c3e0a26 vs ours 3020a49/f7615a4), QMS NotFound for no plan (c336f9f vs AI-450 4016c78), ensure-once (4f653a8 vs trial 6a6bd24), QMS page error wording/company names (SF-PFE-ALIGN vs AI-232). CCS2 wave1/2 (PAT-2735, !31/!32) will also conflict.
+
+**QMS pre-resolved merge (2026-11-26 23:40):** local branch `refactor/AI-450-qms-merge-main-into-sukispace` in quota-management-backend (ae93e14), built on the CTO branch with main merged in. **Not pushed:** the gstack-redact-prepush hook flags the `postgres:postgres@127.0.0.1` test DSNs, which are already on origin/main.
+
+Decisions made in the merge:
+- **Usage path:** the CTO's flow runs inside main's tx + row lock (LockAssignPlan, now ref-aware). A row gone since the match counts as both conflict and NotFound.
+- **Ensure:** main's API (once / active_until) with the CTO's C-3 default (lapsed or revoked → ErrPlanWithdrawn). This changes main's expired-plan default and needs CTO confirmation.
+- **Proto:** main's 5–7 kept. CTO's auto_renew moves 5→8 and pending_top_ups 6→9, so the space-go and management-backend stubs on the CTO branch must be regenerated.
+
+Flaky on the CTO branch itself: TestCancelRealStorage_ChargeAndCancelRacing. CTO integration tests need Postgres on port 58100–58199.
