@@ -18,3 +18,10 @@ CTO ruled (relayed by nunt, 2026-11-26): CCS2 = `frontend/sellsuki-provider-mana
 - PAT-2735 (!31/!32) must follow the same direction.
 
 Related: [[project_sukispace_subscribe_only_on_integration_branch_2026_11_20]]
+
+**State 2026-11-26 22:40:** pushed a pre-resolved merge, CCS2 branch `refactor/PAT-2735-merge-sukispace-integration` (7c3ad20). It merges wave1 (!31) and wave2 (!32) with `feature/sukispace-integration`. There is no MR. Resolution choices:
+- QMS pages: took the CTO's version.
+- Sidebar: CTO entries ported into `src/lib/navigation.ts`.
+- Tests: two CTO Layout tests now read the property as well as the attribute.
+
+Gap: AI-232's company names and periods on the 14 QMS pages were not ported onto the CTO's pages.
