@@ -87,6 +87,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 
 - [Prod CCS = hotfix line](project_production_ccs_runs_hotfix_line_not_main.md) — OUTDATED 11-24: prod v1.8.0/v1.8.1 are cut from main · [Local tags go stale](reference_local_git_tags_go_stale_compare_remote_before_release.md) — diff vs ls-remote tag before a release
 - [SukiSpace subscribe branch-only](project_sukispace_subscribe_only_on_integration_branch_2026_11_20.md) — SG "Done" but code only on feature/sukispace-integration; no BOLA/AI plans
+- [CCS2 no mgmt-backend](project_ccs2_no_management_backend_cto_2026_11_26.md) — CTO 11-26: CCS2 pages call space-go provider routes only (SF-PFE-4)
 - [AI cost page no margin](project_provider_ai_cost_page_usd_only_no_margin_2026_11_20.md) — CCS2 /ai/usage USD only; revenue/FX missing (AI-461, AI-202)
 
 - [Workspace = store+BOLA+chat](project_workspace_is_multi_product_ccs2_support.md) — CCS2 needs CCS3's unified workspace view for provider-admin support; OC-4263 BOLA-only is outdated
