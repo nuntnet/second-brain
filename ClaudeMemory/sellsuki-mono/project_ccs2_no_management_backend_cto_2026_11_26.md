@@ -24,4 +24,10 @@ Related: [[project_sukispace_subscribe_only_on_integration_branch_2026_11_20]]
 - Sidebar: CTO entries ported into `src/lib/navigation.ts`.
 - Tests: two CTO Layout tests now read the property as well as the attribute.
 
-Gap: AI-232's company names and periods on the 14 QMS pages were not ported onto the CTO's pages.
+AI-232 ported onto the CTO's QMS pages at 631a389 on the same branch:
+- company found via `?code=` (resolveCompany)
+- period shows plan_revision
+- one picker row per quota code (latestPerCode)
+- state shown with stateLabel
+
+The CTO's error-text helpers were kept. Ai232OnSpaceRoutes.test.ts was proved red. Not opened in a browser; it needs space-go on the CTO branch running locally.
