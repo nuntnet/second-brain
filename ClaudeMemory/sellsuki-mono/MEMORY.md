@@ -23,6 +23,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Wave/ledger first](feedback_check_wave_lists_and_ledger_before_starting_a_card.md) — grep waves/*.md + docs/cards/<CARD>.md before briefing; wave card = no MR
 - [Bot before merge](feedback_read_review_bot_before_merging.md) — read the bot Result line; green+mergeable ≠ bot passed
 - [Verifier closes, pack for humans](feedback_verifier_closes_cards_review_pack_for_humans.md) — nunt cannot review every AC: verifier verdict counts, human-only rows → review pack, WIP ≤15 In Review
+- [Review-pack buckets](reference_review_pack_buckets_and_card_verdict_lines.md) — 11-24 HUMAN = has any human row (V rows unverified); parse "Card verdict:" lines in verify-2026-11-25
 - [Count ACs before Done](feedback_before_closing_card_count_jira_acs_against_verified_rows.md) — Jira `\[ \]` bullets were missed; verify every AC has a verdict + its commit is in the prod tag
 - [Comment card](feedback_comment_jira_card_when_loop_closes.md) — Jira comment + status follows MR
 - [MR after full ladder](feedback_open_mr_only_after_full_test_ladder_green.md) — unit + real-DB -p 1 + AC table proved red, then MR; kit…
