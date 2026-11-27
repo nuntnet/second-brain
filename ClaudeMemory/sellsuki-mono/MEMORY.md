@@ -91,6 +91,7 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [AI cost page no margin](project_provider_ai_cost_page_usd_only_no_margin_2026_11_20.md) — CCS2 /ai/usage USD only; revenue/FX missing (AI-461, AI-202)
 
 - [Workspace = store+BOLA+chat](project_workspace_is_multi_product_ccs2_support.md) — CCS2 needs CCS3's unified workspace view for provider-admin support; OC-4263 BOLA-only is outdated
+- [Prod: no ai.usage.recorded topic](project_prod_missing_ai_usage_topic_qms_never_debited.md) — 11-27: publish fails before QMS debit, 285 records stuck in spool; knowledge-connector readiness flaps
 - [Dashboard+usage need pipeline prod](project_ai_chat_dashboard_and_usage_need_data_pipeline_prod.md) — dashboard-api not on prod + deny-all; URL alone = 403 (AI-498)
 
 - [AI chat GCP project](reference_ai_chat_google_cloud_project_drive_oauth.md) — ai-chatsystem-510115 via authuser=1; prod Picker key must be a production-scoped GitLab var; consent screen Testing
