@@ -14,3 +14,5 @@ As of 2026-11-20 (AI-498): the AI chat console Dashboard (`dashboard_not_configu
 
 **Why:** nunt said 2026-11-20 prod needs both pages.
 **How to apply:** a fix needs code (dashboard-api trusted-caller mode on `DASHBOARD_SERVICE_TOKEN` + chat-core client sending it) and a prod deploy of the pipeline. Ledger: docs/cards/AI-498.md. Related [[project-provider-ai-cost-page-usd-only-no-margin]].
+
+**Update 2026-11-27:** nunt approved splitting the remaining work: AI-512 (dashboard-api trusted caller on the `DASHBOARD_SERVICE_TOKEN` bearer + chat-core sends `DASHBOARD_API_SERVICE_TOKEN`) and AI-513 (pipeline production values + CI deploy jobs, namespace `data-pipeline` assumed). Pipeline MRs !15 and !16 were opened in the data team's repo as proposals for them to merge. Ledgers: docs/cards/AI-512.md, AI-513.md.
