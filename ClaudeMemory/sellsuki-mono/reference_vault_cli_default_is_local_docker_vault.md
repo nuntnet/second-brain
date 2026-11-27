@@ -31,3 +31,5 @@ Verify a copy by comparing sha256 prefixes of both k8s secrets, never by printin
 **How to apply:** Vault steps go in ONE real Terminal tab (not `!`), port-forward in a second tab; after the write,
 re-check the cluster secret hash before deploying anything that reads it.  before giving a Vault command, write `export VAULT_ADDR=…` into it explicitly. Never let the
 user paste `vault token lookup` output into chat — the `id` line is the token. Related: [[reference-outline-mcp-vpn-blocker]].
+
+2026-11-27 (AI-512 staging key): the hand-over worked first time (port-forward tab + one Terminal tab, value piped kubectl→base64 -d→`vault kv patch … KEY=-`, verified by sha256 prefix). But nunt pasted the whole terminal back, which included the `vault login` output with the token (admin policy, 768h); he revoked it. **Every Vault hand-over must say: send back only the step outputs, not the `vault login` output** — or use `vault login -method=oidc -no-print`.

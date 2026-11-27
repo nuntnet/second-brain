@@ -119,6 +119,8 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 - [Go rag-core needs go1.25](reference_go_rag_core_needs_go125_toolchain_sonic.md) — sonic v1.14.1 breaks on go1.26 as [build failed]; GOTOOLCHAIN=go1.25.0
 - [chat-core suite under load](reference_chat_core_local_suite_under_load_and_testdb_leftover.md) — timeouts at load ~30 → re-run failed pkgs -p 1; drop the leftover <db>_tp_<hash>
 - [rag-core branch fixtures](reference_capture_rag_core_branch_fixtures_via_git_archive.md) — git archive + rag-core .venv, drive real ASGI routes; Write hook = stay inside session worktree
+- [ai-agent persona budget](reference_ai_agent_persona_layer_budget_drops_document_checks.md) — head text silently drops completeness check/checklist on gemini docs; diff main vs branch with a real persona
+- [Live eval gate](reference_live_llm_eval_must_gate_on_model_written_reply.md) — degrade templates pass language checks; gate on Decision reply; TryChat+MessageRef refused
 - [Go / DB / sandbox / test traps](index_go_db_sandbox.md) — sandbox, go cache, pgx/gorm, chat-core test DBs, console e2e ports, ssk-* components, merge traps
 
 ## Sub-indexes — open when the topic comes up
