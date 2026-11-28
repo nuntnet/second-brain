@@ -98,6 +98,9 @@ Titles are 1–3 words on purpose — each file's `description:` carries the rea
 
 - [AI chat GCP project](reference_ai_chat_google_cloud_project_drive_oauth.md) — ai-chatsystem-510115 via authuser=1; prod Picker key must be a production-scoped GitLab var; consent screen Testing
 
+- [Release = tag content](reference_release_check_by_tag_content_not_ancestry.md) — prod tags hold cherry-picks; diff tag vs main per file, not merge-base
+- [Prod verify via chrome-devtools](reference_prod_verify_via_chrome_devtools_test_chat.md) — nunt signs in; fetch chat-core from page; Test_Chat-only writes; prod limits
+
 ## Jira
 - [Sprint ids + agile ops](reference_jira_sprint_ids_not_contiguous.md) — ids global across boards; f9f106ba connector `manageJiraSprint`/`listJiraBoardSprints` replaces the browser; AI S25–27 = 3307–3309
 - [Sweep via files](reference_jira_board_sweep_via_saved_results.md) · [BOLA](reference_bola_jira_project.md) · [OC2Plus](reference_oc2plus_jira_project.md) · [Patona](reference_pat_jira_project.md) · [Sprint ids](reference_jira_sprint_ids_not_contiguous.md) · [PAT sprints](reference_pat_board_sprints.md) · [PAT epics](project_pat_epic_links_unwired.md) · [Crosses sessions](reference_jira_mcp_crosses_responses_between_sessions.md) · [Quirks](reference_jira_mcp_search_quirks.md) · [ADF Thai](reference_jira_editissue_adf_breakage.md) · [No fallback](reference_no_local_jira_fallback.md) · [403 writes](reference_jira_mcp_writes_403_midsession.md) · [BOLA no In Review](reference_bola_jira_has_no_in_review_status_and_auto_mode_denies_merge.md)
